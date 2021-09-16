@@ -1,4 +1,4 @@
-import Dashboard from '@fuse/core/Dashboard';
+import Dashboard from 'app/main/dashboard/Dashboard';
 import FusePageSimple from '@fuse/core/FusePageSimple';
 import {makeStyles} from '@material-ui/core/styles';
 
@@ -6,7 +6,7 @@ const useStyles = makeStyles({
   layoutRoot: {},
 });
 
-function SimpleFullWidthSample() {
+function DashboardPage() {
   const classes = useStyles();
 
   return (
@@ -33,8 +33,10 @@ function SimpleFullWidthSample() {
         <div className="p-10">
           <ul>
             <li>
+              <a href="/dashboard">Dashboard</a>
+            </li>
+            <li>
               <a href="/categories">Categories</a>
-
             </li>
           </ul>
         </div>
@@ -43,4 +45,4 @@ function SimpleFullWidthSample() {
   );
 }
 
-export default SimpleFullWidthSample;
+export default DashboardPage;
