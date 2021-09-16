@@ -38,6 +38,9 @@ function DashboardPage() {
             <li>
               <a href="/categories">Categories</a>
             </li>
+            <li>
+              <a href="/products">Products</a>
+            </li>
           </ul>
         </div>
       }
