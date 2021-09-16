@@ -1260,7 +1260,7 @@ module.exports = {
     backgroundAttachment: [],
     backgroundBlendMode: [],
     backgroundClip: [],
-    backgroundColor: ['group-hover', 'focus-within', 'hover', 'focus'],
+    backgroundColor: ['group-hover', 'focus-within', 'hover', 'focus', 'odd'],
     backgroundImage: [],
     backgroundOpacity: ['group-hover', 'focus-within', 'hover', 'focus'],
     backgroundPosition: [],
