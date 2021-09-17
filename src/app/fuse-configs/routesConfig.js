@@ -3,6 +3,7 @@ import FuseUtils from '@fuse/utils';
 import DashboardPageConfig from 'app/main/dashboard/DashboardPageConfig';
 import CategoriesPageConfig from 'app/main/categories/CategoriesPageConfig';
 import ProductsPageConfig from 'app/main/products/ProductsPageConfig';
+import CoolersPageConfig from 'app/main/coolers/CoolersPageConfig';
 import SchedulesPageConfig from 'app/main/schedules/SchedulesPageConfig';
 import FuseLoading from '@fuse/core/FuseLoading';
 import Error404Page from 'app/main/404/Error404Page';
@@ -11,6 +12,7 @@ const routeConfigs = [
   DashboardPageConfig,
   CategoriesPageConfig,
   ProductsPageConfig,
+  CoolersPageConfig,
   SchedulesPageConfig,
 ];
 
