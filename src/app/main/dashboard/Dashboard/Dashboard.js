@@ -118,7 +118,7 @@ function Dashboard() {
         </div>
         <div className="shadow-lg">
           <Link
-            to="/categories"
+            to="/blacklist"
             className="flex flex-col bg-gray-100 hover:bg-gray-800 text-gray-900 hover:text-gray-50 items-center mx-auto py-20"
             role="button"
           >
