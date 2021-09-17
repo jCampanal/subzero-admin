@@ -69,7 +69,7 @@ function Drivers() {
       </p>
       <div className="flex my-16 justify-center">
         <Button variant="contained" className="bg-blue-500 hover:bg-blue-700 text-white">
-          Search
+          New driver
         </Button>
       </div>
       <div className="mt-2 flex flex-col">
