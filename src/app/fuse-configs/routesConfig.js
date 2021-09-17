@@ -14,6 +14,7 @@ import WarehousesPageConfig from 'app/main/warehouses/WarehousesPageConfig';
 import AdminsPageConfig from 'app/main/admins/AdminsPageConfig';
 import ShipmentsPageConfig from 'app/main/shipments/ShipmentsPageConfig';
 import EmailsPageConfig from 'app/main/emails/EmailsPageConfig';
+import BlacklistPageConfig from 'app/main/blacklist/BlacklistPageConfig';
 
 const routeConfigs = [
   DashboardPageConfig,
@@ -27,7 +28,8 @@ const routeConfigs = [
   WarehousesPageConfig,
   AdminsPageConfig,
   ShipmentsPageConfig,
-  EmailsPageConfig
+  EmailsPageConfig,
+  BlacklistPageConfig,
 ];
 
 const routes = [
