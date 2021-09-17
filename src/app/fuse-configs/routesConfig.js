@@ -11,6 +11,7 @@ import CoolersActivityPageConfig from 'app/main/coolers-activity/CoolersActivity
 import CustomersPageConfig from 'app/main/customers/CustomersPageConfig';
 import DriversPageConfig from 'app/main/drivers/DriversPageConfig';
 import WarehousesPageConfig from 'app/main/warehouses/WarehousesPageConfig';
+import AdminsPageConfig from 'app/main/admins/AdminsPageConfig';
 
 const routeConfigs = [
   DashboardPageConfig,
@@ -22,6 +23,7 @@ const routeConfigs = [
   SchedulesPageConfig,
   DriversPageConfig,
   WarehousesPageConfig,
+  AdminsPageConfig,
 ];
 
 const routes = [
