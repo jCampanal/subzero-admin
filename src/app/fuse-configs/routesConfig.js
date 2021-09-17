@@ -12,6 +12,7 @@ import CustomersPageConfig from 'app/main/customers/CustomersPageConfig';
 import DriversPageConfig from 'app/main/drivers/DriversPageConfig';
 import WarehousesPageConfig from 'app/main/warehouses/WarehousesPageConfig';
 import AdminsPageConfig from 'app/main/admins/AdminsPageConfig';
+import ShipmentsPageConfig from 'app/main/shipments/ShipmentsPageConfig';
 
 const routeConfigs = [
   DashboardPageConfig,
@@ -24,6 +25,7 @@ const routeConfigs = [
   DriversPageConfig,
   WarehousesPageConfig,
   AdminsPageConfig,
+  ShipmentsPageConfig,
 ];
 
 const routes = [
