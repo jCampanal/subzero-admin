@@ -14,7 +14,7 @@ function FooterLayout1(props) {
     <ThemeProvider theme={footerTheme}>
       <AppBar
         id="fuse-footer"
-        className={clsx('relative z-20 shadow-md', props.className)}
+        className={clsx('relative z-0 shadow-md', props.className)}
         color="default"
         style={{ backgroundColor: footerTheme.palette.background.paper }}
       >
