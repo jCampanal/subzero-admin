@@ -6,8 +6,9 @@ import DashboardPageConfig from 'app/main/dashboard/DashboardPageConfig';
 import CategoriesPageConfig from 'app/main/categories/CategoriesPageConfig';
 import ProductsPageConfig from 'app/main/products/ProductsPageConfig';
 import CoolersPageConfig from 'app/main/coolers/CoolersPageConfig';
-import CoolersActivityPageConfig from '../main/coolers-activity/CoolersActivityPageConfig';
 import SchedulesPageConfig from 'app/main/schedules/SchedulesPageConfig';
+import CoolersActivityPageConfig from 'app/main/coolers-activity/CoolersActivityPageConfig';
+import CustomersPageConfig from 'app/main/customers/CustomersPageConfig';
 
 const routeConfigs = [
   DashboardPageConfig,
@@ -15,6 +16,7 @@ const routeConfigs = [
   ProductsPageConfig,
   CoolersPageConfig,
   CoolersActivityPageConfig,
+  CustomersPageConfig,
   SchedulesPageConfig,
 ];
 
