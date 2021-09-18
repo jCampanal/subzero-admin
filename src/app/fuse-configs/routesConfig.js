@@ -1,11 +1,36 @@
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import FuseUtils from '@fuse/utils';
-import DashboardPageConfig from 'app/main/dashboard/DashboardPageConfig';
-import CategoriesPageConfig from 'app/main/categories/CategoriesPageConfig';
 import FuseLoading from '@fuse/core/FuseLoading';
 import Error404Page from 'app/main/404/Error404Page';
+import DashboardPageConfig from 'app/main/dashboard/DashboardPageConfig';
+import CategoriesPageConfig from 'app/main/categories/CategoriesPageConfig';
+import ProductsPageConfig from 'app/main/products/ProductsPageConfig';
+import CoolersPageConfig from 'app/main/coolers/CoolersPageConfig';
+import SchedulesPageConfig from 'app/main/schedules/SchedulesPageConfig';
+import CoolersActivityPageConfig from 'app/main/coolers-activity/CoolersActivityPageConfig';
+import CustomersPageConfig from 'app/main/customers/CustomersPageConfig';
+import DriversPageConfig from 'app/main/drivers/DriversPageConfig';
+import WarehousesPageConfig from 'app/main/warehouses/WarehousesPageConfig';
+import AdminsPageConfig from 'app/main/admins/AdminsPageConfig';
+import ShipmentsPageConfig from 'app/main/shipments/ShipmentsPageConfig';
+import EmailsPageConfig from 'app/main/emails/EmailsPageConfig';
+import BlacklistPageConfig from 'app/main/blacklist/BlacklistPageConfig';
 
-const routeConfigs = [DashboardPageConfig, CategoriesPageConfig];
+const routeConfigs = [
+  DashboardPageConfig,
+  CategoriesPageConfig,
+  ProductsPageConfig,
+  CoolersPageConfig,
+  CoolersActivityPageConfig,
+  CustomersPageConfig,
+  SchedulesPageConfig,
+  DriversPageConfig,
+  WarehousesPageConfig,
+  AdminsPageConfig,
+  ShipmentsPageConfig,
+  EmailsPageConfig,
+  BlacklistPageConfig,
+];
 
 const routes = [
   // if you want to make whole app auth protected by default change defaultAuth for dashboard:
@@ -15,19 +40,19 @@ const routes = [
   {
     exact: true,
     path: '/',
-    component: () => <Redirect to="/dashboard"/>,
+    component: () => <Redirect to="/dashboard" />,
   },
   {
     path: '/loading',
     exact: true,
-    component: () => <FuseLoading/>,
+    component: () => <FuseLoading />,
   },
   {
     path: '/404',
-    component: () => <Error404Page/>,
+    component: () => <Error404Page />,
   },
   {
-    component: () => <Redirect to="/404"/>,
+    component: () => <Redirect to="/404" />,
   },
 ];
 

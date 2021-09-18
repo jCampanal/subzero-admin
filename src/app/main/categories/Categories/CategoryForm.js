@@ -14,7 +14,7 @@ export default function CategoryForm(props) {
   useEffect(() => setCategory(props.category), [props.category]);
   return (
     <Dialog open={props.open} onClose={props.handleClose} aria-labelledby="form-dialog-title">
-      <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+      <DialogTitle id="form-dialog-title">{category.id === 0 ? "Create category" : "Edit category"}</DialogTitle>
       <DialogContent>
         <TextField
           value={category.name}
