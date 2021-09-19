@@ -15,6 +15,7 @@ import AdminsPageConfig from 'app/main/admins/AdminsPageConfig';
 import ShipmentsPageConfig from 'app/main/shipments/ShipmentsPageConfig';
 import EmailsPageConfig from 'app/main/emails/EmailsPageConfig';
 import BlacklistPageConfig from 'app/main/blacklist/BlacklistPageConfig';
+import OrderMonitorPageConfig from 'app/main/order-monitor/OrderMonitorPageConfig';
 
 const routeConfigs = [
   DashboardPageConfig,
@@ -30,6 +31,7 @@ const routeConfigs = [
   ShipmentsPageConfig,
   EmailsPageConfig,
   BlacklistPageConfig,
+  OrderMonitorPageConfig,
 ];
 
 const routes = [
