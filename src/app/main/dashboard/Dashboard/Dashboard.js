@@ -141,7 +141,7 @@ function Dashboard() {
       <div className="pt-10 grid grid-cols-7 gap-20">
         <div className="shadow-lg">
           <Link
-            to="/categories"
+            to="/order-monitor"
             className="flex flex-col bg-gray-100 hover:bg-gray-800 text-gray-900 hover:text-gray-50 items-center mx-auto py-20"
             role="button"
           >
