@@ -5,8 +5,8 @@ import Link from '@material-ui/core/Link';
 import HomeIcon from '@material-ui/icons/Home';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import Typography from '@material-ui/core/Typography';
-import LocalShippingIcon from '@material-ui/icons/LocalShipping';
-import Drivers from './Drivers';
+import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
+import OrderAdmin from './OrderAdmin/OrderAdmin';
 
 const useStyles = makeStyles((theme) => ({
     layoutRoot: {},
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function DriversPage() {
+function OrderAdminPage() {
     const classes = useStyles();
 
     return (
@@ -39,15 +39,15 @@ function DriversPage() {
                             Dashboard
                         </Link>
                         <Typography color="textPrimary" className={classes.link}>
-                            <LocalShippingIcon className={classes.icon} />
-                            Drivers
+                            <AssignmentTurnedInIcon className={classes.icon} />
+                            Order Admin
                         </Typography>
                     </Breadcrumbs>
                 </div>
             }
             content={
                 <div className="p-24">
-                    <Drivers />
+                    <OrderAdmin />
                 </div>
             }
             leftSidebarContent={
@@ -63,4 +63,4 @@ function DriversPage() {
     );
 }
 
-export default DriversPage;
+export default OrderAdminPage;

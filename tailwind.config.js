@@ -1327,7 +1327,7 @@ module.exports = {
     lineHeight: ['responsive'],
     listStylePosition: [],
     listStyleType: [],
-    margin: ['responsive', 'direction'],
+    margin: ['responsive', 'direction', 'last'],
     maxHeight: ['responsive'],
     maxWidth: ['responsive'],
     minHeight: ['responsive'],
