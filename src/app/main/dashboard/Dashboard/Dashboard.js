@@ -179,12 +179,12 @@ function Dashboard() {
                 </div>
                 <div className="shadow-lg">
                     <Link
-                        to="/categories"
+                        to="/drivers-monitor"
                         className="flex flex-col bg-gray-100 hover:bg-gray-800 text-gray-900 hover:text-gray-50 items-center mx-auto py-20 rounded"
                         role="button"
                     >
                         <LocationOnIcon className="block text-7xl" />
-                        <span className="h5 mt-10">Driver monitor</span>
+                        <span className="h5 mt-10">Drivers monitor</span>
                     </Link>
                 </div>
             </div>
