@@ -11,9 +11,9 @@ import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import BlockIcon from '@material-ui/icons/Block';
 import EmailIcon from '@material-ui/icons/Email';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import DateRangeIcon from '@material-ui/icons/DateRange';
 
 function Dashboard() {
     return (
@@ -169,12 +169,12 @@ function Dashboard() {
                 </div>
                 <div className="shadow-lg">
                     <Link
-                        to="/categories"
+                        to="/order-calendar"
                         className="flex flex-col bg-gray-100 hover:bg-gray-800 text-gray-900 hover:text-gray-50 items-center mx-auto py-20 rounded"
                         role="button"
                     >
-                        <FormatListNumberedIcon className="block text-7xl" />
-                        <span className="h5 mt-10">Order monitor 2</span>
+                        <DateRangeIcon className="block text-7xl" />
+                        <span className="h5 mt-10">Order Calendar</span>
                     </Link>
                 </div>
                 <div className="shadow-lg">
