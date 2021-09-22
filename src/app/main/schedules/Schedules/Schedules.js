@@ -1,9 +1,10 @@
-import {memo, useState} from 'react';
+import {lazy, memo, useState} from 'react';
 import {Button, Snackbar, TextField} from '@material-ui/core';
 import {Alert as MuiAlert} from '@material-ui/lab';
 import ScheduleIcon from '@material-ui/icons/Schedule';
-import ScheduleDisplay from './ScheduleDisplay';
-import ConfirmDlg from './ConfirmDlg';
+
+const ScheduleDisplay = lazy(() => import('./ScheduleDisplay'));
+const ConfirmDlg = lazy(() => import('./ConfirmDlg'));
 
 const Alert = (props) => {
     return <MuiAlert elevation={6} variant="filled" {...props} />;

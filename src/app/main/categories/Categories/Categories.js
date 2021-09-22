@@ -1,8 +1,9 @@
-import {memo, useState} from 'react';
+import {lazy, memo, useState} from 'react';
 import Button from '@material-ui/core/Button';
 import CategoryIcon from '@material-ui/icons/Category';
-import CategoryForm from './CategoryForm';
-import ConfirmDlg from './ConfirmDlg';
+
+const CategoryForm = lazy(() => import('./CategoryForm'));
+const ConfirmDlg = lazy(() => import('./ConfirmDlg'));
 
 const dummyCategories = [
     {id: 1, link: 'htp://site.com/cats/gue', name: 'Gue'},

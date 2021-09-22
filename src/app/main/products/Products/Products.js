@@ -1,8 +1,9 @@
-import {memo, useState} from 'react';
+import {lazy, memo, useState} from 'react';
 import {ShoppingCart} from '@material-ui/icons';
 import Button from '@material-ui/core/Button';
-import ProductForm from './ProductForm';
-import ConfirmDlg from './ConfirmDlg';
+
+const ProductForm = lazy(() => import('./ProductForm'));
+const ConfirmDlg = lazy(() => import('./ConfirmDlg'));
 
 const dummyProducts = [
     {id: 1, category: 'Lorem', name: 'Grep', units: 'Gue Ueg Egu Geu', visible: true},

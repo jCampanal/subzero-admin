@@ -1,6 +1,7 @@
-import {memo} from 'react';
+import {lazy, memo} from 'react';
 import DateRangeIcon from '@material-ui/icons/DateRange';
-import OrdersByDateTab from './OrdersByDateTab';
+
+const OrdersByDateTab = lazy(() => import('./OrdersByDateTab'));
 
 const Days = {
     0: 'Sun',

@@ -1,9 +1,10 @@
-import {memo, useState} from 'react';
+import {lazy, memo, useState} from 'react';
 import {Button, TextField} from '@material-ui/core';
 import {MuiPickersUtilsProvider, KeyboardDatePicker} from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import ConfirmDlg from './ConfirmDlg';
-import CoolerForm from './CoolerForm';
+
+const ConfirmDlg = lazy(() => import('./ConfirmDlg'));
+const CoolerForm = lazy(() => import('./CoolerForm'));
 
 const dummyCoolers = [
     {id: 1, code: 1001, provider: 'Grep', status: 'Gue Ueg Egu Geu', registrationDate: new Date()},

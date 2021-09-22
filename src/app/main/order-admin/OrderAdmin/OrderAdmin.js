@@ -1,8 +1,9 @@
-import {memo} from 'react';
+import {lazy, memo} from 'react';
 import {Button, TextField} from '@material-ui/core';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import {KeyboardDatePicker} from '@material-ui/pickers';
-import WarehouseTab from './WarehouseTab';
+
+const WarehouseTab = lazy(() => import('./WarehouseTab'));
 
 const dummyOrders = [
     {
