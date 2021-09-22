@@ -9,17 +9,17 @@ i18next.addResourceBundle('tr', 'examplePage', tr);
 i18next.addResourceBundle('ar', 'examplePage', ar);
 
 const CoolersActivityPageConfig = {
-  settings: {
-    layout: {
-      config: {},
+    settings: {
+        layout: {
+            config: {},
+        },
     },
-  },
-  routes: [
-    {
-      path: '/coolers-activity',
-      component: CoolersActivityPage,
-    },
-  ],
+    routes: [
+        {
+            path: '/coolers_activity',
+            component: CoolersActivityPage,
+        },
+    ],
 };
 
 export default CoolersActivityPageConfig;

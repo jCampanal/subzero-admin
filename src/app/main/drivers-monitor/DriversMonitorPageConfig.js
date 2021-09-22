@@ -16,7 +16,7 @@ const DriversMonitorPageConfig = {
     },
     routes: [
         {
-            path: '/drivers-monitor',
+            path: '/drivers_monitor',
             component: DriversMonitorPage,
         },
     ],

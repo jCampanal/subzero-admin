@@ -16,7 +16,7 @@ const OrderCalendarPageConfig = {
     },
     routes: [
         {
-            path: '/order-calendar',
+            path: '/orders_calendar',
             component: OrderCalendarPage,
         },
     ],

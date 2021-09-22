@@ -9,17 +9,17 @@ i18next.addResourceBundle('tr', 'examplePage', tr);
 i18next.addResourceBundle('ar', 'examplePage', ar);
 
 const OrderMonitorPageConfig = {
-  settings: {
-    layout: {
-      config: {},
+    settings: {
+        layout: {
+            config: {},
+        },
     },
-  },
-  routes: [
-    {
-      path: '/order-monitor',
-      component: OrderMonitorPage,
-    },
-  ],
+    routes: [
+        {
+            path: '/orders_monitor',
+            component: OrderMonitorPage,
+        },
+    ],
 };
 
 export default OrderMonitorPageConfig;

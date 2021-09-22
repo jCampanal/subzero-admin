@@ -56,7 +56,7 @@ function Dashboard() {
                 </div>
                 <div className="shadow-lg">
                     <Link
-                        to="/coolers-activity"
+                        to="/coolers_activity"
                         className="flex flex-col bg-gray-100 hover:bg-gray-800 text-gray-900 hover:text-gray-50 items-center mx-auto py-20 rounded"
                         role="button"
                     >
@@ -106,7 +106,7 @@ function Dashboard() {
                 </div>
                 <div className="shadow-lg">
                     <Link
-                        to="/order-admin"
+                        to="/orders_admin"
                         className="flex flex-col bg-gray-100 hover:bg-gray-800 text-gray-900 hover:text-gray-50 items-center mx-auto py-20 rounded"
                         role="button"
                     >
@@ -141,7 +141,7 @@ function Dashboard() {
                         role="button"
                     >
                         <BlockIcon className="block text-7xl" />
-                        <span className="h5 mt-10">Black list</span>
+                        <span className="h5 mt-10">Blacklist</span>
                     </Link>
                 </div>
                 <div className="shadow-lg">
@@ -159,27 +159,27 @@ function Dashboard() {
             <div className="pt-10 grid grid-cols-7 gap-20">
                 <div className="shadow-lg">
                     <Link
-                        to="/order-monitor"
+                        to="/orders_monitor"
                         className="flex flex-col bg-gray-100 hover:bg-gray-800 text-gray-900 hover:text-gray-50 items-center mx-auto py-20 rounded"
                         role="button"
                     >
                         <AssignmentIcon className="block text-7xl" />
-                        <span className="h5 mt-10">Order monitor</span>
+                        <span className="h5 mt-10">Orders monitor</span>
                     </Link>
                 </div>
                 <div className="shadow-lg">
                     <Link
-                        to="/order-calendar"
+                        to="/orders_calendar"
                         className="flex flex-col bg-gray-100 hover:bg-gray-800 text-gray-900 hover:text-gray-50 items-center mx-auto py-20 rounded"
                         role="button"
                     >
                         <DateRangeIcon className="block text-7xl" />
-                        <span className="h5 mt-10">Order Calendar</span>
+                        <span className="h5 mt-10">Orders Calendar</span>
                     </Link>
                 </div>
                 <div className="shadow-lg">
                     <Link
-                        to="/drivers-monitor"
+                        to="/drivers_monitor"
                         className="flex flex-col bg-gray-100 hover:bg-gray-800 text-gray-900 hover:text-gray-50 items-center mx-auto py-20 rounded"
                         role="button"
                     >

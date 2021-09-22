@@ -16,7 +16,7 @@ const OrderAdminPageConfig = {
     },
     routes: [
         {
-            path: '/order-admin',
+            path: '/orders_admin',
             component: OrderAdminPage,
         },
     ],
