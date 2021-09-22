@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import DriversMonitorPage from './DriversMonitorPage';
+import React from 'react';
 import en from './i18n/en';
 
 i18next.addResourceBundle('en', 'examplePage', en);
@@ -13,7 +13,7 @@ const DriversMonitorPageConfig = {
     routes: [
         {
             path: '/drivers_monitor',
-            component: DriversMonitorPage,
+            component: React.lazy(() => import('./DriversMonitorPage')),
         },
     ],
 };

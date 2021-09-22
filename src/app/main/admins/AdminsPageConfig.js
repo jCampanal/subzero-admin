@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import AdminsPage from './AdminsPage';
+import React from 'react';
 import en from './i18n/en';
 
 i18next.addResourceBundle('en', 'examplePage', en);
@@ -13,7 +13,7 @@ const AdminsPageConfig = {
     routes: [
         {
             path: '/admins',
-            component: AdminsPage,
+            component: React.lazy(() => import('./AdminsPage')),
         },
     ],
 };

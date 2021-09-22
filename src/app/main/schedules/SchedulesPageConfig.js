@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import SchedulesPage from './SchedulesPage';
+import React from 'react';
 import en from './i18n/en';
 
 i18next.addResourceBundle('en', 'examplePage', en);
@@ -13,7 +13,7 @@ const SchedulesPageConfig = {
     routes: [
         {
             path: '/schedules',
-            component: SchedulesPage,
+            component: React.lazy(() => import('./SchedulesPage')),
         },
     ],
 };

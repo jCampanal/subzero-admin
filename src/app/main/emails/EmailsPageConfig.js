@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import EmailsPage from './EmailsPage';
+import React from 'react';
 import en from './i18n/en';
 
 i18next.addResourceBundle('en', 'examplePage', en);
@@ -13,7 +13,7 @@ const EmailsPageConfig = {
     routes: [
         {
             path: '/emails',
-            component: EmailsPage,
+            component: React.lazy(() => import('./EmailsPage')),
         },
     ],
 };

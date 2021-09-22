@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import OrderMonitorPage from './OrderMonitorPage';
+import React from 'react';
 import en from './i18n/en';
 
 i18next.addResourceBundle('en', 'examplePage', en);
@@ -13,7 +13,7 @@ const OrderMonitorPageConfig = {
     routes: [
         {
             path: '/orders_monitor',
-            component: OrderMonitorPage,
+            component: React.lazy(() => import('./OrderMonitorPage')),
         },
     ],
 };
