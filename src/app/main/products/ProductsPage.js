@@ -1,16 +1,7 @@
-import Products from 'app/main/products/Products/Products';
-import FusePageSimple from '@fuse/core/FusePageSimple';
+import Products from "app/main/products/Products/Products";
 
 function ProductsPage() {
-    return (
-        <FusePageSimple
-            content={
-                <div className="p-24">
-                    <Products />
-                </div>
-            }
-        />
-    );
+  return <Products />;
 }
 
 export default ProductsPage;

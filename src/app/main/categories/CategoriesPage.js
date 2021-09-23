@@ -1,16 +1,7 @@
-import Categories from 'app/main/categories/Categories';
-import FusePageSimple from '@fuse/core/FusePageSimple';
+import Categories from "app/main/categories/Categories";
 
 function CategoriesPage() {
-    return (
-        <FusePageSimple
-            content={
-                <div className="p-24">
-                    <Categories />
-                </div>
-            }
-        />
-    );
+  return <Categories />;
 }
 
 export default CategoriesPage;
