@@ -23,167 +23,167 @@ function Dashboard() {
                 Dashboard
             </p>
             <p className="text-xl mt-12 mb-5">Administration</p>
-            <div className="p-10 grid grid-cols-7 gap-20">
-                <div className="shadow-lg">
+            <div className="p-10 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 lg:grid-cols-10 xl:grid-cols-12 gap-10 md:gap-16">
+                <div className="shadow-sm md:shadow-lg">
                     <Link
                         to="/categories"
                         role="button"
                         className="flex flex-col bg-gray-100 hover:bg-gray-800 text-gray-900 hover:text-gray-50 items-center mx-auto py-20 rounded"
                     >
-                        <CategoryIcon className="block text-7xl" />
+                        <CategoryIcon className="block text-5xl md:text-7xl" />
                         <span className="h5 mt-10">Categories</span>
                     </Link>
                 </div>
-                <div className="shadow-lg">
+                <div className="shadow-sm md:shadow-lg">
                     <Link
                         to="/products"
                         role="button"
                         className="flex flex-col bg-gray-100 hover:bg-gray-800 text-gray-900 hover:text-gray-50 items-center mx-auto py-20 rounded"
                     >
-                        <ShoppingCartIcon className="block text-7xl" />
+                        <ShoppingCartIcon className="block text-5xl md:text-7xl" />
                         <span className="h5 mt-10">Products</span>
                     </Link>
                 </div>
-                <div className="shadow-lg">
+                <div className="shadow-sm md:shadow-lg">
                     <Link
                         to="/coolers"
                         className="flex flex-col bg-gray-100 hover:bg-gray-800 text-gray-900 hover:text-gray-50 items-center mx-auto py-20 rounded"
                         role="button"
                     >
-                        <i className="fa text-7xl fa-box block" />
+                        <i className="fa text-5xl md:text-7xl fa-box block" />
                         <span className="h5 mt-10">Coolers</span>
                     </Link>
                 </div>
-                <div className="shadow-lg">
+                <div className="shadow-sm md:shadow-lg">
                     <Link
                         to="/coolers_activity"
                         className="flex flex-col bg-gray-100 hover:bg-gray-800 text-gray-900 hover:text-gray-50 items-center mx-auto py-20 rounded"
                         role="button"
                     >
-                        <HistoryIcon className="block text-7xl" />
+                        <HistoryIcon className="block text-5xl md:text-7xl" />
                         <span className="h5 mt-10">Coolers Activity</span>
                     </Link>
                 </div>
-                <div className="shadow-lg">
+                <div className="shadow-sm md:shadow-lg">
                     <Link
                         to="/customers"
                         className="flex flex-col bg-gray-100 hover:bg-gray-800 text-gray-900 hover:text-gray-50 items-center mx-auto py-20 rounded"
                         role="button"
                     >
-                        <PersonIcon className="block text-7xl" />
+                        <PersonIcon className="block text-5xl md:text-7xl" />
                         <span className="h5 mt-10">Customers</span>
                     </Link>
                 </div>
-                <div className="shadow-lg">
+                <div className="shadow-sm md:shadow-lg">
                     <Link
                         to="/schedules"
                         className="flex flex-col bg-gray-100 hover:bg-gray-800 text-gray-900 hover:text-gray-50 items-center mx-auto py-20 rounded"
                         role="button"
                     >
-                        <ScheduleIcon className="block text-7xl" />
+                        <ScheduleIcon className="block text-5xl md:text-7xl" />
                         <span className="h5 mt-10">Schedules</span>
                     </Link>
                 </div>
-                <div className="shadow-lg">
+                <div className="shadow-sm md:shadow-lg">
                     <Link
                         to="/drivers"
                         className="flex flex-col bg-gray-100 hover:bg-gray-800 text-gray-900 hover:text-gray-50 items-center mx-auto py-20 rounded"
                         role="button"
                     >
-                        <LocalShippingIcon className="block text-7xl" />
+                        <LocalShippingIcon className="block text-5xl md:text-7xl" />
                         <span className="h5 mt-10">Drivers</span>
                     </Link>
                 </div>
-                <div className="shadow-lg">
+                <div className="shadow-sm md:shadow-lg">
                     <Link
                         to="/shipments"
                         className="flex flex-col bg-gray-100 hover:bg-gray-800 text-gray-900 hover:text-gray-50 items-center mx-auto py-20 rounded"
                         role="button"
                     >
-                        <i className="fa text-7xl fa-truck-loading block" />
+                        <i className="fa text-5xl md:text-7xl fa-truck-loading block" />
                         <span className="h5 mt-10">Shipments</span>
                     </Link>
                 </div>
-                <div className="shadow-lg">
+                <div className="shadow-sm md:shadow-lg">
                     <Link
                         to="/orders_admin"
                         className="flex flex-col bg-gray-100 hover:bg-gray-800 text-gray-900 hover:text-gray-50 items-center mx-auto py-20 rounded"
                         role="button"
                     >
-                        <AssignmentTurnedInIcon className="block text-7xl" />
+                        <AssignmentTurnedInIcon className="block text-5xl md:text-7xl" />
                         <span className="h5 mt-10">Order admin</span>
                     </Link>
                 </div>
-                <div className="shadow-lg">
+                <div className="shadow-sm md:shadow-lg">
                     <Link
                         to="/warehouses"
                         className="flex flex-col bg-gray-100 hover:bg-gray-800 text-gray-900 hover:text-gray-50 items-center mx-auto py-20 rounded"
                         role="button"
                     >
-                        <i className="fa text-7xl fa-warehouse block" />
+                        <i className="fa text-5xl md:text-7xl fa-warehouse block" />
                         <span className="h5 mt-10">Warehouses</span>
                     </Link>
                 </div>
-                <div className="shadow-lg">
+                <div className="shadow-sm md:shadow-lg">
                     <Link
                         to="/admins"
                         className="flex flex-col bg-gray-100 hover:bg-gray-800 text-gray-900 hover:text-gray-50 items-center mx-auto py-20 rounded"
                         role="button"
                     >
-                        <SupervisorAccountIcon className="block text-7xl" />
+                        <SupervisorAccountIcon className="block text-5xl md:text-7xl" />
                         <span className="h5 mt-10">Admins</span>
                     </Link>
                 </div>
-                <div className="shadow-lg">
+                <div className="shadow-sm md:shadow-lg">
                     <Link
                         to="/blacklist"
                         className="flex flex-col bg-gray-100 hover:bg-gray-800 text-gray-900 hover:text-gray-50 items-center mx-auto py-20 rounded"
                         role="button"
                     >
-                        <BlockIcon className="block text-7xl" />
+                        <BlockIcon className="block text-5xl md:text-7xl" />
                         <span className="h5 mt-10">Blacklist</span>
                     </Link>
                 </div>
-                <div className="shadow-lg">
+                <div className="shadow-sm md:shadow-lg">
                     <Link
                         to="/emails"
                         className="flex flex-col bg-gray-100 hover:bg-gray-800 text-gray-900 hover:text-gray-50 items-center mx-auto py-20 rounded"
                         role="button"
                     >
-                        <EmailIcon className="block text-7xl" />
+                        <EmailIcon className="block text-5xl md:text-7xl" />
                         <span className="h5 mt-10">Emails</span>
                     </Link>
                 </div>
             </div>
             <p className="text-xl mt-12 mb-5">Monitors</p>
-            <div className="pt-10 grid grid-cols-7 gap-20">
-                <div className="shadow-lg">
+            <div className="p-10 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 lg:grid-cols-10 xl:grid-cols-12 gap-10 md:gap-16">
+                <div className="shadow-sm md:shadow-lg">
                     <Link
                         to="/orders_monitor"
                         className="flex flex-col bg-gray-100 hover:bg-gray-800 text-gray-900 hover:text-gray-50 items-center mx-auto py-20 rounded"
                         role="button"
                     >
-                        <AssignmentIcon className="block text-7xl" />
+                        <AssignmentIcon className="block text-5xl md:text-7xl" />
                         <span className="h5 mt-10">Orders monitor</span>
                     </Link>
                 </div>
-                <div className="shadow-lg">
+                <div className="shadow-sm md:shadow-lg">
                     <Link
                         to="/orders_calendar"
                         className="flex flex-col bg-gray-100 hover:bg-gray-800 text-gray-900 hover:text-gray-50 items-center mx-auto py-20 rounded"
                         role="button"
                     >
-                        <DateRangeIcon className="block text-7xl" />
+                        <DateRangeIcon className="block text-5xl md:text-7xl" />
                         <span className="h5 mt-10">Orders Calendar</span>
                     </Link>
                 </div>
-                <div className="shadow-lg">
+                <div className="shadow-sm md:shadow-lg">
                     <Link
                         to="/drivers_monitor"
                         className="flex flex-col bg-gray-100 hover:bg-gray-800 text-gray-900 hover:text-gray-50 items-center mx-auto py-20 rounded"
                         role="button"
                     >
-                        <LocationOnIcon className="block text-7xl" />
+                        <LocationOnIcon className="block text-5xl md:text-7xl" />
                         <span className="h5 mt-10">Drivers monitor</span>
                     </Link>
                 </div>
