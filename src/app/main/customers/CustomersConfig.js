@@ -4,7 +4,7 @@ import en from './i18n/en';
 
 i18next.addResourceBundle('en', 'examplePage', en);
 
-const CustomersPageConfig = {
+const CustomersConfig = {
     settings: {
         layout: {
             config: {},
@@ -13,9 +13,9 @@ const CustomersPageConfig = {
     routes: [
         {
             path: '/customers',
-            component: React.lazy(() => import('./CustomersPage')),
+            component: React.lazy(() => import('./Customers/Customers')),
         },
     ],
 };
 
-export default CustomersPageConfig;
+export default CustomersConfig;

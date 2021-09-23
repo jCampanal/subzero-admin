@@ -8,7 +8,7 @@ import ProductsPageConfig from 'app/main/products/ProductsPageConfig';
 import CoolersPageConfig from 'app/main/coolers/CoolersPageConfig';
 import SchedulesPageConfig from 'app/main/schedules/SchedulesPageConfig';
 import CoolersActivityPageConfig from 'app/main/coolers-activity/CoolersActivityPageConfig';
-import CustomersPageConfig from 'app/main/customers/CustomersPageConfig';
+import CustomersConfig from 'app/main/customers/CustomersConfig';
 import DriversPageConfig from 'app/main/drivers/DriversPageConfig';
 import OrderAdminPageConfig from 'app/main/order-admin/OrderAdminPageConfig';
 import WarehousesPageConfig from 'app/main/warehouses/WarehousesPageConfig';
@@ -26,7 +26,7 @@ const routeConfigs = [
     ProductsPageConfig,
     CoolersPageConfig,
     CoolersActivityPageConfig,
-    CustomersPageConfig,
+    CustomersConfig,
     SchedulesPageConfig,
     DriversPageConfig,
     OrderAdminPageConfig,
