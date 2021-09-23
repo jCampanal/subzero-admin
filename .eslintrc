@@ -71,8 +71,9 @@
     "react/require-default-props": "off",
     "react/default-props-match-prop-types": "off",
     "react/no-unused-prop-types": "off",
-    "react/react-in-jsx-scope": "off", // after react v17
-    "react/jsx-uses-react": "off", // after react v17
+    "react/react-in-jsx-scope": "warn", // after react v17
+    "react/jsx-uses-react": "warn", // after react v17
+    "react/jsx-no-bind": "off",
     "unused-imports/no-unused-imports": "warn"
   }
 }
