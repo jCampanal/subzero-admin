@@ -13,7 +13,7 @@ const DriversPageConfig = {
     routes: [
         {
             path: '/drivers',
-            component: React.lazy(() => import('./DriversPage')),
+            component: React.lazy(() => import('./Drivers/Drivers')),
         },
     ],
 };
