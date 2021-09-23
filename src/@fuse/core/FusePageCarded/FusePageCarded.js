@@ -52,9 +52,6 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('sm')]: {
             padding: '0',
         },
-        [theme.breakpoints.down('xs')]: {
-            padding: '0 1.6rem',
-        },
     },
     header: {
         height: headerContentHeight,
