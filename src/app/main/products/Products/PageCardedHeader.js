@@ -54,15 +54,17 @@ function PageCardedHeader(props) {
                     </Paper>
                 </ThemeProvider>
             </div>
-            <motion.div initial={{opacity: 0, x: 20}} animate={{opacity: 1, x: 0, transition: {delay: 0.2}}}>
-                <IconButton className="sm:hidden" onClick={props.addButtonCallback}>
-                    <AddCircleIcon />
-                </IconButton>
-                <Button className="whitespace-nowrap hidden sm:inline-block" variant="contained" color="secondary" onClick={props.addButtonCallback}>
-                    <AddCircleIcon className="mr-5" />
-                    {props.addButtonLabel}
-                </Button>
-            </motion.div>
+            {props.addButtonLabel !== '' && (
+                <motion.div initial={{opacity: 0, x: 20}} animate={{opacity: 1, x: 0, transition: {delay: 0.2}}}>
+                    <IconButton className="sm:hidden" onClick={props.addButtonCallback}>
+                        <AddCircleIcon />
+                    </IconButton>
+                    <Button className="whitespace-nowrap hidden sm:inline-block" variant="contained" color="secondary" onClick={props.addButtonCallback}>
+                        <AddCircleIcon className="mr-5" />
+                        {props.addButtonLabel}
+                    </Button>
+                </motion.div>
+            )}
         </div>
     );
 }
