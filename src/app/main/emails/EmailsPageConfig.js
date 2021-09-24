@@ -13,7 +13,7 @@ const EmailsPageConfig = {
     routes: [
         {
             path: '/emails',
-            component: React.lazy(() => import('./EmailsPage')),
+            component: React.lazy(() => import('./Emails/Emails')),
         },
     ],
 };
