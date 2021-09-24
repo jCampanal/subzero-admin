@@ -13,7 +13,7 @@ const AdminsPageConfig = {
     routes: [
         {
             path: '/admins',
-            component: React.lazy(() => import('./AdminsPage')),
+            component: React.lazy(() => import('./Admins/Admins')),
         },
     ],
 };
