@@ -13,7 +13,7 @@ const WarehousesPageConfig = {
     routes: [
         {
             path: '/warehouses',
-            component: React.lazy(() => import('./WarehousesPage')),
+            component: React.lazy(() => import('./Warehouses/Warehouses')),
         },
     ],
 };
