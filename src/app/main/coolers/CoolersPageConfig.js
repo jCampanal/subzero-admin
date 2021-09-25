@@ -13,7 +13,7 @@ const CoolersPageConfig = {
     routes: [
         {
             path: '/coolers',
-            component: React.lazy(() => import('./CoolersPage')),
+            component: React.lazy(() => import('./Coolers/Coolers')),
         },
     ],
 };
