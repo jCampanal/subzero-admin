@@ -13,7 +13,7 @@ const CoolersActivityPageConfig = {
     routes: [
         {
             path: '/coolers_activity',
-            component: React.lazy(() => import('./CoolersActivityPage')),
+            component: React.lazy(() => import('./CoolersActivity/CoolersActivity')),
         },
     ],
 };
