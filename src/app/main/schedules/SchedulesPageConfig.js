@@ -13,7 +13,7 @@ const SchedulesPageConfig = {
     routes: [
         {
             path: '/schedules',
-            component: React.lazy(() => import('./SchedulesPage')),
+            component: React.lazy(() => import('./Schedules/Schedules')),
         },
     ],
 };
