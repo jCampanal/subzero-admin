@@ -13,7 +13,7 @@ const BlacklistPageConfig = {
     routes: [
         {
             path: '/blacklist',
-            component: React.lazy(() => import('./BlacklistPage')),
+            component: React.lazy(() => import('./Blacklist/Blacklist')),
         },
     ],
 };
