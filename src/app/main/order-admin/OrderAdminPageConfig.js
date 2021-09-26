@@ -13,7 +13,7 @@ const OrderAdminPageConfig = {
     routes: [
         {
             path: '/orders_admin',
-            component: React.lazy(() => import('./OrderAdminPage')),
+            component: React.lazy(() => import('./OrderAdmin/OrderAdmin')),
         },
     ],
 };
