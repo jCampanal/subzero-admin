@@ -5,6 +5,21 @@ i18next.addResourceBundle('en', 'navigation', en);
 
 const navigationConfig = [
     {
+        id: 'main',
+        title: 'Subzero',
+        type: 'group',
+        children: [
+            {
+                id: 'dashboard',
+                title: 'Dashboard',
+                translate: 'DASHBOARD',
+                type: 'item',
+                icon: 'dashboard',
+                url: '/dashboard',
+            },
+        ],
+    },
+    {
         id: 'administration',
         title: 'Administration',
         translate: 'ADMINISTRATION',
@@ -31,7 +46,7 @@ const navigationConfig = [
                 title: 'Coolers',
                 translate: 'COOLERS',
                 type: 'item',
-                icon: 'shopping_cart',
+                icon: 'fa-box',
                 url: '/coolers',
             },
             {
@@ -71,7 +86,7 @@ const navigationConfig = [
                 title: 'Shipments',
                 translate: 'SHIPMENTS',
                 type: 'item',
-                icon: 'local_shipping',
+                icon: 'fa-truck-loading',
                 url: '/shipments',
             },
             {
@@ -87,7 +102,7 @@ const navigationConfig = [
                 title: 'Warehouses',
                 translate: 'WAREHOUSES',
                 type: 'item',
-                icon: 'assignment_turned_in',
+                icon: 'fa-warehouse',
                 url: '/warehouses',
             },
             {
