@@ -1,10 +1,39 @@
-import {lazy, memo} from 'react';
-import {Button, TextField} from '@material-ui/core';
-import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
-import {KeyboardDatePicker} from '@material-ui/pickers';
+import React, {lazy, memo} from 'react';
+import FusePageCarded from '@fuse/core/FusePageCarded/FusePageCarded';
 
 const WarehouseTab = lazy(() => import('./WarehouseTab'));
+const Header = lazy(() => import('./PageCardedHeader'));
 
+const rows = [
+    {
+        id: 'company',
+        align: 'left',
+        disablePadding: false,
+        label: 'Company',
+        sort: true,
+    },
+    {
+        id: 'arrive-time',
+        align: 'left',
+        disablePadding: false,
+        label: 'Arrive Time',
+        sort: true,
+    },
+    {
+        id: 'status',
+        align: 'left',
+        disablePadding: false,
+        label: 'Status',
+        sort: true,
+    },
+    {
+        id: 'actions',
+        align: 'right',
+        disablePadding: false,
+        label: '',
+        sort: false,
+    },
+];
 const dummyOrders = [
     {
         id: 1,
@@ -46,50 +75,16 @@ const dummyOrders = [
 
 function OrderAdmin() {
     return (
-        <div>
-            <p className="h1">
-                <AssignmentTurnedInIcon className="text-5xl mr-14" />
-                Order Admin <span className="text-gray-50 rounded-full px-16 bg-blue-600">{dummyOrders.length}</span>
-            </p>
-            <div className="flex flex-col gap-10 min-w-full my-14 border border-gray-300 shadow shadow-large rounded bg-white">
-                <div className="flex flex-row justify-start gap-20 py-10 px-14 bg-gray-200">
-                    <Button variant="contained" className="bg-blue-500 hover:bg-blue-700 text-white">
-                        New order
-                    </Button>
-                    <Button className="text-blue-700 hover:text-blue-500">Drivers cleanup</Button>
-                </div>
-                <div className="grid grid-cols-4 gap-20 pb-10 px-20">
-                    <TextField id="order-id" label="Order ID" fullWidth margin="dense" />
-                    <TextField id="order-company" label="Company" fullWidth margin="dense" />
-                    <KeyboardDatePicker
-                        disableToolbar
-                        variant="inline"
-                        format="MM/dd/yyyy"
-                        margin="dense"
-                        fullWidth
-                        label="From"
-                        onChange={() => null}
-                        KeyboardButtonProps={{
-                            'aria-label': 'change date',
-                        }}
-                    />
-                    <KeyboardDatePicker
-                        disableToolbar
-                        format="MM/dd/yyyy"
-                        margin="dense"
-                        fullWidth
-                        label="To"
-                        onChange={() => null}
-                        KeyboardButtonProps={{
-                            'aria-label': 'change date',
-                        }}
-                    />
-                </div>
-            </div>
-            <div>
-                <WarehouseTab tabItems={dummyOrders} />
-            </div>
-        </div>
+        <FusePageCarded
+            classes={{
+                content: 'flex',
+                contentCard: 'overflow-hidden',
+                header: 'min-h-72 h-72 sm:h-136 sm:min-h-136',
+            }}
+            header={<Header />}
+            content={<WarehouseTab tabItems={dummyOrders} rows={rows} />}
+            innerScroll
+        />
     );
 }
 
