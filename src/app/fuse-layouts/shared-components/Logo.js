@@ -1,3 +1,4 @@
+import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
@@ -30,7 +31,7 @@ function Logo() {
         <div className={clsx(classes.root, 'flex items-center')}>
             <img className="logo-icon w-24 h-24" src="assets/images/logos/subzero.png" alt="logo" />
             <Typography className="text-16 leading-none mx-12 font-medium logo-text" color="inherit">
-                SUB-ZERO Ice Services
+                SUBZERO
             </Typography>
         </div>
     );
