@@ -1,4 +1,5 @@
 const locale = {
+    DASHBOARD: 'Dashboard',
     ADMINISTRATION: 'Administration',
     CATEGORIES: 'Categories',
     PRODUCTS: 'Products',
