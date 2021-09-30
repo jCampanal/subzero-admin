@@ -1,4 +1,4 @@
-import {memo} from 'react';
+import React, {memo} from 'react';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import {GoogleApiWrapper, Map} from 'google-maps-react';
 import {MapAPIKey} from '../../../../.conf';
@@ -16,8 +16,8 @@ function DriversMonitor(props) {
                     zoom={14}
                     style={{width: '100%', height: '100%'}}
                     initialCenter={{
-                        lat: 20.030538,
-                        lng: -75.826956,
+                        lat: 25.761681,
+                        lng: -80.191788,
                     }}
                 />
             </div>
