@@ -23,7 +23,7 @@ function UserMenu() {
         <>
             <Button className="min-h-40 min-w-40 px-0 md:px-16 py-0 md:py-6" onClick={userMenuClick}>
                 <div className="hidden md:flex flex-col mx-4 items-end">
-                    <Avatar className="md:mx-4" alt="user photo" src="fuse/assets/images/avatars/profile.jpg" />
+                    <Avatar className="md:mx-4" alt="user photo" src={`${process.env.PUBLIC_URL}/assets/images/avatars/profile.jpg`} />
                 </div>
             </Button>
 

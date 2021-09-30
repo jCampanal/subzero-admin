@@ -29,7 +29,7 @@ function Logo() {
 
     return (
         <div className={clsx(classes.root, 'flex items-center')}>
-            <img className="logo-icon w-24 h-24" src="fuse/assets/images/logos/subzero.png" alt="logo" />
+            <img className="logo-icon w-24 h-24" src={`${process.env.PUBLIC_URL}/assets/images/logos/subzero.png`} alt="logo" />
             <Typography className="text-16 leading-none mx-12 font-medium logo-text" color="inherit">
                 SUBZERO
             </Typography>

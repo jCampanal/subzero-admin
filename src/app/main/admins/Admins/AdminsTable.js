@@ -127,7 +127,7 @@ function AdminsTable(props) {
                                     <TableCell className="w-52 px-4 md:px-0" component="th" scope="row" padding="none">
                                         <img
                                             className="w-full block rounded"
-                                            src="fuse/assets/images/ecommerce/product-image-placeholder.png"
+                                            src={`${process.env.PUBLIC_URL}/assets/images/ecommerce/product-image-placeholder.png`}
                                             alt={admin.name}
                                         />
                                     </TableCell>
