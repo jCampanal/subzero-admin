@@ -16,7 +16,7 @@ import PropTypes from 'prop-types';
 
 function CustomersTable(props) {
     const [selected, setSelected] = useState([]);
-    const [data, setData] = useState(props.customers);
+    const [data] = useState(props.customers);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [order, setOrder] = useState({
@@ -126,7 +126,11 @@ function CustomersTable(props) {
                                     </TableCell>
 
                                     <TableCell className="w-52 px-4 md:px-0" component="th" scope="row" padding="none">
-                                        <img className="w-full block rounded" src="assets/images/ecommerce/product-image-placeholder.png" alt={customer.name} />
+                                        <img
+                                            className="w-full block rounded"
+                                            src="fuse/assets/images/ecommerce/product-image-placeholder.png"
+                                            alt={customer.name}
+                                        />
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row">

@@ -17,28 +17,13 @@ import PropTypes from 'prop-types';
 function WarehousesTable(props) {
     // const [loading, setLoading] = useState(false);
     const [selected, setSelected] = useState([]);
-    const [data, setData] = useState(props.warehouses);
+    const [data] = useState(props.warehouses);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [order, setOrder] = useState({
         direction: 'asc',
         id: null,
     });
-
-    // useEffect(() => {
-    //   dispatch(getProducts()).then(() => setLoading(false));
-    // }, [dispatch]);
-
-    /* useEffect(() => {
-    if (searchText.length !== 0) {
-      setData(
-        _.filter(products, (item) => item.name.toLowerCase().includes(searchText.toLowerCase()))
-      );
-      setPage(0);
-    } else {
-      setData(products);
-    }
-  }, [products, searchText]); */
 
     function handleRequestSort(event, property) {
         const id = property;
@@ -95,10 +80,6 @@ function WarehousesTable(props) {
         setRowsPerPage(event.target.value);
     }
 
-    // if (loading) {
-    //     return <FuseLoading />;
-    // }
-
     if (data.length === 0) {
         return (
             <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: {delay: 0.1}}} className="flex flex-1 items-center justify-center h-full">
@@ -148,7 +129,7 @@ function WarehousesTable(props) {
                                     <TableCell className="w-52 px-4 md:px-0" component="th" scope="row" padding="none">
                                         <img
                                             className="w-full block rounded"
-                                            src="assets/images/ecommerce/product-image-placeholder.png"
+                                            src="fuse/assets/images/ecommerce/product-image-placeholder.png"
                                             alt={warehouse.name}
                                         />
                                     </TableCell>

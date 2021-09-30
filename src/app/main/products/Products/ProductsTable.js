@@ -8,39 +8,22 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import {motion} from 'framer-motion';
-import {useState} from 'react';
+import React, {useState} from 'react';
 import {withRouter} from 'react-router-dom';
-import FuseLoading from '@fuse/core/FuseLoading';
+import Button from '@material-ui/core/Button';
+import PropTypes from 'prop-types';
+import CheckCircleRounded from '@material-ui/icons/CheckCircleRounded';
 import TableHeader from './TableHeader';
-import Button from "@material-ui/core/Button";
-import PropTypes from "prop-types";
-import CheckCircleRounded from "@material-ui/icons/CheckCircleRounded";
-function ProductsTable(props) {
 
-    // const [loading, setLoading] = useState(false);
+function ProductsTable(props) {
     const [selected, setSelected] = useState([]);
-    const [data, setData] = useState(props.products);
+    const [data] = useState(props.products);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [order, setOrder] = useState({
         direction: 'asc',
         id: null,
     });
-
-    // useEffect(() => {
-    //   dispatch(getProducts()).then(() => setLoading(false));
-    // }, [dispatch]);
-
-    /* useEffect(() => {
-    if (searchText.length !== 0) {
-      setData(
-        _.filter(products, (item) => item.name.toLowerCase().includes(searchText.toLowerCase()))
-      );
-      setPage(0);
-    } else {
-      setData(products);
-    }
-  }, [products, searchText]); */
 
     function handleRequestSort(event, property) {
         const id = property;
@@ -97,10 +80,6 @@ function ProductsTable(props) {
         setRowsPerPage(event.target.value);
     }
 
-    // if (loading) {
-    //     return <FuseLoading />;
-    // }
-
     if (data.length === 0) {
         return (
             <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: {delay: 0.1}}} className="flex flex-1 items-center justify-center h-full">
@@ -127,62 +106,65 @@ function ProductsTable(props) {
 
                     <TableBody>
                         {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((product) => {
-                                const isSelected = selected.indexOf(product.id) !== -1;
-                                return (
-                                    <TableRow
-                                        className="h-72 cursor-pointer"
-                                        hover
-                                        role="checkbox"
-                                        aria-checked={isSelected}
-                                        tabIndex={-1}
-                                        key={product.id}
-                                        selected={isSelected}
-                                        onClick={(event) => handleClick(product)}
-                                    >
-                                        <TableCell className="w-40 md:w-64 text-center" padding="none">
-                                            <Checkbox
-                                                checked={isSelected}
-                                                onClick={(event) => event.stopPropagation()}
-                                                onChange={(event) => handleCheck(event, product.id)}
-                                            />
-                                        </TableCell>
+                            const isSelected = selected.indexOf(product.id) !== -1;
+                            return (
+                                <TableRow
+                                    className="h-72 cursor-pointer"
+                                    hover
+                                    role="checkbox"
+                                    aria-checked={isSelected}
+                                    tabIndex={-1}
+                                    key={product.id}
+                                    selected={isSelected}
+                                    onClick={(event) => handleClick(product)}
+                                >
+                                    <TableCell className="w-40 md:w-64 text-center" padding="none">
+                                        <Checkbox
+                                            checked={isSelected}
+                                            onClick={(event) => event.stopPropagation()}
+                                            onChange={(event) => handleCheck(event, product.id)}
+                                        />
+                                    </TableCell>
 
-                                        <TableCell className="w-52 px-4 md:px-0" component="th" scope="row" padding="none">
+                                    <TableCell className="w-52 px-4 md:px-0" component="th" scope="row" padding="none">
+                                        <img
+                                            className="w-full block rounded"
+                                            src="fuse/assets/images/ecommerce/product-image-placeholder.png"
+                                            alt={product.name}
+                                        />
+                                    </TableCell>
 
-                                                <img
-                                                    className="w-full block rounded"
-                                                    src="assets/images/ecommerce/product-image-placeholder.png"
-                                                    alt={product.name}
-                                                />
-                                        </TableCell>
+                                    <TableCell className="p-4 md:p-16 truncate" component="th" scope="row">
+                                        {product.category}
+                                    </TableCell>
 
-                                        <TableCell className="p-4 md:p-16 truncate" component="th" scope="row">
-                                            {product.category}
-                                        </TableCell>
+                                    <TableCell className="p-4 md:p-16" component="th" scope="row">
+                                        {product.name}
+                                    </TableCell>
 
-                                        <TableCell className="p-4 md:p-16" component="th" scope="row">
-                                            {product.name}
-                                        </TableCell>
+                                    <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
+                                        {product.units}
+                                    </TableCell>
 
-                                        <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                                            {product.units}
-                                        </TableCell>
+                                    <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
+                                        {product.visible ? (
+                                            <CheckCircleRounded className="text-green text-20" />
+                                        ) : (
+                                            <Icon className="text-red text-20">remove_circle</Icon>
+                                        )}
+                                    </TableCell>
 
-                                        <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                                            {product.visible ? (
-                                                <CheckCircleRounded className="text-green text-20" />
-                                            ) : (
-                                                <Icon className="text-red text-20">remove_circle</Icon>
-                                            )}
-                                        </TableCell>
-
-                                        <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                                            <Button color="primary"><Icon>edit</Icon> Edit</Button>
-                                            <Button color="primary"><Icon>delete</Icon> Delete</Button>
-                                        </TableCell>
-                                    </TableRow>
-                                );
-                            })}
+                                    <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
+                                        <Button color="primary">
+                                            <Icon>edit</Icon> Edit
+                                        </Button>
+                                        <Button color="primary">
+                                            <Icon>delete</Icon> Delete
+                                        </Button>
+                                    </TableCell>
+                                </TableRow>
+                            );
+                        })}
                     </TableBody>
                 </Table>
             </FuseScrollbars>
@@ -210,5 +192,5 @@ export default withRouter(ProductsTable);
 
 ProductsTable.propTypes = {
     products: PropTypes.array.isRequired,
-    rows: PropTypes.array.isRequired
-}
+    rows: PropTypes.array.isRequired,
+};

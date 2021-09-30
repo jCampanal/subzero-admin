@@ -5,10 +5,10 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuItem from '@material-ui/core/MenuItem';
 import Popover from '@material-ui/core/Popover';
-import {useState} from 'react';
+import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 
-function UserMenu(props) {
+function UserMenu() {
     const [userMenu, setUserMenu] = useState(null);
 
     const userMenuClick = (event) => {
@@ -23,7 +23,7 @@ function UserMenu(props) {
         <>
             <Button className="min-h-40 min-w-40 px-0 md:px-16 py-0 md:py-6" onClick={userMenuClick}>
                 <div className="hidden md:flex flex-col mx-4 items-end">
-                    <Avatar className="md:mx-4" alt="user photo" src="assets/images/avatars/profile.jpg" />
+                    <Avatar className="md:mx-4" alt="user photo" src="fuse/assets/images/avatars/profile.jpg" />
                 </div>
             </Button>
 

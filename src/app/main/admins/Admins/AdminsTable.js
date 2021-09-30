@@ -14,30 +14,14 @@ import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 
 function AdminsTable(props) {
-    // const [loading, setLoading] = useState(false);
     const [selected, setSelected] = useState([]);
-    const [data, setData] = useState(props.admins);
+    const [data] = useState(props.admins);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [order, setOrder] = useState({
         direction: 'asc',
         id: null,
     });
-
-    // useEffect(() => {
-    //   dispatch(getProducts()).then(() => setLoading(false));
-    // }, [dispatch]);
-
-    /* useEffect(() => {
-    if (searchText.length !== 0) {
-      setData(
-        _.filter(products, (item) => item.name.toLowerCase().includes(searchText.toLowerCase()))
-      );
-      setPage(0);
-    } else {
-      setData(products);
-    }
-  }, [products, searchText]); */
 
     function handleRequestSort(event, property) {
         const id = property;
@@ -94,10 +78,6 @@ function AdminsTable(props) {
         setRowsPerPage(event.target.value);
     }
 
-    // if (loading) {
-    //     return <FuseLoading />;
-    // }
-
     if (data.length === 0) {
         return (
             <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: {delay: 0.1}}} className="flex flex-1 items-center justify-center h-full">
@@ -145,7 +125,11 @@ function AdminsTable(props) {
                                     </TableCell>
 
                                     <TableCell className="w-52 px-4 md:px-0" component="th" scope="row" padding="none">
-                                        <img className="w-full block rounded" src="assets/images/ecommerce/product-image-placeholder.png" alt={admin.name} />
+                                        <img
+                                            className="w-full block rounded"
+                                            src="fuse/assets/images/ecommerce/product-image-placeholder.png"
+                                            alt={admin.name}
+                                        />
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row">

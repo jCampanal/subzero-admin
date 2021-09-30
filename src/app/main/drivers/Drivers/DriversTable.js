@@ -15,30 +15,14 @@ import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 
 function DriversTable(props) {
-    // const [loading, setLoading] = useState(false);
     const [selected, setSelected] = useState([]);
-    const [data, setData] = useState(props.drivers);
+    const [data] = useState(props.drivers);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [order, setOrder] = useState({
         direction: 'asc',
         id: null,
     });
-
-    // useEffect(() => {
-    //   dispatch(getProducts()).then(() => setLoading(false));
-    // }, [dispatch]);
-
-    /* useEffect(() => {
-    if (searchText.length !== 0) {
-      setData(
-        _.filter(products, (item) => item.name.toLowerCase().includes(searchText.toLowerCase()))
-      );
-      setPage(0);
-    } else {
-      setData(products);
-    }
-  }, [products, searchText]); */
 
     function handleRequestSort(event, property) {
         const id = property;
@@ -146,7 +130,7 @@ function DriversTable(props) {
                                     </TableCell>
 
                                     <TableCell className="w-52 px-4 md:px-0" component="th" scope="row" padding="none">
-                                        <img className="w-full block rounded" src="/assets/images/avatars/profile.jpg" alt={driver.name} />
+                                        <img className="w-full block rounded" src="fuse/assets/images/avatars/profile.jpg" alt={driver.name} />
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row">
