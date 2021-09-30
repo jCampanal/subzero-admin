@@ -50,12 +50,6 @@ function UserMenu() {
                         </ListItemIcon>
                         <ListItemText primary="Login" />
                     </MenuItem>
-                    <MenuItem component={Link} to="/register" role="button">
-                        <ListItemIcon className="min-w-40">
-                            <Icon>person_add</Icon>
-                        </ListItemIcon>
-                        <ListItemText primary="Register" />
-                    </MenuItem>
                 </>
             </Popover>
         </>
