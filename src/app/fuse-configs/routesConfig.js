@@ -1,7 +1,9 @@
+import React from 'react';
 import {Redirect} from 'react-router-dom';
 import FuseUtils from '@fuse/utils';
 import FuseLoading from '@fuse/core/FuseLoading';
 import Error404Page from 'app/main/404/Error404Page';
+import LoginPageConfig from 'app/pages/login/LoginPageConfig';
 import DashboardPageConfig from 'app/main/dashboard/DashboardPageConfig';
 import CategoriesPageConfig from 'app/main/categories/CategoriesPageConfig';
 import ProductsPageConfig from 'app/main/products/ProductsPageConfig';
@@ -21,6 +23,7 @@ import OrderCalendarPageConfig from 'app/main/order-calendar/OrderCalendarPageCo
 import DriversMonitorPageConfig from 'app/main/drivers-monitor/DriversMonitorPageConfig';
 
 const routeConfigs = [
+    LoginPageConfig,
     DashboardPageConfig,
     CategoriesPageConfig,
     ProductsPageConfig,
