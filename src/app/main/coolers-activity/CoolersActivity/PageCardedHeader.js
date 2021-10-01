@@ -10,10 +10,12 @@ import {useSelector} from 'react-redux';
 import {selectMainTheme} from 'app/store/fuse/settingsSlice';
 import IconButton from '@material-ui/core/IconButton';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import {useTranslation} from 'react-i18next';
 
 const DateRangePicker = lazy(() => import('../../coolers/Coolers/DateRangePicker'));
 
 function PageCardedHeader() {
+    const {t} = useTranslation('coolers-activity');
     const mainTheme = useSelector(selectMainTheme);
     const [dateRangeDlgIsOpen, openDateRangeDlg] = useState(false);
     const toggleDateRangeDlgIsOpen = () => {
@@ -33,7 +35,7 @@ function PageCardedHeader() {
                     delay={300}
                     className="hidden sm:flex text-16 md:text-24 mx-12 font-semibold"
                 >
-                    Coolers Activity
+                    {t('COOLERS_ACTIVITY')}
                 </Typography>
             </div>
 
@@ -48,7 +50,7 @@ function PageCardedHeader() {
                         <Icon color="action">search</Icon>
 
                         <Input
-                            placeholder="Search by code"
+                            placeholder={t('SEARCH_BY_CODE')}
                             className="flex flex-1 mx-8"
                             disableUnderline
                             fullWidth
@@ -65,7 +67,7 @@ function PageCardedHeader() {
                 </IconButton>
                 <Button className="whitespace-nowrap hidden sm:inline-block" variant="contained" color="secondary" onClick={toggleDateRangeDlgIsOpen}>
                     <CalendarTodayIcon className="mr-5" />
-                    Search by date
+                    {t('SEARCH_BY_DATE')}
                 </Button>
             </motion.div>
             <DateRangePicker isOpen={dateRangeDlgIsOpen} />
