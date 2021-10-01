@@ -11,10 +11,12 @@ import {selectMainTheme} from 'app/store/fuse/settingsSlice';
 import IconButton from '@material-ui/core/IconButton';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import {useTranslation} from 'react-i18next';
 
 const DateRangePicker = lazy(() => import('./DateRangePicker'));
 
 function PageCardedHeader() {
+    const {t} = useTranslation('coolers');
     const mainTheme = useSelector(selectMainTheme);
     const [dateRangeDlgIsOpen, openDateRangeDlg] = useState(false);
     const toggleDateRangeDlgIsOpen = () => {
@@ -35,7 +37,7 @@ function PageCardedHeader() {
                         delay={300}
                         className="hidden sm:flex text-16 md:text-24 mx-12 font-semibold"
                     >
-                        Coolers
+                        {t('COOLERS')}
                     </Typography>
                 </div>
 
@@ -50,7 +52,7 @@ function PageCardedHeader() {
                             <Icon color="action">search</Icon>
 
                             <Input
-                                placeholder="Search by code"
+                                placeholder={t('SEARCH_BY_CODE')}
                                 className="flex flex-1 mx-8"
                                 disableUnderline
                                 fullWidth
@@ -67,7 +69,7 @@ function PageCardedHeader() {
                     </IconButton>
                     <Button className="whitespace-nowrap hidden sm:inline-block" variant="contained" color="secondary" onClick={toggleDateRangeDlgIsOpen}>
                         <CalendarTodayIcon className="mr-5" />
-                        Search by date
+                        {t('SEARCH_BY_DATE')}
                     </Button>
                 </motion.div>
                 <motion.div initial={{opacity: 0, x: 20}} animate={{opacity: 1, x: 0, transition: {delay: 0.2}}}>
@@ -76,17 +78,17 @@ function PageCardedHeader() {
                     </IconButton>
                     <Button className="whitespace-nowrap hidden sm:inline-block" variant="contained" color="secondary" onClick={() => null}>
                         <AddCircleIcon className="mr-5" />
-                        Register new cooler
+                        {t('REGISTER')}
                     </Button>
                 </motion.div>
                 <DateRangePicker isOpen={dateRangeDlgIsOpen} />
             </div>
             <div className="sm:flex-1 text-right">
                 <Button className="whitespace-nowrap inline-block uppercase" onClick={() => null}>
-                    Providers
+                    {t('PROVIDERS')}
                 </Button>
                 <Button className="whitespace-nowrap inline-block uppercase" onClick={() => null}>
-                    Clients
+                    {t('CLIENTS')}
                 </Button>
             </div>
         </div>

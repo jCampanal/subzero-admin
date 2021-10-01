@@ -12,9 +12,10 @@ import {motion} from 'framer-motion';
 import TableHeader from 'app/main/products/Products/TableHeader';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
+import {useTranslation} from 'react-i18next';
 
 function CoolersTable(props) {
-    // const [loading, setLoading] = useState(false);
+    const {t} = useTranslation('coolers');
     const [selected, setSelected] = useState([]);
     const [data, setData] = useState(props.coolers);
     const [page, setPage] = useState(0);
@@ -23,21 +24,6 @@ function CoolersTable(props) {
         direction: 'asc',
         id: null,
     });
-
-    // useEffect(() => {
-    //   dispatch(getProducts()).then(() => setLoading(false));
-    // }, [dispatch]);
-
-    /* useEffect(() => {
-    if (searchText.length !== 0) {
-      setData(
-        _.filter(products, (item) => item.name.toLowerCase().includes(searchText.toLowerCase()))
-      );
-      setPage(0);
-    } else {
-      setData(products);
-    }
-  }, [products, searchText]); */
 
     function handleRequestSort(event, property) {
         const id = property;
@@ -94,15 +80,11 @@ function CoolersTable(props) {
         setRowsPerPage(event.target.value);
     }
 
-    // if (loading) {
-    //     return <FuseLoading />;
-    // }
-
     if (data.length === 0) {
         return (
             <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: {delay: 0.1}}} className="flex flex-1 items-center justify-center h-full">
                 <Typography color="textSecondary" variant="h5">
-                    There are no coolers!
+                    {t('NO_COOLERS')}
                 </Typography>
             </motion.div>
         );
@@ -113,6 +95,7 @@ function CoolersTable(props) {
             <FuseScrollbars className="flex-grow overflow-x-auto">
                 <Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
                     <TableHeader
+                        namespace="coolers"
                         rows={props.rows}
                         selectedProductIds={selected}
                         order={order}
@@ -162,10 +145,10 @@ function CoolersTable(props) {
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
                                         <Button color="primary">
-                                            <Icon>edit</Icon> Edit
+                                            <Icon>edit</Icon> {t('EDIT')}
                                         </Button>
                                         <Button color="primary">
-                                            <Icon>delete</Icon> Delete
+                                            <Icon>delete</Icon> {t('DELETE')}
                                         </Button>
                                     </TableCell>
                                 </TableRow>
@@ -179,6 +162,7 @@ function CoolersTable(props) {
                 className="flex-shrink-0 border-t-1"
                 component="div"
                 count={data.length}
+                labelRowsPerPage={t('ROWS_PER_PAGE')}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 backIconButtonProps={{

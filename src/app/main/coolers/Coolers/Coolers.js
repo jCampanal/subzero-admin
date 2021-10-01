@@ -1,4 +1,4 @@
-import React, {lazy, memo, useState} from 'react';
+import React, {lazy, memo} from 'react';
 import FusePageCarded from '@fuse/core/FusePageCarded';
 
 const Header = lazy(() => import('./PageCardedHeader'));
@@ -9,28 +9,28 @@ const rows = [
         id: 'code',
         align: 'left',
         disablePadding: false,
-        label: 'Code',
+        label: 'CODE',
         sort: true,
     },
     {
         id: 'provider',
         align: 'left',
         disablePadding: false,
-        label: 'Provider',
+        label: 'PROVIDER',
         sort: true,
     },
     {
         id: 'status',
         align: 'left',
         disablePadding: false,
-        label: 'Status',
+        label: 'STATUS',
         sort: true,
     },
     {
         id: 'registration-date',
         align: 'left',
         disablePadding: false,
-        label: 'Registration date',
+        label: 'REGISTRATION_DATE',
         sort: true,
     },
     {
@@ -52,62 +52,6 @@ const dummyCoolers = [
 ];
 
 function Coolers() {
-    const [formIsOpen, openForm] = useState(false);
-    const [cooler, selectCooler] = useState({
-        id: 0,
-        code: 0,
-        provider: '',
-        status: '',
-        registrationDate: new Date(),
-    });
-    const [coolers, setCoolers] = useState(dummyCoolers);
-    const [confirmDelete, askForConfirmation] = useState(false);
-    const [selectedFromDate, selectFromDate] = useState(undefined);
-    const handleFromDateChange = (date) => {
-        selectFromDate(date);
-    };
-    const [selectedToDate, selectToDate] = useState(undefined);
-    const handleToDateChange = (date) => {
-        selectToDate(date);
-    };
-    const toggleForm = () => {
-        openForm(!formIsOpen);
-    };
-    const editCooler = (id) => {
-        selectCooler(coolers.filter((item) => item.id === id)[0]);
-        toggleForm();
-    };
-    const saveCooler = (item) => {
-        if (item.id === 0) {
-            setCoolers((old) => {
-                old.push({
-                    id: old[old.length - 1].id + 1,
-                    code: item.code,
-                    provider: item.provider,
-                    status: '',
-                    registrationDate: new Date(),
-                });
-                return old;
-            });
-        } else {
-            setCoolers((prevState) => {
-                prevState[prevState.findIndex((token) => token.id === item.id)] = item;
-                return prevState;
-            });
-        }
-    };
-    const toggleConfirmation = () => {
-        askForConfirmation(!confirmDelete);
-    };
-    const deleteCooler = (id) => {
-        setCoolers((prevState) => prevState.filter((item) => item.id !== id));
-        selectCooler({id: 0, code: 0, provider: '', status: '', registrationDate: new Date()});
-        toggleConfirmation();
-    };
-    const confirmBeforeDelete = (id) => {
-        selectCooler(coolers.filter((item) => item.id === id)[0]);
-        toggleConfirmation();
-    };
     return (
         <FusePageCarded
             classes={{
