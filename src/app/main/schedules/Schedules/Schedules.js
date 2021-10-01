@@ -1,4 +1,4 @@
-import React, {lazy, memo, useState} from 'react';
+import React, {lazy, memo} from 'react';
 import FusePageCarded from '@fuse/core/FusePageCarded/FusePageCarded';
 
 const Header = lazy(() => import('./PageCardedHeader'));
@@ -9,28 +9,28 @@ const rows = [
         id: 'reference',
         align: 'left',
         disablePadding: true,
-        label: 'Reference',
+        label: 'REFERENCE',
         sort: false,
     },
     {
         id: 'customer',
         align: 'left',
         disablePadding: false,
-        label: 'Customer',
+        label: 'CUSTOMER',
         sort: true,
     },
     {
         id: 'company',
         align: 'left',
         disablePadding: false,
-        label: 'Company',
+        label: 'COMPANY',
         sort: true,
     },
     {
         id: 'next-order',
         align: 'left',
         disablePadding: false,
-        label: 'Next order',
+        label: 'NEXT_ORDER',
         sort: true,
     },
     {
@@ -54,41 +54,6 @@ const dummySchedules = [
 ];
 
 function Schedules() {
-    const [detailsIsOpen, openDetails] = useState(false);
-    const [schedule, selectSchedule] = useState({id: 0, reference: '', customer: '', company: '', nextOrder: ''});
-    const [schedules, setSchedules] = useState(dummySchedules);
-    const [confirmDelete, askForConfirmation] = useState(false);
-    const [snackIsOpen, openSnack] = useState(false);
-    const toggleConfirmation = () => {
-        askForConfirmation(!confirmDelete);
-    };
-    const toggleDetails = () => {
-        openDetails(!detailsIsOpen);
-    };
-    const toggleSnack = () => {
-        openSnack(!snackIsOpen);
-    };
-    const viewSchedule = (id) => {
-        selectSchedule(schedules.filter((item) => item.id === id)[0]);
-        toggleDetails();
-    };
-    const pauseSchedule = (id) => {
-        const copy = [...schedules];
-        const index = copy.findIndex((item) => item.id === id);
-        copy[index].paused = !copy[index].paused;
-        setSchedules(copy);
-        selectSchedule(schedules[index]);
-        toggleSnack();
-    };
-    const deleteSchedule = (id) => {
-        setSchedules((prevState) => prevState.filter((item) => item.id !== id));
-        selectSchedule({id: 0, reference: '', customer: '', company: '', nextOrder: ''});
-        toggleConfirmation();
-    };
-    const confirmBeforeDeleteSchedule = (id) => {
-        selectSchedule(schedules.filter((item) => item.id === id)[0]);
-        toggleConfirmation();
-    };
     return (
         <FusePageCarded
             classes={{
@@ -96,7 +61,7 @@ function Schedules() {
                 contentCard: 'overflow-hidden',
                 header: 'min-h-72 h-72 sm:h-136 sm:min-h-136',
             }}
-            header={<Header iconText="supervisor_account" title="Admins" addButtonLabel="New Admin" searchHint="Search admin by name" />}
+            header={<Header />}
             content={<SchedulesTable schedules={dummySchedules} rows={rows} />}
             innerScroll
         />

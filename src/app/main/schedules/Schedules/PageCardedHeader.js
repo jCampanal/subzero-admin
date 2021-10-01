@@ -7,8 +7,10 @@ import Typography from '@material-ui/core/Typography';
 import {motion} from 'framer-motion';
 import {useSelector} from 'react-redux';
 import {selectMainTheme} from 'app/store/fuse/settingsSlice';
+import {useTranslation} from 'react-i18next';
 
 function PageCardedHeader() {
+    const {t} = useTranslation('schedules');
     const mainTheme = useSelector(selectMainTheme);
 
     return (
@@ -24,7 +26,7 @@ function PageCardedHeader() {
                     delay={300}
                     className="hidden sm:flex text-16 md:text-24 mx-12 font-semibold"
                 >
-                    Schedules
+                    {t('SCHEDULES')}
                 </Typography>
             </div>
 
@@ -39,7 +41,7 @@ function PageCardedHeader() {
                         <Icon color="action">search</Icon>
 
                         <Input
-                            placeholder="Search by customer"
+                            placeholder={t('SEARCH_BY_CUSTOMER')}
                             className="flex flex-1 mx-8"
                             disableUnderline
                             fullWidth
@@ -57,7 +59,7 @@ function PageCardedHeader() {
                         <Icon color="action">search</Icon>
 
                         <Input
-                            placeholder="Search by company"
+                            placeholder={t('SEARCH_BY_COMPANY')}
                             className="flex flex-1 mx-8"
                             disableUnderline
                             fullWidth
