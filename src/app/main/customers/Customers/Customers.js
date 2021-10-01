@@ -1,5 +1,6 @@
 import React, {lazy, memo, useState} from 'react';
-import FusePageCarded from '../../../../@fuse/core/FusePageCarded';
+import {useTranslation} from 'react-i18next';
+import FusePageCarded from '@fuse/core/FusePageCarded';
 
 const CustomerGenerator = lazy(() => import('./NewCustomerGeneratorForm'));
 const Header = lazy(() => import('app/main/products/Products/PageCardedHeader'));
@@ -17,35 +18,35 @@ const rows = [
         id: 'first-name',
         align: 'left',
         disablePadding: false,
-        label: 'First Name',
+        label: 'FIRST_NAME',
         sort: true,
     },
     {
         id: 'last-name',
         align: 'left',
         disablePadding: false,
-        label: 'Last Name',
+        label: 'LAST_NAME',
         sort: true,
     },
     {
         id: 'company',
         align: 'left',
         disablePadding: false,
-        label: 'Company',
+        label: 'COMPANY',
         sort: true,
     },
     {
         id: 'phone',
         align: 'left',
         disablePadding: false,
-        label: 'Phone',
+        label: 'PHONE',
         sort: true,
     },
     {
         id: 'email',
         align: 'left',
         disablePadding: false,
-        label: 'Email',
+        label: 'EMAIL',
         sort: true,
     },
     {
@@ -124,37 +125,36 @@ const dummyCustomers = [
 ];
 
 function Customers() {
+    const {t} = useTranslation('customers');
     const [addingNewCustomer, addNewCustomer] = useState(false);
     const toggleAddingNewCustomer = () => {
         addNewCustomer(!addingNewCustomer);
     };
 
     return (
-        <>
-            <FusePageCarded
-                classes={{
-                    content: 'flex',
-                    contentCard: 'overflow-hidden',
-                    header: 'min-h-72 h-72 sm:h-136 sm:min-h-136',
-                }}
-                header={
-                    <Header
-                        iconText="person"
-                        title="Customers"
-                        addButtonLabel="New Customer"
-                        addButtonCallback={toggleAddingNewCustomer}
-                        searchHint="Search customer by name"
-                    />
-                }
-                content={
-                    !addingNewCustomer ? (
-                        <CustomersTable customers={dummyCustomers} rows={rows} />
-                    ) : (
-                        <CustomerGenerator toggleNewCustomer={toggleAddingNewCustomer} />
-                    )
-                }
-            />
-        </>
+        <FusePageCarded
+            classes={{
+                content: 'flex',
+                contentCard: 'overflow-hidden',
+                header: 'min-h-72 h-72 sm:h-136 sm:min-h-136',
+            }}
+            header={
+                <Header
+                    iconText="person"
+                    title={t('CUSTOMERS')}
+                    addButtonLabel={t('ADD_CUSTOMER')}
+                    addButtonCallback={toggleAddingNewCustomer}
+                    searchHint={t('SEARCH_BY_NAME')}
+                />
+            }
+            content={
+                !addingNewCustomer ? (
+                    <CustomersTable customers={dummyCustomers} rows={rows} />
+                ) : (
+                    <CustomerGenerator toggleNewCustomer={toggleAddingNewCustomer} />
+                )
+            }
+        />
     );
 }
 

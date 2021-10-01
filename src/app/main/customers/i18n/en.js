@@ -1,5 +1,24 @@
 const locale = {
-  TITLE: 'Example Page',
+    CUSTOMERS: 'Customers',
+    ADD_CUSTOMER: 'Add Customer',
+    SEARCH_BY_NAME: 'Search customer by name',
+    NO_CUSTOMERS: 'There are no customers to show here',
+    FIRST_NAME: 'First Name',
+    LAST_NAME: 'Last Name',
+    COMPANY: 'Company',
+    PHONE: 'Phone',
+    EMAIL: 'Email',
+    EDIT: 'Edit',
+    DELETE: 'Delete',
+    ROWS_PER_PAGE: 'Customers per page',
+    ACCOUNT_GENERATOR: 'Account Generator',
+    FILL_MESSAGE: 'Fill the follow to generate a link for a new customer',
+    HINT_COMPANY_NAME: 'e.g: Company Name',
+    MAILS: 'Emails',
+    HINT_EMAILS: 'e.g: user1@company.com, user2@corporation.com, ...',
+    SEND_AFTER_KEY: 'Send after generate the key',
+    GENERATE: 'Generate',
+    CANCEL: 'Cancel',
 };
 
 export default locale;
