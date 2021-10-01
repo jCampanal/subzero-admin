@@ -19,7 +19,7 @@ export const ShipmentStatus = {
     3: {name: 'Canceled', icon: 'fa-times', tColor: 'red-700'},
 };
 
-function OrdersAdminTable(props) {
+function OrdersTable(props) {
     const [selected, setSelected] = useState([]);
     const [data, setData] = useState(props.items);
     const [page, setPage] = useState(0);
@@ -179,9 +179,9 @@ function OrdersAdminTable(props) {
     );
 }
 
-export default OrdersAdminTable;
+export default OrdersTable;
 
-OrdersAdminTable.propTypes = {
+OrdersTable.propTypes = {
     items: PropTypes.array.isRequired,
     rows: PropTypes.array.isRequired,
 };

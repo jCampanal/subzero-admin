@@ -7,7 +7,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 
-const OrdersAdminTable = lazy(() => import('./OrdersAdminTable'));
+const OrdersAdminTable = lazy(() => import('./OrdersTable'));
 
 function TabPanel(props) {
     const {children, value, index, ...other} = props;
@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function WarehouseTab(props) {
+export default function OrdersTab(props) {
     const classes = useStyles();
     const theme = useTheme();
     const [value, setValue] = React.useState(0);
@@ -88,7 +88,7 @@ export default function WarehouseTab(props) {
     );
 }
 
-WarehouseTab.propTypes = {
+OrdersTab.propTypes = {
     tabItems: PropTypes.array.isRequired,
     rows: PropTypes.array.isRequired,
 };

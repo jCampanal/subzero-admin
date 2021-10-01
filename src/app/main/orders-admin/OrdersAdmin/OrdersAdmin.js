@@ -1,7 +1,7 @@
 import React, {lazy, memo} from 'react';
 import FusePageCarded from '@fuse/core/FusePageCarded/FusePageCarded';
 
-const WarehouseTab = lazy(() => import('./WarehouseTab'));
+const OrdersTab = lazy(() => import('./OrdersTab'));
 const Header = lazy(() => import('./PageCardedHeader'));
 
 const rows = [
@@ -73,7 +73,7 @@ const dummyOrders = [
     },
 ];
 
-function OrderAdmin() {
+function OrdersAdmin() {
     return (
         <FusePageCarded
             classes={{
@@ -82,10 +82,10 @@ function OrderAdmin() {
                 header: 'min-h-72 h-72 sm:h-136 sm:min-h-136',
             }}
             header={<Header />}
-            content={<WarehouseTab tabItems={dummyOrders} rows={rows} />}
+            content={<OrdersTab tabItems={dummyOrders} rows={rows} />}
             innerScroll
         />
     );
 }
 
-export default memo(OrderAdmin);
+export default memo(OrdersAdmin);

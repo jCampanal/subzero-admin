@@ -4,7 +4,7 @@ import en from './i18n/en';
 
 i18next.addResourceBundle('en', 'examplePage', en);
 
-const OrderAdminPageConfig = {
+const OrdersAdminConfig = {
     settings: {
         layout: {
             config: {},
@@ -13,9 +13,9 @@ const OrderAdminPageConfig = {
     routes: [
         {
             path: '/orders_admin',
-            component: React.lazy(() => import('./OrderAdmin/OrderAdmin')),
+            component: React.lazy(() => import('./OrdersAdmin/OrdersAdmin')),
         },
     ],
 };
 
-export default OrderAdminPageConfig;
+export default OrdersAdminConfig;
