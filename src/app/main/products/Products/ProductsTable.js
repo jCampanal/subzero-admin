@@ -13,9 +13,11 @@ import {withRouter} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import CheckCircleRounded from '@material-ui/icons/CheckCircleRounded';
+import {useTranslation} from 'react-i18next';
 import TableHeader from './TableHeader';
 
 function ProductsTable(props) {
+    const {t} = useTranslation('products');
     const [selected, setSelected] = useState([]);
     const [data] = useState(props.products);
     const [page, setPage] = useState(0);
@@ -84,7 +86,7 @@ function ProductsTable(props) {
         return (
             <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: {delay: 0.1}}} className="flex flex-1 items-center justify-center h-full">
                 <Typography color="textSecondary" variant="h5">
-                    There are no products!
+                    {t('NO_PRODUCTS')}
                 </Typography>
             </motion.div>
         );
@@ -95,6 +97,7 @@ function ProductsTable(props) {
             <FuseScrollbars className="flex-grow overflow-x-auto">
                 <Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
                     <TableHeader
+                        namespace="products"
                         rows={props.rows}
                         selectedProductIds={selected}
                         order={order}
@@ -156,10 +159,10 @@ function ProductsTable(props) {
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
                                         <Button color="primary">
-                                            <Icon>edit</Icon> Edit
+                                            <Icon>edit</Icon> {t('EDIT')}
                                         </Button>
                                         <Button color="primary">
-                                            <Icon>delete</Icon> Delete
+                                            <Icon>delete</Icon> {t('DELETE')}
                                         </Button>
                                     </TableCell>
                                 </TableRow>
@@ -173,6 +176,7 @@ function ProductsTable(props) {
                 className="flex-shrink-0 border-t-1"
                 component="div"
                 count={data.length}
+                labelRowsPerPage={t('ROWS_PER_PAGE')}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 backIconButtonProps={{
