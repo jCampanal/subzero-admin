@@ -1,5 +1,5 @@
 const locale = {
-    DASHBOARD: 'Dashboard',
+    DASHBOARD: 'Tablero',
 };
 
 export default locale;
