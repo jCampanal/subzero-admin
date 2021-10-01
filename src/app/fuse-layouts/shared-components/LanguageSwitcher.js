@@ -4,8 +4,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import MenuItem from '@material-ui/core/MenuItem';
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
-import {useState} from 'react';
-import React, {useSelector, useDispatch} from 'react-redux';
+import React, {useState} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import {changeLanguage} from 'app/store/i18nSlice';
 
 const languages = [
@@ -13,6 +13,11 @@ const languages = [
         id: 'en',
         title: 'English',
         flag: 'us',
+    },
+    {
+        id: 'es',
+        title: 'Spanish',
+        flag: 'es',
     },
 ];
 
@@ -41,7 +46,7 @@ function LanguageSwitcher() {
     return (
         <>
             <Button className="h-40 w-64" onClick={langMenuClick}>
-                <img className="mx-4 min-w-20" src={`${process.env.PUBLIC_URL}/assets/images/flags/${currentLanguage.flag}.png`} alt={currentLanguage.title} />
+                <span className={`flag-icon flag-icon-${currentLanguage.flag}`} />
 
                 <Typography className="mx-4 font-semibold uppercase" color="textSecondary">
                     {currentLanguage.id}
@@ -67,7 +72,7 @@ function LanguageSwitcher() {
                 {languages.map((lng) => (
                     <MenuItem key={lng.id} onClick={() => handleLanguageChange(lng)}>
                         <ListItemIcon className="min-w-40">
-                            <img className="min-w-20" src={`${process.env.PUBLIC_URL}/assets/images/flags/${lng.flag}.png`} alt={lng.title} />
+                            <span className={`flag-icon flag-icon-${lng.flag}`} />
                         </ListItemIcon>
                         <ListItemText primary={lng.title} />
                     </MenuItem>
