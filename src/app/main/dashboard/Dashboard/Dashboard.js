@@ -1,4 +1,4 @@
-import {memo} from 'react';
+import React, {memo} from 'react';
 import {Link} from 'react-router-dom';
 import CategoryIcon from '@material-ui/icons/Category';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
@@ -14,13 +14,15 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import DateRangeIcon from '@material-ui/icons/DateRange';
+import {useTranslation} from 'react-i18next';
 
 function Dashboard() {
+    const {t} = useTranslation('dashboard');
     return (
         <div>
             <p className="h1">
                 <DashboardIcon className="text-5xl mr-14" />
-                Dashboard
+                {t('DASHBOARD')}
             </p>
             <p className="text-xl mt-12 mb-5">Administration</p>
             <div className="p-10 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 lg:grid-cols-10 xl:grid-cols-12 gap-10 md:gap-16">
