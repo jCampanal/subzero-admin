@@ -13,8 +13,10 @@ import {withRouter} from 'react-router-dom';
 import TableHeader from 'app/main/products/Products/TableHeader';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
+import {useTranslation} from 'react-i18next';
 
 function DriversTable(props) {
+    const {t} = useTranslation('drivers');
     const [selected, setSelected] = useState([]);
     const [data] = useState(props.drivers);
     const [page, setPage] = useState(0);
@@ -79,15 +81,11 @@ function DriversTable(props) {
         setRowsPerPage(event.target.value);
     }
 
-    // if (loading) {
-    //     return <FuseLoading />;
-    // }
-
     if (data.length === 0) {
         return (
             <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: {delay: 0.1}}} className="flex flex-1 items-center justify-center h-full">
                 <Typography color="textSecondary" variant="h5">
-                    There are no divers!
+                    {t('NO_DRIVERS')}
                 </Typography>
             </motion.div>
         );
@@ -98,6 +96,7 @@ function DriversTable(props) {
             <FuseScrollbars className="flex-grow overflow-x-auto">
                 <Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
                     <TableHeader
+                        namespace="drivers"
                         rows={props.rows}
                         selectedProductIds={selected}
                         order={order}
@@ -151,22 +150,22 @@ function DriversTable(props) {
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
                                         <Button color="primary">
-                                            <Icon>send</Icon> Send test order
+                                            <Icon>send</Icon> {t('SEND_TEST')}
                                         </Button>
                                         {driver.enabled ? (
                                             <Button color="primary">
-                                                <Icon>remove_circle_outline</Icon> Disable
+                                                <Icon>remove_circle_outline</Icon> {t('DISABLE')}
                                             </Button>
                                         ) : (
                                             <Button color="primary">
-                                                <Icon>check_circle_outline</Icon> Enable
+                                                <Icon>check_circle_outline</Icon> {t('ENABLE')}
                                             </Button>
                                         )}
                                         <Button color="primary">
-                                            <Icon>edit</Icon> Edit
+                                            <Icon>edit</Icon> {t('EDIT')}
                                         </Button>
                                         <Button color="primary">
-                                            <Icon>delete</Icon> Delete
+                                            <Icon>delete</Icon> {t('DELETE')}
                                         </Button>
                                     </TableCell>
                                 </TableRow>
@@ -180,6 +179,7 @@ function DriversTable(props) {
                 className="flex-shrink-0 border-t-1"
                 component="div"
                 count={data.length}
+                labelRowsPerPage={t('ROWS_PER_PAGE')}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 backIconButtonProps={{

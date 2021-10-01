@@ -1,5 +1,6 @@
 import React, {lazy, memo} from 'react';
 import FusePageCarded from '@fuse/core/FusePageCarded';
+import {useTranslation} from 'react-i18next';
 
 const Header = lazy(() => import('app/main/products/Products/PageCardedHeader'));
 const DriversTable = lazy(() => import('./DriversTable'));
@@ -16,21 +17,21 @@ const rows = [
         id: 'username',
         align: 'left',
         disablePadding: false,
-        label: 'Username',
+        label: 'USERNAME',
         sort: true,
     },
     {
         id: 'full-name',
         align: 'left',
         disablePadding: false,
-        label: 'Full name',
+        label: 'FULL_NAME',
         sort: true,
     },
     {
         id: 'warehouse',
         align: 'left',
         disablePadding: false,
-        label: 'Warehouse',
+        label: 'WAREHOUSE',
         sort: true,
     },
     {
@@ -60,6 +61,7 @@ const dummyDrivers = [
 ];
 
 function Drivers() {
+    const {t} = useTranslation('drivers');
     return (
         <FusePageCarded
             classes={{
@@ -67,7 +69,7 @@ function Drivers() {
                 contentCard: 'overflow-hidden',
                 header: 'min-h-72 h-72 sm:h-136 sm:min-h-136',
             }}
-            header={<Header iconText="local_shipping" title="Drivers" addButtonLabel="New Driver" searchHint="Search driver by name" />}
+            header={<Header iconText="local_shipping" title={t('DRIVERS')} addButtonLabel={t('ADD_DRIVER')} searchHint={t('SEARCH_BY_NAME')} />}
             content={<DriversTable drivers={dummyDrivers} rows={rows} />}
             innerScroll
         />
