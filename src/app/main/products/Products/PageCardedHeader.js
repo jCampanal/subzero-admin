@@ -18,9 +18,16 @@ function PageCardedHeader(props) {
     return (
         <div className="flex flex-1 w-full items-center justify-between">
             <div className="flex items-center">
-                <Icon component={motion.span} initial={{scale: 0}} animate={{scale: 1, transition: {delay: 0.2}}} className="text-24 md:text-32">
-                    {props.iconText}
-                </Icon>
+                {props.iconText.slice(0, 3) !== 'fa-' && (
+                    <Icon component={motion.span} initial={{scale: 0}} animate={{scale: 1, transition: {delay: 0.2}}} className="text-24 md:text-32">
+                        {props.iconText}
+                    </Icon>
+                )}
+                {props.iconText.slice(0, 3) === 'fa-' && (
+                    <Icon component={motion.span} initial={{scale: 0}} animate={{scale: 1, transition: {delay: 0.2}}} className="text-24 md:text-32">
+                        <i className={`fa ${props.iconText}`} />
+                    </Icon>
+                )}
                 <Typography
                     component={motion.span}
                     initial={{x: -20}}
@@ -34,27 +41,29 @@ function PageCardedHeader(props) {
 
             <div className="flex flex-1 items-center justify-center px-12">
                 <ThemeProvider theme={mainTheme}>
-                    <Paper
-                        component={motion.div}
-                        initial={{y: -20, opacity: 0}}
-                        animate={{y: 0, opacity: 1, transition: {delay: 0.2}}}
-                        className="flex items-center w-full max-w-512 px-8 py-4 rounded-16 shadow"
-                    >
-                        <Icon color="action">search</Icon>
+                    {props.searchHint !== undefined && props.searchHint !== '' && (
+                        <Paper
+                            component={motion.div}
+                            initial={{y: -20, opacity: 0}}
+                            animate={{y: 0, opacity: 1, transition: {delay: 0.2}}}
+                            className="flex items-center w-full max-w-512 px-8 py-4 rounded-16 shadow"
+                        >
+                            <Icon color="action">search</Icon>
 
-                        <Input
-                            placeholder={props.searchHint}
-                            className="flex flex-1 mx-8"
-                            disableUnderline
-                            fullWidth
-                            inputProps={{
-                                'aria-label': 'Search',
-                            }}
-                        />
-                    </Paper>
+                            <Input
+                                placeholder={props.searchHint}
+                                className="flex flex-1 mx-8"
+                                disableUnderline
+                                fullWidth
+                                inputProps={{
+                                    'aria-label': 'Search',
+                                }}
+                            />
+                        </Paper>
+                    )}
                 </ThemeProvider>
             </div>
-            {props.addButtonLabel !== '' && (
+            {props.addButtonLabel !== '' && props.addButtonLabel !== undefined && (
                 <motion.div initial={{opacity: 0, x: 20}} animate={{opacity: 1, x: 0, transition: {delay: 0.2}}}>
                     <IconButton className="sm:hidden" onClick={props.addButtonCallback}>
                         <AddCircleIcon />
