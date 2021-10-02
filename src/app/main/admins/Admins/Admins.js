@@ -1,5 +1,6 @@
 import React, {lazy, memo} from 'react';
 import FusePageCarded from '@fuse/core/FusePageCarded/FusePageCarded';
+import {useTranslation} from 'react-i18next';
 
 const Header = lazy(() => import('app/main/products/Products/PageCardedHeader'));
 const AdminsTable = lazy(() => import('./AdminsTable'));
@@ -16,21 +17,21 @@ const rows = [
         id: 'first-name',
         align: 'left',
         disablePadding: false,
-        label: 'First Name',
+        label: 'FIRST_NAME',
         sort: true,
     },
     {
         id: 'last-name',
         align: 'left',
         disablePadding: false,
-        label: 'Last Name',
+        label: 'LAST_NAME',
         sort: true,
     },
     {
         id: 'phone',
         align: 'left',
         disablePadding: false,
-        label: 'Phone',
+        label: 'PHONE',
         sort: true,
     },
     {
@@ -52,6 +53,7 @@ const dummyAdmins = [
 ];
 
 function Admins() {
+    const {t} = useTranslation('admins');
     return (
         <FusePageCarded
             classes={{
@@ -59,7 +61,7 @@ function Admins() {
                 contentCard: 'overflow-hidden',
                 header: 'min-h-72 h-72 sm:h-136 sm:min-h-136',
             }}
-            header={<Header iconText="supervisor_account" title="Admins" addButtonLabel="New Admin" searchHint="Search admin by name" />}
+            header={<Header iconText="supervisor_account" title={t('ADMINS')} addButtonLabel={t('ADD_ADMIN')} searchHint={t('SEARCH_BY_NAME')} />}
             content={<AdminsTable admins={dummyAdmins} rows={rows} />}
             innerScroll
         />

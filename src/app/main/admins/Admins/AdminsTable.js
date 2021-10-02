@@ -12,8 +12,10 @@ import {motion} from 'framer-motion';
 import TableHeader from 'app/main/products/Products/TableHeader';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
+import {useTranslation} from 'react-i18next';
 
 function AdminsTable(props) {
+    const {t} = useTranslation('admins');
     const [selected, setSelected] = useState([]);
     const [data] = useState(props.admins);
     const [page, setPage] = useState(0);
@@ -82,7 +84,7 @@ function AdminsTable(props) {
         return (
             <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: {delay: 0.1}}} className="flex flex-1 items-center justify-center h-full">
                 <Typography color="textSecondary" variant="h5">
-                    There are no admins!
+                    {t('NO_ADMINS')}
                 </Typography>
             </motion.div>
         );
@@ -93,6 +95,7 @@ function AdminsTable(props) {
             <FuseScrollbars className="flex-grow overflow-x-auto">
                 <Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
                     <TableHeader
+                        namespace="admins"
                         rows={props.rows}
                         selectedProductIds={selected}
                         order={order}
@@ -141,15 +144,15 @@ function AdminsTable(props) {
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="left">
-                                        {admin.phone}
+                                        {admin.phoneNumber}
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
                                         <Button color="primary">
-                                            <Icon>edit</Icon> Edit
+                                            <Icon>edit</Icon> {t('EDIT')}
                                         </Button>
                                         <Button color="primary">
-                                            <Icon>delete</Icon> Delete
+                                            <Icon>delete</Icon> {t('DELETE')}
                                         </Button>
                                     </TableCell>
                                 </TableRow>
@@ -163,6 +166,7 @@ function AdminsTable(props) {
                 className="flex-shrink-0 border-t-1"
                 component="div"
                 count={data.length}
+                labelRowsPerPage={t('ROWS_PER_PAGE')}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 backIconButtonProps={{
