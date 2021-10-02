@@ -14,7 +14,7 @@ import CustomersConfig from 'app/main/customers/CustomersConfig';
 import DriversPageConfig from 'app/main/drivers/DriversPageConfig';
 import OrdersAdminConfig from 'app/main/orders-admin/OrdersAdminConfig';
 import WarehousesConfig from 'app/main/warehouses/WarehousesConfig';
-import AdminsPageConfig from 'app/main/admins/AdminsPageConfig';
+import AdminsConfig from 'app/main/admins/AdminsConfig';
 import ShipmentsPageConfig from 'app/main/shipments/ShipmentsPageConfig';
 import EmailsPageConfig from 'app/main/emails/EmailsPageConfig';
 import BlacklistPageConfig from 'app/main/blacklist/BlacklistPageConfig';
@@ -34,7 +34,7 @@ const routeConfigs = [
     DriversPageConfig,
     OrdersAdminConfig,
     WarehousesConfig,
-    AdminsPageConfig,
+    AdminsConfig,
     ShipmentsPageConfig,
     EmailsPageConfig,
     BlacklistPageConfig,
