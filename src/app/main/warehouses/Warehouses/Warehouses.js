@@ -1,5 +1,6 @@
 import React, {lazy, memo} from 'react';
 import FusePageCarded from '@fuse/core/FusePageCarded/FusePageCarded';
+import {useTranslation} from 'react-i18next';
 
 const Header = lazy(() => import('app/main/products/Products/PageCardedHeader'));
 const WarehousesTable = lazy(() => import('./WarehousesTable'));
@@ -15,7 +16,7 @@ const rows = [
         id: 'name',
         align: 'left',
         disablePadding: false,
-        label: 'Name',
+        label: 'NAME',
         sort: true,
     },
     {
@@ -38,6 +39,7 @@ const dummyWarehouses = [
 ];
 
 function Warehouses() {
+    const {t} = useTranslation('warehouses');
     return (
         <FusePageCarded
             classes={{
@@ -45,7 +47,7 @@ function Warehouses() {
                 contentCard: 'overflow-hidden',
                 header: 'min-h-72 h-72 sm:h-136 sm:min-h-136',
             }}
-            header={<Header iconText="store" title="Warehouses" addButtonLabel="New Warehouse" searchHint="Search warehouse by name" />}
+            header={<Header iconText="store" title={t('WAREHOUSES')} addButtonLabel={t('ADD_WAREHOUSE')} searchHint={t('SEARCH_BY_NAME')} />}
             content={<WarehousesTable warehouses={dummyWarehouses} rows={rows} />}
             innerScroll
         />

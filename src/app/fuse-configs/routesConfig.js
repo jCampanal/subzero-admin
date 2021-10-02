@@ -13,7 +13,7 @@ import CoolersActivityPageConfig from 'app/main/coolers-activity/CoolersActivity
 import CustomersConfig from 'app/main/customers/CustomersConfig';
 import DriversPageConfig from 'app/main/drivers/DriversPageConfig';
 import OrdersAdminConfig from 'app/main/orders-admin/OrdersAdminConfig';
-import WarehousesPageConfig from 'app/main/warehouses/WarehousesPageConfig';
+import WarehousesConfig from 'app/main/warehouses/WarehousesConfig';
 import AdminsPageConfig from 'app/main/admins/AdminsPageConfig';
 import ShipmentsPageConfig from 'app/main/shipments/ShipmentsPageConfig';
 import EmailsPageConfig from 'app/main/emails/EmailsPageConfig';
@@ -33,7 +33,7 @@ const routeConfigs = [
     SchedulesPageConfig,
     DriversPageConfig,
     OrdersAdminConfig,
-    WarehousesPageConfig,
+    WarehousesConfig,
     AdminsPageConfig,
     ShipmentsPageConfig,
     EmailsPageConfig,
