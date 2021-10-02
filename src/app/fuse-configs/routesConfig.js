@@ -16,7 +16,7 @@ import OrdersAdminConfig from 'app/main/orders-admin/OrdersAdminConfig';
 import WarehousesConfig from 'app/main/warehouses/WarehousesConfig';
 import AdminsConfig from 'app/main/admins/AdminsConfig';
 import ShipmentsPageConfig from 'app/main/shipments/ShipmentsPageConfig';
-import EmailsPageConfig from 'app/main/emails/EmailsPageConfig';
+import EmailsConfig from 'app/main/emails/EmailsConfig';
 import BlacklistConfig from 'app/main/blacklist/BlacklistConfig';
 import OrderMonitorPageConfig from 'app/main/order-monitor/OrderMonitorPageConfig';
 import OrderCalendarPageConfig from 'app/main/order-calendar/OrderCalendarPageConfig';
@@ -36,7 +36,7 @@ const routeConfigs = [
     WarehousesConfig,
     AdminsConfig,
     ShipmentsPageConfig,
-    EmailsPageConfig,
+    EmailsConfig,
     BlacklistConfig,
     OrderMonitorPageConfig,
     OrderCalendarPageConfig,
