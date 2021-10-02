@@ -1,5 +1,6 @@
 import React, {lazy, memo} from 'react';
-import FusePageCarded from '../../../../@fuse/core/FusePageCarded/FusePageCarded';
+import FusePageCarded from '@fuse/core/FusePageCarded/FusePageCarded';
+import {useTranslation} from 'react-i18next';
 
 const Header = lazy(() => import('app/main/products/Products/PageCardedHeader'));
 const BlacklistTable = lazy(() => import('./BlaclistTable'));
@@ -9,7 +10,7 @@ const rows = [
         id: 'company-name',
         align: 'left',
         disablePadding: false,
-        label: 'Company Name',
+        label: 'COMPANY_NAME',
         sort: true,
     },
     {
@@ -37,6 +38,7 @@ const dummyBlacklist = [
 ];
 
 function Blacklist() {
+    const {t} = useTranslation('blacklist');
     return (
         <FusePageCarded
             classes={{
@@ -44,7 +46,7 @@ function Blacklist() {
                 contentCard: 'overflow-hidden',
                 header: 'min-h-72 h-72 sm:h-136 sm:min-h-136',
             }}
-            header={<Header iconText="block" title="Blacklist" addButtonLabel="Add to blacklist" searchHint="Search" />}
+            header={<Header iconText="block" title={t('BLACKLIST')} addButtonLabel={t('ADD_TO_BLACKLIST')} searchHint={t('SEARCH')} />}
             content={<BlacklistTable items={dummyBlacklist} rows={rows} />}
             innerScroll
         />

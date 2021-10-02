@@ -12,8 +12,10 @@ import {motion} from 'framer-motion';
 import TableHeader from 'app/main/products/Products/TableHeader';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
+import {useTranslation} from 'react-i18next';
 
 function BlacklistTable(props) {
+    const {t} = useTranslation('blacklist');
     const [selected, setSelected] = useState([]);
     const [data, setData] = useState(props.items);
     const [page, setPage] = useState(0);
@@ -82,7 +84,7 @@ function BlacklistTable(props) {
         return (
             <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: {delay: 0.1}}} className="flex flex-1 items-center justify-center h-full">
                 <Typography color="textSecondary" variant="h5">
-                    There are no admins!
+                    {t('NO_BLACKLISTED')}
                 </Typography>
             </motion.div>
         );
@@ -93,6 +95,7 @@ function BlacklistTable(props) {
             <FuseScrollbars className="flex-grow overflow-x-auto">
                 <Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
                     <TableHeader
+                        namespace="blacklist"
                         rows={props.rows}
                         selectedProductIds={selected}
                         order={order}
@@ -129,12 +132,12 @@ function BlacklistTable(props) {
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="left">
-                                        Banned workers: {item.bannedWorkers}
+                                        {t('BANNED_WORKERS', {count: item.bannedWorkers})}
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
                                         <Button color="primary">
-                                            <Icon>delete</Icon> Remove from blacklist
+                                            <Icon>delete</Icon> {t('REMOVE')}
                                         </Button>
                                     </TableCell>
                                 </TableRow>
@@ -148,6 +151,7 @@ function BlacklistTable(props) {
                 className="flex-shrink-0 border-t-1"
                 component="div"
                 count={data.length}
+                labelRowsPerPage={t('ROWS_PER_PAGE')}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 backIconButtonProps={{
