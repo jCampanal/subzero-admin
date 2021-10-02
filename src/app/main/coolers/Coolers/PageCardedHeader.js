@@ -81,7 +81,7 @@ function PageCardedHeader() {
                         {t('REGISTER')}
                     </Button>
                 </motion.div>
-                <DateRangePicker isOpen={dateRangeDlgIsOpen} />
+                <DateRangePicker isOpen={dateRangeDlgIsOpen} namespace="coolers" />
             </div>
             <div className="sm:flex-1 text-right">
                 <Button className="whitespace-nowrap inline-block uppercase" onClick={() => null}>
