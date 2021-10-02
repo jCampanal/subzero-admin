@@ -12,14 +12,16 @@ import {motion} from 'framer-motion';
 import TableHeader from 'app/main/products/Products/TableHeader';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
+import {useTranslation} from 'react-i18next';
 
 export const ShipmentStatus = {
-    1: {name: 'Shipping', icon: 'fa-truck', tColor: 'blue-700'},
-    2: {name: 'Delivered', icon: 'fa-handshake', tColor: 'green-700'},
-    3: {name: 'Canceled', icon: 'fa-times', tColor: 'red-700'},
+    1: {name: 'SHIPPING', icon: 'fa-truck', tColor: 'blue-700'},
+    2: {name: 'DELIVERED', icon: 'fa-handshake', tColor: 'green-700'},
+    3: {name: 'CANCELED', icon: 'fa-times', tColor: 'red-700'},
 };
 
 function OrdersTable(props) {
+    const {t} = useTranslation('orders-admin');
     const [selected, setSelected] = useState([]);
     const [data, setData] = useState(props.items);
     const [page, setPage] = useState(0);
@@ -88,7 +90,7 @@ function OrdersTable(props) {
         return (
             <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: {delay: 0.1}}} className="flex flex-1 items-center justify-center h-full">
                 <Typography color="textSecondary" variant="h5">
-                    There are no orders!
+                    {t('NO_ORDERS')}
                 </Typography>
             </motion.div>
         );
@@ -99,6 +101,7 @@ function OrdersTable(props) {
             <FuseScrollbars className="flex-grow overflow-x-auto">
                 <Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
                     <TableHeader
+                        namespace="orders-admin"
                         rows={props.rows}
                         selectedProductIds={selected}
                         order={order}
@@ -141,16 +144,16 @@ function OrdersTable(props) {
                                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="left">
                                         <span className={`text-${ShipmentStatus[item.status].tColor}`}>
                                             <i className={`fa ${ShipmentStatus[item.status].icon} mr-2`} />
-                                            {ShipmentStatus[item.status].name}
+                                            {t(ShipmentStatus[item.status].name)}
                                         </span>
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
                                         <Button color="primary">
-                                            <Icon>edit</Icon> Edit
+                                            <Icon>edit</Icon> {t('EDIT')}
                                         </Button>
                                         <Button color="primary">
-                                            <Icon>delete</Icon> Delete
+                                            <Icon>delete</Icon> {t('DELETE')}
                                         </Button>
                                     </TableCell>
                                 </TableRow>
@@ -164,6 +167,7 @@ function OrdersTable(props) {
                 className="flex-shrink-0 border-t-1"
                 component="div"
                 count={data.length}
+                labelRowsPerPage={t('ROWS_PER_PAGE')}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 backIconButtonProps={{

@@ -1,29 +1,29 @@
 import React, {lazy, memo} from 'react';
 import FusePageCarded from '@fuse/core/FusePageCarded/FusePageCarded';
 
-const OrdersTab = lazy(() => import('./OrdersTab'));
 const Header = lazy(() => import('./PageCardedHeader'));
+const OrdersTab = lazy(() => import('./OrdersTab'));
 
 const rows = [
     {
         id: 'company',
         align: 'left',
         disablePadding: false,
-        label: 'Company',
+        label: 'COMPANY',
         sort: true,
     },
     {
         id: 'arrive-time',
         align: 'left',
         disablePadding: false,
-        label: 'Arrive Time',
+        label: 'ARRIVE_TIME',
         sort: true,
     },
     {
         id: 'status',
         align: 'left',
         disablePadding: false,
-        label: 'Status',
+        label: 'STATUS',
         sort: true,
     },
     {
