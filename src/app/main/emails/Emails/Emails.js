@@ -1,5 +1,6 @@
 import React, {lazy, memo} from 'react';
 import FusePageCarded from '@fuse/core/FusePageCarded/FusePageCarded';
+import {useTranslation} from 'react-i18next';
 
 const Header = lazy(() => import('app/main/products/Products/PageCardedHeader'));
 const EmailsTable = lazy(() => import('./EmailsTable'));
@@ -23,21 +24,21 @@ const rows = [
         id: 'to',
         align: 'left',
         disablePadding: false,
-        label: 'To',
+        label: 'TO',
         sort: true,
     },
     {
         id: 'subject',
         align: 'left',
         disablePadding: false,
-        label: 'Subject',
+        label: 'SUBJECT',
         sort: true,
     },
     {
         id: 'status',
         align: 'left',
         disablePadding: false,
-        label: 'Status',
+        label: 'STATUS',
         sort: true,
     },
 ];
@@ -101,6 +102,7 @@ const dummyEmails = [
 ];
 
 function Emails() {
+    const {t} = useTranslation('emails');
     return (
         <FusePageCarded
             classes={{
@@ -108,7 +110,7 @@ function Emails() {
                 contentCard: 'overflow-hidden',
                 header: 'min-h-72 h-72 sm:h-136 sm:min-h-136',
             }}
-            header={<Header iconText="email" title="Emails" addButtonLabel="" searchHint="" />}
+            header={<Header iconText="email" title={t('EMAILS')} addButtonLabel="" searchHint="" />}
             content={<EmailsTable emails={dummyEmails} rows={rows} />}
             innerScroll
         />

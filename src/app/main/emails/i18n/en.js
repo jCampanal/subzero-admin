@@ -1,5 +1,10 @@
 const locale = {
-  TITLE: 'Example Page',
+    EMAILS: 'Emails',
+    NO_EMAILS: 'There are no emails to show here',
+    TO: 'To',
+    SUBJECT: 'Subject',
+    STATUS: 'Status',
+    ROWS_PER_PAGE: 'Emails per page',
 };
 
 export default locale;
