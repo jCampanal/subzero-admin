@@ -6,15 +6,22 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
+import {useTranslation} from 'react-i18next';
+import FuseScrollbars from '@fuse/core/FuseScrollbars';
+import Table from '@material-ui/core/Table';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
+import TableBody from '@material-ui/core/TableBody';
 
 const Days = {
-    0: 'Sunday',
-    1: 'Monday',
-    2: 'Tuesday',
-    3: 'Wednesday',
-    4: 'Thursday',
-    5: 'Friday',
-    6: 'Saturday',
+    0: 'SUNDAY',
+    1: 'MONDAY',
+    2: 'TUESDAY',
+    3: 'WEDNESDAY',
+    4: 'THURSDAY',
+    5: 'FRIDAY',
+    6: 'SATURDAY',
 };
 
 function TabPanel(props) {
@@ -48,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function OrdersByDateTab(props) {
+    const {t} = useTranslation('orders-calendar');
     const classes = useStyles();
     const theme = useTheme();
     const [value, setValue] = React.useState(0);
@@ -75,7 +83,7 @@ export default function OrdersByDateTab(props) {
                     {props.tabHeaders.map((tabHeader, index) => (
                         <Tab
                             key={index}
-                            label={<div>{`${Days[tabHeader.getDay()]} ${tabHeader.getDate()}/${tabHeader.getMonth() + 1}`}</div>}
+                            label={<div>{`${t(Days[tabHeader.getDay()])} ${tabHeader.getDate()}/${tabHeader.getMonth() + 1}`}</div>}
                             {...a11yProps(index)}
                         />
                     ))}
@@ -85,36 +93,43 @@ export default function OrdersByDateTab(props) {
                 {props.tabHeaders.map((header, index) => (
                     <TabPanel key={index} value={value} index={index} dir={theme.direction}>
                         <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                            <table className="min-w-full divide-y divide-gray-100 text-lg font-sans">
-                                <thead className="bg-gray-50 font-medium text-gray-800 font-serif">
-                                    <tr className="text-left tracking-wider border-t border-b">
-                                        <th scope="col" className="px-14 py-3">
-                                            ID
-                                        </th>
-                                        <th scope="col" className="px-14 py-3">
-                                            Company
-                                        </th>
-                                        <th scope="col" className="px-14 py-3">
-                                            Arrive Time
-                                        </th>
-                                        <th scope="col" className="px-14 py-3">
-                                            Prioritize
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody className="bg-white divide-y divide-gray-200">
-                                    {props.tabItems
-                                        .filter((item) => item.arriveTime.getDate() === header.getDate())
-                                        .map((tabItem, i) => (
-                                            <tr key={i} className="odd:bg-gray-200 hover:bg-gray-100">
-                                                <td className="px-14 py-3">{tabItem.id}</td>
-                                                <td className="px-14 py-3">{tabItem.companyName.replace(/\b\w/g, (c) => c.toUpperCase())}</td>
-                                                <td className="px-14 py-3">{tabItem.arriveTime.toLocaleTimeString()}</td>
-                                                <td className="px-14 py-3" />
-                                            </tr>
-                                        ))}
-                                </tbody>
-                            </table>
+                            <FuseScrollbars className="flex-grow overflow-x-auto overflow-y-visible">
+                                <Table className="min-w-xl" aria-labelledby="tableTitle">
+                                    <TableHead>
+                                        <TableRow className="h-48 sm:h-64 text-left">
+                                            <TableCell padding="none" className="w-40 md:w-64 text-center">
+                                                ID
+                                            </TableCell>
+                                            <TableCell padding="none" className="w-40 md:w-64 text-center">
+                                                {t('COMPANY')}
+                                            </TableCell>
+                                            <TableCell padding="none" className="w-40 md:w-64 text-center">
+                                                {t('ARRIVE_TIME')}
+                                            </TableCell>
+                                            <TableCell padding="none" className="w-40 md:w-64 text-center">
+                                                {t('PRIORITIZE')}
+                                            </TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {props.tabItems
+                                            .filter((item) => item.arriveTime.getDate() === header.getDate())
+                                            .map((tabItem, i) => (
+                                                <TableRow key={i} className="h-48 sm:h-64 text-left">
+                                                    <TableCell padding="none" className="w-40 md:w-64 text-center">
+                                                        {tabItem.id}
+                                                    </TableCell>
+                                                    <TableCell padding="none" className="w-40 md:w-64 text-center">
+                                                        {tabItem.companyName.replace(/\b\w/g, (c) => c.toUpperCase())}
+                                                    </TableCell>
+                                                    <TableCell padding="none" className="w-40 md:w-64 text-center">
+                                                        {tabItem.arriveTime.toLocaleTimeString()}
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))}
+                                    </TableBody>
+                                </Table>
+                            </FuseScrollbars>
                         </div>
                     </TabPanel>
                 ))}

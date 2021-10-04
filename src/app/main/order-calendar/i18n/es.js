@@ -1,0 +1,27 @@
+const locale = {
+    ORDERS_CALENDAR: 'Calendario de Pedidos',
+    PRODUCT: 'Producto',
+    TOTAL: 'TOTAL',
+    DRY_ICE: 'Hielo Seco',
+    PELLETS: 'Pellets',
+    BLASTING: 'Blasting',
+    SUN: 'Dom',
+    MON: 'Lun',
+    TUE: 'Mar',
+    WED: 'Mie',
+    THU: 'Jue',
+    FRI: 'Vie',
+    SAT: 'Sab',
+    SUNDAY: 'Domingo',
+    MONDAY: 'Lunes',
+    TUESDAY: 'Martes',
+    WEDNESDAY: 'Miércoles',
+    THURSDAY: 'Jueves',
+    FRIDAY: 'Viernes',
+    SATURDAY: 'Sábado',
+    COMPANY: 'Empresa',
+    ARRIVE_TIME: 'Hora de Llegada',
+    PRIORITIZE: 'Priorizar',
+};
+
+export default locale;
