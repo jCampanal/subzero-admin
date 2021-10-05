@@ -1,26 +1,32 @@
-import {memo} from 'react';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
+import React, {memo} from 'react';
 import {GoogleApiWrapper, Map} from 'google-maps-react';
-import {MapAPIKey} from '../../../../.conf';
+import {useTranslation} from 'react-i18next';
+import FuseLoading from '@fuse/core/FuseLoading';
+import {MapAPIKey} from '.conf';
 
 function DriversMonitor(props) {
+    const {t} = useTranslation('drivers-monitor');
     return (
-        <div>
-            <p className="h1">
-                <LocationOnIcon className="text-5xl mr-14" />
-                Drivers Monitor
-            </p>
-            <div className="flex mt-16 gap-5">
-                <Map
-                    google={props.google}
-                    zoom={14}
-                    style={{width: '100%', height: '100%'}}
-                    initialCenter={{
-                        lat: 20.030538,
-                        lng: -75.826956,
-                    }}
-                />
-            </div>
+        <div className="px-12">
+            <h1 className="mt-9">{t('DRIVERS_MONITOR')}</h1>
+            <Map
+                google={props.google}
+                zoom={14}
+                containerStyle={{
+                    position: 'absolute',
+                    width: 'auto',
+                    height: 'auto',
+                    top: '50px',
+                    right: '10px',
+                    bottom: '10px',
+                    left: '10px',
+                }}
+                style={{position: 'relative', width: '100%', height: '100%'}}
+                initialCenter={{
+                    lat: 25.761681,
+                    lng: -80.191788,
+                }}
+            />
         </div>
     );
 }
@@ -28,5 +34,6 @@ function DriversMonitor(props) {
 export default memo(
     GoogleApiWrapper({
         apiKey: MapAPIKey,
+        LoadingContainer: FuseLoading,
     })(DriversMonitor)
 );

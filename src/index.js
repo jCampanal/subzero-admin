@@ -1,6 +1,4 @@
-// Internet Explorer 11 requires polyfills and partially supported by this project.
-// import 'react-app-polyfill/ie11';
-// import 'react-app-polyfill/stable';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import 'typeface-poppins';
 import './i18n';
@@ -12,6 +10,7 @@ import App from 'app/App';
 import * as serviceWorker from './serviceWorker';
 import reportWebVitals from './reportWebVitals';
 import '@fortawesome/fontawesome-free/css/all.css';
+import 'flag-icon-css/css/flag-icon.min.css';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

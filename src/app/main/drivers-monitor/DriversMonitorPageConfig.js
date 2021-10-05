@@ -1,12 +1,10 @@
 import i18next from 'i18next';
-import DriversMonitorPage from './DriversMonitorPage';
+import React from 'react';
 import en from './i18n/en';
-import tr from './i18n/tr';
-import ar from './i18n/ar';
+import es from './i18n/es';
 
-i18next.addResourceBundle('en', 'examplePage', en);
-i18next.addResourceBundle('tr', 'examplePage', tr);
-i18next.addResourceBundle('ar', 'examplePage', ar);
+i18next.addResourceBundle('en', 'drivers-monitor', en);
+i18next.addResourceBundle('es', 'drivers-monitor', es);
 
 const DriversMonitorPageConfig = {
     settings: {
@@ -16,8 +14,8 @@ const DriversMonitorPageConfig = {
     },
     routes: [
         {
-            path: '/drivers-monitor',
-            component: DriversMonitorPage,
+            path: '/drivers_monitor',
+            component: React.lazy(() => import('./DriversMonitor/DriversMonitor')),
         },
     ],
 };

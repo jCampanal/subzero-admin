@@ -1,25 +1,23 @@
 import i18next from 'i18next';
-import DriversPage from './DriversPage';
+import React from 'react';
 import en from './i18n/en';
-import tr from './i18n/tr';
-import ar from './i18n/ar';
+import es from './i18n/es';
 
-i18next.addResourceBundle('en', 'examplePage', en);
-i18next.addResourceBundle('tr', 'examplePage', tr);
-i18next.addResourceBundle('ar', 'examplePage', ar);
+i18next.addResourceBundle('en', 'drivers', en);
+i18next.addResourceBundle('es', 'drivers', es);
 
 const DriversPageConfig = {
-  settings: {
-    layout: {
-      config: {},
+    settings: {
+        layout: {
+            config: {},
+        },
     },
-  },
-  routes: [
-    {
-      path: '/drivers',
-      component: DriversPage,
-    },
-  ],
+    routes: [
+        {
+            path: '/drivers',
+            component: React.lazy(() => import('./Drivers/Drivers')),
+        },
+    ],
 };
 
 export default DriversPageConfig;

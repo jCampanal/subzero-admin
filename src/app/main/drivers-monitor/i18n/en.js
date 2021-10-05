@@ -1,5 +1,5 @@
 const locale = {
-  TITLE: 'Example Page',
+    DRIVERS_MONITOR: 'Drivers Monitor',
 };
 
 export default locale;

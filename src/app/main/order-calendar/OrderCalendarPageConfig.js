@@ -1,12 +1,10 @@
 import i18next from 'i18next';
-import OrderCalendarPage from './OrderCalendarPage';
+import React from 'react';
 import en from './i18n/en';
-import tr from './i18n/tr';
-import ar from './i18n/ar';
+import es from './i18n/es';
 
-i18next.addResourceBundle('en', 'examplePage', en);
-i18next.addResourceBundle('tr', 'examplePage', tr);
-i18next.addResourceBundle('ar', 'examplePage', ar);
+i18next.addResourceBundle('en', 'orders-calendar', en);
+i18next.addResourceBundle('es', 'orders-calendar', es);
 
 const OrderCalendarPageConfig = {
     settings: {
@@ -16,8 +14,8 @@ const OrderCalendarPageConfig = {
     },
     routes: [
         {
-            path: '/order-calendar',
-            component: OrderCalendarPage,
+            path: '/orders_calendar',
+            component: React.lazy(() => import('./OrderCalendar/OrderCalendar')),
         },
     ],
 };
