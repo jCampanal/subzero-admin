@@ -146,6 +146,7 @@ const navigationConfig = [
                 type: 'item',
                 icon: 'assignment',
                 url: '/orders_monitor',
+                target: '_blank',
             },
             {
                 id: 'orders_calendar',
@@ -154,6 +155,7 @@ const navigationConfig = [
                 type: 'item',
                 icon: 'date_range',
                 url: '/orders_calendar',
+                target: '_blank',
             },
             {
                 id: 'drivers_monitor',
@@ -162,6 +164,7 @@ const navigationConfig = [
                 type: 'item',
                 icon: 'location_on',
                 url: '/drivers_monitor',
+                target: '_blank',
             },
         ],
     },
