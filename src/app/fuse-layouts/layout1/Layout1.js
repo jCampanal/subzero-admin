@@ -4,13 +4,13 @@ import FuseSuspense from '@fuse/core/FuseSuspense';
 import {makeStyles} from '@material-ui/core/styles';
 import AppContext from 'app/AppContext';
 import clsx from 'clsx';
-import {memo, useContext} from 'react';
+import React, {memo, useContext} from 'react';
 import {useSelector} from 'react-redux';
 import {renderRoutes} from 'react-router-config';
 import NavbarWrapperLayout1 from './components/NavbarWrapperLayout1';
 import ToolbarLayout1 from './components/ToolbarLayout1';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     root: {
         '&.boxed': {
             clipPath: 'inset(0)',
