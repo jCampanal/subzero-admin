@@ -4,7 +4,7 @@ import FuseUtils from '@fuse/utils';
 import FuseLoading from '@fuse/core/FuseLoading';
 import Error404Page from 'app/main/404/Error404Page';
 import LoginPageConfig from 'app/pages/login/LoginPageConfig';
-import DashboardPageConfig from 'app/main/dashboard/DashboardPageConfig';
+import DashboardConfig from 'app/main/dashboard/DashboardConfig';
 import CategoriesPageConfig from 'app/main/categories/CategoriesPageConfig';
 import ProductsPageConfig from 'app/main/products/ProductsPageConfig';
 import CoolersPageConfig from 'app/main/coolers/CoolersPageConfig';
@@ -24,7 +24,7 @@ import DriversMonitorPageConfig from 'app/main/drivers-monitor/DriversMonitorPag
 
 const routeConfigs = [
     LoginPageConfig,
-    DashboardPageConfig,
+    DashboardConfig,
     CategoriesPageConfig,
     ProductsPageConfig,
     CoolersPageConfig,

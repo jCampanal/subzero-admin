@@ -1,4 +1,3 @@
-import React, {memo} from 'react';
 import FuseScrollbars from '@fuse/core/FuseScrollbars';
 import AppBar from '@material-ui/core/AppBar';
 import {makeStyles} from '@material-ui/core/styles';
@@ -7,6 +6,7 @@ import NavbarToggleButton from 'app/fuse-layouts/shared-components/NavbarToggleB
 import Navigation from 'app/fuse-layouts/shared-components/Navigation';
 import UserNavbarHeader from 'app/fuse-layouts/shared-components/UserNavbarHeader';
 import clsx from 'clsx';
+import React, {memo} from 'react';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function NavbarStyle2Content(props) {
+function NavbarStyle1Content(props) {
     const classes = useStyles();
 
     return (
@@ -53,4 +53,4 @@ function NavbarStyle2Content(props) {
     );
 }
 
-export default memo(NavbarStyle2Content);
+export default memo(NavbarStyle1Content);

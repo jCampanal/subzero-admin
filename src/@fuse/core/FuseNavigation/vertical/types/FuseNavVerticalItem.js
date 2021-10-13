@@ -73,6 +73,7 @@ function FuseNavVerticalItem(props) {
                 className={clsx(classes.item, 'fuse-list-item')}
                 onClick={() => onItemClick && onItemClick(item)}
                 exact={item.exact}
+                target={item.target ? item.target : '_self'}
             >
                 {createIcon(item.icon)}
                 <ListItemText
