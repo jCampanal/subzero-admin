@@ -10,7 +10,7 @@ const apiClient = axios.create({
 apiClient.interceptors.request.use(
     (config) => {
         config.headers = {
-            Authorization: `Bearer ${store.getState().login.token}`,
+            Authorization: `Bearer ${store.getState().authorization.token}`,
             Accept: 'application/json',
             'Content-Type': 'application/json',
         };
