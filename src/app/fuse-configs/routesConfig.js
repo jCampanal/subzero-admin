@@ -21,11 +21,13 @@ import BlacklistConfig from 'app/main/blacklist/BlacklistConfig';
 import OrdersMonitorConfig from 'app/main/orders-monitor/OrdersMonitorConfig';
 import OrderCalendarPageConfig from 'app/main/order-calendar/OrderCalendarPageConfig';
 import DriversMonitorPageConfig from 'app/main/drivers-monitor/DriversMonitorPageConfig';
+import CategoryFormConfig from '../main/categories/Categories/CategoryForm/CategoryFormConfig';
 
 const routeConfigs = [
     LoginPageConfig,
     DashboardConfig,
     CategoriesPageConfig,
+    CategoryFormConfig,
     ProductsPageConfig,
     CoolersPageConfig,
     CoolersActivityPageConfig,
