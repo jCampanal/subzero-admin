@@ -8,7 +8,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import {motion} from 'framer-motion';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 import TableHeader from 'app/main/products/Products/TableHeader';
 import Button from '@material-ui/core/Button';
@@ -18,7 +18,8 @@ import {useTranslation} from 'react-i18next';
 function CategoriesTable(props) {
     const {t} = useTranslation('categories');
     const [selected, setSelected] = useState([]);
-    const [data] = useState(props.categories);
+    const [data, setData] = useState(props.categories);
+    useEffect(() => setData(props.categories), [props.categories]);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [order, setOrder] = useState({
@@ -129,11 +130,7 @@ function CategoriesTable(props) {
                                     </TableCell>
 
                                     <TableCell className="w-52 px-4 md:px-0" component="th" scope="row" padding="none">
-                                        <img
-                                            className="w-full block rounded"
-                                            src={`${process.env.PUBLIC_URL}/assets/images/ecommerce/product-image-placeholder.png`}
-                                            alt={category.name}
-                                        />
+                                        <img className="w-full block rounded" src={category.imageURL} alt={category.name} />
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row">

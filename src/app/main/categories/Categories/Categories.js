@@ -1,6 +1,7 @@
-import React, {lazy, memo} from 'react';
+import React, {lazy, memo, useEffect, useState} from 'react';
 import FusePageCarded from '@fuse/core/FusePageCarded';
 import {useTranslation} from 'react-i18next';
+import {getCategories} from '../../../api-conn/categories';
 
 const Header = lazy(() => import('app/main/products/Products/PageCardedHeader'));
 const CategoriesTable = lazy(() => import('./CategoriesTable'));
@@ -35,20 +36,16 @@ const rows = [
         sort: false,
     },
 ];
-const dummyCategories = [
-    {id: 1, link: 'htp://site.com/cats/gue', name: 'Gue'},
-    {id: 2, link: 'htp://site.com/cats/gue', name: 'Gue'},
-    {id: 3, link: 'htp://site.com/cats/gue', name: 'Gue'},
-    {id: 4, link: 'htp://site.com/cats/gue', name: 'Gue'},
-    {id: 5, link: 'htp://site.com/cats/gue', name: 'Gue'},
-    {id: 6, link: 'htp://site.com/cats/gue', name: 'Gue'},
-    {id: 7, link: 'htp://site.com/cats/gue', name: 'Gue'},
-    {id: 8, link: 'htp://site.com/cats/gue', name: 'Gue'},
-    {id: 9, link: 'htp://site.com/cats/gue', name: 'Gue'},
-];
 
 function Categories() {
     const {t} = useTranslation('categories');
+    const [categories, populateCategories] = useState([]);
+    const loadCategories = () => {
+        getCategories()
+            .then((data) => populateCategories(data.data))
+            .catch((error) => console.log(error));
+    };
+    useEffect(loadCategories, []);
     return (
         <FusePageCarded
             classes={{
@@ -57,7 +54,7 @@ function Categories() {
                 header: 'min-h-72 h-72 sm:h-136 sm:min-h-136',
             }}
             header={<Header iconText="category" title={t('CATEGORIES')} addButtonLabel={t('ADD_CATEGORY')} searchHint={t('SEARCH_BY_NAME')} />}
-            content={<CategoriesTable categories={dummyCategories} rows={rows} />}
+            content={<CategoriesTable categories={categories} rows={rows} />}
             innerScroll
         />
     );
