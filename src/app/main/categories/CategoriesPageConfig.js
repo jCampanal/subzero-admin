@@ -15,6 +15,7 @@ const CategoriesPageConfig = {
     routes: [
         {
             path: '/categories',
+            exact: true,
             component: React.lazy(() => import('./Categories/Categories')),
         },
     ],
