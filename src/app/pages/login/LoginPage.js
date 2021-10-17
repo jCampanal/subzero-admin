@@ -1,4 +1,3 @@
-import {yupResolver} from '@hookform/resolvers/yup';
 import {motion} from 'framer-motion';
 import {Controller, useForm} from 'react-hook-form';
 import React from 'react';
@@ -12,37 +11,46 @@ import {makeStyles} from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
-import * as yup from 'yup';
 import _ from '@lodash';
+import {useDispatch} from 'react-redux';
+import {postLogin} from 'app/api-conn/User';
+import {useHistory} from 'react-router';
+import {login} from '../../store/auth/authorizationSlice';
 
 const useStyles = makeStyles((theme) => ({
     root: {},
 }));
 
-const schema = yup.object().shape({
-    email: yup.string().email('You must enter a valid email').required('You must enter a email'),
-    password: yup.string().required('Please enter your password.').min(8, 'Password is too short - should be 8 chars minimum.'),
-});
-
 const defaultValues = {
-    email: '',
+    username: '',
     password: '',
-    remember: true,
+    rememberMe: true,
 };
 
 function LoginPage() {
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const history = useHistory();
 
-    const {control, formState, handleSubmit, reset} = useForm({
+    const {control, formState, handleSubmit} = useForm({
         mode: 'onChange',
         defaultValues,
-        resolver: yupResolver(schema),
     });
 
     const {isValid, dirtyFields, errors} = formState;
 
-    function onSubmit() {
-        reset(defaultValues);
+    function onSubmit(data) {
+        postLogin(JSON.stringify(data))
+            .then((response) => {
+                dispatch(
+                    login({
+                        token: response.data.token,
+                        refreshToken: response.data.tokenRefresh,
+                    })
+                );
+                history.push('/dashboard');
+            })
+            .catch((error) => console.log(error.message));
     }
 
     return (
@@ -59,15 +67,15 @@ function LoginPage() {
 
                             <form name="loginForm" noValidate className="flex flex-col justify-center w-full" onSubmit={handleSubmit(onSubmit)}>
                                 <Controller
-                                    name="email"
+                                    name="username"
                                     control={control}
                                     render={({field}) => (
                                         <TextField
                                             {...field}
                                             className="mb-16"
-                                            label="Email"
+                                            label="Username"
                                             autoFocus
-                                            type="email"
+                                            type="text"
                                             error={!!errors.email}
                                             helperText={errors?.email?.message}
                                             variant="outlined"
@@ -76,7 +84,6 @@ function LoginPage() {
                                         />
                                     )}
                                 />
-
                                 <Controller
                                     name="password"
                                     control={control}
@@ -97,7 +104,7 @@ function LoginPage() {
 
                                 <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between">
                                     <Controller
-                                        name="remember"
+                                        name="rememberMe"
                                         control={control}
                                         render={({field}) => (
                                             <FormControl>
