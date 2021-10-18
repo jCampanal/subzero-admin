@@ -16,6 +16,7 @@ import {useDispatch} from 'react-redux';
 import {postLogin} from 'app/api-conn/User';
 import {useHistory} from 'react-router';
 import {login} from '../../store/auth/authorizationSlice';
+import {logUser} from '../../store/user/userSlice';
 
 const useStyles = makeStyles((theme) => ({
     root: {},
@@ -48,6 +49,7 @@ function LoginPage() {
                         refreshToken: response.data.tokenRefresh,
                     })
                 );
+                dispatch(logUser());
                 history.push('/dashboard');
             })
             .catch((error) => console.log(error.message));

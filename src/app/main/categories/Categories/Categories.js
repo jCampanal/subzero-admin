@@ -1,6 +1,8 @@
 import React, {lazy, memo, useEffect, useState} from 'react';
 import FusePageCarded from '@fuse/core/FusePageCarded';
 import {useTranslation} from 'react-i18next';
+import {useSelector} from 'react-redux';
+import {Redirect} from 'react-router';
 import {getCategories} from '../../../api-conn/categories';
 
 const Header = lazy(() => import('app/main/products/Products/PageCardedHeader'));
@@ -38,6 +40,7 @@ const rows = [
 ];
 
 function Categories() {
+    const loggedUser = useSelector((state) => state.user);
     const {t} = useTranslation('categories');
     const [categories, populateCategories] = useState([]);
     const loadCategories = () => {
@@ -46,6 +49,7 @@ function Categories() {
             .catch((error) => console.log(error));
     };
     useEffect(loadCategories, []);
+    if (!loggedUser.logged) return <Redirect to="/login" />;
     return (
         <FusePageCarded
             classes={{
