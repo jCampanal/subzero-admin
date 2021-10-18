@@ -1,4 +1,5 @@
 import store from '../store';
+import {logoutUser} from '../store/user/userSlice';
 import {login} from '../store/auth/authorizationSlice';
 
 const {default: axios} = require('axios');
@@ -20,7 +21,11 @@ apiClient.interceptors.request.use(
 );
 
 const refreshTokenUrl = '/User/refresh-token';
-const postRefreshToken = (token) => apiClient.post(refreshTokenUrl, token).then((response) => response.data.data);
+const postRefreshToken = (token) =>
+    apiClient
+        .post(refreshTokenUrl, token)
+        .then((response) => response.data.data)
+        .catch(() => ({invalid: true}));
 
 apiClient.interceptors.response.use(
     (response) => {
@@ -31,11 +36,15 @@ apiClient.interceptors.response.use(
         if (error.response.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
             const payload = {
-                refreshToken: store.getState().login.refreshToken,
+                refreshToken: store.getState().authorization.refreshToken,
             };
-            const {token, tokenRefresh} = await postRefreshToken(JSON.stringify(payload));
-            store.dispatch(login({token, refreshToken: tokenRefresh}));
-            axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+            const {token, tokenRefresh, invalid} = await postRefreshToken(JSON.stringify(payload));
+            if (!invalid) {
+                store.dispatch(login({token, refreshToken: tokenRefresh}));
+                axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+            } else {
+                store.dispatch(logoutUser());
+            }
             return apiClient(originalRequest);
         }
         return Promise.reject(error);
