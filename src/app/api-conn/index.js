@@ -6,15 +6,15 @@ const {default: axios} = require('axios');
 
 const apiClient = axios.create({
     baseURL: 'https://31.220.21.190:5000/api',
+    headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+    },
 });
 
 apiClient.interceptors.request.use(
     (config) => {
-        config.headers = {
-            Authorization: `Bearer ${store.getState().authorization.token}`,
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        };
+        config.headers.authorization = `Bearer ${store.getState().authorization.token}`;
         return config;
     },
     (error) => Promise.reject(error)
