@@ -54,10 +54,6 @@ function CategoriesTable(props) {
         setSelected([]);
     }
 
-    function handleClick(item) {
-        history.push(`/category/${item.id}`);
-    }
-
     function handleCheck(event, id) {
         const selectedIndex = selected.indexOf(id);
         let newSelected = [];
@@ -120,7 +116,7 @@ function CategoriesTable(props) {
                                     tabIndex={-1}
                                     key={category.id}
                                     selected={isSelected}
-                                    onClick={(event) => handleClick(category)}
+                                    onClick={() => history.push(`/category/${category.id}`)}
                                 >
                                     <TableCell className="w-40 md:w-64 text-center" padding="none">
                                         <Checkbox
