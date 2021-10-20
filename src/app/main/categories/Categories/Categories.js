@@ -2,7 +2,7 @@ import React, {lazy, memo, useEffect, useState} from 'react';
 import FusePageCarded from '@fuse/core/FusePageCarded';
 import {useTranslation} from 'react-i18next';
 import {useSelector} from 'react-redux';
-import {Redirect} from 'react-router';
+import {Redirect, useHistory} from 'react-router';
 import {getCategories} from '../../../api-conn/categories';
 import rows from './rows';
 
@@ -11,6 +11,7 @@ const CategoriesTable = lazy(() => import('./CategoriesTable'));
 
 function Categories() {
     const loggedUser = useSelector((state) => state.user);
+    const history = useHistory();
     const {t} = useTranslation('categories');
     const [categories, populateCategories] = useState([]);
     const loadCategories = () => {
@@ -19,12 +20,14 @@ function Categories() {
             .catch((error) => console.log(error));
     };
     useEffect(loadCategories, []);
-    const [creatingCategory, toggleCreatingCategory] = useState(false);
     const createCategory = () => {
-        toggleCreatingCategory(true);
+        history.push('/categories/create');
+    };
+    const editCategory = (categoryId) => {
+        const category = categories.filter((item) => item.id === categoryId)[0];
+        history.push(`/categories/${categoryId}/edit`, {category});
     };
     if (!loggedUser.logged) return <Redirect to="/login" />;
-    if (creatingCategory) return <Redirect to="/categories/create" />;
     return (
         <FusePageCarded
             classes={{
@@ -41,7 +44,7 @@ function Categories() {
                     searchHint={t('SEARCH_BY_NAME')}
                 />
             }
-            content={<CategoriesTable categories={categories} rows={rows} />}
+            content={<CategoriesTable categories={categories} rows={rows} editCallback={editCategory} />}
             innerScroll
         />
     );
