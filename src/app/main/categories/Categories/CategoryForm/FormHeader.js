@@ -5,14 +5,15 @@ import {useTheme} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import {motion} from 'framer-motion';
 import {Link} from 'react-router-dom';
-import {Redirect, useParams} from 'react-router';
+import {Redirect, useHistory, useParams} from 'react-router';
 import {useTranslation} from 'react-i18next';
 import {useFormContext} from 'react-hook-form';
-import {postCategory} from '../../../../api-conn/categories';
+import {postCategory, putCategory} from '../../../../api-conn/categories';
 // import _ from '@lodash';
 
 function ProductHeader() {
     const theme = useTheme();
+    const history = useHistory();
     const {id} = useParams();
     const {t} = useTranslation('category-form');
     const methods = useFormContext();
@@ -62,10 +63,16 @@ function ProductHeader() {
                         const formData = new FormData();
                         formData.append('Name', getValues().name);
                         formData.append('Link', `https://subzeroiceservices.com/category/${getValues().link}`);
-                        formData.append('File', getValues().file);
-                        postCategory(formData)
-                            .then(() => setSaved(true))
-                            .catch((error) => console.log(error));
+                        if (id === undefined && getValues().file !== null) formData.append('File', getValues().file);
+                        if (id) {
+                            putCategory(id, formData)
+                                .then(() => history.push('/categories'))
+                                .catch((error) => console.log(error));
+                        } else {
+                            postCategory(formData)
+                                .then(() => setSaved(true))
+                                .catch((error) => console.log(error));
+                        }
                     }}
                     // disabled={_.isEmpty(dirtyFields) || !isValid}
                     // onClick={handleSaveProduct}
