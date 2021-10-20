@@ -5,7 +5,6 @@ import {makeStyles} from '@material-ui/core/styles';
 import {orange} from '@material-ui/core/colors';
 import clsx from 'clsx';
 import Icon from '@material-ui/core/Icon';
-import {useParams} from 'react-router';
 import {useTranslation} from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
@@ -44,7 +43,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function FormControls(props) {
-    const {id} = useParams();
     const {t} = useTranslation('category-form');
     const methods = useFormContext();
     const {control, formState} = methods;
@@ -77,6 +75,7 @@ function FormControls(props) {
                 control={control}
                 render={({field}) => <TextField {...field} className="mt-8 mb-16" id="link" label="Link" type="text" variant="outlined" fullWidth />}
             />
+
             <Controller
                 name="file"
                 control={control}
@@ -89,9 +88,16 @@ function FormControls(props) {
                         )}
                     >
                         <input accept="image/*" className="hidden" id="button-file" type="file" onChange={(e) => onChange(e.target.files[0])} />
-                        <Icon fontSize="large" color="action">
-                            cloud_upload
-                        </Icon>
+                        {props.imgUrl === '' && (
+                            <Icon fontSize="large" color="action">
+                                cloud_upload
+                            </Icon>
+                        )}
+                        {props.imgUrl !== '' && (
+                            <div>
+                                <img src={props.imgUrl} alt="Category thumbnail" />
+                            </div>
+                        )}
                     </label>
                 )}
             />
