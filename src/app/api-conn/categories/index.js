@@ -9,3 +9,5 @@ export const postCategory = (data) => apiClient.post(categoryBase, data, {header
 
 export const putCategory = (categoryId, data) =>
     apiClient.put(`${categoryBase}/${categoryId}`, data, {headers: {'Content-Type': 'multipart/form-data'}}).then((response) => response);
+
+export const getCategory = (categoryId) => apiClient.get(`${categoryBase}/${categoryId}`).then((response) => response.data);
