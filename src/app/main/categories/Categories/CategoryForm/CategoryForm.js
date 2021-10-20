@@ -1,28 +1,31 @@
+import React from 'react';
+import {FormProvider, useForm} from 'react-hook-form';
 import FusePageCarded from '@fuse/core/FusePageCarded';
-import React, {lazy} from 'react';
-import {useParams} from 'react-router';
-import {useTranslation} from 'react-i18next';
+import FormControls from './FormControls';
+import FormHeader from './FormHeader';
 
-const Header = lazy(() => import('app/main/products/Products/PageCardedHeader'));
 const CategoryForm = () => {
-    const {id} = useParams();
-    const {t} = useTranslation('category-form');
+    const methods = useForm();
     return (
-        <FusePageCarded
-            classes={{
-                content: 'flex',
-                contentCard: 'overflow-hidden',
-                header: 'min-h-72 h-72 sm:h-136 sm:min-h-136',
-            }}
-            header={
-                <Header
-                    iconText="category"
-                    title={t(id ? 'EDITING_CATEGORY' : 'CREATING_CATEGORY')}
-                    addButtonLabel={t('ADD_CATEGORY')}
-                    searchHint={t('SEARCH_BY_NAME')}
-                />
-            }
-        />
+        <FormProvider {...methods}>
+            <FusePageCarded
+                classes={{
+                    toolbar: 'p-0',
+                    header: 'min-h-72 h-72 sm:h-136 sm:min-h-136',
+                }}
+                header={<FormHeader />}
+                contentToolbar={
+                    <div className="p-16 sm:p-24 max-w-2xl">
+                        <h1>Some text for the header</h1>
+                    </div>
+                }
+                content={
+                    <div className="p-16 sm:p-24 max-w-2xl">
+                        <FormControls />
+                    </div>
+                }
+            />
+        </FormProvider>
     );
 };
 
