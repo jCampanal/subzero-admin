@@ -31,7 +31,8 @@ const CategoryHeader = (props) => {
                         <motion.div initial={{x: -20}} animate={{x: 0, transition: {delay: 0.3}}}>
                             <Typography className="text-16 sm:text-20 truncate font-semibold">{name}</Typography>
                             <Typography variant="caption" className="font-medium">
-                                {products.length} productos
+                                {t('PRODUCTS', {count: products.length})}
+
                             </Typography>
                         </motion.div>
                     </div>
@@ -45,7 +46,7 @@ const CategoryHeader = (props) => {
                     startIcon={<Icon className="hidden sm:flex">delete</Icon>}
                     onClick={() => history.push(`/category/${id}/delete`)}
                 >
-                    Remove
+                    {t('REMOVE')}
                 </Button>
                 <Button
                     className="whitespace-nowrap mx-4"
