@@ -23,6 +23,7 @@ import OrderCalendarPageConfig from 'app/main/order-calendar/OrderCalendarPageCo
 import DriversMonitorPageConfig from 'app/main/drivers-monitor/DriversMonitorPageConfig';
 import CategoryFormConfig from '../main/categories/Categories/CategoryForm/CategoryFormConfig';
 import CategoryConfig from '../main/categories/Categories/Category/CategoryConfig';
+import CategoryDeleteConfig from '../main/categories/Categories/CategoryDelete/CategoryDeleteConfig';
 
 const routeConfigs = [
     LoginPageConfig,
@@ -30,6 +31,7 @@ const routeConfigs = [
     CategoriesPageConfig,
     CategoryConfig,
     CategoryFormConfig,
+    CategoryDeleteConfig,
     ProductsPageConfig,
     CoolersPageConfig,
     CoolersActivityPageConfig,
