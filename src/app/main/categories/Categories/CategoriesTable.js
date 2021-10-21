@@ -9,13 +9,14 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import {motion} from 'framer-motion';
 import React, {useEffect, useState} from 'react';
-import {withRouter} from 'react-router-dom';
 import TableHeader from 'app/main/products/Products/TableHeader';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import {useTranslation} from 'react-i18next';
+import {useHistory} from 'react-router';
 
 function CategoriesTable(props) {
+    const history = useHistory();
     const {t} = useTranslation('categories');
     const [selected, setSelected] = useState([]);
     const [data, setData] = useState(props.categories);
@@ -51,10 +52,6 @@ function CategoriesTable(props) {
 
     function handleDeselect() {
         setSelected([]);
-    }
-
-    function handleClick(item) {
-        props.history.push(`/apps/e-commerce/products/${item.id}/${item.handle}`);
     }
 
     function handleCheck(event, id) {
@@ -119,7 +116,7 @@ function CategoriesTable(props) {
                                     tabIndex={-1}
                                     key={category.id}
                                     selected={isSelected}
-                                    onClick={(event) => handleClick(category)}
+                                    onClick={() => history.push(`/category/${category.id}`)}
                                 >
                                     <TableCell className="w-40 md:w-64 text-center" padding="none">
                                         <Checkbox
@@ -141,11 +138,23 @@ function CategoriesTable(props) {
                                         {category.link}
                                     </TableCell>
 
-                                    <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                                        <Button color="primary">
+                                    <TableCell className="p-4 md:p-16" component="th" scope="row" align="right" onClick={() => null}>
+                                        <Button
+                                            color="primary"
+                                            onClick={(event) => {
+                                                event.stopPropagation();
+                                                props.editCallback(category.id);
+                                            }}
+                                        >
                                             <Icon>edit</Icon> {t('EDIT')}
                                         </Button>
-                                        <Button color="primary">
+                                        <Button
+                                            color="primary"
+                                            onClick={(event) => {
+                                                event.stopPropagation();
+                                                history.push(`/category/${category.id}/delete`);
+                                            }}
+                                        >
                                             <Icon>delete</Icon> {t('DELETE')}
                                         </Button>
                                     </TableCell>
@@ -176,9 +185,10 @@ function CategoriesTable(props) {
     );
 }
 
-export default withRouter(CategoriesTable);
+export default CategoriesTable;
 
 CategoriesTable.propTypes = {
     categories: PropTypes.array.isRequired,
     rows: PropTypes.array.isRequired,
+    editCallback: PropTypes.func.isRequired,
 };

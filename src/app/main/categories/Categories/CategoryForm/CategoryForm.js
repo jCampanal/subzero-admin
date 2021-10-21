@@ -1,11 +1,20 @@
 import React from 'react';
 import {FormProvider, useForm} from 'react-hook-form';
 import FusePageCarded from '@fuse/core/FusePageCarded';
+import {useLocation, useParams} from 'react-router';
 import FormControls from './FormControls';
 import FormHeader from './FormHeader';
 
 const CategoryForm = () => {
-    const methods = useForm();
+    const location = useLocation();
+    const {id} = useParams();
+    const methods = useForm({
+        defaultValues: {
+            name: id ? location.state.category.name : '',
+            link: id ? location.state.category.link.slice(location.state.category.link.lastIndexOf('/') + 1) : '',
+            file: null,
+        },
+    });
     return (
         <FormProvider {...methods}>
             <FusePageCarded
@@ -21,7 +30,7 @@ const CategoryForm = () => {
                 }
                 content={
                     <div className="p-16 sm:p-24 max-w-2xl">
-                        <FormControls />
+                        <FormControls imgUrl={id ? location.state.category.imageURL : ''} />
                     </div>
                 }
             />
