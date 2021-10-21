@@ -38,7 +38,13 @@ const CategoryHeader = (props) => {
                 </div>
             </div>
             <motion.div className="flex" initial={{opacity: 0, x: 20}} animate={{opacity: 1, x: 0, transition: {delay: 0.3}}}>
-                <Button className="whitespace-nowrap mx-4" variant="contained" color="secondary" startIcon={<Icon className="hidden sm:flex">delete</Icon>}>
+                <Button
+                    className="whitespace-nowrap mx-4"
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<Icon className="hidden sm:flex">delete</Icon>}
+                    onClick={() => history.push(`/category/${id}/delete`)}
+                >
                     Remove
                 </Button>
                 <Button
@@ -46,7 +52,7 @@ const CategoryHeader = (props) => {
                     variant="contained"
                     color="secondary"
                     onClick={() => history.push(`/categories/${id}/edit`, {category: props.category})}
-                    startIcon={<Icon className="hidden sm:flex">pencil</Icon>}
+                    startIcon={<Icon className="hidden sm:flex">edit</Icon>}
                 >
                     {t('EDIT')}
                 </Button>
