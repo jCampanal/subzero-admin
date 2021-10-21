@@ -148,7 +148,13 @@ function CategoriesTable(props) {
                                         >
                                             <Icon>edit</Icon> {t('EDIT')}
                                         </Button>
-                                        <Button color="primary">
+                                        <Button
+                                            color="primary"
+                                            onClick={(event) => {
+                                                event.stopPropagation();
+                                                history.push(`/category/${category.id}/delete`);
+                                            }}
+                                        >
                                             <Icon>delete</Icon> {t('DELETE')}
                                         </Button>
                                     </TableCell>
