@@ -1,6 +1,9 @@
 import FusePageCarded from '@fuse/core/FusePageCarded';
-import React, {lazy, memo} from 'react';
+import React, {lazy, memo, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
+import {useHistory} from 'react-router';
+import {useSelector} from 'react-redux';
+import {getProducts} from '../../../api-conn/products';
 
 const Header = lazy(() => import('./PageCardedHeader'));
 const ProductsTable = lazy(() => import('./ProductsTable'));
@@ -50,102 +53,23 @@ const rows = [
     },
 ];
 
-const dummyProducts = [
-    {
-        id: 1,
-        category: 'Lorem',
-        name: 'Grep',
-        units: 'Gue Ueg Egu Geu',
-        visible: true,
-    },
-    {
-        id: 2,
-        category: 'Dolor',
-        name: 'Grep',
-        units: 'Gue Ueg Egu Geu',
-        visible: true,
-    },
-    {
-        id: 3,
-        category: 'Ipsum',
-        name: 'Grep',
-        units: 'Gue Ueg Egu Geu',
-        visible: true,
-    },
-    {
-        id: 4,
-        category: 'Dolor',
-        name: 'Grep',
-        units: 'Gue Ueg Egu Geu',
-        visible: true,
-    },
-    {
-        id: 5,
-        category: 'Dolor',
-        name: 'Grep',
-        units: 'Gue Ueg Egu Geu',
-        visible: true,
-    },
-    {
-        id: 6,
-        category: 'Lorem',
-        name: 'Grep',
-        units: 'Gue Ueg Egu Geu',
-        visible: true,
-    },
-    {
-        id: 7,
-        category: 'Ipsum',
-        name: 'Grep',
-        units: 'Gue Ueg Egu Geu',
-        visible: true,
-    },
-    {
-        id: 8,
-        category: 'Ipsum',
-        name: 'Grep',
-        units: 'Gue Ueg Egu Geu',
-        visible: true,
-    },
-    {
-        id: 9,
-        category: 'Lorem',
-        name: 'Grep',
-        units: 'Gue Ueg Egu Geu',
-        visible: true,
-    },
-    {
-        id: 10,
-        category: 'Lorem',
-        name: 'Grep',
-        units: 'Gue Ueg Egu Geu',
-        visible: true,
-    },
-    {
-        id: 11,
-        category: 'Lorem',
-        name: 'Grep',
-        units: 'Gue Ueg Egu Geu',
-        visible: false,
-    },
-    {
-        id: 12,
-        category: 'Lorem',
-        name: 'Grep',
-        units: 'Gue Ueg Egu Geu',
-        visible: false,
-    },
-    {
-        id: 13,
-        category: 'Lorem',
-        name: 'Grep',
-        units: 'Gue Ueg Egu Geu',
-        visible: true,
-    },
-];
-
 function Products() {
+    const history = useHistory();
     const {t} = useTranslation('products');
+    const loggedUser = useSelector((state) => state.user);
+    const [products, setProducts] = useState([]);
+    const loadProducts = async () => {
+        await getProducts()
+            .then((data) => setProducts(data))
+            .catch(() => setProducts([]));
+    };
+    const askForLogin = () => {
+        if (!loggedUser.logged) history.push('/login');
+    };
+    useEffect(() => {
+        loadProducts().finally();
+    }, []);
+    useEffect(askForLogin, []);
     return (
         <FusePageCarded
             classes={{
@@ -153,8 +77,16 @@ function Products() {
                 contentCard: 'overflow-hidden',
                 header: 'min-h-72 h-72 sm:h-136 sm:min-h-136',
             }}
-            header={<Header iconText="shopping_cart" title={t('PRODUCTS')} addButtonLabel={t('ADD_PRODUCT')} searchHint={t('SEARCH_BY_NAME')} />}
-            content={<ProductsTable products={dummyProducts} rows={rows} />}
+            header={
+                <Header
+                    iconText="shopping_cart"
+                    title={t('PRODUCTS')}
+                    addButtonLabel={t('ADD_PRODUCT')}
+                    addButtonCallback={() => history.push('/products/create')}
+                    searchHint={t('SEARCH_BY_NAME')}
+                />
+            }
+            content={<ProductsTable products={products} rows={rows} />}
             innerScroll
         />
     );
