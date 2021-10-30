@@ -59,12 +59,17 @@ function LoginPage() {
         <div className={clsx(classes.root, 'flex flex-col flex-auto items-center justify-center p-16 sm:p-32')}>
             <div className="flex flex-col items-center justify-center w-full">
                 <motion.div initial={{opacity: 0, scale: 0.6}} animate={{opacity: 1, scale: 1}}>
-                    <Card className="w-full max-w-384">
+                    <Card className="w-full max-w-512">
                         <CardContent className="flex flex-col items-center justify-center p-16 sm:p-24 md:p-32">
-                            <img className="w-128 m-32" src={`${process.env.PUBLIC_URL}/assets/images/logos/subzero_lg.png`} alt="logo" />
+                            <img className="w-128 m-32 mb-0" src={`${process.env.PUBLIC_URL}/assets/images/logos/subzero_lg.png`} alt="logo" />
 
-                            <Typography variant="h6" className="mt-16 mb-24 font-semibold text-18 sm:text-24">
-                                Login to your account
+                            <Typography variant="h6" className="mt-5 font-semibold text-24 sm:text-24">
+                                Please Sign In
+                            </Typography>
+
+                            <Typography variant="caption" className="mt-2 mb-24 font-300 text-16 sm:text-14 text-center">
+                                We specialize in the distribution of dry ice and temperature controlled packaging. We are committed to always exceed our
+                                customer’s expectations by delivering to them: excellent Customer Service, Quality Products, and Competitive Pricing.
                             </Typography>
 
                             <form name="loginForm" noValidate className="flex flex-col justify-center w-full" onSubmit={handleSubmit(onSubmit)}>
