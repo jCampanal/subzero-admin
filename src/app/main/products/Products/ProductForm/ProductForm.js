@@ -1,11 +1,12 @@
-import React, {useEffect} from 'react';
+import React, {lazy, useEffect} from 'react';
 import {FormProvider, useForm} from 'react-hook-form';
 import FusePageCarded from '@fuse/core/FusePageCarded';
 import {useHistory, useLocation, useParams} from 'react-router';
 import {useTranslation} from 'react-i18next';
 import {useSelector} from 'react-redux';
-import FormControls from './FormControls';
-import FormHeader from './FormHeader';
+
+const Header = lazy(() => import('./FormHeader').then((header) => header));
+const FormControls = lazy(() => import('./FormControls').then((form) => form));
 
 const ProductForm = () => {
     const logged = useSelector((state) => state.user.logged);
@@ -40,7 +41,7 @@ const ProductForm = () => {
                     toolbar: 'p-0',
                     header: 'min-h-72 h-72 sm:h-136 sm:min-h-136',
                 }}
-                header={<FormHeader />}
+                header={<Header />}
                 contentToolbar={<div className="p-16 sm:p-24 max-w-2xl">{id ? <h1>{product.name}</h1> : <h1>{t('CREATE_NEW')}</h1>}</div>}
                 content={
                     <div className="p-16 sm:p-24 max-w-2xl">
