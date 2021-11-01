@@ -1,36 +1,38 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {FormProvider, useForm} from 'react-hook-form';
 import FusePageCarded from '@fuse/core/FusePageCarded';
-import {useLocation, useParams} from 'react-router';
+import {useHistory, useLocation, useParams} from 'react-router';
 import {useTranslation} from 'react-i18next';
+import {useSelector} from 'react-redux';
 import FormControls from './FormControls';
 import FormHeader from './FormHeader';
-import {getSaleUnits} from '../../../../api-conn/products';
 
 const ProductForm = () => {
+    const logged = useSelector((state) => state.user.logged);
+    const history = useHistory();
     const location = useLocation();
     const {id} = useParams();
     const product = id ? location.state.product : {};
     const {t} = useTranslation('product-form');
-    const [salesUnits, setSalesUnits] = useState([]);
-    const loadProductTypes = async () => {
-        const data = await getSaleUnits();
-        setSalesUnits(data);
-    };
     const methods = useForm({
         defaultValues: {
             name: id ? product.name : '',
             description: id ? product.description : '',
             visible: id ? product.visible : true,
-            categoryId: id ? product.category.id : 0,
-            salesUnitsId: id ? salesUnits.filter((unit) => unit.id === product.salesUnits.id)[0] : [],
-            decimals: id ? product.decimals : [],
+            categoryId: id ? product.category.id : '',
+            salesUnitsId: id ? product.salesUnits.map((item) => ({id: item.saleUnitId})) : [],
+            decimals: id ? product.salesUnits.map((item) => ({id: item.saleUnitId, accept: item.decimals})) : [],
             file: null,
         },
     });
+
     useEffect(() => {
-        loadProductTypes().finally();
-    }, []);
+        if (!logged) history.push('/login');
+    }, [logged, history]);
+    useEffect(() => {
+        document.title = id ? t('EDITING') : t('CREATING');
+    }, [id, t]);
+
     return (
         <FormProvider {...methods}>
             <FusePageCarded
