@@ -2,11 +2,12 @@ import FusePageCarded from '@fuse/core/FusePageCarded';
 import React, {lazy, memo, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useHistory} from 'react-router';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {getProducts} from '../../../api-conn/products';
+import {showMessage} from '../../../store/fuse/messageSlice';
 
-const Header = lazy(() => import('./PageCardedHeader'));
-const ProductsTable = lazy(() => import('./ProductsTable'));
+const Header = lazy(() => import('./PageCardedHeader').then((header) => header));
+const ProductsTable = lazy(() => import('./ProductsTable').then((table) => table));
 
 const rows = [
     {
@@ -55,21 +56,40 @@ const rows = [
 
 function Products() {
     const history = useHistory();
+    const dispatch = useDispatch();
     const {t} = useTranslation('products');
-    const loggedUser = useSelector((state) => state.user);
+    const {
+        user: {logged},
+    } = useSelector((state) => state);
     const [products, setProducts] = useState([]);
-    const loadProducts = async () => {
-        await getProducts()
-            .then((data) => setProducts(data))
-            .catch(() => setProducts([]));
-    };
-    const askForLogin = () => {
-        if (!loggedUser.logged) history.push('/login');
-    };
+
     useEffect(() => {
-        loadProducts().finally();
+        if (!logged) history.push('/login');
+    }, [logged, history]);
+    useEffect(() => {
+        document.title = 'Products - Subzero Ice Services';
     }, []);
-    useEffect(askForLogin, []);
+    useEffect(() => {
+        const loadProducts = async () => {
+            await getProducts()
+                .then((data) => setProducts(data.data))
+                .catch(() => {
+                    setProducts([]);
+                    dispatch(
+                        showMessage({
+                            message: t('PROBLEM_FETCHING'),
+                            anchorOrigin: {
+                                vertical: 'top',
+                                horizontal: 'right',
+                            },
+                            variant: 'error',
+                        })
+                    );
+                });
+        };
+        loadProducts().finally();
+    }, [dispatch, t]);
+
     return (
         <FusePageCarded
             classes={{
@@ -86,7 +106,7 @@ function Products() {
                     searchHint={t('SEARCH_BY_NAME')}
                 />
             }
-            content={<ProductsTable products={products} rows={rows} />}
+            content={<ProductsTable data={products} rows={rows} />}
             innerScroll
         />
     );
