@@ -1,6 +1,6 @@
 import {motion} from 'framer-motion';
 import {Controller, useForm} from 'react-hook-form';
-import React from 'react';
+import React, {useEffect} from 'react';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -15,10 +15,13 @@ import _ from '@lodash';
 import {useDispatch} from 'react-redux';
 import {postLogin} from 'app/api-conn/User';
 import {useHistory} from 'react-router';
+import {yupResolver} from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import {login} from '../../store/auth/authorizationSlice';
 import {logUser} from '../../store/user/userSlice';
+import {showMessage} from '../../store/fuse/messageSlice';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     root: {},
 }));
 
@@ -28,14 +31,20 @@ const defaultValues = {
     rememberMe: true,
 };
 
+const validation = yup.object().shape({
+    username: yup.string().required(),
+    password: yup.string().required(),
+});
+
 function LoginPage() {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
 
     const {control, formState, handleSubmit} = useForm({
-        mode: 'onChange',
+        mode: 'all',
         defaultValues,
+        resolver: yupResolver(validation),
     });
 
     const {isValid, dirtyFields, errors} = formState;
@@ -50,10 +59,52 @@ function LoginPage() {
                     })
                 );
                 dispatch(logUser());
-                history.push('/dashboard');
+                dispatch(
+                    showMessage({
+                        message: 'Welcome!',
+                        variant: 'success',
+                        anchorOrigin: {
+                            vertical: 'top',
+                            horizontal: 'right',
+                        },
+                    })
+                );
+                if (history.length < 3) {
+                    history.push('/dashboard');
+                } else {
+                    history.goBack();
+                }
             })
-            .catch((error) => console.log(error.message));
+            .catch((error) => {
+                if (error.response && error.response.status === 400) {
+                    dispatch(
+                        showMessage({
+                            message: 'Bad credentials',
+                            variant: 'error',
+                            anchorOrigin: {
+                                vertical: 'top',
+                                horizontal: 'right',
+                            },
+                        })
+                    );
+                } else {
+                    dispatch(
+                        showMessage({
+                            message: 'We had an error trying to login you in. Please try again later',
+                            variant: 'error',
+                            anchorOrigin: {
+                                vertical: 'top',
+                                horizontal: 'right',
+                            },
+                        })
+                    );
+                }
+            });
     }
+
+    useEffect(() => {
+        document.title = 'Login - Subzero Ice Services';
+    }, []);
 
     return (
         <div className={clsx(classes.root, 'flex flex-col flex-auto items-center justify-center p-16 sm:p-32')}>
@@ -83,8 +134,7 @@ function LoginPage() {
                                             label="Username"
                                             autoFocus
                                             type="text"
-                                            error={!!errors.email}
-                                            helperText={errors?.email?.message}
+                                            error={!!errors.username}
                                             variant="outlined"
                                             required
                                             fullWidth
@@ -101,7 +151,6 @@ function LoginPage() {
                                             label="Password"
                                             type="password"
                                             error={!!errors.password}
-                                            helperText={errors?.password?.message}
                                             variant="outlined"
                                             required
                                             fullWidth
