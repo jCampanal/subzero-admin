@@ -33,7 +33,7 @@ apiClient.interceptors.response.use(
     },
     async (error) => {
         const originalRequest = error.config;
-        if (error.response.status === 401 && !originalRequest.isRetrying) {
+        if (error.response?.status === 401 && !originalRequest.isRetrying) {
             originalRequest.isRetrying = true;
             const payload = {
                 refreshToken: store.getState().authorization.refreshToken,
