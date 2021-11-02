@@ -1,9 +1,13 @@
 import FusePageCarded from '@fuse/core/FusePageCarded';
-import React, {lazy, memo} from 'react';
+import React, {lazy, memo, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
+import {useHistory} from 'react-router';
+import {useDispatch, useSelector} from 'react-redux';
+import {getProducts} from '../../../api-conn/products';
+import {showMessage} from '../../../store/fuse/messageSlice';
 
-const Header = lazy(() => import('./PageCardedHeader'));
-const ProductsTable = lazy(() => import('./ProductsTable'));
+const Header = lazy(() => import('./PageCardedHeader').then((header) => header));
+const ProductsTable = lazy(() => import('./ProductsTable').then((table) => table));
 
 const rows = [
     {
@@ -50,102 +54,42 @@ const rows = [
     },
 ];
 
-const dummyProducts = [
-    {
-        id: 1,
-        category: 'Lorem',
-        name: 'Grep',
-        units: 'Gue Ueg Egu Geu',
-        visible: true,
-    },
-    {
-        id: 2,
-        category: 'Dolor',
-        name: 'Grep',
-        units: 'Gue Ueg Egu Geu',
-        visible: true,
-    },
-    {
-        id: 3,
-        category: 'Ipsum',
-        name: 'Grep',
-        units: 'Gue Ueg Egu Geu',
-        visible: true,
-    },
-    {
-        id: 4,
-        category: 'Dolor',
-        name: 'Grep',
-        units: 'Gue Ueg Egu Geu',
-        visible: true,
-    },
-    {
-        id: 5,
-        category: 'Dolor',
-        name: 'Grep',
-        units: 'Gue Ueg Egu Geu',
-        visible: true,
-    },
-    {
-        id: 6,
-        category: 'Lorem',
-        name: 'Grep',
-        units: 'Gue Ueg Egu Geu',
-        visible: true,
-    },
-    {
-        id: 7,
-        category: 'Ipsum',
-        name: 'Grep',
-        units: 'Gue Ueg Egu Geu',
-        visible: true,
-    },
-    {
-        id: 8,
-        category: 'Ipsum',
-        name: 'Grep',
-        units: 'Gue Ueg Egu Geu',
-        visible: true,
-    },
-    {
-        id: 9,
-        category: 'Lorem',
-        name: 'Grep',
-        units: 'Gue Ueg Egu Geu',
-        visible: true,
-    },
-    {
-        id: 10,
-        category: 'Lorem',
-        name: 'Grep',
-        units: 'Gue Ueg Egu Geu',
-        visible: true,
-    },
-    {
-        id: 11,
-        category: 'Lorem',
-        name: 'Grep',
-        units: 'Gue Ueg Egu Geu',
-        visible: false,
-    },
-    {
-        id: 12,
-        category: 'Lorem',
-        name: 'Grep',
-        units: 'Gue Ueg Egu Geu',
-        visible: false,
-    },
-    {
-        id: 13,
-        category: 'Lorem',
-        name: 'Grep',
-        units: 'Gue Ueg Egu Geu',
-        visible: true,
-    },
-];
-
 function Products() {
+    const history = useHistory();
+    const dispatch = useDispatch();
     const {t} = useTranslation('products');
+    const {
+        user: {logged},
+    } = useSelector((state) => state);
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        if (!logged) history.push('/login');
+    }, [logged, history]);
+    useEffect(() => {
+        document.title = 'Products - Subzero Ice Services';
+    }, []);
+    useEffect(() => {
+        const loadProducts = async () => {
+            await getProducts()
+                .then((data) => setProducts(data.data))
+                .catch(() => {
+                    setProducts([]);
+                    dispatch(
+                        showMessage({
+                            message: t('PROBLEM_FETCHING'),
+                            anchorOrigin: {
+                                vertical: 'top',
+                                horizontal: 'right',
+                            },
+                            variant: 'error',
+                        })
+                    );
+                });
+        };
+        loadProducts().finally();
+    }, [dispatch, t]);
+
     return (
         <FusePageCarded
             classes={{
@@ -153,8 +97,16 @@ function Products() {
                 contentCard: 'overflow-hidden',
                 header: 'min-h-72 h-72 sm:h-136 sm:min-h-136',
             }}
-            header={<Header iconText="shopping_cart" title={t('PRODUCTS')} addButtonLabel={t('ADD_PRODUCT')} searchHint={t('SEARCH_BY_NAME')} />}
-            content={<ProductsTable products={dummyProducts} rows={rows} />}
+            header={
+                <Header
+                    iconText="shopping_cart"
+                    title={t('PRODUCTS')}
+                    addButtonLabel={t('ADD_PRODUCT')}
+                    addButtonCallback={() => history.push('/products/create')}
+                    searchHint={t('SEARCH_BY_NAME')}
+                />
+            }
+            content={<ProductsTable data={products} rows={rows} />}
             innerScroll
         />
     );

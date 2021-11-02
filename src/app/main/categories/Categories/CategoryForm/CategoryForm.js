@@ -4,6 +4,7 @@ import FusePageCarded from '@fuse/core/FusePageCarded';
 import {useLocation, useParams} from 'react-router';
 import FormControls from './FormControls';
 import FormHeader from './FormHeader';
+import { useTranslation } from 'react-i18next';
 
 const CategoryForm = () => {
     const location = useLocation();
@@ -15,6 +16,7 @@ const CategoryForm = () => {
             file: null,
         },
     });
+    const {t} = useTranslation('category-form')
     return (
         <FormProvider {...methods}>
             <FusePageCarded
@@ -25,7 +27,7 @@ const CategoryForm = () => {
                 header={<FormHeader />}
                 contentToolbar={
                     <div className="p-16 sm:p-24 max-w-2xl">
-                        <h1>Some text for the header</h1>
+                        {id?<h1>{location.state.category.name}</h1>:<h1>{t('CREATE_NEW')}</h1>}
                     </div>
                 }
                 content={

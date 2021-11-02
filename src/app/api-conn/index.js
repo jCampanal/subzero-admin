@@ -20,7 +20,7 @@ apiClient.interceptors.request.use(
     (error) => Promise.reject(error)
 );
 
-const refreshTokenUrl = '/User/refresh-token';
+const refreshTokenUrl = '/User/refreshToken';
 const postRefreshToken = (token) =>
     apiClient
         .post(refreshTokenUrl, token)
@@ -33,8 +33,8 @@ apiClient.interceptors.response.use(
     },
     async (error) => {
         const originalRequest = error.config;
-        if (error.response.status === 401 && !originalRequest._retry) {
-            originalRequest._retry = true;
+        if (error.response.status === 401 && !originalRequest.isRetrying) {
+            originalRequest.isRetrying = true;
             const payload = {
                 refreshToken: store.getState().authorization.refreshToken,
             };

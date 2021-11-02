@@ -9,7 +9,7 @@ import {useTranslation} from 'react-i18next';
 const DeleteHeader = (props) => {
     const theme = useTheme();
     const {name, imageURL, products} = props.category;
-    const {t} = useTranslation('category');
+    const {t} = useTranslation('category-delete');
     return (
         <div className="flex flex-1 w-full items-center justify-between">
             <div className="flex flex-col items-start max-w-full min-w-0">
@@ -28,7 +28,7 @@ const DeleteHeader = (props) => {
                         <motion.div initial={{x: -20}} animate={{x: 0, transition: {delay: 0.3}}}>
                             <Typography className="text-16 sm:text-20 truncate font-semibold">{name}</Typography>
                             <Typography variant="caption" className="font-medium">
-                                {products.length} products
+                                {t('PRODUCTS',{count: products.length})}
                             </Typography>
                         </motion.div>
                     </div>

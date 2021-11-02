@@ -34,8 +34,7 @@ const CategoryDelete = () => {
                 header={<DeleteHeader category={category} />}
                 content={
                     <div className="p-16 sm:p-24 max-w-2xl">
-                        <div className="flex justify-center">
-                            <div>
+                        <div className="flex flex-col items-center">
                                 {t('ARE_YOU_SURE')}
                                 <div className="mt-16">
                                     <Button
@@ -58,7 +57,6 @@ const CategoryDelete = () => {
                                     </Button>
                                 </div>
                             </div>
-                        </div>
                     </div>
                 }
             />

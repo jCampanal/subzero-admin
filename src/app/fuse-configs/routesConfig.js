@@ -24,6 +24,8 @@ import DriversMonitorPageConfig from 'app/main/drivers-monitor/DriversMonitorPag
 import CategoryFormConfig from '../main/categories/Categories/CategoryForm/CategoryFormConfig';
 import CategoryConfig from '../main/categories/Categories/Category/CategoryConfig';
 import CategoryDeleteConfig from '../main/categories/Categories/CategoryDelete/CategoryDeleteConfig';
+import ProductFormConfig from '../main/products/Products/ProductForm/ProductFormConfig';
+import SaleUnitFormConfig from '../main/products/Products/SaleUnitForm/SaleUnitFormConfig';
 
 const routeConfigs = [
     LoginPageConfig,
@@ -33,6 +35,8 @@ const routeConfigs = [
     CategoryFormConfig,
     CategoryDeleteConfig,
     ProductsPageConfig,
+    ProductFormConfig,
+    SaleUnitFormConfig,
     CoolersPageConfig,
     CoolersActivityPageConfig,
     CustomersConfig,

@@ -15,6 +15,7 @@ const ProductsPageConfig = {
     routes: [
         {
             path: '/products',
+            exact: true,
             component: React.lazy(() => import('./Products/Products')),
         },
     ],

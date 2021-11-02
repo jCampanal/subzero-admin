@@ -14,18 +14,20 @@ import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import CheckCircleRounded from '@material-ui/icons/CheckCircleRounded';
 import {useTranslation} from 'react-i18next';
+import {useHistory} from 'react-router';
 import TableHeader from './TableHeader';
 
 function ProductsTable(props) {
     const {t} = useTranslation('products');
     const [selected, setSelected] = useState([]);
-    const [data] = useState(props.products);
+    const {data} = props;
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [order, setOrder] = useState({
         direction: 'asc',
         id: null,
     });
+    const history = useHistory();
 
     function handleRequestSort(event, property) {
         const id = property;
@@ -85,7 +87,7 @@ function ProductsTable(props) {
     if (data.length === 0) {
         return (
             <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: {delay: 0.1}}} className="flex flex-1 items-center justify-center h-full">
-                <Typography color="textSecondary" variant="h5">
+                <Typography color="textSecondary" variant="h5" className="text-center">
                     {t('NO_PRODUCTS')}
                 </Typography>
             </motion.div>
@@ -119,7 +121,7 @@ function ProductsTable(props) {
                                     tabIndex={-1}
                                     key={product.id}
                                     selected={isSelected}
-                                    onClick={(event) => handleClick(product)}
+                                    onClick={() => handleClick(product)}
                                 >
                                     <TableCell className="w-40 md:w-64 text-center" padding="none">
                                         <Checkbox
@@ -130,23 +132,24 @@ function ProductsTable(props) {
                                     </TableCell>
 
                                     <TableCell className="w-52 px-4 md:px-0" component="th" scope="row" padding="none">
-                                        <img
-                                            className="w-full block rounded"
-                                            src={`${process.env.PUBLIC_URL}/assets/images/ecommerce/product-image-placeholder.png`}
-                                            alt={product.name}
-                                        />
+                                        <img className="w-full block rounded" src={product.imageURL} alt={product.name} />
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16 truncate" component="th" scope="row">
-                                        {product.category}
+                                        {product.name}
+                                        <Typography>{product.description}</Typography>
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row">
-                                        {product.name}
+                                        {product.category.name}
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                                        {product.units}
+                                        <ul>
+                                            {product.salesUnits.map((item) => (
+                                                <li key={item.saleUnitId}>{item.saleUnitName}</li>
+                                            ))}
+                                        </ul>
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
@@ -158,10 +161,22 @@ function ProductsTable(props) {
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                                        <Button color="primary">
+                                        <Button
+                                            color="primary"
+                                            onClick={(event) => {
+                                                event.stopPropagation();
+                                                history.push(`/products/${product.id}/edit`, {product});
+                                            }}
+                                        >
                                             <Icon>edit</Icon> {t('EDIT')}
                                         </Button>
-                                        <Button color="primary">
+                                        <Button
+                                            color="primary"
+                                            onClick={(event) => {
+                                                event.stopPropagation();
+                                                history.push(`/products/${product.id}/remove`);
+                                            }}
+                                        >
                                             <Icon>delete</Icon> {t('DELETE')}
                                         </Button>
                                     </TableCell>
@@ -195,6 +210,6 @@ function ProductsTable(props) {
 export default withRouter(ProductsTable);
 
 ProductsTable.propTypes = {
-    products: PropTypes.array.isRequired,
+    data: PropTypes.array.isRequired,
     rows: PropTypes.array.isRequired,
 };
