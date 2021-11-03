@@ -51,10 +51,6 @@ function ProvidersTable(props) {
         setSelected([]);
     }
 
-    function handleClick(item) {
-        props.history.push(`/apps/e-commerce/products/${item.id}/${item.handle}`);
-    }
-
     function handleCheck(event, id) {
         const selectedIndex = selected.indexOf(id);
         let newSelected = [];
@@ -117,7 +113,7 @@ function ProvidersTable(props) {
                                     tabIndex={-1}
                                     key={provider.id}
                                     selected={isSelected}
-                                    onClick={() => handleClick(provider)}
+                                    onClick={() => props.showProvider(provider)}
                                 >
                                     <TableCell className="w-40 md:w-64 text-center" padding="none">
                                         <Checkbox
@@ -140,10 +136,22 @@ function ProvidersTable(props) {
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                                        <Button color="primary">
+                                        <Button
+                                            color="primary"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                props.editCallback(provider);
+                                            }}
+                                        >
                                             <Icon>edit</Icon> {t('EDIT')}
                                         </Button>
-                                        <Button color="primary">
+                                        <Button
+                                            color="primary"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                props.deleteCallback(provider);
+                                            }}
+                                        >
                                             <Icon>delete</Icon> {t('DELETE')}
                                         </Button>
                                     </TableCell>
