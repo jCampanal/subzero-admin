@@ -1,7 +1,6 @@
 import store from '../store';
 import {logoutUser} from '../store/user/userSlice';
 import {login} from '../store/auth/authorizationSlice';
-import {showMessage} from '../store/fuse/messageSlice';
 
 const {default: axios} = require('axios');
 
@@ -48,17 +47,6 @@ apiClient.interceptors.response.use(
             }
             return apiClient(originalRequest);
         }
-        store.dispatch(
-            showMessage({
-                message: 'We have some problems to communicate with the server. For security reason you have been logged out',
-                variant: 'error',
-                anchorOrigin: {
-                    vertical: 'top',
-                    horizontal: 'right',
-                },
-            })
-        );
-        store.dispatch(logoutUser());
         return Promise.reject(error);
     }
 );
