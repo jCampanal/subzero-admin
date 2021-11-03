@@ -27,6 +27,7 @@ import CategoryDeleteConfig from '../main/categories/Categories/CategoryDelete/C
 import ProductFormConfig from '../main/products/Products/ProductForm/ProductFormConfig';
 import SaleUnitFormConfig from '../main/products/Products/SaleUnitForm/SaleUnitFormConfig';
 import CoolerFormConfig from '../main/coolers/CoolersForm/CoolerFormConfig';
+import ProvidersConfig from '../main/providers/Providers/ProvidersConfig';
 
 const routeConfigs = [
     LoginPageConfig,
@@ -41,6 +42,7 @@ const routeConfigs = [
     CoolersPageConfig,
     CoolerFormConfig,
     CoolersActivityPageConfig,
+    ProvidersConfig,
     CustomersConfig,
     SchedulesPageConfig,
     DriversPageConfig,
