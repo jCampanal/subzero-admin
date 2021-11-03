@@ -12,12 +12,14 @@ import IconButton from '@material-ui/core/IconButton';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import {useTranslation} from 'react-i18next';
+import {useHistory} from 'react-router';
 
 const DateRangePicker = lazy(() => import('./DateRangePicker'));
 
 function PageCardedHeader(props) {
     const {t} = useTranslation('coolers');
     const mainTheme = useSelector(selectMainTheme);
+    const history = useHistory();
     const [dateRangeDlgIsOpen, openDateRangeDlg] = useState(false);
     const toggleDateRangeDlgIsOpen = () => {
         openDateRangeDlg(!dateRangeDlgIsOpen);
@@ -84,7 +86,7 @@ function PageCardedHeader(props) {
                 <DateRangePicker isOpen={dateRangeDlgIsOpen} namespace="coolers" />
             </div>
             <div className="sm:flex-1 text-right">
-                <Button className="whitespace-nowrap inline-block uppercase" onClick={() => null}>
+                <Button className="whitespace-nowrap inline-block uppercase" onClick={() => history.push('/providers')}>
                     {t('PROVIDERS')}
                 </Button>
                 <Button className="whitespace-nowrap inline-block uppercase" onClick={() => null}>
