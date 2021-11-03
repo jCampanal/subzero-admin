@@ -17,7 +17,7 @@ import {useTranslation} from 'react-i18next';
 function CoolersTable(props) {
     const {t} = useTranslation('coolers');
     const [selected, setSelected] = useState([]);
-    const [data, setData] = useState(props.coolers);
+    const data = props.coolers;
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [order, setOrder] = useState({
@@ -117,7 +117,7 @@ function CoolersTable(props) {
                                     tabIndex={-1}
                                     key={cooler.id}
                                     selected={isSelected}
-                                    onClick={(event) => handleClick(cooler)}
+                                    onClick={() => handleClick(cooler)}
                                 >
                                     <TableCell className="w-40 md:w-64 text-center" padding="none">
                                         <Checkbox
@@ -127,27 +127,51 @@ function CoolersTable(props) {
                                         />
                                     </TableCell>
 
+                                    <TableCell className="w-52 px-4 md:px-0" component="th" scope="row" padding="none">
+                                        <img
+                                            className="w-full block rounded"
+                                            src={
+                                                cooler.imageURL
+                                                    ? cooler.imageURL
+                                                    : `${process.env.PUBLIC_URL}/assets/images/ecommerce/product-image-placeholder.png`
+                                            }
+                                            alt={cooler.code}
+                                        />
+                                    </TableCell>
+
                                     <TableCell className="p-4 md:p-16" component="th" scope="row">
                                         {cooler.code}
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="left">
-                                        {cooler.provider}
+                                        {cooler.providerName}
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="left">
-                                        {cooler.status}
+                                        {cooler.coolerStatus}
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="left">
-                                        {cooler.registrationDate.toLocaleDateString()}
+                                        {new Date(cooler.pickedUp).toLocaleDateString()}
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                                        <Button color="primary">
+                                        <Button
+                                            color="primary"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                props.editCallback(cooler.id);
+                                            }}
+                                        >
                                             <Icon>edit</Icon> {t('EDIT')}
                                         </Button>
-                                        <Button color="primary">
+                                        <Button
+                                            color="primary"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                props.deleteCallback(cooler.id);
+                                            }}
+                                        >
                                             <Icon>delete</Icon> {t('DELETE')}
                                         </Button>
                                     </TableCell>
