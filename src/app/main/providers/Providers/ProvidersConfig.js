@@ -3,8 +3,8 @@ import React from 'react';
 import en from './translations/en';
 import es from './translations/es';
 
-i18next.addResourceBundle('en', 'products', en);
-i18next.addResourceBundle('es', 'products', es);
+i18next.addResourceBundle('en', 'providers', en);
+i18next.addResourceBundle('es', 'providers', es);
 
 const ProvidersConfig = {
     settings: {
