@@ -1,57 +1,36 @@
-import React, {lazy, memo} from 'react';
+import React, {lazy, memo, useEffect, useState} from 'react';
 import FusePageCarded from '@fuse/core/FusePageCarded';
+import {useHistory} from 'react-router';
+import {useDispatch, useSelector} from 'react-redux';
+import {getCoolers} from '../../../api-conn/coolers';
+import rows from './tableRows';
+import {openDialog} from '../../../store/fuse/dialogSlice';
+import RemoveDlg from '../../../common/removeDlg';
 
-const Header = lazy(() => import('./PageCardedHeader'));
-const CoolersTable = lazy(() => import('./CoolersTable'));
-
-const rows = [
-    {
-        id: 'code',
-        align: 'left',
-        disablePadding: false,
-        label: 'CODE',
-        sort: true,
-    },
-    {
-        id: 'provider',
-        align: 'left',
-        disablePadding: false,
-        label: 'PROVIDER',
-        sort: true,
-    },
-    {
-        id: 'status',
-        align: 'left',
-        disablePadding: false,
-        label: 'STATUS',
-        sort: true,
-    },
-    {
-        id: 'registration-date',
-        align: 'left',
-        disablePadding: false,
-        label: 'REGISTRATION_DATE',
-        sort: true,
-    },
-    {
-        id: 'actions',
-        align: 'right',
-        disablePadding: false,
-        label: '',
-        sort: false,
-    },
-];
-const dummyCoolers = [
-    {id: 1, code: 1001, provider: 'Grep', status: 'Gue Ueg Egu Geu', registrationDate: new Date()},
-    {id: 2, code: 1002, provider: 'Grep', status: 'Gue Ueg Egu Geu', registrationDate: new Date()},
-    {id: 3, code: 1003, provider: 'Grep', status: 'Gue Ueg Egu Geu', registrationDate: new Date()},
-    {id: 4, code: 1004, provider: 'Grep', status: 'Gue Ueg Egu Geu', registrationDate: new Date()},
-    {id: 5, code: 1005, provider: 'Grep', status: 'Gue Ueg Egu Geu', registrationDate: new Date()},
-    {id: 6, code: 1006, provider: 'Grep', status: 'Gue Ueg Egu Geu', registrationDate: new Date()},
-    {id: 7, code: 1007, provider: 'Grep', status: 'Gue Ueg Egu Geu', registrationDate: new Date()},
-];
+const Header = lazy(() => import('./PageCardedHeader').then((header) => header));
+const CoolersTable = lazy(() => import('./CoolersTable').then((table) => table));
 
 function Coolers() {
+    const [coolers, setCoolers] = useState([]);
+    const history = useHistory();
+    const {logged} = useSelector((state) => state.user);
+    const dispatch = useDispatch();
+    const fetchCoolers = async () => {
+        const {data} = await getCoolers();
+        setCoolers(data);
+    };
+
+    const createCooler = () => history.push('/coolers/create');
+    const editCooler = (id) => history.push(`/coolers/${id}/edit`, {cooler: coolers.filter((cooler) => cooler.id === id)[0]});
+    const moveCooler = (id) => history.push(`/coolers/${id}/move`, {cooler: coolers.filter((cooler) => cooler.id === id)[0]});
+    const removeCooler = (itemId) => dispatch(openDialog({children: <RemoveDlg itemId={itemId} proceedCallback={fetchCoolers} />}));
+
+    useEffect(() => {
+        if (!logged) history.push('/login');
+    }, [logged, history]);
+    useEffect(() => {
+        fetchCoolers().finally();
+    }, []);
     return (
         <FusePageCarded
             classes={{
@@ -59,8 +38,8 @@ function Coolers() {
                 contentCard: 'overflow-hidden',
                 header: 'min-h-72 h-72 sm:h-136 sm:min-h-136',
             }}
-            header={<Header />}
-            content={<CoolersTable coolers={dummyCoolers} rows={rows} />}
+            header={<Header addCallback={createCooler} />}
+            content={<CoolersTable coolers={coolers} rows={rows} editCallback={editCooler} deleteCallback={removeCooler} moveCallback={moveCooler} />}
             innerScroll
         />
     );
