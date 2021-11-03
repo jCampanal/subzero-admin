@@ -15,7 +15,7 @@ import {useTranslation} from 'react-i18next';
 
 const DateRangePicker = lazy(() => import('./DateRangePicker'));
 
-function PageCardedHeader() {
+function PageCardedHeader(props) {
     const {t} = useTranslation('coolers');
     const mainTheme = useSelector(selectMainTheme);
     const [dateRangeDlgIsOpen, openDateRangeDlg] = useState(false);
@@ -73,10 +73,10 @@ function PageCardedHeader() {
                     </Button>
                 </motion.div>
                 <motion.div initial={{opacity: 0, x: 20}} animate={{opacity: 1, x: 0, transition: {delay: 0.2}}}>
-                    <IconButton className="sm:hidden" onClick={() => null}>
+                    <IconButton className="sm:hidden" onClick={() => props.addCallback()}>
                         <AddCircleIcon />
                     </IconButton>
-                    <Button className="whitespace-nowrap hidden sm:inline-block" variant="contained" color="secondary" onClick={() => null}>
+                    <Button className="whitespace-nowrap hidden sm:inline-block" variant="contained" color="secondary" onClick={() => props.addCallback()}>
                         <AddCircleIcon className="mr-5" />
                         {t('REGISTER')}
                     </Button>
