@@ -7,7 +7,7 @@ import LoginPageConfig from 'app/pages/login/LoginPageConfig';
 import DashboardConfig from 'app/main/dashboard/DashboardConfig';
 import CategoriesPageConfig from 'app/main/categories/CategoriesPageConfig';
 import ProductsPageConfig from 'app/main/products/ProductsPageConfig';
-import CoolersPageConfig from 'app/main/coolers/CoolersPageConfig';
+import CoolersPageConfig from 'app/main/coolers/Coolers/CoolersPageConfig';
 import SchedulesPageConfig from 'app/main/schedules/SchedulesPageConfig';
 import CoolersActivityPageConfig from 'app/main/coolers-activity/CoolersActivityPageConfig';
 import CustomersConfig from 'app/main/customers/CustomersConfig';
@@ -26,6 +26,10 @@ import CategoryConfig from '../main/categories/Categories/Category/CategoryConfi
 import CategoryDeleteConfig from '../main/categories/Categories/CategoryDelete/CategoryDeleteConfig';
 import ProductFormConfig from '../main/products/Products/ProductForm/ProductFormConfig';
 import SaleUnitFormConfig from '../main/products/Products/SaleUnitForm/SaleUnitFormConfig';
+import CoolerFormConfig from '../main/coolers/CoolersForm/CoolerFormConfig';
+import ProvidersConfig from '../main/providers/Providers/ProvidersConfig';
+import ProvidersFormConfig from '../main/providers/ProvidersForm/ProvidersFormConfig';
+import ProvidersShowConfig from '../main/providers/ShowProvider/ProvidersShowConfig';
 
 const routeConfigs = [
     LoginPageConfig,
@@ -38,7 +42,11 @@ const routeConfigs = [
     ProductFormConfig,
     SaleUnitFormConfig,
     CoolersPageConfig,
+    CoolerFormConfig,
     CoolersActivityPageConfig,
+    ProvidersConfig,
+    ProvidersFormConfig,
+    ProvidersShowConfig,
     CustomersConfig,
     SchedulesPageConfig,
     DriversPageConfig,

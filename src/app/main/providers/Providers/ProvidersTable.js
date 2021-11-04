@@ -14,10 +14,10 @@ import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import {useTranslation} from 'react-i18next';
 
-function CoolersTable(props) {
-    const {t} = useTranslation('coolers');
+function ProvidersTable(props) {
+    const {t} = useTranslation('providers');
     const [selected, setSelected] = useState([]);
-    const data = props.coolers;
+    const data = props.providers;
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [order, setOrder] = useState({
@@ -51,10 +51,6 @@ function CoolersTable(props) {
         setSelected([]);
     }
 
-    function handleClick(item) {
-        props.history.push(`/apps/e-commerce/products/${item.id}/${item.handle}`);
-    }
-
     function handleCheck(event, id) {
         const selectedIndex = selected.indexOf(id);
         let newSelected = [];
@@ -84,7 +80,7 @@ function CoolersTable(props) {
         return (
             <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: {delay: 0.1}}} className="flex flex-1 items-center justify-center h-full">
                 <Typography color="textSecondary" variant="h5">
-                    {t('NO_COOLERS')}
+                    {t('NO_PROVIDERS')}
                 </Typography>
             </motion.div>
         );
@@ -95,7 +91,7 @@ function CoolersTable(props) {
             <FuseScrollbars className="flex-grow overflow-x-auto">
                 <Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
                     <TableHeader
-                        namespace="coolers"
+                        namespace="schedules"
                         rows={props.rows}
                         selectedProductIds={selected}
                         order={order}
@@ -106,8 +102,8 @@ function CoolersTable(props) {
                     />
 
                     <TableBody>
-                        {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((cooler) => {
-                            const isSelected = selected.indexOf(cooler.id) !== -1;
+                        {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((provider) => {
+                            const isSelected = selected.indexOf(provider.id) !== -1;
                             return (
                                 <TableRow
                                     className="h-72 cursor-pointer"
@@ -115,44 +111,28 @@ function CoolersTable(props) {
                                     role="checkbox"
                                     aria-checked={isSelected}
                                     tabIndex={-1}
-                                    key={cooler.id}
+                                    key={provider.id}
                                     selected={isSelected}
-                                    onClick={() => handleClick(cooler)}
+                                    onClick={() => props.showProvider(provider)}
                                 >
                                     <TableCell className="w-40 md:w-64 text-center" padding="none">
                                         <Checkbox
                                             checked={isSelected}
                                             onClick={(event) => event.stopPropagation()}
-                                            onChange={(event) => handleCheck(event, cooler.id)}
-                                        />
-                                    </TableCell>
-
-                                    <TableCell className="w-52 px-4 md:px-0" component="th" scope="row" padding="none">
-                                        <img
-                                            className="w-full block rounded"
-                                            src={
-                                                cooler.imageURL
-                                                    ? cooler.imageURL
-                                                    : `${process.env.PUBLIC_URL}/assets/images/ecommerce/product-image-placeholder.png`
-                                            }
-                                            alt={cooler.code}
+                                            onChange={(event) => handleCheck(event, provider.id)}
                                         />
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row">
-                                        {cooler.code}
+                                        {provider.name}
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="left">
-                                        {cooler.providerName}
+                                        {provider.tags}
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="left">
-                                        {cooler.coolerStatus}
-                                    </TableCell>
-
-                                    <TableCell className="p-4 md:p-16" component="th" scope="row" align="left">
-                                        {new Date(cooler.pickedUp).toLocaleDateString()}
+                                        {provider.coolerCount}
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
@@ -160,7 +140,7 @@ function CoolersTable(props) {
                                             color="primary"
                                             onClick={(e) => {
                                                 e.stopPropagation();
-                                                props.editCallback(cooler.id);
+                                                props.editCallback(provider);
                                             }}
                                         >
                                             <Icon>edit</Icon> {t('EDIT')}
@@ -169,7 +149,7 @@ function CoolersTable(props) {
                                             color="primary"
                                             onClick={(e) => {
                                                 e.stopPropagation();
-                                                props.deleteCallback(cooler.id);
+                                                props.deleteCallback(provider);
                                             }}
                                         >
                                             <Icon>delete</Icon> {t('DELETE')}
@@ -202,9 +182,9 @@ function CoolersTable(props) {
     );
 }
 
-export default CoolersTable;
+export default ProvidersTable;
 
-CoolersTable.propTypes = {
-    coolers: PropTypes.array.isRequired,
+ProvidersTable.propTypes = {
+    providers: PropTypes.array.isRequired,
     rows: PropTypes.array.isRequired,
 };

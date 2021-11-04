@@ -16,7 +16,7 @@ const ProductsPageConfig = {
         {
             path: '/products',
             exact: true,
-            component: React.lazy(() => import('./Products/Products')),
+            component: React.lazy(() => import('./Products/Products').then((products) => products)),
         },
     ],
 };

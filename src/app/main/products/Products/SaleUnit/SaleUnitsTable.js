@@ -1,4 +1,3 @@
-import React, {useState} from 'react';
 import FuseScrollbars from '@fuse/core/FuseScrollbars';
 import Checkbox from '@material-ui/core/Checkbox';
 import Icon from '@material-ui/core/Icon';
@@ -9,21 +8,26 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import {motion} from 'framer-motion';
-import TableHeader from 'app/main/products/Products/TableHeader';
+import React, {useState} from 'react';
+import {withRouter} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
+import CheckCircleRounded from '@material-ui/icons/CheckCircleRounded';
 import {useTranslation} from 'react-i18next';
+import {useHistory} from 'react-router';
+import TableHeader from './TableHeader';
 
-function CoolersTable(props) {
-    const {t} = useTranslation('coolers');
+function SaleUnitsTable(props) {
+    const {t} = useTranslation('products');
     const [selected, setSelected] = useState([]);
-    const data = props.coolers;
+    const {data} = props;
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [order, setOrder] = useState({
         direction: 'asc',
         id: null,
     });
+    const history = useHistory();
 
     function handleRequestSort(event, property) {
         const id = property;
@@ -83,8 +87,8 @@ function CoolersTable(props) {
     if (data.length === 0) {
         return (
             <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: {delay: 0.1}}} className="flex flex-1 items-center justify-center h-full">
-                <Typography color="textSecondary" variant="h5">
-                    {t('NO_COOLERS')}
+                <Typography color="textSecondary" variant="h5" className="text-center">
+                    {t('NO_PRODUCTS')}
                 </Typography>
             </motion.div>
         );
@@ -95,7 +99,7 @@ function CoolersTable(props) {
             <FuseScrollbars className="flex-grow overflow-x-auto">
                 <Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
                     <TableHeader
-                        namespace="coolers"
+                        namespace="products"
                         rows={props.rows}
                         selectedProductIds={selected}
                         order={order}
@@ -106,8 +110,8 @@ function CoolersTable(props) {
                     />
 
                     <TableBody>
-                        {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((cooler) => {
-                            const isSelected = selected.indexOf(cooler.id) !== -1;
+                        {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((product) => {
+                            const isSelected = selected.indexOf(product.id) !== -1;
                             return (
                                 <TableRow
                                     className="h-72 cursor-pointer"
@@ -115,61 +119,62 @@ function CoolersTable(props) {
                                     role="checkbox"
                                     aria-checked={isSelected}
                                     tabIndex={-1}
-                                    key={cooler.id}
+                                    key={product.id}
                                     selected={isSelected}
-                                    onClick={() => handleClick(cooler)}
+                                    onClick={() => handleClick(product)}
                                 >
                                     <TableCell className="w-40 md:w-64 text-center" padding="none">
                                         <Checkbox
                                             checked={isSelected}
                                             onClick={(event) => event.stopPropagation()}
-                                            onChange={(event) => handleCheck(event, cooler.id)}
+                                            onChange={(event) => handleCheck(event, product.id)}
                                         />
                                     </TableCell>
 
                                     <TableCell className="w-52 px-4 md:px-0" component="th" scope="row" padding="none">
-                                        <img
-                                            className="w-full block rounded"
-                                            src={
-                                                cooler.imageURL
-                                                    ? cooler.imageURL
-                                                    : `${process.env.PUBLIC_URL}/assets/images/ecommerce/product-image-placeholder.png`
-                                            }
-                                            alt={cooler.code}
-                                        />
+                                        <img className="w-full block rounded" src={product.imageURL} alt={product.name} />
+                                    </TableCell>
+
+                                    <TableCell className="p-4 md:p-16 truncate" component="th" scope="row">
+                                        {product.name}
+                                        <Typography>{product.description}</Typography>
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row">
-                                        {cooler.code}
+                                        {product.category.name}
                                     </TableCell>
 
-                                    <TableCell className="p-4 md:p-16" component="th" scope="row" align="left">
-                                        {cooler.providerName}
+                                    <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
+                                        <ul>
+                                            {product.salesUnits.map((item) => (
+                                                <li key={item.saleUnitId}>{item.saleUnitName}</li>
+                                            ))}
+                                        </ul>
                                     </TableCell>
 
-                                    <TableCell className="p-4 md:p-16" component="th" scope="row" align="left">
-                                        {cooler.coolerStatus}
-                                    </TableCell>
-
-                                    <TableCell className="p-4 md:p-16" component="th" scope="row" align="left">
-                                        {new Date(cooler.pickedUp).toLocaleDateString()}
+                                    <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
+                                        {product.visible ? (
+                                            <CheckCircleRounded className="text-green text-20" />
+                                        ) : (
+                                            <Icon className="text-red text-20">remove_circle</Icon>
+                                        )}
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
                                         <Button
                                             color="primary"
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                props.editCallback(cooler.id);
+                                            onClick={(event) => {
+                                                event.stopPropagation();
+                                                history.push(`/products/${product.id}/edit`, {product});
                                             }}
                                         >
                                             <Icon>edit</Icon> {t('EDIT')}
                                         </Button>
                                         <Button
                                             color="primary"
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                props.deleteCallback(cooler.id);
+                                            onClick={(event) => {
+                                                event.stopPropagation();
+                                                history.push(`/products/${product.id}/remove`);
                                             }}
                                         >
                                             <Icon>delete</Icon> {t('DELETE')}
@@ -202,9 +207,9 @@ function CoolersTable(props) {
     );
 }
 
-export default CoolersTable;
+export default withRouter(SaleUnitsTable);
 
-CoolersTable.propTypes = {
-    coolers: PropTypes.array.isRequired,
+SaleUnitsTable.propTypes = {
+    data: PropTypes.array.isRequired,
     rows: PropTypes.array.isRequired,
 };

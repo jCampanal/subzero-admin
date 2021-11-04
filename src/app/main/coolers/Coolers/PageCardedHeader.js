@@ -12,12 +12,14 @@ import IconButton from '@material-ui/core/IconButton';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import {useTranslation} from 'react-i18next';
+import {useHistory} from 'react-router';
 
 const DateRangePicker = lazy(() => import('./DateRangePicker'));
 
-function PageCardedHeader() {
+function PageCardedHeader(props) {
     const {t} = useTranslation('coolers');
     const mainTheme = useSelector(selectMainTheme);
+    const history = useHistory();
     const [dateRangeDlgIsOpen, openDateRangeDlg] = useState(false);
     const toggleDateRangeDlgIsOpen = () => {
         openDateRangeDlg(!dateRangeDlgIsOpen);
@@ -73,10 +75,10 @@ function PageCardedHeader() {
                     </Button>
                 </motion.div>
                 <motion.div initial={{opacity: 0, x: 20}} animate={{opacity: 1, x: 0, transition: {delay: 0.2}}}>
-                    <IconButton className="sm:hidden" onClick={() => null}>
+                    <IconButton className="sm:hidden" onClick={() => props.addCallback()}>
                         <AddCircleIcon />
                     </IconButton>
-                    <Button className="whitespace-nowrap hidden sm:inline-block" variant="contained" color="secondary" onClick={() => null}>
+                    <Button className="whitespace-nowrap hidden sm:inline-block" variant="contained" color="secondary" onClick={() => props.addCallback()}>
                         <AddCircleIcon className="mr-5" />
                         {t('REGISTER')}
                     </Button>
@@ -84,7 +86,7 @@ function PageCardedHeader() {
                 <DateRangePicker isOpen={dateRangeDlgIsOpen} namespace="coolers" />
             </div>
             <div className="sm:flex-1 text-right">
-                <Button className="whitespace-nowrap inline-block uppercase" onClick={() => null}>
+                <Button className="whitespace-nowrap inline-block uppercase" onClick={() => history.push('/providers')}>
                     {t('PROVIDERS')}
                 </Button>
                 <Button className="whitespace-nowrap inline-block uppercase" onClick={() => null}>
