@@ -1,11 +1,14 @@
 import React, {lazy, memo, useEffect, useState} from 'react';
 import FusePageCarded from '@fuse/core/FusePageCarded/FusePageCarded';
 import {useTranslation} from 'react-i18next';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useHistory} from 'react-router';
+import FuseLoading from '@fuse/core/FuseLoading';
 import rows from './rows';
-import {getWarehouses} from '../../../api-conn/warehouses';
-import FuseLoading from '../../../../@fuse/core/FuseLoading';
+import {deleteWarehouse, getWarehouses} from '../../../api-conn/warehouses';
+import {closeDialog, openDialog} from '../../../store/fuse/dialogSlice';
+import RemoveDlg from '../../../common/removeDlg';
+import {showMessage} from '../../../store/fuse/messageSlice';
 
 const Header = lazy(() => import('app/main/products/Products/PageCardedHeader').then((header) => header));
 const Table = lazy(() => import('./WarehousesTable').then((table) => table));
@@ -24,6 +27,35 @@ function Warehouses() {
         setWarehouses(data);
         setLoading(false);
     };
+    const dispatch = useDispatch();
+    const onProceed = (id) => {
+        const deleteItem = async () => {
+            await deleteWarehouse(id);
+        };
+        deleteItem().finally();
+        dispatch(closeDialog());
+        dispatch(
+            showMessage({
+                message: 'The warehouse was removed successfully',
+                anchorOrigin: {vertical: 'top', horizontal: 'right'},
+                variant: 'success',
+            })
+        );
+        loadWarehouses().finally();
+    };
+    const remove = (itemId) =>
+        dispatch(
+            openDialog({
+                children: (
+                    <RemoveDlg
+                        itemId={itemId}
+                        proceedCallback={() => onProceed(itemId)}
+                        dlgTitle="Warning, you have requested a risky operation"
+                        dlgText="You are attempting to delete a warehouse, this operation cannot be undone. Are you sure you want to proceed with the deletion?"
+                    />
+                ),
+            })
+        );
 
     useEffect(() => {
         if (!logged) history.push('/login');
@@ -55,7 +87,12 @@ function Warehouses() {
                 loading ? (
                     <FuseLoading />
                 ) : (
-                    <Table warehouses={warehouses} rows={rows} editCallback={(data) => history.push(`/warehouses/${data.id}/edit`, {warehouse: data})} />
+                    <Table
+                        warehouses={warehouses}
+                        rows={rows}
+                        editCallback={(data) => history.push(`/warehouses/${data.id}/edit`, {warehouse: data})}
+                        deleteCallback={remove}
+                    />
                 )
             }
             innerScroll
