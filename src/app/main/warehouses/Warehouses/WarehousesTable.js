@@ -118,7 +118,7 @@ function WarehousesTable(props) {
                                     tabIndex={-1}
                                     key={warehouse.id}
                                     selected={isSelected}
-                                    onClick={(event) => handleClick(warehouse)}
+                                    onClick={() => handleClick(warehouse)}
                                 >
                                     <TableCell className="w-40 md:w-64 text-center" padding="none">
                                         <Checkbox
@@ -138,6 +138,10 @@ function WarehousesTable(props) {
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row">
                                         {warehouse.name}
+                                    </TableCell>
+
+                                    <TableCell className="p-4 md:p-16" component="th" scope="row">
+                                        {`${warehouse.address.street}, ${warehouse.address.city}`}
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">

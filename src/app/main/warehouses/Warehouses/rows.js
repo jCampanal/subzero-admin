@@ -14,6 +14,13 @@ const rows = [
         sort: true,
     },
     {
+        id: 'address',
+        align: 'left',
+        disablePadding: false,
+        label: 'ADDRESS',
+        sort: true,
+    },
+    {
         id: 'actions',
         align: 'right',
         disablePadding: false,
