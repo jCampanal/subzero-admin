@@ -42,8 +42,22 @@ function Warehouses() {
                 contentCard: 'overflow-hidden',
                 header: 'min-h-72 h-72 sm:h-136 sm:min-h-136',
             }}
-            header={<Header iconText="store" title={t('WAREHOUSES')} addButtonLabel={t('ADD_WAREHOUSE')} searchHint={t('SEARCH_BY_NAME')} />}
-            content={loading ? <FuseLoading /> : <Table warehouses={warehouses} rows={rows} />}
+            header={
+                <Header
+                    iconText="store"
+                    title={t('WAREHOUSES')}
+                    addButtonLabel={t('ADD_WAREHOUSE')}
+                    addButtonCallback={() => history.push('/warehouses/create')}
+                    searchHint={t('SEARCH_BY_NAME')}
+                />
+            }
+            content={
+                loading ? (
+                    <FuseLoading />
+                ) : (
+                    <Table warehouses={warehouses} rows={rows} editCallback={(data) => history.push(`/warehouses/${data.id}/edit`, {warehouse: data})} />
+                )
+            }
             innerScroll
         />
     );

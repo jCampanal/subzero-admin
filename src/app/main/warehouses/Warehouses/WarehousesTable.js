@@ -137,7 +137,13 @@ function WarehousesTable(props) {
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                                        <Button color="primary">
+                                        <Button
+                                            color="primary"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                props.editCallback(warehouse);
+                                            }}
+                                        >
                                             <Icon>edit</Icon> {t('EDIT')}
                                         </Button>
                                         <Button color="primary">
@@ -176,4 +182,5 @@ export default withRouter(WarehousesTable);
 WarehousesTable.propTypes = {
     warehouses: PropTypes.array.isRequired,
     rows: PropTypes.array.isRequired,
+    editCallback: PropTypes.func.isRequired,
 };
