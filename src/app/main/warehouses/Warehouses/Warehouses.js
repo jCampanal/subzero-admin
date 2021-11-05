@@ -1,32 +1,11 @@
 import React, {lazy, memo} from 'react';
 import FusePageCarded from '@fuse/core/FusePageCarded/FusePageCarded';
 import {useTranslation} from 'react-i18next';
+import rows from './rows';
 
-const Header = lazy(() => import('app/main/products/Products/PageCardedHeader'));
-const WarehousesTable = lazy(() => import('./WarehousesTable'));
-const rows = [
-    {
-        id: 'image',
-        align: 'left',
-        disablePadding: true,
-        label: '',
-        sort: false,
-    },
-    {
-        id: 'name',
-        align: 'left',
-        disablePadding: false,
-        label: 'NAME',
-        sort: true,
-    },
-    {
-        id: 'actions',
-        align: 'right',
-        disablePadding: false,
-        label: '',
-        sort: false,
-    },
-];
+const Header = lazy(() => import('app/main/products/Products/PageCardedHeader').then((header) => header));
+const WarehousesTable = lazy(() => import('./WarehousesTable').then((table) => table));
+
 const dummyWarehouses = [
     {id: 1, name: 'Gue Ipsum'},
     {id: 2, name: 'Gue Ipsum'},
