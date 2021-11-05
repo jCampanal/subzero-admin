@@ -1,24 +1,40 @@
-import React, {lazy, memo} from 'react';
+import React, {lazy, memo, useEffect, useState} from 'react';
 import FusePageCarded from '@fuse/core/FusePageCarded/FusePageCarded';
 import {useTranslation} from 'react-i18next';
+import {useSelector} from 'react-redux';
+import {useHistory} from 'react-router';
 import rows from './rows';
+import {getWarehouses} from '../../../api-conn/warehouses';
+import FuseLoading from '../../../../@fuse/core/FuseLoading';
 
 const Header = lazy(() => import('app/main/products/Products/PageCardedHeader').then((header) => header));
-const WarehousesTable = lazy(() => import('./WarehousesTable').then((table) => table));
-
-const dummyWarehouses = [
-    {id: 1, name: 'Gue Ipsum'},
-    {id: 2, name: 'Gue Ipsum'},
-    {id: 3, name: 'Gue Ipsum'},
-    {id: 4, name: 'Gue Ipsum'},
-    {id: 5, name: 'Gue Ipsum'},
-    {id: 6, name: 'Gue Ipsum'},
-    {id: 7, name: 'Gue Ipsum'},
-    {id: 8, name: 'Gue Ipsum'},
-];
+const Table = lazy(() => import('./WarehousesTable').then((table) => table));
 
 function Warehouses() {
+    const {
+        user: {logged},
+    } = useSelector((state) => state);
+    const history = useHistory();
     const {t} = useTranslation('warehouses');
+    const [warehouses, setWarehouses] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const loadWarehouses = async () => {
+        setLoading(true);
+        const {data} = await getWarehouses();
+        setWarehouses(data);
+        setLoading(false);
+    };
+
+    useEffect(() => {
+        if (!logged) history.push('/login');
+    }, [logged, history]);
+    useEffect(() => {
+        document.title = 'Warehouses - Subzero Ice Services';
+    }, []);
+    useEffect(() => {
+        loadWarehouses().finally();
+    }, []);
+
     return (
         <FusePageCarded
             classes={{
@@ -27,7 +43,7 @@ function Warehouses() {
                 header: 'min-h-72 h-72 sm:h-136 sm:min-h-136',
             }}
             header={<Header iconText="store" title={t('WAREHOUSES')} addButtonLabel={t('ADD_WAREHOUSE')} searchHint={t('SEARCH_BY_NAME')} />}
-            content={<WarehousesTable warehouses={dummyWarehouses} rows={rows} />}
+            content={loading ? <FuseLoading /> : <Table warehouses={warehouses} rows={rows} />}
             innerScroll
         />
     );
