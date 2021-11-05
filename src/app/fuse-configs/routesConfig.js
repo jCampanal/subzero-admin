@@ -10,7 +10,7 @@ import ProductsPageConfig from 'app/main/products/ProductsPageConfig';
 import CoolersPageConfig from 'app/main/coolers/Coolers/CoolersPageConfig';
 import SchedulesPageConfig from 'app/main/schedules/SchedulesPageConfig';
 import CoolersActivityPageConfig from 'app/main/coolers-activity/CoolersActivityPageConfig';
-import CustomersConfig from 'app/main/customers/CustomersConfig';
+import CustomersConfig from 'app/main/customers/Customers/CustomersConfig';
 import DriversPageConfig from 'app/main/drivers/DriversPageConfig';
 import OrdersAdminConfig from 'app/main/orders-admin/OrdersAdminConfig';
 import WarehousesConfig from 'app/main/warehouses/WarehousesConfig';
