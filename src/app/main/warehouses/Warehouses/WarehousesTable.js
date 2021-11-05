@@ -128,14 +128,6 @@ function WarehousesTable(props) {
                                         />
                                     </TableCell>
 
-                                    <TableCell className="w-52 px-4 md:px-0" component="th" scope="row" padding="none">
-                                        <img
-                                            className="w-full block rounded"
-                                            src={`${process.env.PUBLIC_URL}/assets/images/ecommerce/product-image-placeholder.png`}
-                                            alt={warehouse.name}
-                                        />
-                                    </TableCell>
-
                                     <TableCell className="p-4 md:p-16" component="th" scope="row">
                                         {warehouse.name}
                                     </TableCell>
