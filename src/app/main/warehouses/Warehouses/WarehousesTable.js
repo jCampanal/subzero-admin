@@ -146,7 +146,13 @@ function WarehousesTable(props) {
                                         >
                                             <Icon>edit</Icon> {t('EDIT')}
                                         </Button>
-                                        <Button color="primary">
+                                        <Button
+                                            color="primary"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                props.deleteCallback(warehouse.id);
+                                            }}
+                                        >
                                             <Icon>delete</Icon> {t('DELETE')}
                                         </Button>
                                     </TableCell>
@@ -183,4 +189,5 @@ WarehousesTable.propTypes = {
     warehouses: PropTypes.array.isRequired,
     rows: PropTypes.array.isRequired,
     editCallback: PropTypes.func.isRequired,
+    deleteCallback: PropTypes.func.isRequired,
 };
