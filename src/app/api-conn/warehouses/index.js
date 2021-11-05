@@ -9,4 +9,6 @@ const postWarehouse = (data) => apiClient.post(warehousesURL, data).then((respon
 
 const putWarehouse = (id, data) => apiClient.put(`${warehousesURL}/${id}`, data).then((response) => response.data);
 
-export {getWarehouses, postWarehouse, putWarehouse};
+const deleteWarehouse = (id) => apiClient.delete(`${warehousesURL}/${id}`).then((response) => response.data);
+
+export {getWarehouses, postWarehouse, putWarehouse, deleteWarehouse};
