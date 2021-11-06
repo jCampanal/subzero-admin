@@ -9,6 +9,8 @@ import {useHistory, useParams} from 'react-router';
 import {useTranslation} from 'react-i18next';
 import {useFormContext} from 'react-hook-form';
 import {useDispatch} from 'react-redux';
+import DeleteIcon from '@material-ui/icons/Delete';
+import SaveIcon from '@material-ui/icons/Save';
 import {showMessage} from '../../../store/fuse/messageSlice';
 import {postWarehouse, putWarehouse} from '../../../api-conn/warehouses';
 
@@ -110,23 +112,13 @@ function FormHeader(props) {
             </div>
             <motion.div className="flex" initial={{opacity: 0, x: 20}} animate={{opacity: 1, x: 0, transition: {delay: 0.3}}}>
                 {id && (
-                    <Button
-                        className="whitespace-nowrap mx-4"
-                        variant="contained"
-                        color="secondary"
-                        onClick={() => props.removeCallback(id)}
-                        startIcon={<Icon className="hidden sm:flex">delete</Icon>}
-                    >
+                    <Button className="whitespace-nowrap mx-4" variant="contained" color="secondary" onClick={() => props.removeCallback(id)}>
+                        <DeleteIcon className="mr-2" />
                         {t('REMOVE')}
                     </Button>
                 )}
-                <Button
-                    className="whitespace-nowrap mx-4"
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => saveData()}
-                    startIcon={<Icon className="hidden sm:flex">save</Icon>}
-                >
+                <Button className="whitespace-nowrap mx-4" variant="contained" color="secondary" onClick={() => saveData()}>
+                    <SaveIcon className="mr-2" />
                     {t('SAVE')}
                 </Button>
             </motion.div>
