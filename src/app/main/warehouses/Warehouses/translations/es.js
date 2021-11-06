@@ -7,6 +7,7 @@ const locale = {
     EDIT: 'Editar',
     DELETE: 'Eliminar',
     ROWS_PER_PAGE: 'Almacenes por página',
+    ADDRESS: 'Dirección',
 };
 
 export default locale;

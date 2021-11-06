@@ -52,10 +52,6 @@ function WarehousesTable(props) {
         setSelected([]);
     }
 
-    function handleClick(item) {
-        props.history.push(`/apps/e-commerce/products/${item.id}/${item.handle}`);
-    }
-
     function handleCheck(event, id) {
         const selectedIndex = selected.indexOf(id);
         let newSelected = [];
@@ -118,7 +114,6 @@ function WarehousesTable(props) {
                                     tabIndex={-1}
                                     key={warehouse.id}
                                     selected={isSelected}
-                                    onClick={(event) => handleClick(warehouse)}
                                 >
                                     <TableCell className="w-40 md:w-64 text-center" padding="none">
                                         <Checkbox
@@ -128,23 +123,31 @@ function WarehousesTable(props) {
                                         />
                                     </TableCell>
 
-                                    <TableCell className="w-52 px-4 md:px-0" component="th" scope="row" padding="none">
-                                        <img
-                                            className="w-full block rounded"
-                                            src={`${process.env.PUBLIC_URL}/assets/images/ecommerce/product-image-placeholder.png`}
-                                            alt={warehouse.name}
-                                        />
-                                    </TableCell>
-
                                     <TableCell className="p-4 md:p-16" component="th" scope="row">
                                         {warehouse.name}
                                     </TableCell>
 
+                                    <TableCell className="p-4 md:p-16" component="th" scope="row">
+                                        {`${warehouse.address.street}, ${warehouse.address.city}`}
+                                    </TableCell>
+
                                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                                        <Button color="primary">
+                                        <Button
+                                            color="primary"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                props.editCallback(warehouse);
+                                            }}
+                                        >
                                             <Icon>edit</Icon> {t('EDIT')}
                                         </Button>
-                                        <Button color="primary">
+                                        <Button
+                                            color="primary"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                props.deleteCallback(warehouse.id);
+                                            }}
+                                        >
                                             <Icon>delete</Icon> {t('DELETE')}
                                         </Button>
                                     </TableCell>
@@ -180,4 +183,6 @@ export default withRouter(WarehousesTable);
 WarehousesTable.propTypes = {
     warehouses: PropTypes.array.isRequired,
     rows: PropTypes.array.isRequired,
+    editCallback: PropTypes.func.isRequired,
+    deleteCallback: PropTypes.func.isRequired,
 };

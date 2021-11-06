@@ -10,13 +10,13 @@ import ProductsPageConfig from 'app/main/products/ProductsPageConfig';
 import CoolersPageConfig from 'app/main/coolers/Coolers/CoolersPageConfig';
 import SchedulesPageConfig from 'app/main/schedules/SchedulesPageConfig';
 import CoolersActivityPageConfig from 'app/main/coolers-activity/CoolersActivityPageConfig';
-import CustomersConfig from 'app/main/customers/CustomersConfig';
+import CustomersConfig from 'app/main/customers/Customers/CustomersConfig';
 import DriversPageConfig from 'app/main/drivers/DriversPageConfig';
 import OrdersAdminConfig from 'app/main/orders-admin/OrdersAdminConfig';
-import WarehousesConfig from 'app/main/warehouses/WarehousesConfig';
+import WarehousesConfig from 'app/main/warehouses/Warehouses/WarehousesConfig';
 import AdminsConfig from 'app/main/admins/AdminsConfig';
 import ShipmentsPageConfig from 'app/main/shipments/ShipmentsPageConfig';
-import EmailsConfig from 'app/main/emails/EmailsConfig';
+import EmailsConfig from 'app/main/emails/Emails/EmailsConfig';
 import BlacklistConfig from 'app/main/blacklist/BlacklistConfig';
 import OrdersMonitorConfig from 'app/main/orders-monitor/OrdersMonitorConfig';
 import OrderCalendarPageConfig from 'app/main/order-calendar/OrderCalendarPageConfig';
@@ -30,6 +30,7 @@ import CoolerFormConfig from '../main/coolers/CoolersForm/CoolerFormConfig';
 import ProvidersConfig from '../main/providers/Providers/ProvidersConfig';
 import ProvidersFormConfig from '../main/providers/ProvidersForm/ProvidersFormConfig';
 import ProvidersShowConfig from '../main/providers/ShowProvider/ProvidersShowConfig';
+import WarehouseFormConfig from '../main/warehouses/WarehouseForm/WarehouseFormConfig';
 
 const routeConfigs = [
     LoginPageConfig,
@@ -52,6 +53,7 @@ const routeConfigs = [
     DriversPageConfig,
     OrdersAdminConfig,
     WarehousesConfig,
+    WarehouseFormConfig,
     AdminsConfig,
     ShipmentsPageConfig,
     EmailsConfig,
