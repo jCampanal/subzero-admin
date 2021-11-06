@@ -52,10 +52,6 @@ function WarehousesTable(props) {
         setSelected([]);
     }
 
-    function handleClick(item) {
-        props.history.push(`/apps/e-commerce/products/${item.id}/${item.handle}`);
-    }
-
     function handleCheck(event, id) {
         const selectedIndex = selected.indexOf(id);
         let newSelected = [];
@@ -118,7 +114,6 @@ function WarehousesTable(props) {
                                     tabIndex={-1}
                                     key={warehouse.id}
                                     selected={isSelected}
-                                    onClick={() => handleClick(warehouse)}
                                 >
                                     <TableCell className="w-40 md:w-64 text-center" padding="none">
                                         <Checkbox
