@@ -1,47 +1,11 @@
 import React, {lazy, memo} from 'react';
 import FusePageCarded from '@fuse/core/FusePageCarded/FusePageCarded';
 import {useTranslation} from 'react-i18next';
+import rows from './rows';
 
-const Header = lazy(() => import('app/main/products/Products/PageCardedHeader'));
-const EmailsTable = lazy(() => import('./EmailsTable'));
+const Header = lazy(() => import('app/main/products/Products/PageCardedHeader').then((header) => header));
+const EmailsTable = lazy(() => import('./EmailsTable').then((table) => table));
 
-const rows = [
-    {
-        id: 'image',
-        align: 'left',
-        disablePadding: true,
-        label: '',
-        sort: false,
-    },
-    {
-        id: 'id',
-        align: 'left',
-        disablePadding: false,
-        label: 'ID',
-        sort: true,
-    },
-    {
-        id: 'to',
-        align: 'left',
-        disablePadding: false,
-        label: 'TO',
-        sort: true,
-    },
-    {
-        id: 'subject',
-        align: 'left',
-        disablePadding: false,
-        label: 'SUBJECT',
-        sort: true,
-    },
-    {
-        id: 'status',
-        align: 'left',
-        disablePadding: false,
-        label: 'STATUS',
-        sort: true,
-    },
-];
 const dummyEmails = [
     {
         id: 1,
