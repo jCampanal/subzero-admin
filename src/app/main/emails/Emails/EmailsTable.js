@@ -83,7 +83,7 @@ function EmailsTable(props) {
     if (data.length === 0) {
         return (
             <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: {delay: 0.1}}} className="flex flex-1 items-center justify-center h-full">
-                <Typography color="textSecondary" variant="h5">
+                <Typography color="textSecondary" variant="h5" className="text-center px-5">
                     {t('NO_EMAILS')}
                 </Typography>
             </motion.div>
