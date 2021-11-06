@@ -16,7 +16,7 @@ import OrdersAdminConfig from 'app/main/orders-admin/OrdersAdminConfig';
 import WarehousesConfig from 'app/main/warehouses/Warehouses/WarehousesConfig';
 import AdminsConfig from 'app/main/admins/AdminsConfig';
 import ShipmentsPageConfig from 'app/main/shipments/ShipmentsPageConfig';
-import EmailsConfig from 'app/main/emails/EmailsConfig';
+import EmailsConfig from 'app/main/emails/Emails/EmailsConfig';
 import BlacklistConfig from 'app/main/blacklist/BlacklistConfig';
 import OrdersMonitorConfig from 'app/main/orders-monitor/OrdersMonitorConfig';
 import OrderCalendarPageConfig from 'app/main/order-calendar/OrderCalendarPageConfig';
