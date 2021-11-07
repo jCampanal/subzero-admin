@@ -2,8 +2,8 @@ import React, {lazy, memo} from 'react';
 import FusePageCarded from '@fuse/core/FusePageCarded/FusePageCarded';
 import {useTranslation} from 'react-i18next';
 
-const Header = lazy(() => import('app/main/products/Products/PageCardedHeader'));
-const BlacklistTable = lazy(() => import('./BlaclistTable'));
+const Header = lazy(() => import('app/main/products/Products/PageCardedHeader').then((header) => header));
+const BlacklistTable = lazy(() => import('./BlacklistTable').then((table) => table));
 
 const rows = [
     {
