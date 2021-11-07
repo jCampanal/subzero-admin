@@ -2,7 +2,7 @@ const locale = {
     BLACKLIST: 'Blacklist',
     ADD_TO_BLACKLIST: 'Add to blacklist',
     SEARCH: 'Search',
-    NO_BLACKLISTED: 'There are no company blacklisted right now',
+    NO_BLACKLISTED: 'There are no blacklisted company right now',
     COMPANY_NAME: 'Company Name',
     BANNED_WORKERS: 'One banned worker',
     BANNED_WORKERS_plural: '{{count}} banned workers',
