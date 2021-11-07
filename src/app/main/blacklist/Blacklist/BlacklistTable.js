@@ -17,7 +17,7 @@ import {useTranslation} from 'react-i18next';
 function BlacklistTable(props) {
     const {t} = useTranslation('blacklist');
     const [selected, setSelected] = useState([]);
-    const [data, setData] = useState(props.items);
+    const data = props.items;
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [order, setOrder] = useState({
@@ -51,10 +51,6 @@ function BlacklistTable(props) {
         setSelected([]);
     }
 
-    function handleClick(item) {
-        props.history.push(`/apps/e-commerce/products/${item.id}/${item.handle}`);
-    }
-
     function handleCheck(event, id) {
         const selectedIndex = selected.indexOf(id);
         let newSelected = [];
@@ -83,7 +79,7 @@ function BlacklistTable(props) {
     if (data.length === 0) {
         return (
             <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: {delay: 0.1}}} className="flex flex-1 items-center justify-center h-full">
-                <Typography color="textSecondary" variant="h5">
+                <Typography color="textSecondary" variant="h5" className="text-center">
                     {t('NO_BLACKLISTED')}
                 </Typography>
             </motion.div>
@@ -117,7 +113,6 @@ function BlacklistTable(props) {
                                     tabIndex={-1}
                                     key={item.id}
                                     selected={isSelected}
-                                    onClick={(event) => handleClick(item)}
                                 >
                                     <TableCell className="w-40 md:w-64 text-center" padding="none">
                                         <Checkbox
