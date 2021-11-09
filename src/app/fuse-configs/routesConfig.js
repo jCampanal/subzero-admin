@@ -23,7 +23,6 @@ import OrderCalendarPageConfig from 'app/main/order-calendar/OrderCalendarPageCo
 import DriversMonitorPageConfig from 'app/main/drivers-monitor/DriversMonitorPageConfig';
 import CategoryFormConfig from '../main/categories/CategoryForm/CategoryFormConfig';
 import CategoryConfig from '../main/categories/Category/CategoryConfig';
-import CategoryDeleteConfig from '../main/categories/CategoryDelete/CategoryDeleteConfig';
 import ProductFormConfig from '../main/products/Products/ProductForm/ProductFormConfig';
 import SaleUnitFormConfig from '../main/products/Products/SaleUnitForm/SaleUnitFormConfig';
 import CoolerFormConfig from '../main/coolers/CoolersForm/CoolerFormConfig';
@@ -38,7 +37,6 @@ const routeConfigs = [
     CategoriesPageConfig,
     CategoryConfig,
     CategoryFormConfig,
-    CategoryDeleteConfig,
     ProductsPageConfig,
     ProductFormConfig,
     SaleUnitFormConfig,
