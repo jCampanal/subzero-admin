@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 import FusePageCarded from '@fuse/core/FusePageCarded';
 import FuseLoading from '@fuse/core/FuseLoading';
-import {deleteCategory, getCategory} from '../../../../api-conn/categories';
+import {deleteCategory, getCategory} from '../../../api-conn/categories';
 import DeleteHeader from './DeleteHeader';
 
 const CategoryDelete = () => {
@@ -35,28 +35,28 @@ const CategoryDelete = () => {
                 content={
                     <div className="p-16 sm:p-24 max-w-2xl">
                         <div className="flex flex-col items-center">
-                                {t('ARE_YOU_SURE')}
-                                <div className="mt-16">
-                                    <Button
-                                        className="whitespace-nowrap mx-4"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={() => history.push('/categories')}
-                                        startIcon={<Icon className="hidden sm:flex">cancel</Icon>}
-                                    >
-                                        {t('CANCEL')}
-                                    </Button>
-                                    <Button
-                                        className="whitespace-nowrap mx-4"
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={() => performDelete()}
-                                        startIcon={<Icon className="hidden sm:flex">delete</Icon>}
-                                    >
-                                        {t('DELETE')}
-                                    </Button>
-                                </div>
+                            {t('ARE_YOU_SURE')}
+                            <div className="mt-16">
+                                <Button
+                                    className="whitespace-nowrap mx-4"
+                                    variant="contained"
+                                    color="secondary"
+                                    onClick={() => history.push('/categories')}
+                                    startIcon={<Icon className="hidden sm:flex">cancel</Icon>}
+                                >
+                                    {t('CANCEL')}
+                                </Button>
+                                <Button
+                                    className="whitespace-nowrap mx-4"
+                                    variant="contained"
+                                    color="secondary"
+                                    onClick={() => performDelete()}
+                                    startIcon={<Icon className="hidden sm:flex">delete</Icon>}
+                                >
+                                    {t('DELETE')}
+                                </Button>
                             </div>
+                        </div>
                     </div>
                 }
             />
