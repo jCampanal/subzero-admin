@@ -76,7 +76,7 @@ function TableHeader(props) {
                                     <MenuItem
                                         onClick={() => {
                                             props.onMenuItemClick();
-                                            closeSelectedProductsMenu();
+                                            props.deleteSelectedItemsCallback();
                                         }}
                                     >
                                         <ListItemIcon className="min-w-40">
@@ -125,4 +125,5 @@ export default TableHeader;
 TableHeader.propTypes = {
     namespace: PropTypes.string.isRequired,
     rows: PropTypes.array.isRequired,
+    deleteSelectedItemsCallback: PropTypes.func,
 };
