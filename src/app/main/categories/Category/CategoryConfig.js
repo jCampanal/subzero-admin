@@ -16,7 +16,7 @@ const CategoryConfig = {
         {
             path: '/category/:id',
             exact: true,
-            component: React.lazy(() => import('./Category')),
+            component: React.lazy(() => import('./Category').then((category) => category)),
         },
     ],
 };
