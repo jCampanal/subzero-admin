@@ -1,3 +1,4 @@
+import React, {useState} from 'react';
 import FuseScrollbars from '@fuse/core/FuseScrollbars';
 import Checkbox from '@material-ui/core/Checkbox';
 import Icon from '@material-ui/core/Icon';
@@ -8,19 +9,18 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import {motion} from 'framer-motion';
-import React, {useEffect, useState} from 'react';
 import TableHeader from 'app/main/products/Products/TableHeader';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import {useTranslation} from 'react-i18next';
 import {useHistory} from 'react-router';
+import {Link} from '@material-ui/core';
 
 function CategoriesTable(props) {
     const history = useHistory();
     const {t} = useTranslation('categories');
     const [selected, setSelected] = useState([]);
-    const [data, setData] = useState(props.categories);
-    useEffect(() => setData(props.categories), [props.categories]);
+    const data = props.categories;
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [order, setOrder] = useState({
@@ -102,6 +102,7 @@ function CategoriesTable(props) {
                         onRequestSort={handleRequestSort}
                         rowCount={data.length}
                         onMenuItemClick={handleDeselect}
+                        deleteSelectedItemsCallback={() => props.deleteCallback(selected)}
                     />
 
                     <TableBody>
@@ -116,7 +117,7 @@ function CategoriesTable(props) {
                                     tabIndex={-1}
                                     key={category.id}
                                     selected={isSelected}
-                                    onClick={() => history.push(`/category/${category.id}`)}
+                                    onClick={() => history.push(`/category/${category.link}`)}
                                 >
                                     <TableCell className="w-40 md:w-64 text-center" padding="none">
                                         <Checkbox
@@ -135,7 +136,7 @@ function CategoriesTable(props) {
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="left">
-                                        {category.link}
+                                        <Link href={category.link}>{category.link}</Link>
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right" onClick={() => null}>
@@ -152,7 +153,7 @@ function CategoriesTable(props) {
                                             color="primary"
                                             onClick={(event) => {
                                                 event.stopPropagation();
-                                                history.push(`/category/${category.id}/delete`);
+                                                props.deleteCallback(category.id);
                                             }}
                                         >
                                             <Icon>delete</Icon> {t('DELETE')}
@@ -191,4 +192,5 @@ CategoriesTable.propTypes = {
     categories: PropTypes.array.isRequired,
     rows: PropTypes.array.isRequired,
     editCallback: PropTypes.func.isRequired,
+    deleteCallback: PropTypes.func.isRequired,
 };
