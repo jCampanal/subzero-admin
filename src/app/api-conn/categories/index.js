@@ -2,14 +2,16 @@ import apiClient from '../index';
 
 const categoryBase = '/admin/Category';
 
-export const getCategories = (pageSize = 10, pageNumber = 0) =>
+const getCategories = (pageSize = 10, pageNumber = 0) =>
     apiClient.get(`${categoryBase}?pageSize=${pageSize}&pageNumber=${pageNumber}`).then((response) => response.data);
 
-export const postCategory = (data) => apiClient.post(categoryBase, data, {headers: {'Content-Type': 'multipart/form-data'}}).then((response) => response);
+const postCategory = (data) => apiClient.post(categoryBase, data, {headers: {'Content-Type': 'multipart/form-data'}}).then((response) => response);
 
-export const putCategory = (categoryId, data) =>
+const putCategory = (categoryId, data) =>
     apiClient.put(`${categoryBase}/${categoryId}`, data, {headers: {'Content-Type': 'multipart/form-data'}}).then((response) => response);
 
-export const getCategory = (categoryId) => apiClient.get(`${categoryBase}/${categoryId}`).then((response) => response.data);
+const getCategory = (categoryId) => apiClient.get(`${categoryBase}/${categoryId}`).then((response) => response.data);
 
-export const deleteCategory = (categoryId) => apiClient.delete(`${categoryBase}/${categoryId}`).then((response) => response.data);
+const deleteCategory = (categoryId) => apiClient.delete(categoryBase, {data: categoryId}).then((response) => response.data);
+
+export {getCategories, getCategory, postCategory, putCategory, deleteCategory};
