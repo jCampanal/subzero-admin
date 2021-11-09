@@ -18,7 +18,7 @@ const rows = [
         align: 'left',
         disablePadding: false,
         label: 'LINK',
-        sort: true,
+        sort: false,
     },
     {
         id: 'actions',
