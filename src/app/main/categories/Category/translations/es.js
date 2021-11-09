@@ -3,7 +3,7 @@ const locale = {
     PRODUCTS: 'Un producto',
     PRODUCTS_plural: '{{count}} productos',
     REMOVE: 'Delete',
-    EDIT: 'Editar'
+    EDIT: 'Editar',
 };
 
 export default locale;
