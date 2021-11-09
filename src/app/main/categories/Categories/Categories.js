@@ -3,10 +3,12 @@ import FusePageCarded from '@fuse/core/FusePageCarded';
 import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
 import {useHistory} from 'react-router';
-import {getCategories} from '../../../api-conn/categories';
+import {deleteCategory, getCategories} from '../../../api-conn/categories';
 import rows from './rows';
 import FuseLoading from '../../../../@fuse/core/FuseLoading';
 import {showMessage} from '../../../store/fuse/messageSlice';
+import {openDialog} from '../../../store/fuse/dialogSlice';
+import RemoveDlg from '../../../common/removeDlg';
 
 const Header = lazy(() => import('app/main/products/Products/PageCardedHeader').then((header) => header));
 const CategoriesTable = lazy(() => import('./CategoriesTable').then((table) => table));
@@ -45,6 +47,40 @@ function Categories() {
         const category = categories.filter((item) => item.id === categoryId)[0];
         history.push(`/categories/${categoryId}/edit`, {category});
     };
+    const onProceed = (itemId) => {
+        setLoading(true);
+        deleteCategory(itemId)
+            .then(() => {
+                dispatch(
+                    showMessage({
+                        message: 'Deletion completed!',
+                    })
+                );
+                loadCategories();
+            })
+            .catch(() => {
+                dispatch(
+                    showMessage({
+                        message: 'Error during deletion. Please try again later',
+                        variant: 'error',
+                    })
+                );
+                setLoading(false);
+            });
+    };
+    const removeCategory = (itemId) =>
+        dispatch(
+            openDialog({
+                children: (
+                    <RemoveDlg
+                        itemId={itemId}
+                        proceedCallback={() => onProceed(itemId)}
+                        dlgTitle="Warning, you have requested a risky operation"
+                        dlgText="You are attempting to delete a category, this operation cannot be undone. Are you sure you want to proceed with the deletion?"
+                    />
+                ),
+            })
+        );
 
     useEffect(() => {
         if (!logged) history.push('/login');
@@ -57,7 +93,7 @@ function Categories() {
     return (
         <FusePageCarded
             classes={{
-                content: 'flex',
+                content: 'flex mx-14',
                 contentCard: 'overflow-hidden',
                 header: 'min-h-72 h-72 sm:h-136 sm:min-h-136',
             }}
@@ -70,7 +106,9 @@ function Categories() {
                     searchHint={t('SEARCH_BY_NAME')}
                 />
             }
-            content={loading ? <FuseLoading /> : <CategoriesTable categories={categories} rows={rows} editCallback={editCategory} />}
+            content={
+                loading ? <FuseLoading /> : <CategoriesTable categories={categories} rows={rows} editCallback={editCategory} deleteCallback={removeCategory} />
+            }
             innerScroll
         />
     );
