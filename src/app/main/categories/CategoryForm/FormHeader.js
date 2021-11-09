@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 import {useTheme} from '@material-ui/core/styles';
@@ -8,7 +8,7 @@ import {Link} from 'react-router-dom';
 import {useHistory, useParams} from 'react-router';
 import {useTranslation} from 'react-i18next';
 import {useFormContext} from 'react-hook-form';
-import {postCategory, putCategory} from '../../../../api-conn/categories';
+import {postCategory, putCategory} from '../../../api-conn/categories';
 
 function ProductHeader() {
     const theme = useTheme();
@@ -32,7 +32,7 @@ function ProductHeader() {
                 .then(() => history.push('/categories'))
                 .catch((error) => console.log(error));
         }
-    }
+    };
 
     return (
         <div className="flex flex-1 w-full items-center justify-between">
@@ -53,15 +53,17 @@ function ProductHeader() {
                 </div>
             </div>
             <motion.div className="flex" initial={{opacity: 0, x: 20}} animate={{opacity: 1, x: 0, transition: {delay: 0.3}}}>
-                {id && <Button
-                    className="whitespace-nowrap mx-4"
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => history.push(`/categories/${id}/remove`)}
-                    startIcon={<Icon className="hidden sm:flex">delete</Icon>}
-                >
-                    {t('REMOVE')}
-                </Button>}
+                {id && (
+                    <Button
+                        className="whitespace-nowrap mx-4"
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => history.push(`/categories/${id}/remove`)}
+                        startIcon={<Icon className="hidden sm:flex">delete</Icon>}
+                    >
+                        {t('REMOVE')}
+                    </Button>
+                )}
                 <Button
                     className="whitespace-nowrap mx-4"
                     variant="contained"

@@ -16,12 +16,12 @@ const CategoriesPageConfig = {
         {
             path: '/categories/create',
             exact: true,
-            component: React.lazy(() => import('./CategoryForm')),
+            component: React.lazy(() => import('./CategoryForm').then((form) => form)),
         },
         {
             path: '/categories/:id/edit',
             exact: true,
-            component: React.lazy(() => import('./CategoryForm')),
+            component: React.lazy(() => import('./CategoryForm').then((form) => form)),
         },
     ],
 };
