@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 import FusePageCarded from '@fuse/core/FusePageCarded';
 import {useParams} from 'react-router';
 import CategoryHeader from './CategoryHeader';
-import {getCategory} from '../../../../api-conn/categories';
-import FuseLoading from '../../../../../@fuse/core/FuseLoading';
+import {getCategory} from '../../../api-conn/categories';
+import FuseLoading from '../../../../@fuse/core/FuseLoading';
 
 const Category = () => {
     const {id} = useParams();

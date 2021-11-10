@@ -9,7 +9,7 @@ const local = {
     LINK: 'Link',
     CATEGORY_THUMBNAIL: 'Image Thumbnail',
     CLICK_TO_CHANGE: 'Click here to change category image',
-    CLICK_TO_LOAD: 'Click here to load category image'
+    CLICK_TO_LOAD: 'Click here to load category image',
 };
 
 export default local;

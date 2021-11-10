@@ -6,7 +6,7 @@ import {orange} from '@material-ui/core/colors';
 import clsx from 'clsx';
 import Icon from '@material-ui/core/Icon';
 import {useTranslation} from 'react-i18next';
-import { useParams } from 'react-router';
+import {useParams} from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
     productImageFeaturedStar: {
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function FormControls(props) {
-    const {id} = useParams()
+    const {id} = useParams();
     const {t} = useTranslation('category-form');
     const methods = useFormContext();
     const {control, formState} = methods;
@@ -75,16 +75,16 @@ function FormControls(props) {
             <Controller
                 name="link"
                 control={control}
-                render={({field}) => <TextField {...field} className="mt-8 mb-16" id="link" label={t("LINK")} type="text" variant="outlined" fullWidth />}
+                render={({field}) => <TextField {...field} className="mt-8 mb-16" id="link" label={t('LINK')} type="text" variant="outlined" fullWidth />}
             />
 
             <Controller
                 name="file"
                 control={control}
-                render={({field: {onChange, value}}) => (
+                render={({field: {onChange}}) => (
                     <label
                         htmlFor="button-file"
-                        title={t(id?'CLICK_TO_CHANGE':'CLICK_TO_LOAD')}
+                        title={t(id ? 'CLICK_TO_CHANGE' : 'CLICK_TO_LOAD')}
                         className={clsx(
                             classes.productImageUpload,
                             'flex items-center justify-center relative w-128 h-128 rounded-16 mx-12 mb-24 overflow-hidden cursor-pointer shadow hover:shadow-lg'
@@ -98,7 +98,7 @@ function FormControls(props) {
                         )}
                         {props.imgUrl !== '' && (
                             <div>
-                                <img src={props.imgUrl} alt={t("CATEGORY_THUMBNAIL")} />
+                                <img src={props.imgUrl} alt={t('CATEGORY_THUMBNAIL')} />
                             </div>
                         )}
                     </label>

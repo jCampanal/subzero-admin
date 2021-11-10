@@ -76,7 +76,7 @@ function TableHeader(props) {
                                     <MenuItem
                                         onClick={() => {
                                             props.onMenuItemClick();
-                                            closeSelectedProductsMenu();
+                                            props.deleteSelectedItemsCallback();
                                         }}
                                     >
                                         <ListItemIcon className="min-w-40">
@@ -98,7 +98,7 @@ function TableHeader(props) {
                             padding={row.disablePadding ? 'none' : 'normal'}
                             sortDirection={props.order.id === row.id ? props.order.direction : false}
                         >
-                            {row.sort && (
+                            {row.sort ? (
                                 <Tooltip title="Sort" placement={row.align === 'right' ? 'bottom-end' : 'bottom-start'} enterDelay={300}>
                                     <TableSortLabel
                                         active={props.order.id === row.id}
@@ -109,6 +109,8 @@ function TableHeader(props) {
                                         {t(`${row.label}`)}
                                     </TableSortLabel>
                                 </Tooltip>
+                            ) : (
+                                <span>{t(`${row.label}`)}</span>
                             )}
                         </TableCell>
                     );
@@ -123,4 +125,5 @@ export default TableHeader;
 TableHeader.propTypes = {
     namespace: PropTypes.string.isRequired,
     rows: PropTypes.array.isRequired,
+    deleteSelectedItemsCallback: PropTypes.func,
 };

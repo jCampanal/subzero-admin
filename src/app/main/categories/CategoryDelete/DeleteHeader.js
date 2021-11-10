@@ -28,7 +28,7 @@ const DeleteHeader = (props) => {
                         <motion.div initial={{x: -20}} animate={{x: 0, transition: {delay: 0.3}}}>
                             <Typography className="text-16 sm:text-20 truncate font-semibold">{name}</Typography>
                             <Typography variant="caption" className="font-medium">
-                                {t('PRODUCTS',{count: products.length})}
+                                {t('PRODUCTS', {count: products.length})}
                             </Typography>
                         </motion.div>
                     </div>

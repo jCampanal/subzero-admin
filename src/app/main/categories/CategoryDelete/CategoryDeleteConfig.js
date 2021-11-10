@@ -16,7 +16,7 @@ const CategoryDeleteConfig = {
         {
             path: '/category/:id/delete',
             exact: true,
-            component: React.lazy(() => import('./CategoryDelete')),
+            component: React.lazy(() => import('./CategoryDelete').then((catDelete) => catDelete)),
         },
     ],
 };

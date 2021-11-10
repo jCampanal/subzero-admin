@@ -1,9 +1,9 @@
 const locale = {
-    CATEGORIES:'Categories',
+    CATEGORIES: 'Categories',
     PRODUCTS: 'One product',
     PRODUCTS_plural: '{{count}} products',
     REMOVE: 'Remove',
-    EDIT: 'Edit'
+    EDIT: 'Edit',
 };
 
 export default locale;
