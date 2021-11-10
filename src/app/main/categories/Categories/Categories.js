@@ -49,7 +49,7 @@ function Categories() {
     };
     const onProceed = (itemId) => {
         setLoading(true);
-        deleteCategory(itemId)
+        deleteCategory(JSON.stringify(itemId))
             .then(() => {
                 dispatch(
                     showMessage({

@@ -153,7 +153,7 @@ function CategoriesTable(props) {
                                             color="primary"
                                             onClick={(event) => {
                                                 event.stopPropagation();
-                                                props.deleteCallback(category.id);
+                                                props.deleteCallback([category.id]);
                                             }}
                                         >
                                             <Icon>delete</Icon> {t('DELETE')}
