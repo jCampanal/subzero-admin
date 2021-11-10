@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+
+  subzero-front:
+    container_name: subzero-front
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '1337:80'
