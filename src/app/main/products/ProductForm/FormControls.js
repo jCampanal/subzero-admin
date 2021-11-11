@@ -10,8 +10,8 @@ import {useTranslation} from 'react-i18next';
 import {useParams} from 'react-router';
 import {FormControlLabel, FormGroup, InputLabel, MenuItem, Select} from '@material-ui/core';
 import FormControl from '@material-ui/core/FormControl';
-import {getCategories} from '../../../../api-conn/categories';
-import {getSaleUnits} from '../../../../api-conn/products';
+import {getCategories} from '../../../api-conn/categories';
+import {getSaleUnits} from '../../../api-conn/products/sale-units';
 
 const useStyles = makeStyles((theme) => ({
     productImageFeaturedStar: {

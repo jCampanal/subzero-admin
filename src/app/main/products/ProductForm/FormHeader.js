@@ -13,8 +13,8 @@ import IconButton from '@material-ui/core/IconButton';
 import SaveIcon from '@material-ui/icons/Save';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import {postProduct, putProduct} from '../../../../api-conn/products';
-import {showMessage} from '../../../../store/fuse/messageSlice';
+import {postProduct, putProduct} from '../../../api-conn/products';
+import {showMessage} from '../../../store/fuse/messageSlice';
 
 function ProductHeader() {
     const theme = useTheme();
