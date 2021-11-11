@@ -5,10 +5,12 @@ import {useHistory, useLocation} from 'react-router';
 import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import CategoryHeader from './CategoryHeader';
-import {getCategory} from '../../../api-conn/categories';
+import {deleteCategory, getCategory} from '../../../api-conn/categories';
 import {showMessage} from '../../../store/fuse/messageSlice';
 import ProductsTable from '../../products/Products/ProductsTable';
 import rows from '../../../common/productRows';
+import {openDialog} from '../../../store/fuse/dialogSlice';
+import RemoveDlg from '../../../common/removeDlg';
 
 const Category = () => {
     const {
@@ -38,6 +40,42 @@ const Category = () => {
                 setLoading(false);
             });
     };
+    const onProceed = (itemId) => {
+        setLoading(true);
+        deleteCategory(JSON.stringify(itemId))
+            .then(() => {
+                setLoading(false);
+                dispatch(
+                    showMessage({
+                        message: 'Deletion completed!',
+                    })
+                );
+                history.push('/categories');
+            })
+            .catch(() => {
+                setLoading(false);
+                dispatch(
+                    showMessage({
+                        message: 'Error during deletion. Please try again later',
+                        variant: 'error',
+                    })
+                );
+                history.push('/categories');
+            });
+    };
+    const removeCategory = (itemId) =>
+        dispatch(
+            openDialog({
+                children: (
+                    <RemoveDlg
+                        itemId={itemId}
+                        proceedCallback={() => onProceed(itemId)}
+                        dlgTitle="Warning, you have requested a risky operation"
+                        dlgText="You are attempting to delete a category, this operation cannot be undone. Are you sure you want to proceed with the deletion?"
+                    />
+                ),
+            })
+        );
 
     useEffect(() => {
         if (!logged) history.push('/login');
@@ -54,7 +92,7 @@ const Category = () => {
                     toolbar: 'p-0',
                     header: 'min-h-72 h-72 sm:h-136 sm:min-h-136',
                 }}
-                header={<CategoryHeader category={category} />}
+                header={<CategoryHeader category={category} deleteCallback={removeCategory} />}
                 contentToolbar={
                     <div className="p-16 sm:p-24 max-w-2xl">
                         <h1>{category.name}</h1>
