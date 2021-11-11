@@ -117,7 +117,7 @@ function CategoriesTable(props) {
                                     tabIndex={-1}
                                     key={category.id}
                                     selected={isSelected}
-                                    onClick={() => history.push(`/category/${category.link}`)}
+                                    onClick={() => history.push(`/category/${category.link}`, {category})}
                                 >
                                     <TableCell className="w-40 md:w-64 text-center" padding="none">
                                         <Checkbox
@@ -136,7 +136,14 @@ function CategoriesTable(props) {
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="left">
-                                        <Link to={`/category/${category.link}`}>{category.link}</Link>
+                                        <Link
+                                            to={{
+                                                pathname: `/category/${category.link}`,
+                                                state: {category},
+                                            }}
+                                        >
+                                            {category.link}
+                                        </Link>
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right" onClick={() => null}>

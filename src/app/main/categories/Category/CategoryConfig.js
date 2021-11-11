@@ -14,7 +14,7 @@ const CategoryConfig = {
     },
     routes: [
         {
-            path: '/category/:id',
+            path: '/category/:link',
             exact: true,
             component: React.lazy(() => import('./Category').then((category) => category)),
         },
