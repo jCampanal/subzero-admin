@@ -63,7 +63,10 @@ function FormControls(props) {
     useEffect(() => {
         setValue(
             'link',
-            watchLink.replace(/[A-Z]/g, (match) => match.toLowerCase()).replace(/\b \b/g, () => '_')
+            watchLink
+                .replace(/[A-Z]/g, (match) => match.toLowerCase())
+                .replace(/\b-\b/g, () => '_')
+                .replace(/\b \b/g, () => '_')
         );
     }, [watchLink, setValue]);
 
