@@ -55,10 +55,6 @@ function ProductsTable(props) {
         setSelected([]);
     }
 
-    function handleClick(item) {
-        props.history.push(`/apps/e-commerce/products/${item.id}/${item.handle}`);
-    }
-
     function handleCheck(event, id) {
         const selectedIndex = selected.indexOf(id);
         let newSelected = [];
@@ -121,7 +117,7 @@ function ProductsTable(props) {
                                     tabIndex={-1}
                                     key={product.id}
                                     selected={isSelected}
-                                    onClick={() => handleClick(product)}
+                                    onClick={() => history.push(`/product/${product.name}`, {product})}
                                 >
                                     <TableCell className="w-40 md:w-64 text-center" padding="none">
                                         <Checkbox
@@ -135,7 +131,7 @@ function ProductsTable(props) {
                                         <img className="w-full block rounded" src={product.imageURL} alt={product.name} />
                                     </TableCell>
 
-                                    <TableCell className="p-4 md:p-16 truncate" component="th" scope="row">
+                                    <TableCell className="p-4 md:p-16 max-w-xs overflow-ellipsis" component="th" scope="row">
                                         {product.name}
                                         <Typography>{product.description}</Typography>
                                     </TableCell>
