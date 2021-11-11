@@ -9,8 +9,8 @@ import {useHistory, useParams} from 'react-router';
 import {useTranslation} from 'react-i18next';
 import {useFormContext} from 'react-hook-form';
 import {useDispatch} from 'react-redux';
-import {postSaleUnit, putSaleUnit} from '../../../../api-conn/products/sale-units';
-import {showMessage} from '../../../../store/fuse/messageSlice';
+import {postSaleUnit, putSaleUnit} from '../../../api-conn/products/sale-units';
+import {showMessage} from '../../../store/fuse/messageSlice';
 
 function ProductHeader() {
     const theme = useTheme();
