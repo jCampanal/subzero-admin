@@ -10,4 +10,6 @@ const postProduct = (data) => apiClient.post(productsBase, data).then((response)
 
 const putProduct = (id, data) => apiClient.put(`${productsBase}/${id}`, data).then((response) => response.data);
 
-export {getProducts, getProductById, postProduct, putProduct};
+const deleteProduct = (ids) => apiClient.delete(productsBase, {data: ids}).then((response) => response.data);
+
+export {getProducts, getProductById, postProduct, putProduct, deleteProduct};
