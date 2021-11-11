@@ -41,14 +41,14 @@ const CategoryHeader = (props) => {
                 </div>
             </div>
             <motion.div className="flex" initial={{opacity: 0, x: 20}} animate={{opacity: 1, x: 0, transition: {delay: 0.3}}}>
-                <IconButton className="sm:hidden" onClick={() => history.push(`/category/${id}/delete`)}>
+                <IconButton className="sm:hidden" onClick={() => props.deleteCallback(props.category.id)}>
                     <DeleteIcon />
                 </IconButton>
                 <Button
                     className="whitespace-nowrap hidden sm:inline-block mr-4"
                     variant="contained"
                     color="secondary"
-                    onClick={() => history.push(`/category/${id}/delete`)}
+                    onClick={() => props.deleteCallback(props.category.id)}
                 >
                     <DeleteIcon className="mr-5" />
                     {t('REMOVE')}
