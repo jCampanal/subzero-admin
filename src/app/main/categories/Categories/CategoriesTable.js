@@ -14,7 +14,6 @@ import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import {useTranslation} from 'react-i18next';
 import {useHistory} from 'react-router';
-import {Link} from 'react-router-dom';
 
 function CategoriesTable(props) {
     const history = useHistory();
@@ -136,14 +135,12 @@ function CategoriesTable(props) {
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="left">
-                                        <Link
-                                            to={{
-                                                pathname: `/category/${category.link}`,
-                                                state: {category},
-                                            }}
-                                        >
-                                            {category.link}
-                                        </Link>
+                                        <a
+                                            href={`https://www.subzeroiceservices.com/${category.link}`}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            onClick={(e) => e.stopPropagation()}
+                                        >{`https://www.subzeroiceservices.com/${category.link}`}</a>
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right" onClick={() => null}>
