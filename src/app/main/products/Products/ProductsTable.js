@@ -103,6 +103,7 @@ function ProductsTable(props) {
                         onRequestSort={handleRequestSort}
                         rowCount={data.length}
                         onMenuItemClick={handleDeselect}
+                        deleteSelectedItemsCallback={() => props.deleteCallback(selected)}
                     />
 
                     <TableBody>
