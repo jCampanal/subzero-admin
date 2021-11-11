@@ -14,7 +14,7 @@ import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import {useTranslation} from 'react-i18next';
 import {useHistory} from 'react-router';
-import {Link} from '@material-ui/core';
+import {Link} from 'react-router-dom';
 
 function CategoriesTable(props) {
     const history = useHistory();
@@ -136,7 +136,7 @@ function CategoriesTable(props) {
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="left">
-                                        <Link href={category.link}>{category.link}</Link>
+                                        <Link to={`/category/${category.link}`}>{category.link}</Link>
                                     </TableCell>
 
                                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right" onClick={() => null}>
@@ -153,7 +153,7 @@ function CategoriesTable(props) {
                                             color="primary"
                                             onClick={(event) => {
                                                 event.stopPropagation();
-                                                props.deleteCallback(category.id);
+                                                props.deleteCallback([category.id]);
                                             }}
                                         >
                                             <Icon>delete</Icon> {t('DELETE')}

@@ -5,34 +5,17 @@ import {useTheme} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import {motion} from 'framer-motion';
 import {Link} from 'react-router-dom';
-import {useHistory, useParams} from 'react-router';
+import {useParams} from 'react-router';
 import {useTranslation} from 'react-i18next';
-import {useFormContext} from 'react-hook-form';
-import {postCategory, putCategory} from '../../../api-conn/categories';
+import IconButton from '@material-ui/core/IconButton';
+import SaveIcon from '@material-ui/icons/Save';
+import {SaveRounded} from '@material-ui/icons';
+import DeleteIcon from '@material-ui/icons/Delete';
 
-function ProductHeader() {
+const ProductHeader = (props) => {
     const theme = useTheme();
-    const history = useHistory();
     const {id} = useParams();
     const {t} = useTranslation('category-form');
-    const methods = useFormContext();
-    const {getValues} = methods;
-
-    const saveData = () => {
-        const formData = new FormData();
-        formData.append('Name', getValues().name);
-        formData.append('Link', `https://subzeroiceservices.com/category/${getValues().link}`);
-        if (id === undefined && getValues().file !== null) formData.append('File', getValues().file);
-        if (id) {
-            putCategory(id, formData)
-                .then(() => history.push('/categories'))
-                .catch((error) => console.log(error));
-        } else {
-            postCategory(formData)
-                .then(() => history.push('/categories'))
-                .catch((error) => console.log(error));
-        }
-    };
 
     return (
         <div className="flex flex-1 w-full items-center justify-between">
@@ -54,28 +37,31 @@ function ProductHeader() {
             </div>
             <motion.div className="flex" initial={{opacity: 0, x: 20}} animate={{opacity: 1, x: 0, transition: {delay: 0.3}}}>
                 {id && (
-                    <Button
-                        className="whitespace-nowrap mx-4"
-                        variant="contained"
-                        color="secondary"
-                        onClick={() => history.push(`/categories/${id}/remove`)}
-                        startIcon={<Icon className="hidden sm:flex">delete</Icon>}
-                    >
-                        {t('REMOVE')}
-                    </Button>
+                    <>
+                        <IconButton className="sm:hidden" onClick={() => props.deleteCallback([id])}>
+                            <DeleteIcon />
+                        </IconButton>
+                        <Button
+                            className="whitespace-nowrap hidden sm:inline-block mr-5"
+                            variant="contained"
+                            color="secondary"
+                            onClick={() => props.deleteCallback([id])}
+                        >
+                            <DeleteIcon className="mr-5" />
+                            {t('REMOVE')}
+                        </Button>
+                    </>
                 )}
-                <Button
-                    className="whitespace-nowrap mx-4"
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => saveData()}
-                    startIcon={<Icon className="hidden sm:flex">save</Icon>}
-                >
+                <IconButton className="sm:hidden" onClick={() => props.saveCallback()}>
+                    <SaveRounded />
+                </IconButton>
+                <Button className="whitespace-nowrap hidden sm:inline-block" variant="contained" color="secondary" onClick={() => props.saveCallback()}>
+                    <SaveIcon className="mr-5" />
                     {t('SAVE')}
                 </Button>
             </motion.div>
         </div>
     );
-}
+};
 
 export default ProductHeader;
