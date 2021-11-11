@@ -5,54 +5,10 @@ import {useHistory} from 'react-router';
 import {useDispatch, useSelector} from 'react-redux';
 import {getProducts} from '../../../api-conn/products';
 import {showMessage} from '../../../store/fuse/messageSlice';
+import rows from '../../../common/productRows';
 
 const Header = lazy(() => import('./PageCardedHeader').then((header) => header));
 const ProductsTable = lazy(() => import('./ProductsTable').then((table) => table));
-
-const rows = [
-    {
-        id: 'image',
-        align: 'left',
-        disablePadding: true,
-        label: '',
-        sort: false,
-    },
-    {
-        id: 'name',
-        align: 'left',
-        disablePadding: false,
-        label: 'NAME',
-        sort: true,
-    },
-    {
-        id: 'category',
-        align: 'left',
-        disablePadding: false,
-        label: 'CATEGORY',
-        sort: true,
-    },
-    {
-        id: 'units',
-        align: 'right',
-        disablePadding: false,
-        label: 'UNITS',
-        sort: true,
-    },
-    {
-        id: 'visible',
-        align: 'right',
-        disablePadding: false,
-        label: 'VISIBLE',
-        sort: true,
-    },
-    {
-        id: 'actions',
-        align: 'right',
-        disablePadding: false,
-        label: '',
-        sort: false,
-    },
-];
 
 function Products() {
     const history = useHistory();
