@@ -7,6 +7,9 @@ import {motion} from 'framer-motion';
 import {Link} from 'react-router-dom';
 import {useHistory} from 'react-router';
 import {useTranslation} from 'react-i18next';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
 
 const CategoryHeader = (props) => {
     const theme = useTheme();
@@ -38,22 +41,29 @@ const CategoryHeader = (props) => {
                 </div>
             </div>
             <motion.div className="flex" initial={{opacity: 0, x: 20}} animate={{opacity: 1, x: 0, transition: {delay: 0.3}}}>
+                <IconButton className="sm:hidden" onClick={() => history.push(`/category/${id}/delete`)}>
+                    <DeleteIcon />
+                </IconButton>
                 <Button
-                    className="whitespace-nowrap mx-4"
+                    className="whitespace-nowrap hidden sm:inline-block mr-4"
                     variant="contained"
                     color="secondary"
-                    startIcon={<Icon className="hidden sm:flex">delete</Icon>}
                     onClick={() => history.push(`/category/${id}/delete`)}
                 >
+                    <DeleteIcon className="mr-5" />
                     {t('REMOVE')}
                 </Button>
+
+                <IconButton className="sm:hidden" onClick={() => history.push(`/categories/${id}/edit`, {category: props.category})}>
+                    <EditIcon />
+                </IconButton>
                 <Button
-                    className="whitespace-nowrap mx-4"
+                    className="whitespace-nowrap hidden sm:inline-block"
                     variant="contained"
                     color="secondary"
                     onClick={() => history.push(`/categories/${id}/edit`, {category: props.category})}
-                    startIcon={<Icon className="hidden sm:flex">edit</Icon>}
                 >
+                    <EditIcon className="mr-5" />
                     {t('EDIT')}
                 </Button>
             </motion.div>
