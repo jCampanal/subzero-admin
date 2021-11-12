@@ -108,6 +108,14 @@ function FormControls(props) {
                     })
                 );
                 loadSaleUnits();
+                setValue(
+                    'salesUnitsId',
+                    getValues().salesUnitsId.filter((item) => item.id !== itemsId[0])
+                );
+                setValue(
+                    'decimals',
+                    getValues().decimals.filter((item) => item.id !== itemsId[0])
+                );
             })
             .catch(() => {
                 dispatch(
