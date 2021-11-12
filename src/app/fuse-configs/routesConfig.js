@@ -26,9 +26,9 @@ import CategoryConfig from '../main/categories/Category/CategoryConfig';
 import ProductFormConfig from '../main/products/ProductForm/ProductFormConfig';
 import SaleUnitFormConfig from '../main/products/SaleUnitForm/SaleUnitFormConfig';
 import CoolerFormConfig from '../main/coolers/CoolersForm/CoolerFormConfig';
-import ProvidersConfig from '../main/providers/Providers/ProvidersConfig';
-import ProvidersFormConfig from '../main/providers/ProvidersForm/ProvidersFormConfig';
-import ProvidersShowConfig from '../main/providers/ShowProvider/ProvidersShowConfig';
+import ProvidersConfig from '../main/coolers/providers/Providers/ProvidersConfig';
+import ProvidersFormConfig from '../main/coolers/providers/ProvidersForm/ProvidersFormConfig';
+import ProvidersShowConfig from '../main/coolers/providers/ShowProvider/ProvidersShowConfig';
 import WarehouseFormConfig from '../main/warehouses/WarehouseForm/WarehouseFormConfig';
 import ProductConfig from '../main/products/Product/ProductConfig';
 

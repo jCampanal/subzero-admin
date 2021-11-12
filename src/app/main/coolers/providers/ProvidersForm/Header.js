@@ -9,8 +9,8 @@ import {useHistory, useParams} from 'react-router';
 import {useTranslation} from 'react-i18next';
 import {useFormContext} from 'react-hook-form';
 import {useDispatch} from 'react-redux';
-import {showMessage} from '../../../store/fuse/messageSlice';
-import {postProviders, putProviders} from '../../../api-conn/providers';
+import {showMessage} from '../../../../store/fuse/messageSlice';
+import {postProviders, putProviders} from '../../../../api-conn/providers';
 
 function Header(props) {
     const theme = useTheme();

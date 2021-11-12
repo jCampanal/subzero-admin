@@ -4,11 +4,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useHistory} from 'react-router';
 import {useTranslation} from 'react-i18next';
 import FuseLoading from '@fuse/core/FuseLoading';
-import {deleteProviders, getProviders} from '../../../api-conn/providers';
-import tableRows from './tableRows';
-import {openDialog} from '../../../store/fuse/dialogSlice';
-import RemoveDlg from '../../../common/removeDlg';
-import {showMessage} from '../../../store/fuse/messageSlice';
+import {deleteProviders, getProviders} from '../../../../api-conn/providers';
+import rows from './rows';
+import {openDialog} from '../../../../store/fuse/dialogSlice';
+import RemoveDlg from '../../../../common/removeDlg';
+import {showMessage} from '../../../../store/fuse/messageSlice';
 
 const Providers = () => {
     const history = useHistory();
@@ -80,7 +80,7 @@ const Providers = () => {
         );
 
     const ProvidersTable = lazy(() => import('./ProvidersTable').then((table) => table));
-    const ProvidersHeader = lazy(() => import('../../products/Products/PageCardedHeader').then((header) => header));
+    const ProvidersHeader = lazy(() => import('../../../products/Products/PageCardedHeader').then((header) => header));
 
     return (
         <FusePageCarded
@@ -102,13 +102,7 @@ const Providers = () => {
                 loading ? (
                     <FuseLoading />
                 ) : (
-                    <ProvidersTable
-                        rows={tableRows}
-                        providers={providers}
-                        showProvider={showProvider}
-                        editCallback={editProvider}
-                        deleteCallback={deleteProvider}
-                    />
+                    <ProvidersTable rows={rows} providers={providers} showProvider={showProvider} editCallback={editProvider} deleteCallback={deleteProvider} />
                 )
             }
             innerScroll
