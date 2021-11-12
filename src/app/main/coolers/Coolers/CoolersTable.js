@@ -13,8 +13,10 @@ import TableHeader from 'app/main/products/Products/TableHeader';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import {useTranslation} from 'react-i18next';
+import {useHistory} from 'react-router';
 
 function CoolersTable(props) {
+    const history = useHistory();
     const {t} = useTranslation('coolers');
     const [selected, setSelected] = useState([]);
     const data = props.coolers;
@@ -51,10 +53,6 @@ function CoolersTable(props) {
         setSelected([]);
     }
 
-    function handleClick(item) {
-        props.history.push(`/apps/e-commerce/products/${item.id}/${item.handle}`);
-    }
-
     function handleCheck(event, id) {
         const selectedIndex = selected.indexOf(id);
         let newSelected = [];
@@ -83,7 +81,7 @@ function CoolersTable(props) {
     if (data.length === 0) {
         return (
             <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: {delay: 0.1}}} className="flex flex-1 items-center justify-center h-full">
-                <Typography color="textSecondary" variant="h5">
+                <Typography color="textSecondary" variant="h5" className="text-center">
                     {t('NO_COOLERS')}
                 </Typography>
             </motion.div>
@@ -103,6 +101,7 @@ function CoolersTable(props) {
                         onRequestSort={handleRequestSort}
                         rowCount={data.length}
                         onMenuItemClick={handleDeselect}
+                        deleteSelectedItemsCallback={() => props.deleteCallback(selected)}
                     />
 
                     <TableBody>
@@ -117,7 +116,7 @@ function CoolersTable(props) {
                                     tabIndex={-1}
                                     key={cooler.id}
                                     selected={isSelected}
-                                    onClick={() => handleClick(cooler)}
+                                    onClick={() => history.push(`/coolers/${cooler.code}`, {cooler})}
                                 >
                                     <TableCell className="w-40 md:w-64 text-center" padding="none">
                                         <Checkbox
@@ -169,7 +168,7 @@ function CoolersTable(props) {
                                             color="primary"
                                             onClick={(e) => {
                                                 e.stopPropagation();
-                                                props.deleteCallback(cooler.id);
+                                                props.deleteCallback([cooler.id]);
                                             }}
                                         >
                                             <Icon>delete</Icon> {t('DELETE')}
