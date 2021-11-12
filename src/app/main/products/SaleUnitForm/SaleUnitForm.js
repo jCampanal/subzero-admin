@@ -5,11 +5,25 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import {useDispatch} from 'react-redux';
 import {useTranslation} from 'react-i18next';
+import {yupResolver} from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import {closeDialog} from '../../../store/fuse/dialogSlice';
 import {postSaleUnit, putSaleUnit} from '../../../api-conn/products/sale-units';
 import {showMessage} from '../../../store/fuse/messageSlice';
 import FuseLoading from '../../../../@fuse/core/FuseLoading';
 
+const validationRules = yup.object().shape({
+    name: yup
+        .string()
+        .required('REQUIRED')
+        .min(3, 'MORE_THAN_2')
+        .matches(/^[a-z]([\w ]*)[a-z]$/gi, 'UNACCEPTED_CHARACTER'),
+    value: yup
+        .string()
+        .required('REQUIRED')
+        .min(2, 'MORE_THAN_1')
+        .matches(/^[a-z]([\w]*)[a-z]$/gi, 'UNACCEPTED_CHARACTER'),
+});
 const SaleUnitForm = (props) => {
     const dispatch = useDispatch();
     const {t} = useTranslation('product-form');
@@ -19,6 +33,8 @@ const SaleUnitForm = (props) => {
             name: props.saleUnit.name,
             value: props.saleUnit.value,
         },
+        mode: 'all',
+        resolver: yupResolver(validationRules),
     });
     const {
         control,
@@ -97,7 +113,7 @@ const SaleUnitForm = (props) => {
                                     helperText={errors?.name?.message}
                                     label={t('NAME')}
                                     autoFocus
-                                    id="value"
+                                    id="name"
                                     variant="outlined"
                                     fullWidth
                                 />
@@ -113,8 +129,7 @@ const SaleUnitForm = (props) => {
                                     error={!!errors.value}
                                     required
                                     helperText={errors?.value?.message}
-                                    label={t('NAME')}
-                                    autoFocus
+                                    label={t('VALUE')}
                                     id="value"
                                     variant="outlined"
                                     fullWidth
