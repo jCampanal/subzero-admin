@@ -1,5 +1,5 @@
 import FusePageCarded from '@fuse/core/FusePageCarded';
-import React, {lazy, memo, useEffect, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useHistory} from 'react-router';
 import {useDispatch, useSelector} from 'react-redux';
@@ -9,9 +9,8 @@ import rows from '../../../common/productRows';
 import FuseLoading from '../../../../@fuse/core/FuseLoading';
 import {openDialog} from '../../../store/fuse/dialogSlice';
 import RemoveDlg from '../../../common/removeDlg';
-
-const Header = lazy(() => import('./PageCardedHeader').then((header) => header));
-const ProductsTable = lazy(() => import('./ProductsTable').then((table) => table));
+import PageCardedHeader from './PageCardedHeader';
+import ProductsTable from './ProductsTable';
 
 function Products() {
     const history = useHistory();
@@ -24,9 +23,9 @@ function Products() {
     const [loading, setLoading] = useState(false);
 
     const createProduct = () => history.push('/products/create');
-    const loadProducts = () => {
+    const loadProducts = (pageSize = 20, pageNumber = 0, name = '') => {
         setLoading(true);
-        getProducts()
+        getProducts(pageSize, pageNumber, name)
             .then((data) => {
                 setProducts(data.data);
                 setLoading(false);
@@ -100,12 +99,13 @@ function Products() {
                 header: 'min-h-72 h-72 sm:h-136 sm:min-h-136',
             }}
             header={
-                <Header
+                <PageCardedHeader
                     iconText="shopping_cart"
                     title={t('PRODUCTS')}
                     addButtonLabel={t('ADD_PRODUCT')}
                     addButtonCallback={createProduct}
                     searchHint={t('SEARCH_BY_NAME')}
+                    searchCallback={loadProducts}
                 />
             }
             content={loading ? <FuseLoading /> : <ProductsTable data={products} rows={rows} editCallback={editProduct} deleteCallback={removeProduct} />}
