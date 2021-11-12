@@ -4,7 +4,7 @@ import {useHistory} from 'react-router';
 import {useDispatch, useSelector} from 'react-redux';
 import {deleteCooler, getCoolers} from '../../../api-conn/coolers';
 import rows from './tableRows';
-import {closeDialog, openDialog} from '../../../store/fuse/dialogSlice';
+import {openDialog} from '../../../store/fuse/dialogSlice';
 import RemoveDlg from '../../../common/removeDlg';
 import {showMessage} from '../../../store/fuse/messageSlice';
 import FuseLoading from '../../../../@fuse/core/FuseLoading';
@@ -36,19 +36,31 @@ function Coolers() {
                 setLoading(false);
             });
     };
-    const onProceed = (id) => {
-        const deleteItem = async () => {
-            await deleteCooler(id);
-        };
-        deleteItem().finally();
-        dispatch(closeDialog());
-        loadCoolers();
+    const onProceed = (itemIds) => {
+        setLoading(true);
+        deleteCooler(JSON.stringify(itemIds))
+            .then(() => {
+                dispatch(
+                    showMessage({
+                        message: 'Deletion completed!',
+                    })
+                );
+                loadCoolers();
+            })
+            .catch(() => {
+                dispatch(
+                    showMessage({
+                        message: 'Error during deletion. Please try again later',
+                        variant: 'error',
+                    })
+                );
+                setLoading(false);
+            });
     };
 
     const createCooler = () => history.push('/coolers/create');
     const editCooler = (id) => history.push(`/coolers/${id}/edit`, {cooler: coolers.filter((cooler) => cooler.id === id)[0]});
-    const moveCooler = (id) => history.push(`/coolers/${id}/move`, {cooler: coolers.filter((cooler) => cooler.id === id)[0]});
-    const removeCooler = (itemId) =>
+    const removeCooler = (itemId) => {
         dispatch(
             openDialog({
                 children: (
@@ -61,6 +73,7 @@ function Coolers() {
                 ),
             })
         );
+    };
 
     useEffect(() => {
         if (!logged) history.push('/login');
@@ -77,13 +90,7 @@ function Coolers() {
                 header: 'min-h-72 h-72 sm:h-136 sm:min-h-136',
             }}
             header={<PageCardedHeader addCallback={createCooler} />}
-            content={
-                loading ? (
-                    <FuseLoading />
-                ) : (
-                    <CoolersTable coolers={coolers} rows={rows} editCallback={editCooler} deleteCallback={removeCooler} moveCallback={moveCooler} />
-                )
-            }
+            content={loading ? <FuseLoading /> : <CoolersTable coolers={coolers} rows={rows} editCallback={editCooler} deleteCallback={removeCooler} />}
             innerScroll
         />
     );
