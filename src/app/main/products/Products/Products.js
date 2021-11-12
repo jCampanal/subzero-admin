@@ -3,56 +3,15 @@ import React, {lazy, memo, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useHistory} from 'react-router';
 import {useDispatch, useSelector} from 'react-redux';
-import {getProducts} from '../../../api-conn/products';
+import {deleteProduct, getProducts} from '../../../api-conn/products';
 import {showMessage} from '../../../store/fuse/messageSlice';
+import rows from '../../../common/productRows';
+import FuseLoading from '../../../../@fuse/core/FuseLoading';
+import {openDialog} from '../../../store/fuse/dialogSlice';
+import RemoveDlg from '../../../common/removeDlg';
 
 const Header = lazy(() => import('./PageCardedHeader').then((header) => header));
 const ProductsTable = lazy(() => import('./ProductsTable').then((table) => table));
-
-const rows = [
-    {
-        id: 'image',
-        align: 'left',
-        disablePadding: true,
-        label: '',
-        sort: false,
-    },
-    {
-        id: 'name',
-        align: 'left',
-        disablePadding: false,
-        label: 'NAME',
-        sort: true,
-    },
-    {
-        id: 'category',
-        align: 'left',
-        disablePadding: false,
-        label: 'CATEGORY',
-        sort: true,
-    },
-    {
-        id: 'units',
-        align: 'right',
-        disablePadding: false,
-        label: 'UNITS',
-        sort: true,
-    },
-    {
-        id: 'visible',
-        align: 'right',
-        disablePadding: false,
-        label: 'VISIBLE',
-        sort: true,
-    },
-    {
-        id: 'actions',
-        align: 'right',
-        disablePadding: false,
-        label: '',
-        sort: false,
-    },
-];
 
 function Products() {
     const history = useHistory();
@@ -62,6 +21,68 @@ function Products() {
         user: {logged},
     } = useSelector((state) => state);
     const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(false);
+
+    const createProduct = () => history.push('/products/create');
+    const loadProducts = () => {
+        setLoading(true);
+        getProducts()
+            .then((data) => {
+                setProducts(data.data);
+                setLoading(false);
+            })
+            .catch(() => {
+                dispatch(
+                    showMessage({
+                        message: t('PROBLEM_FETCHING'),
+                        anchorOrigin: {
+                            vertical: 'top',
+                            horizontal: 'right',
+                        },
+                        variant: 'error',
+                    })
+                );
+                setLoading(false);
+            });
+    };
+    const editProduct = (productId) => {
+        const product = products.filter((item) => item.id === productId)[0];
+        history.push(`/products/${productId}/edit`, {product});
+    };
+    const onProceed = (itemIds) => {
+        setLoading(true);
+        deleteProduct(JSON.stringify(itemIds))
+            .then(() => {
+                dispatch(
+                    showMessage({
+                        message: 'Deletion completed!',
+                    })
+                );
+                loadProducts();
+            })
+            .catch(() => {
+                dispatch(
+                    showMessage({
+                        message: 'Error during deletion. Please try again later',
+                        variant: 'error',
+                    })
+                );
+                setLoading(false);
+            });
+    };
+    const removeProduct = (itemIds) =>
+        dispatch(
+            openDialog({
+                children: (
+                    <RemoveDlg
+                        itemId={itemIds}
+                        proceedCallback={() => onProceed(itemIds)}
+                        dlgTitle="Warning, you have requested a risky operation"
+                        dlgText="You are attempting to delete a product, this operation cannot be undone. Are you sure you want to proceed with the deletion?"
+                    />
+                ),
+            })
+        );
 
     useEffect(() => {
         if (!logged) history.push('/login');
@@ -69,26 +90,7 @@ function Products() {
     useEffect(() => {
         document.title = 'Products - Subzero Ice Services';
     }, []);
-    useEffect(() => {
-        const loadProducts = async () => {
-            await getProducts()
-                .then((data) => setProducts(data.data))
-                .catch(() => {
-                    setProducts([]);
-                    dispatch(
-                        showMessage({
-                            message: t('PROBLEM_FETCHING'),
-                            anchorOrigin: {
-                                vertical: 'top',
-                                horizontal: 'right',
-                            },
-                            variant: 'error',
-                        })
-                    );
-                });
-        };
-        loadProducts().finally();
-    }, [dispatch, t]);
+    useEffect(loadProducts, [dispatch, t]);
 
     return (
         <FusePageCarded
@@ -102,11 +104,11 @@ function Products() {
                     iconText="shopping_cart"
                     title={t('PRODUCTS')}
                     addButtonLabel={t('ADD_PRODUCT')}
-                    addButtonCallback={() => history.push('/products/create')}
+                    addButtonCallback={createProduct}
                     searchHint={t('SEARCH_BY_NAME')}
                 />
             }
-            content={<ProductsTable data={products} rows={rows} />}
+            content={loading ? <FuseLoading /> : <ProductsTable data={products} rows={rows} editCallback={editProduct} deleteCallback={removeProduct} />}
             innerScroll
         />
     );

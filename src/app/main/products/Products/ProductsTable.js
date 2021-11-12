@@ -103,6 +103,7 @@ function ProductsTable(props) {
                         onRequestSort={handleRequestSort}
                         rowCount={data.length}
                         onMenuItemClick={handleDeselect}
+                        deleteSelectedItemsCallback={() => props.deleteCallback(selected)}
                     />
 
                     <TableBody>
@@ -161,7 +162,7 @@ function ProductsTable(props) {
                                             color="primary"
                                             onClick={(event) => {
                                                 event.stopPropagation();
-                                                history.push(`/products/${product.id}/edit`, {product});
+                                                props.editCallback(product.id);
                                             }}
                                         >
                                             <Icon>edit</Icon> {t('EDIT')}
@@ -170,7 +171,7 @@ function ProductsTable(props) {
                                             color="primary"
                                             onClick={(event) => {
                                                 event.stopPropagation();
-                                                history.push(`/products/${product.id}/remove`);
+                                                props.deleteCallback([product.id]);
                                             }}
                                         >
                                             <Icon>delete</Icon> {t('DELETE')}
@@ -208,4 +209,6 @@ export default withRouter(ProductsTable);
 ProductsTable.propTypes = {
     data: PropTypes.array.isRequired,
     rows: PropTypes.array.isRequired,
+    editCallback: PropTypes.func.isRequired,
+    deleteCallback: PropTypes.func.isRequired,
 };
