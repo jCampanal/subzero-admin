@@ -1,4 +1,4 @@
-import React, {lazy, memo, useEffect, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import FusePageCarded from '@fuse/core/FusePageCarded';
 import {useHistory} from 'react-router';
 import {useDispatch, useSelector} from 'react-redux';
@@ -6,18 +6,35 @@ import {deleteCooler, getCoolers} from '../../../api-conn/coolers';
 import rows from './tableRows';
 import {closeDialog, openDialog} from '../../../store/fuse/dialogSlice';
 import RemoveDlg from '../../../common/removeDlg';
-
-const Header = lazy(() => import('./PageCardedHeader').then((header) => header));
-const CoolersTable = lazy(() => import('./CoolersTable').then((table) => table));
+import {showMessage} from '../../../store/fuse/messageSlice';
+import FuseLoading from '../../../../@fuse/core/FuseLoading';
+import PageCardedHeader from './PageCardedHeader';
+import CoolersTable from './CoolersTable';
 
 function Coolers() {
     const [coolers, setCoolers] = useState([]);
     const history = useHistory();
-    const {logged} = useSelector((state) => state.user);
+    const {
+        user: {logged},
+    } = useSelector((state) => state);
     const dispatch = useDispatch();
-    const fetchCoolers = async () => {
-        const {data} = await getCoolers();
-        setCoolers(data);
+    const [loading, setLoading] = useState(false);
+    const loadCoolers = () => {
+        setLoading(true);
+        getCoolers()
+            .then((response) => {
+                setCoolers(response.data);
+                setLoading(false);
+            })
+            .catch(() => {
+                dispatch(
+                    showMessage({
+                        message: 'There is something wrong, try to refresh the page',
+                        variant: 'error',
+                    })
+                );
+                setLoading(false);
+            });
     };
     const onProceed = (id) => {
         const deleteItem = async () => {
@@ -25,7 +42,7 @@ function Coolers() {
         };
         deleteItem().finally();
         dispatch(closeDialog());
-        fetchCoolers().finally();
+        loadCoolers();
     };
 
     const createCooler = () => history.push('/coolers/create');
@@ -49,8 +66,9 @@ function Coolers() {
         if (!logged) history.push('/login');
     }, [logged, history]);
     useEffect(() => {
-        fetchCoolers().finally();
+        document.title = 'Coolers - Subzero Ice Services';
     }, []);
+    useEffect(loadCoolers, [dispatch]);
     return (
         <FusePageCarded
             classes={{
@@ -58,8 +76,14 @@ function Coolers() {
                 contentCard: 'overflow-hidden',
                 header: 'min-h-72 h-72 sm:h-136 sm:min-h-136',
             }}
-            header={<Header addCallback={createCooler} />}
-            content={<CoolersTable coolers={coolers} rows={rows} editCallback={editCooler} deleteCallback={removeCooler} moveCallback={moveCooler} />}
+            header={<PageCardedHeader addCallback={createCooler} />}
+            content={
+                loading ? (
+                    <FuseLoading />
+                ) : (
+                    <CoolersTable coolers={coolers} rows={rows} editCallback={editCooler} deleteCallback={removeCooler} moveCallback={moveCooler} />
+                )
+            }
             innerScroll
         />
     );
