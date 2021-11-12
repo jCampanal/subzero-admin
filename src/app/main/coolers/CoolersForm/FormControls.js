@@ -79,11 +79,14 @@ function FormControls(props) {
                 control={control}
                 render={({field}) => (
                     <FormControl className="mt-8 mb-16">
-                        <InputLabel id="demo-simple-select-label">{t('PROVIDER')}</InputLabel>
+                        <InputLabel id="provider-select-label" className="pl-20 -mt-9">
+                            {t('PROVIDER')}
+                        </InputLabel>
                         <Select
                             {...field}
-                            labelId="demo-simple-select-label"
+                            labelId="provider-select-label"
                             id="demo-simple-select"
+                            required
                             displayEmpty
                             label={t('PROVIDER')}
                             inputProps={{'aria-label': 'Without label'}}
