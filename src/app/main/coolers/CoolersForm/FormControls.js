@@ -136,6 +136,7 @@ function FormControls(props) {
                     <img
                         src={id ? props.imgUrl : `${process.env.PUBLIC_URL}/assets/images/ecommerce/cooler_image_placeholder.jpg`}
                         alt={t('COOLER_THUMBNAIL')}
+                        id="preview"
                     />
                 </div>
             </div>
