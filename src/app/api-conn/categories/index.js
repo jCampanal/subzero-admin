@@ -2,8 +2,8 @@ import apiClient from '../index';
 
 const categoryBase = '/admin/Category';
 
-const getCategories = (pageSize = 10, pageNumber = 0) =>
-    apiClient.get(`${categoryBase}?pageSize=${pageSize}&pageNumber=${pageNumber}`).then((response) => response.data);
+const getCategories = (pageSize = 10, pageNumber = 0, name = '') =>
+    apiClient.get(`${categoryBase}?pageSize=${pageSize}&pageNumber=${pageNumber}&name=${name}`).then((response) => response.data);
 
 const postCategory = (data) => apiClient.post(categoryBase, data, {headers: {'Content-Type': 'multipart/form-data'}}).then((response) => response);
 
