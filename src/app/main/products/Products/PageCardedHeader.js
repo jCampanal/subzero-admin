@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 import Input from '@material-ui/core/Input';
@@ -14,6 +14,7 @@ import PropTypes from 'prop-types';
 
 function PageCardedHeader(props) {
     const mainTheme = useSelector(selectMainTheme);
+    const [searchPattern, setSearchPattern] = useState('');
 
     return (
         <div className="flex flex-1 w-full items-center justify-between">
@@ -48,8 +49,6 @@ function PageCardedHeader(props) {
                             animate={{y: 0, opacity: 1, transition: {delay: 0.2}}}
                             className="flex items-center w-full max-w-512 px-8 py-4 rounded-16 shadow"
                         >
-                            <Icon color="action">search</Icon>
-
                             <Input
                                 placeholder={props.searchHint}
                                 className="flex flex-1 mx-8"
@@ -58,7 +57,13 @@ function PageCardedHeader(props) {
                                 inputProps={{
                                     'aria-label': 'Search',
                                 }}
+                                id="search-inp"
+                                onChange={({target: {value}}) => setSearchPattern(value)}
                             />
+
+                            <Icon color="action" onClick={() => props.searchCallback(10, 0, searchPattern)}>
+                                search
+                            </Icon>
                         </Paper>
                     )}
                 </ThemeProvider>

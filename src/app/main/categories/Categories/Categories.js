@@ -1,4 +1,4 @@
-import React, {lazy, memo, useEffect, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import FusePageCarded from '@fuse/core/FusePageCarded';
 import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
@@ -9,9 +9,8 @@ import FuseLoading from '../../../../@fuse/core/FuseLoading';
 import {showMessage} from '../../../store/fuse/messageSlice';
 import {openDialog} from '../../../store/fuse/dialogSlice';
 import RemoveDlg from '../../../common/removeDlg';
-
-const Header = lazy(() => import('app/main/products/Products/PageCardedHeader').then((header) => header));
-const CategoriesTable = lazy(() => import('./CategoriesTable').then((table) => table));
+import PageCardedHeader from '../../products/Products/PageCardedHeader';
+import CategoriesTable from './CategoriesTable';
 
 function Categories() {
     const {
@@ -23,9 +22,9 @@ function Categories() {
     const [categories, populateCategories] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    const loadCategories = () => {
+    const loadCategories = (pageSize = 10, pageNumber = 0, pattern = '') => {
         setLoading(true);
-        getCategories()
+        getCategories(pageSize, pageNumber, pattern)
             .then((data) => {
                 populateCategories(data.data);
                 setLoading(false);
@@ -98,12 +97,13 @@ function Categories() {
                 header: 'min-h-72 h-72 sm:h-136 sm:min-h-136',
             }}
             header={
-                <Header
+                <PageCardedHeader
                     iconText="category"
                     title={t('CATEGORIES')}
                     addButtonLabel={t('ADD_CATEGORY')}
                     addButtonCallback={createCategory}
                     searchHint={t('SEARCH_BY_NAME')}
+                    searchCallback={loadCategories}
                 />
             }
             content={
