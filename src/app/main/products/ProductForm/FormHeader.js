@@ -5,97 +5,18 @@ import {useTheme} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import {motion} from 'framer-motion';
 import {Link} from 'react-router-dom';
-import {useHistory, useParams} from 'react-router';
+import {useParams} from 'react-router';
 import {useTranslation} from 'react-i18next';
-import {useFormContext} from 'react-hook-form';
-import {useDispatch} from 'react-redux';
 import IconButton from '@material-ui/core/IconButton';
 import SaveIcon from '@material-ui/icons/Save';
 import DeleteIcon from '@material-ui/icons/Delete';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-import {postProduct, putProduct} from '../../../api-conn/products';
-import {showMessage} from '../../../store/fuse/messageSlice';
+import {useFormContext} from 'react-hook-form';
 
-function ProductHeader() {
+function ProductHeader(props) {
     const theme = useTheme();
-    const history = useHistory();
     const {id} = useParams();
     const {t} = useTranslation('product-form');
     const methods = useFormContext();
-    const {getValues} = methods;
-    const dispatch = useDispatch();
-
-    const saveData = () => {
-        const formData = new FormData();
-        formData.append('Name', getValues().name);
-        formData.append('Description', getValues().description);
-        formData.append('Visible', getValues().visible);
-        formData.append('CategoryId', getValues().categoryId);
-        formData.append(
-            'SalesUnitsId',
-            getValues().salesUnitsId.map((unit) => unit.id)
-        );
-        formData.append(
-            'Decimals',
-            getValues().decimals.map((decimal) => decimal.accept)
-        );
-        if (id === undefined && getValues().file !== null) formData.append('File', getValues().file);
-        if (id) {
-            putProduct(id, formData)
-                .then(() => {
-                    dispatch(
-                        showMessage({
-                            message: t('PRODUCT_UPDATED'),
-                            variant: 'success',
-                            anchorOrigin: {
-                                vertical: 'top',
-                                horizontal: 'right',
-                            },
-                        })
-                    );
-                    history.push('/products');
-                })
-                .catch(() =>
-                    dispatch(
-                        showMessage({
-                            message: t('PRODUCT_UPDATE_ERROR'),
-                            variant: 'error',
-                            anchorOrigin: {
-                                vertical: 'top',
-                                horizontal: 'right',
-                            },
-                        })
-                    )
-                );
-        } else {
-            postProduct(formData)
-                .then(() => {
-                    dispatch(
-                        showMessage({
-                            message: t('PRODUCT_CREATED'),
-                            variant: 'success',
-                            anchorOrigin: {
-                                vertical: 'top',
-                                horizontal: 'right',
-                            },
-                        })
-                    );
-                    history.push('/products');
-                })
-                .catch(() =>
-                    dispatch(
-                        showMessage({
-                            message: t('PRODUCT_CREATE_ERROR'),
-                            variant: 'error',
-                            anchorOrigin: {
-                                vertical: 'top',
-                                horizontal: 'right',
-                            },
-                        })
-                    )
-                );
-        }
-    };
 
     return (
         <div className="flex flex-1 w-full items-center justify-between">
@@ -116,54 +37,39 @@ function ProductHeader() {
                 </div>
             </div>
             <motion.div className="flex" initial={{opacity: 0, x: 20}} animate={{opacity: 1, x: 0, transition: {delay: 0.3}}}>
-                {/* <Button
-                    className="whitespace-nowrap mx-4"
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => history.push(`/products/types/create`)}
-                    startIcon={<Icon className="hidden sm:flex">add</Icon>}
-                >
-                    {t('DEFINE_TYPE')}
-                </Button> */}
-                <motion.div initial={{opacity: 0, x: 20}} animate={{opacity: 1, x: 0, transition: {delay: 0.2}}}>
-                    <IconButton className="sm:hidden mr-5" onClick={() => history.push(`/products/sale-unit/create`)}>
-                        <AddCircleIcon />
-                    </IconButton>
-                    <Button
-                        className="whitespace-nowrap hidden sm:inline-block mr-5"
-                        variant="contained"
-                        color="secondary"
-                        onClick={() => history.push(`/products/sale-unit/create`)}
-                    >
-                        <AddCircleIcon className="mr-5" />
-                        {t('ADD_SALE_UNIT')}
-                    </Button>
-                </motion.div>
                 {id && (
-                    <motion.div initial={{opacity: 0, x: 20}} animate={{opacity: 1, x: 0, transition: {delay: 0.2}}}>
-                        <IconButton className="sm:hidden mr-5" onClick={() => history.push(`/products/${id}/remove`)}>
+                    <>
+                        <IconButton className="sm:hidden mr-5" onClick={() => props.deleteCallback([id])}>
                             <DeleteIcon />
                         </IconButton>
                         <Button
                             className="whitespace-nowrap hidden sm:inline-block mr-5"
                             variant="contained"
                             color="secondary"
-                            onClick={() => history.push(`/products/${id}/remove`)}
+                            onClick={() => props.deleteCallback([id])}
                         >
                             <DeleteIcon className="mr-5" />
                             {t('REMOVE')}
                         </Button>
-                    </motion.div>
+                    </>
                 )}
-                <motion.div initial={{opacity: 0, x: 20}} animate={{opacity: 1, x: 0, transition: {delay: 0.2}}}>
-                    <IconButton className="sm:hidden" onClick={() => saveData()}>
-                        <SaveIcon />
-                    </IconButton>
-                    <Button className="whitespace-nowrap hidden sm:inline-block" variant="contained" color="secondary" onClick={() => saveData()}>
-                        <SaveIcon className="mr-5" />
-                        {t('SAVE')}
-                    </Button>
-                </motion.div>
+                <IconButton
+                    className="sm:hidden"
+                    disabled={methods.formState.dirtyFields === {} || !methods.formState.isValid}
+                    onClick={() => props.saveCallback()}
+                >
+                    <SaveIcon />
+                </IconButton>
+                <Button
+                    className="whitespace-nowrap hidden sm:inline-block"
+                    variant="contained"
+                    color="secondary"
+                    disabled={methods.formState.dirtyFields === {} || !methods.formState.isValid}
+                    onClick={() => props.saveCallback()}
+                >
+                    <SaveIcon className="mr-5" />
+                    {t('SAVE')}
+                </Button>
             </motion.div>
         </div>
     );
