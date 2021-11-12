@@ -23,7 +23,7 @@ function Products() {
     const [loading, setLoading] = useState(false);
 
     const createProduct = () => history.push('/products/create');
-    const loadProducts = (pageSize = 20, pageNumber = 0, name = '') => {
+    const loadProducts = (pageSize = 10, pageNumber = 0, name = '') => {
         setLoading(true);
         getProducts(pageSize, pageNumber, name)
             .then((data) => {
@@ -94,7 +94,7 @@ function Products() {
     return (
         <FusePageCarded
             classes={{
-                content: 'flex',
+                content: 'flex mx-14',
                 contentCard: 'overflow-hidden',
                 header: 'min-h-72 h-72 sm:h-136 sm:min-h-136',
             }}
@@ -108,7 +108,13 @@ function Products() {
                     searchCallback={loadProducts}
                 />
             }
-            content={loading ? <FuseLoading /> : <ProductsTable data={products} rows={rows} editCallback={editProduct} deleteCallback={removeProduct} />}
+            content={
+                loading ? (
+                    <FuseLoading />
+                ) : (
+                    <ProductsTable data={products} rows={rows} editCallback={editProduct} deleteCallback={removeProduct} loadDataCallback={loadProducts} />
+                )
+            }
             innerScroll
         />
     );
