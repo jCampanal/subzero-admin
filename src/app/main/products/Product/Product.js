@@ -104,7 +104,7 @@ const Product = () => {
                                 <Typography variant="subtitle1">{t('SALE_UNITS')}</Typography>
                                 <Typography variant="body1">
                                     {product.salesUnits.map((unit) => (
-                                        <span>{unit.saleUnitName}</span>
+                                        <span key={unit.saleUnitId}>{unit.saleUnitName}</span>
                                     ))}
                                 </Typography>
                             </div>
