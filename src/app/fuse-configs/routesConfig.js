@@ -7,7 +7,7 @@ import LoginPageConfig from 'app/pages/login/LoginPageConfig';
 import DashboardConfig from 'app/main/dashboard/DashboardConfig';
 import CategoriesPageConfig from 'app/main/categories/Categories/CategoriesConfig';
 import ProductsConfig from 'app/main/products/Products/ProductsConfig';
-import CoolersPageConfig from 'app/main/coolers/Coolers/CoolersPageConfig';
+import CoolersConfig from 'app/main/coolers/Coolers/CoolersConfig';
 import SchedulesPageConfig from 'app/main/schedules/SchedulesPageConfig';
 import CoolersActivityPageConfig from 'app/main/coolers-activity/CoolersActivityPageConfig';
 import CustomersConfig from 'app/main/customers/Customers/CustomersConfig';
@@ -42,7 +42,7 @@ const routeConfigs = [
     ProductFormConfig,
     ProductConfig,
     SaleUnitFormConfig,
-    CoolersPageConfig,
+    CoolersConfig,
     CoolerFormConfig,
     CoolersActivityPageConfig,
     ProvidersConfig,
