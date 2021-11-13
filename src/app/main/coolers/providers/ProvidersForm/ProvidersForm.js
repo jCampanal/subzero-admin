@@ -1,9 +1,11 @@
-import React, {lazy, useState} from 'react';
+import React, {useState} from 'react';
 import {useForm, FormProvider} from 'react-hook-form';
 import {useHistory, useLocation, useParams} from 'react-router';
 import {useSelector} from 'react-redux';
 import FusePageCarded from '@fuse/core/FusePageCarded';
 import FuseLoading from '@fuse/core/FuseLoading';
+import Header from './Header';
+import Controls from './Controls';
 
 const ProvidersForm = () => {
     const history = useHistory();
@@ -24,12 +26,12 @@ const ProvidersForm = () => {
     const toggleLoading = () => {
         setLoading(!loading);
     };
-    const Header = lazy(() => import('./Header').then((header) => header));
-    const Controls = lazy(() => import('./Controls').then((controls) => controls));
+
     return (
         <FormProvider {...methods}>
             <FusePageCarded
                 classes={{
+                    content: 'flex justify-center',
                     toolbar: 'p-0',
                     header: 'min-h-72 h-72 sm:h-136 sm:min-h-136',
                 }}

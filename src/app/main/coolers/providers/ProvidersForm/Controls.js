@@ -12,7 +12,7 @@ const Controls = () => {
     const {t} = useTranslation('providers-form');
 
     return (
-        <div className="flex flex-col justify-center sm:justify-start flex-wrap -mx-16 px-7 sm:px-16">
+        <div className="p-16 sm:p-24 max-w-2xl flex flex-wrap justify-center">
             <Controller
                 name="name"
                 control={control}
