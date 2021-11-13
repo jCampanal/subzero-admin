@@ -12,43 +12,45 @@ const Controls = () => {
     const {t} = useTranslation('providers-form');
 
     return (
-        <div className="p-16 sm:p-24 max-w-2xl flex flex-wrap justify-center">
-            <Controller
-                name="name"
-                control={control}
-                render={({field}) => (
-                    <TextField
-                        {...field}
-                        className="mt-8 mb-16"
-                        error={!!errors.name}
-                        required
-                        helperText={errors?.name?.message}
-                        label={t('NAME')}
-                        autoFocus
-                        id="name"
-                        variant="outlined"
-                        fullWidth
-                    />
-                )}
-            />
+        <div className="flex flex-wrap p-16 sm:p-24 min-w-full content-start">
+            <div className="min-w-full mt-8 mb-16">
+                <Controller
+                    name="name"
+                    control={control}
+                    render={({field}) => (
+                        <TextField
+                            {...field}
+                            error={!!errors.name}
+                            required
+                            helperText={errors?.name?.message}
+                            label={t('NAME')}
+                            autoFocus
+                            id="name"
+                            variant="outlined"
+                            fullWidth
+                        />
+                    )}
+                />
+            </div>
 
-            <Controller
-                name="tags"
-                control={control}
-                render={({field}) => (
-                    <TextField
-                        {...field}
-                        className="mt-8 mb-16"
-                        error={!!errors.tags}
-                        required
-                        helperText={errors?.tags?.message}
-                        label={t('TAGS')}
-                        id="tags"
-                        variant="outlined"
-                        fullWidth
-                    />
-                )}
-            />
+            <div className="w-full mt-8 mb-16">
+                <Controller
+                    name="tags"
+                    control={control}
+                    render={({field}) => (
+                        <TextField
+                            {...field}
+                            error={!!errors.tags}
+                            required
+                            helperText={errors?.tags?.message}
+                            label={t('TAGS')}
+                            id="tags"
+                            variant="outlined"
+                            fullWidth
+                        />
+                    )}
+                />
+            </div>
         </div>
     );
 };
