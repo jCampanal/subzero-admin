@@ -22,9 +22,9 @@ const Providers = () => {
     const [loading, setLoading] = useState(false);
     const [providers, setProviders] = useState([]);
 
-    const loadProviders = () => {
+    const loadProviders = (pageSize = 10, pageNumber = 0, code = undefined) => {
         setLoading(true);
-        getProviders()
+        getProviders(pageSize, pageNumber)
             .then((response) => {
                 setProviders(response.data);
                 setLoading(false);
@@ -101,7 +101,8 @@ const Providers = () => {
                     title="Providers"
                     addButtonLabel={t('ADD')}
                     addButtonCallback={() => history.push('/providers/create')}
-                    searchHint=""
+                    searchHint="Search by name"
+                    searchCallback={loadProviders}
                 />
             }
             content={
