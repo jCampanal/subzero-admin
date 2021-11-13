@@ -3,10 +3,10 @@ import React from 'react';
 import en from './translations/en';
 import es from './translations/es';
 
-i18next.addResourceBundle('en', 'providers-show', en);
-i18next.addResourceBundle('es', 'providers-show', es);
+i18next.addResourceBundle('en', 'provider', en);
+i18next.addResourceBundle('es', 'provider', es);
 
-const ProvidersShowConfig = {
+const ProviderConfig = {
     settings: {
         layout: {
             config: {},
@@ -16,9 +16,9 @@ const ProvidersShowConfig = {
         {
             path: '/providers/:id',
             exact: true,
-            component: React.lazy(() => import('./ProvidersShow').then((show) => show)),
+            component: React.lazy(() => import('./Provider').then((provider) => provider)),
         },
     ],
 };
 
-export default ProvidersShowConfig;
+export default ProviderConfig;

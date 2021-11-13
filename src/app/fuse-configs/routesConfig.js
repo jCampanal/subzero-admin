@@ -28,7 +28,6 @@ import SaleUnitFormConfig from '../main/products/SaleUnitForm/SaleUnitFormConfig
 import CoolerFormConfig from '../main/coolers/CoolersForm/CoolerFormConfig';
 import ProvidersConfig from '../main/coolers/providers/Providers/ProvidersConfig';
 import ProvidersFormConfig from '../main/coolers/providers/ProvidersForm/ProvidersFormConfig';
-import ProvidersShowConfig from '../main/coolers/providers/ShowProvider/ProvidersShowConfig';
 import WarehouseFormConfig from '../main/warehouses/WarehouseForm/WarehouseFormConfig';
 import ProductConfig from '../main/products/Product/ProductConfig';
 
@@ -47,7 +46,7 @@ const routeConfigs = [
     CoolersActivityPageConfig,
     ProvidersConfig,
     ProvidersFormConfig,
-    ProvidersShowConfig,
+    ProvidersConfig,
     CustomersConfig,
     SchedulesPageConfig,
     DriversPageConfig,
