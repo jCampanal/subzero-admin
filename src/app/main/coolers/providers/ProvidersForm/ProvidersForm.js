@@ -5,8 +5,15 @@ import {useSelector} from 'react-redux';
 import FusePageCarded from '@fuse/core/FusePageCarded';
 import FuseLoading from '@fuse/core/FuseLoading';
 import {useTranslation} from 'react-i18next';
+import {yupResolver} from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import Header from './Header';
 import Controls from './Controls';
+
+const validationRules = yup.object().shape({
+    name: yup.string().required('REQUIRED'),
+    tags: yup.string().required('REQUIRED'),
+});
 
 const ProvidersForm = () => {
     const history = useHistory();
@@ -23,6 +30,8 @@ const ProvidersForm = () => {
             name: id ? provider.name : '',
             tags: id ? provider.tags : '',
         },
+        mode: 'all',
+        resolver: yupResolver(validationRules),
     });
     const [loading, setLoading] = useState(false);
     const toggleLoading = () => {

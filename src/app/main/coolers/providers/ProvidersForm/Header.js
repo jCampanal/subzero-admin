@@ -21,7 +21,10 @@ function Header(props) {
     const {id} = useParams();
     const {t} = useTranslation('providers-form');
     const methods = useFormContext();
-    const {getValues} = methods;
+    const {
+        getValues,
+        formState: {dirtyFields, isValid},
+    } = methods;
     const dispatch = useDispatch();
 
     const saveData = () => {
@@ -121,10 +124,16 @@ function Header(props) {
                         </Button>
                     </>
                 )}
-                <IconButton className="sm:hidden" onClick={() => saveData()}>
+                <IconButton className="sm:hidden" disabled={dirtyFields === {} || !isValid} onClick={() => saveData()}>
                     <SaveIcon />
                 </IconButton>
-                <Button className="whitespace-nowrap hidden sm:inline-block" variant="contained" color="secondary" onClick={() => saveData()}>
+                <Button
+                    className="whitespace-nowrap hidden sm:inline-block"
+                    variant="contained"
+                    color="secondary"
+                    disabled={dirtyFields === {} || !isValid}
+                    onClick={() => saveData()}
+                >
                     <SaveIcon className="mr-5" />
                     {t('SAVE')}
                 </Button>
