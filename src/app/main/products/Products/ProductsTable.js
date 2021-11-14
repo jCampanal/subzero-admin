@@ -74,10 +74,12 @@ function ProductsTable(props) {
 
     function handleChangePage(event, value) {
         setPage(value);
+        props.loadDataCallback(rowsPerPage, value, '');
     }
 
     function handleChangeRowsPerPage(event) {
         setRowsPerPage(event.target.value);
+        props.loadDataCallback(event.target.value, page, '');
     }
 
     if (data.length === 0) {
@@ -211,4 +213,5 @@ ProductsTable.propTypes = {
     rows: PropTypes.array.isRequired,
     editCallback: PropTypes.func.isRequired,
     deleteCallback: PropTypes.func.isRequired,
+    loadDataCallback: PropTypes.func.isRequired,
 };
