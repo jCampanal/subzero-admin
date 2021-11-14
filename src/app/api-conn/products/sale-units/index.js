@@ -6,6 +6,8 @@ const getSaleUnits = () => apiClient.get(saleUnitBaseUrl).then((response) => res
 
 const postSaleUnit = (data) => apiClient.post(saleUnitBaseUrl, data).then((response) => response.data);
 
-const putSaleUnit = (data) => apiClient.put(saleUnitBaseUrl, data).then((response) => response.data);
+const putSaleUnit = (id, data) => apiClient.put(`${saleUnitBaseUrl}/${id}`, data).then((response) => response.data);
 
-export {getSaleUnits, postSaleUnit, putSaleUnit};
+const deleteSaleUnit = (ids) => apiClient.delete(saleUnitBaseUrl, {data: ids}).then((response) => response.data);
+
+export {getSaleUnits, postSaleUnit, putSaleUnit, deleteSaleUnit};
