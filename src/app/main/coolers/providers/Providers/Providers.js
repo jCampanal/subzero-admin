@@ -1,42 +1,44 @@
-import React, {lazy, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import FusePageCarded from '@fuse/core/FusePageCarded';
 import {useDispatch, useSelector} from 'react-redux';
 import {useHistory} from 'react-router';
 import {useTranslation} from 'react-i18next';
 import FuseLoading from '@fuse/core/FuseLoading';
-import {deleteProviders, getProviders} from '../../../api-conn/providers';
-import tableRows from './tableRows';
-import {openDialog} from '../../../store/fuse/dialogSlice';
-import RemoveDlg from '../../../common/removeDlg';
-import {showMessage} from '../../../store/fuse/messageSlice';
+import {deleteProviders, getProviders} from '../../../../api-conn/providers';
+import rows from './rows';
+import {openDialog} from '../../../../store/fuse/dialogSlice';
+import RemoveDlg from '../../../../common/removeDlg';
+import {showMessage} from '../../../../store/fuse/messageSlice';
+import PageCardedHeader from '../../../products/Products/PageCardedHeader';
+import ProvidersTable from './ProvidersTable';
 
 const Providers = () => {
     const history = useHistory();
+    const dispatch = useDispatch();
     const {
         user: {logged},
     } = useSelector((state) => state);
-    if (!logged) history.push('/login');
-
     const {t} = useTranslation('providers');
-    useEffect(() => {
-        document.title = t('PAGE_TITLE');
-    }, [t]);
     const [loading, setLoading] = useState(false);
     const [providers, setProviders] = useState([]);
 
-    const loadProviders = async () => {
+    const loadProviders = (pageSize = 10, pageNumber = 0, code = undefined) => {
         setLoading(true);
-        const {data} = await getProviders();
-        setProviders(data);
-        setLoading(false);
+        getProviders(pageSize, pageNumber)
+            .then((response) => {
+                setProviders(response.data);
+                setLoading(false);
+            })
+            .catch(() => {
+                dispatch(
+                    showMessage({
+                        message: 'Something went wrong. Try to reload the page',
+                        variant: 'error',
+                    })
+                );
+            });
     };
-    useEffect(() => {
-        loadProviders().finally();
-    }, []);
-
     const showProvider = (provider) => history.push(`/providers/${provider.id}`, {provider});
-
-    const dispatch = useDispatch();
     const onProceed = (id) => {
         setLoading(true);
         deleteProviders(id)
@@ -52,7 +54,7 @@ const Providers = () => {
                     })
                 );
                 setLoading(false);
-                loadProviders().finally();
+                loadProviders();
             })
             .catch(() => {
                 setLoading(false);
@@ -68,7 +70,6 @@ const Providers = () => {
                 );
             });
     };
-
     const editProvider = (provider) => history.push(`/providers/${provider.id}/edit`, {provider});
     const deleteProvider = (provider) =>
         dispatch(
@@ -79,8 +80,13 @@ const Providers = () => {
             })
         );
 
-    const ProvidersTable = lazy(() => import('./ProvidersTable').then((table) => table));
-    const ProvidersHeader = lazy(() => import('../../products/Products/PageCardedHeader').then((header) => header));
+    useEffect(() => {
+        if (!logged) history.push('/login');
+    }, [logged, history]);
+    useEffect(() => {
+        document.title = t('PAGE_TITLE');
+    }, [t]);
+    useEffect(loadProviders, [dispatch]);
 
     return (
         <FusePageCarded
@@ -90,25 +96,20 @@ const Providers = () => {
                 header: 'min-h-72 h-72 sm:h-136 sm:min-h-136',
             }}
             header={
-                <ProvidersHeader
+                <PageCardedHeader
                     iconText="business"
                     title="Providers"
                     addButtonLabel={t('ADD')}
                     addButtonCallback={() => history.push('/providers/create')}
-                    searchHint=""
+                    searchHint="Search by name"
+                    searchCallback={loadProviders}
                 />
             }
             content={
                 loading ? (
                     <FuseLoading />
                 ) : (
-                    <ProvidersTable
-                        rows={tableRows}
-                        providers={providers}
-                        showProvider={showProvider}
-                        editCallback={editProvider}
-                        deleteCallback={deleteProvider}
-                    />
+                    <ProvidersTable rows={rows} providers={providers} showProvider={showProvider} editCallback={editProvider} deleteCallback={deleteProvider} />
                 )
             }
             innerScroll

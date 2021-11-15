@@ -6,7 +6,7 @@ import es from './translations/es';
 i18next.addResourceBundle('en', 'coolers', en);
 i18next.addResourceBundle('es', 'coolers', es);
 
-const CoolersPageConfig = {
+const CoolersConfig = {
     settings: {
         layout: {
             config: {},
@@ -21,4 +21,4 @@ const CoolersPageConfig = {
     ],
 };
 
-export default CoolersPageConfig;
+export default CoolersConfig;

@@ -4,11 +4,18 @@ import {useHistory, useLocation, useParams} from 'react-router';
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
+import {yupResolver} from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import FormControls from './FormControls';
 import FormHeader from './FormHeader';
 import {getProvidersAll} from '../../../api-conn/providers';
 import {openDialog} from '../../../store/fuse/dialogSlice';
 import RemoveDlg from '../../../common/removeDlg';
+
+const validationRules = yup.object().shape({
+    code: yup.string().required('REQUIRED'),
+    providerId: yup.string().required('REQUIRED'),
+});
 
 const CoolerForm = () => {
     const {
@@ -17,16 +24,29 @@ const CoolerForm = () => {
     const history = useHistory();
     const {id} = useParams();
     const {state} = useLocation();
-    const cooler = id ? state.cooler : undefined;
+    const cooler = id
+        ? state.cooler
+        : {
+              id: '',
+              code: '',
+              pickedUp: '',
+              imageURL: '',
+              providerName: '',
+              providerId: '',
+              coolerStatus: '',
+              customerName: '',
+          };
     const {t} = useTranslation('coolers-form');
     const [providers, setProviders] = useState([]);
     const dispatch = useDispatch();
     const methods = useForm({
         defaultValues: {
-            code: id ? cooler.code : '',
-            providerId: id ? cooler.providerId : 0,
+            code: cooler.code,
+            providerId: cooler.providerId,
             file: null,
         },
+        mode: 'all',
+        resolver: yupResolver(validationRules),
     });
     const removeCooler = (itemId) => dispatch(openDialog({children: <RemoveDlg itemId={itemId} proceedCallback={() => history.push('/coolers')} />}));
 
@@ -52,7 +72,7 @@ const CoolerForm = () => {
                 contentToolbar={<div className="p-16 sm:p-24 max-w-2xl">{id ? <h1>{cooler.code}</h1> : <h1>{t('CREATE_NEW')}</h1>}</div>}
                 content={
                     <div className="p-16 sm:p-24 max-w-2xl">
-                        <FormControls providers={providers} />
+                        <FormControls providers={providers} imageURL={cooler.imageURL} />
                     </div>
                 }
             />

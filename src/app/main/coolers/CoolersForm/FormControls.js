@@ -4,11 +4,11 @@ import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import {orange} from '@material-ui/core/colors';
 import clsx from 'clsx';
-import Icon from '@material-ui/core/Icon';
 import {useTranslation} from 'react-i18next';
 import {useParams} from 'react-router';
 import FormControl from '@material-ui/core/FormControl';
 import {InputLabel, MenuItem, Select} from '@material-ui/core';
+import Icon from '@material-ui/core/Icon';
 
 const useStyles = makeStyles((theme) => ({
     productImageFeaturedStar: {
@@ -54,7 +54,7 @@ function FormControls(props) {
     const classes = useStyles(props);
 
     return (
-        <div className="flex flex-col justify-center sm:justify-start flex-wrap -mx-16 px-7 sm:px-16">
+        <div className="flex flex-col justify-center sm:justify-start flex-wrap max-w-2xl">
             <Controller
                 name="code"
                 control={control}
@@ -79,11 +79,14 @@ function FormControls(props) {
                 control={control}
                 render={({field}) => (
                     <FormControl className="mt-8 mb-16">
-                        <InputLabel id="demo-simple-select-label">{t('PROVIDER')}</InputLabel>
+                        <InputLabel id="provider-select-label" className="pl-20 -mt-9">
+                            {t('PROVIDER')}
+                        </InputLabel>
                         <Select
                             {...field}
-                            labelId="demo-simple-select-label"
+                            labelId="provider-select-label"
                             id="demo-simple-select"
+                            required
                             displayEmpty
                             label={t('PROVIDER')}
                             inputProps={{'aria-label': 'Without label'}}
@@ -100,32 +103,43 @@ function FormControls(props) {
                 )}
             />
 
-            <Controller
-                name="file"
-                control={control}
-                render={({field: {onChange}}) => (
-                    <label
-                        htmlFor="button-file"
-                        title={t(id ? 'CLICK_TO_CHANGE' : 'CLICK_TO_LOAD')}
-                        className={clsx(
-                            classes.productImageUpload,
-                            'flex items-center justify-center relative w-128 h-128 rounded-16 mx-12 mb-24 overflow-hidden cursor-pointer shadow hover:shadow-lg'
-                        )}
-                    >
-                        <input accept="image/*" className="hidden" id="button-file" type="file" onChange={(e) => onChange(e.target.files[0])} />
-                        {props.imgUrl === '' && (
+            <div className="flex flex-col sm:flex-row sm:gap-7">
+                <Controller
+                    name="file"
+                    control={control}
+                    render={({field: {onChange}}) => (
+                        <label
+                            htmlFor="button-file"
+                            title={t(id ? 'CLICK_TO_CHANGE' : 'CLICK_TO_LOAD')}
+                            className={clsx(
+                                classes.productImageUpload,
+                                'flex items-center justify-center relative w-128 h-128 rounded-16 mb-24 overflow-hidden cursor-pointer shadow hover:shadow-lg'
+                            )}
+                        >
+                            <input
+                                accept="image/*"
+                                className="hidden"
+                                id="button-file"
+                                type="file"
+                                onChange={(e) => {
+                                    document.getElementById('preview').src = URL.createObjectURL(e.target.files[0]);
+                                    onChange(e.target.files[0]);
+                                }}
+                            />
                             <Icon fontSize="large" color="action">
                                 cloud_upload
                             </Icon>
-                        )}
-                        {props.imgUrl !== '' && (
-                            <div>
-                                <img src={props.imgUrl} alt={t('COOLER_THUMBNAIL')} />
-                            </div>
-                        )}
-                    </label>
-                )}
-            />
+                        </label>
+                    )}
+                />
+                <div>
+                    <img
+                        src={id ? props.imgUrl : `${process.env.PUBLIC_URL}/assets/images/ecommerce/cooler_image_placeholder.jpg`}
+                        alt={t('COOLER_THUMBNAIL')}
+                        id="preview"
+                    />
+                </div>
+            </div>
         </div>
     );
 }

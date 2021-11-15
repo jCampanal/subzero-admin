@@ -7,7 +7,7 @@ import LoginPageConfig from 'app/pages/login/LoginPageConfig';
 import DashboardConfig from 'app/main/dashboard/DashboardConfig';
 import CategoriesPageConfig from 'app/main/categories/Categories/CategoriesConfig';
 import ProductsConfig from 'app/main/products/Products/ProductsConfig';
-import CoolersPageConfig from 'app/main/coolers/Coolers/CoolersPageConfig';
+import CoolersConfig from 'app/main/coolers/Coolers/CoolersConfig';
 import SchedulesPageConfig from 'app/main/schedules/SchedulesPageConfig';
 import CoolersActivityPageConfig from 'app/main/coolers-activity/CoolersActivityPageConfig';
 import CustomersConfig from 'app/main/customers/Customers/CustomersConfig';
@@ -25,11 +25,11 @@ import CategoryFormConfig from '../main/categories/CategoryForm/CategoryFormConf
 import CategoryConfig from '../main/categories/Category/CategoryConfig';
 import ProductFormConfig from '../main/products/ProductForm/ProductFormConfig';
 import CoolerFormConfig from '../main/coolers/CoolersForm/CoolerFormConfig';
-import ProvidersConfig from '../main/providers/Providers/ProvidersConfig';
-import ProvidersFormConfig from '../main/providers/ProvidersForm/ProvidersFormConfig';
-import ProvidersShowConfig from '../main/providers/ShowProvider/ProvidersShowConfig';
+import ProvidersConfig from '../main/coolers/providers/Providers/ProvidersConfig';
+import ProvidersFormConfig from '../main/coolers/providers/ProvidersForm/ProvidersFormConfig';
 import WarehouseFormConfig from '../main/warehouses/WarehouseForm/WarehouseFormConfig';
 import ProductConfig from '../main/products/Product/ProductConfig';
+import ProviderConfig from '../main/coolers/providers/Provider/ProviderConfig';
 
 const routeConfigs = [
     LoginPageConfig,
@@ -40,12 +40,12 @@ const routeConfigs = [
     ProductsConfig,
     ProductFormConfig,
     ProductConfig,
-    CoolersPageConfig,
+    CoolersConfig,
     CoolerFormConfig,
     CoolersActivityPageConfig,
     ProvidersConfig,
     ProvidersFormConfig,
-    ProvidersShowConfig,
+    ProviderConfig,
     CustomersConfig,
     SchedulesPageConfig,
     DriversPageConfig,
