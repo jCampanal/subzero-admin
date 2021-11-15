@@ -2,7 +2,8 @@ import apiClient from '../index';
 
 const productsBase = '/admin/Product';
 
-const getProducts = (pageSize = 10, pageNumber = 0) => apiClient.get(productsBase, {params: {pageSize, pageNumber}}).then((response) => response.data);
+const getProducts = (pageSize = 10, pageNumber = 0, name = '') =>
+    apiClient.get(productsBase, {params: {pageSize, pageNumber, name}}).then((response) => response.data);
 
 const getProduct = (id) => apiClient.get(`${productsBase}/${id}`).then((response) => response.data);
 
