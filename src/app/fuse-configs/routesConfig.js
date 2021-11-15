@@ -24,7 +24,6 @@ import DriversMonitorPageConfig from 'app/main/drivers-monitor/DriversMonitorPag
 import CategoryFormConfig from '../main/categories/CategoryForm/CategoryFormConfig';
 import CategoryConfig from '../main/categories/Category/CategoryConfig';
 import ProductFormConfig from '../main/products/ProductForm/ProductFormConfig';
-import SaleUnitFormConfig from '../main/products/SaleUnitForm/SaleUnitFormConfig';
 import CoolerFormConfig from '../main/coolers/CoolersForm/CoolerFormConfig';
 import ProvidersConfig from '../main/coolers/providers/Providers/ProvidersConfig';
 import ProvidersFormConfig from '../main/coolers/providers/ProvidersForm/ProvidersFormConfig';
@@ -41,7 +40,6 @@ const routeConfigs = [
     ProductsConfig,
     ProductFormConfig,
     ProductConfig,
-    SaleUnitFormConfig,
     CoolersConfig,
     CoolerFormConfig,
     CoolersActivityPageConfig,
