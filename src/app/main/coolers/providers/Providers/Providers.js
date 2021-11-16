@@ -24,12 +24,13 @@ const Providers = () => {
 
     const loadProviders = (pageSize = 10, pageNumber = 0, code = undefined) => {
         setLoading(true);
-        getProviders(pageSize, pageNumber)
+        getProviders(pageNumber, pageSize)
             .then((response) => {
-                setProviders(response.data);
+                setProviders(response.data.data);
                 setLoading(false);
             })
             .catch(() => {
+                setLoading(false);
                 dispatch(
                     showMessage({
                         message: 'Something went wrong. Try to reload the page',
