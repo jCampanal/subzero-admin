@@ -159,7 +159,7 @@ function CoolersTable(props) {
                                             color="primary"
                                             onClick={(e) => {
                                                 e.stopPropagation();
-                                                props.editCallback(cooler.id);
+                                                props.editCallback(cooler);
                                             }}
                                         >
                                             <Icon>edit</Icon> {t('EDIT')}

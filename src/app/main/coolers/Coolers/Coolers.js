@@ -59,7 +59,7 @@ function Coolers() {
     };
 
     const createCooler = () => history.push('/coolers/create');
-    const editCooler = (id) => history.push(`/coolers/${id}/edit`, {cooler: coolers.data.filter((cooler) => cooler.id === id)[0]});
+    const editCooler = (cooler) => history.push(`/coolers/${cooler.id}/edit`, {cooler});
     const removeCooler = (itemId) => {
         dispatch(
             openDialog({
