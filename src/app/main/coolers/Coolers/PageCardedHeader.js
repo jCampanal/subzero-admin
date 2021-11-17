@@ -1,4 +1,4 @@
-import React, {lazy, useState} from 'react';
+import React, {useState} from 'react';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 import Input from '@material-ui/core/Input';
@@ -13,13 +13,13 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import {useTranslation} from 'react-i18next';
 import {useHistory} from 'react-router';
-
-const DateRangePicker = lazy(() => import('./DateRangePicker'));
+import DateRangePicker from './DateRangePicker';
 
 function PageCardedHeader(props) {
     const {t} = useTranslation('coolers');
-    const mainTheme = useSelector(selectMainTheme);
     const history = useHistory();
+    const mainTheme = useSelector(selectMainTheme);
+    const [searchPattern, setSearchPattern] = useState('');
     const [dateRangeDlgIsOpen, openDateRangeDlg] = useState(false);
     const toggleDateRangeDlgIsOpen = () => {
         openDateRangeDlg(!dateRangeDlgIsOpen);
@@ -51,8 +51,6 @@ function PageCardedHeader(props) {
                             animate={{y: 0, opacity: 1, transition: {delay: 0.2}}}
                             className="flex items-center w-full max-w-512 px-8 py-4 rounded-16 shadow"
                         >
-                            <Icon color="action">search</Icon>
-
                             <Input
                                 placeholder={t('SEARCH_BY_CODE')}
                                 className="flex flex-1 mx-8"
@@ -61,7 +59,12 @@ function PageCardedHeader(props) {
                                 inputProps={{
                                     'aria-label': 'Search',
                                 }}
+                                onChange={({target: {value}}) => setSearchPattern(value)}
                             />
+
+                            <Icon color="action" onClick={() => props.searchCallback(10, 0, searchPattern)}>
+                                search
+                            </Icon>
                         </Paper>
                     </ThemeProvider>
                 </div>

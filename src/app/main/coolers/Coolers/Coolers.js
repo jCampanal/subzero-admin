@@ -19,9 +19,9 @@ function Coolers() {
     } = useSelector((state) => state);
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(true);
-    const loadCoolers = () => {
+    const loadCoolers = (pageNumber = 0, pageSize = 10, code = undefined) => {
         setLoading(true);
-        getCoolers()
+        getCoolers(pageNumber, pageSize, code)
             .then((response) => {
                 setCoolers(response.data);
                 setLoading(false);
@@ -90,7 +90,7 @@ function Coolers() {
                 contentCard: 'overflow-hidden',
                 header: 'min-h-72 h-72 sm:h-136 sm:min-h-136',
             }}
-            header={<PageCardedHeader addCallback={createCooler} />}
+            header={<PageCardedHeader addCallback={createCooler} searchCallback={loadCoolers} />}
             content={loading ? <FuseLoading /> : <CoolersTable coolers={coolers.data} rows={rows} editCallback={editCooler} deleteCallback={removeCooler} />}
             innerScroll
         />
