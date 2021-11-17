@@ -18,7 +18,7 @@ function Coolers() {
         user: {logged},
     } = useSelector((state) => state);
     const dispatch = useDispatch();
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const loadCoolers = () => {
         setLoading(true);
         getCoolers()
@@ -59,7 +59,7 @@ function Coolers() {
     };
 
     const createCooler = () => history.push('/coolers/create');
-    const editCooler = (id) => history.push(`/coolers/${id}/edit`, {cooler: coolers.filter((cooler) => cooler.id === id)[0]});
+    const editCooler = (cooler) => history.push(`/coolers/${cooler.id}/edit`, {cooler});
     const removeCooler = (itemId) => {
         dispatch(
             openDialog({
@@ -81,7 +81,8 @@ function Coolers() {
     useEffect(() => {
         document.title = 'Coolers - Subzero Ice Services';
     }, []);
-    useEffect(loadCoolers, [dispatch]);
+    useEffect(loadCoolers, []);
+
     return (
         <FusePageCarded
             classes={{
@@ -90,7 +91,7 @@ function Coolers() {
                 header: 'min-h-72 h-72 sm:h-136 sm:min-h-136',
             }}
             header={<PageCardedHeader addCallback={createCooler} />}
-            content={loading ? <FuseLoading /> : <CoolersTable coolers={coolers} rows={rows} editCallback={editCooler} deleteCallback={removeCooler} />}
+            content={loading ? <FuseLoading /> : <CoolersTable coolers={coolers.data} rows={rows} editCallback={editCooler} deleteCallback={removeCooler} />}
             innerScroll
         />
     );
