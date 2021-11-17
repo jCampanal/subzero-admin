@@ -62,7 +62,7 @@ function PageCardedHeader(props) {
                                 onChange={({target: {value}}) => setSearchPattern(value)}
                             />
 
-                            <Icon color="action" onClick={() => props.searchCallback(10, 0, searchPattern)}>
+                            <Icon color="action" onClick={() => props.searchCallback(0, 10, searchPattern)}>
                                 search
                             </Icon>
                         </Paper>
