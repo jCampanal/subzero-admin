@@ -30,6 +30,7 @@ import ProvidersFormConfig from '../main/coolers/providers/ProvidersForm/Provide
 import WarehouseFormConfig from '../main/warehouses/WarehouseForm/WarehouseFormConfig';
 import ProductConfig from '../main/products/Product/ProductConfig';
 import ProviderConfig from '../main/coolers/providers/Provider/ProviderConfig';
+import CoolersCustomersConfig from '../main/coolers/Customers/CoolersCustomersConfig';
 
 const routeConfigs = [
     LoginPageConfig,
@@ -42,6 +43,7 @@ const routeConfigs = [
     ProductConfig,
     CoolersConfig,
     CoolerFormConfig,
+    CoolersCustomersConfig,
     CoolersActivityPageConfig,
     ProvidersConfig,
     ProvidersFormConfig,
