@@ -92,7 +92,7 @@ function PageCardedHeader(props) {
                 <Button className="whitespace-nowrap inline-block uppercase" onClick={() => history.push('/providers')}>
                     {t('PROVIDERS')}
                 </Button>
-                <Button className="whitespace-nowrap inline-block uppercase" onClick={() => null}>
+                <Button className="whitespace-nowrap inline-block uppercase" onClick={() => history.push('/coolers/customers')}>
                     {t('CLIENTS')}
                 </Button>
             </div>
