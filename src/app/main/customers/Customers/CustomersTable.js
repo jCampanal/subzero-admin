@@ -16,7 +16,6 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 
 function CustomersTable(props) {
-  console.log("props", props.customers);
   const { t } = useTranslation("customers");
   const [selected, setSelected] = useState([]);
   const [data] = useState(props.customers);
@@ -118,7 +117,6 @@ function CustomersTable(props) {
             {data.data
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((customer) => {
-                console.log("customer", customer);
                 const isSelected = selected.indexOf(customer.id) !== -1;
                 return (
                   <TableRow

@@ -14,13 +14,13 @@ const CustomersTable = lazy(() =>
 
 function Customers() {
   const { t } = useTranslation("customers");
-  const [customers, setCustomers] = useState({});
+  const [customers, setCustomers] = useState({ data: [] });
   const [loading, setLoading] = useState(false);
 
   const loadCustomers = async () => {
     setLoading(true);
     const { data } = await getCustomers();
-    console.log("data".data);
+
     setCustomers(data);
     setLoading(false);
   };
@@ -29,9 +29,6 @@ function Customers() {
     loadCustomers().finally();
   }, []);
 
-  useEffect(() => {
-    console.log(customers);
-  }, [customers]);
   return (
     <FusePageCarded
       classes={{

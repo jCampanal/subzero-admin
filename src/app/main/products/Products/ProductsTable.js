@@ -98,6 +98,7 @@ function ProductsTable(props) {
       </motion.div>
     );
   }
+  console.log("product data", data);
 
   return (
     <div className="w-full flex flex-col">
@@ -116,7 +117,7 @@ function ProductsTable(props) {
           />
 
           <TableBody>
-            {data.data
+            {data
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((product) => {
                 const isSelected = selected.indexOf(product.id) !== -1;
@@ -235,7 +236,7 @@ function ProductsTable(props) {
       <TablePagination
         className="flex-shrink-0 border-t-1"
         component="div"
-        count={data.totalItems}
+        count={data.length}
         labelRowsPerPage={t("ROWS_PER_PAGE")}
         rowsPerPage={rowsPerPage}
         page={page}
@@ -257,7 +258,7 @@ export default withRouter(ProductsTable);
 ProductsTable.propTypes = {
   data: PropTypes.array.isRequired,
   rows: PropTypes.array.isRequired,
-  editCallback: PropTypes.func.isRequired,
-  deleteCallback: PropTypes.func.isRequired,
-  loadDataCallback: PropTypes.func.isRequired,
+  editCallback: PropTypes.func,
+  deleteCallback: PropTypes.func,
+  loadDataCallback: PropTypes.func,
 };

@@ -211,7 +211,7 @@ function CategoriesTable(props) {
       <TablePagination
         className="flex-shrink-0 border-t-1"
         component="div"
-        count={data.totalItems}
+        count={data.data.lenght || 0}
         labelRowsPerPage={t("ROWS_PER_PAGE")}
         rowsPerPage={rowsPerPage}
         page={page}
@@ -231,7 +231,7 @@ function CategoriesTable(props) {
 export default CategoriesTable;
 
 CategoriesTable.propTypes = {
-  categories: PropTypes.array.isRequired,
+  categories: PropTypes.object.isRequired,
   rows: PropTypes.array.isRequired,
   editCallback: PropTypes.func.isRequired,
   deleteCallback: PropTypes.func.isRequired,
