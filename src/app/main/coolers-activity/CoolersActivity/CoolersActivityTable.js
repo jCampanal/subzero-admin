@@ -12,12 +12,13 @@ import TableHeader from "app/main/products/Products/TableHeader";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
+import { Button } from "@material-ui/core";
 
 function CoolersActivityTable(props) {
   const history = useHistory();
   const { t } = useTranslation("coolers-activity");
   const [selected, setSelected] = useState([]);
-  const [data, setData] = useState(props.coolersActivity);
+  const [data] = useState(props.coolersActivity);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [order, setOrder] = useState({
@@ -97,6 +98,8 @@ function CoolersActivityTable(props) {
     );
   }
 
+  console.log("activity", data);
+
   return (
     <div className="w-full flex flex-col">
       <FuseScrollbars className="flex-grow overflow-x-auto">
@@ -117,6 +120,9 @@ function CoolersActivityTable(props) {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((coolerActivity) => {
                 const isSelected = selected.indexOf(coolerActivity.id) !== -1;
+
+                const date = new Date(coolerActivity.deliveredTime);
+
                 return (
                   <TableRow
                     className="h-72 cursor-pointer"
@@ -124,7 +130,7 @@ function CoolersActivityTable(props) {
                     role="checkbox"
                     aria-checked={isSelected}
                     tabIndex={-1}
-                    key={coolerActivity.id}
+                    key={coolerActivity.code}
                     selected={isSelected}
                     onClick={(event) => handleClick(coolerActivity)}
                   >
@@ -140,6 +146,22 @@ function CoolersActivityTable(props) {
                         }
                       />
                     </TableCell>
+                    {/* <TableCell
+                      className="w-52 px-4 md:px-0"
+                      component="th"
+                      scope="row"
+                      padding="none"
+                    >
+                      <img
+                        className="w-full block rounded"
+                        src={
+                          coolerActivity.imageURL
+                            ? coolerActivity.imageURL
+                            : `${process.env.PUBLIC_URL}/assets/images/ecommerce/product-image-placeholder.png`
+                        }
+                        alt={coolerActivity.code}
+                      />
+                    </TableCell> */}
 
                     <TableCell
                       className="p-4 md:p-16"
@@ -173,7 +195,7 @@ function CoolersActivityTable(props) {
                       scope="row"
                       align="left"
                     >
-                      {coolerActivity.driver}
+                      {coolerActivity.driverName}
                     </TableCell>
 
                     <TableCell
@@ -182,7 +204,23 @@ function CoolersActivityTable(props) {
                       scope="row"
                       align="left"
                     >
-                      {coolerActivity.date.toLocaleDateString()}
+                      {date.toLocaleDateString()}
+                    </TableCell>
+                    <TableCell
+                      className="p-4 md:p-16"
+                      component="th"
+                      scope="row"
+                      align="right"
+                    >
+                      <Button
+                        color="primary"
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          props.moveCallback(coolerActivity.code);
+                        }}
+                      >
+                        {t("MOVE")}
+                      </Button>
                     </TableCell>
                   </TableRow>
                 );
@@ -215,5 +253,6 @@ export default CoolersActivityTable;
 
 CoolersActivityTable.propTypes = {
   coolersActivity: PropTypes.array.isRequired,
+  moveCallback: PropTypes.func.isRequired,
   rows: PropTypes.array.isRequired,
 };
