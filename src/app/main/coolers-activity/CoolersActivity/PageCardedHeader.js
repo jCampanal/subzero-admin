@@ -12,12 +12,13 @@ import IconButton from "@material-ui/core/IconButton";
 import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
-
+import PropTypes from "prop-types";
+import { EditLocation } from "@material-ui/icons";
 const DateRangePicker = lazy(() =>
   import("../../coolers/Coolers/DateRangePicker")
 );
 
-function PageCardedHeader() {
+function PageCardedHeader({ code }) {
   const history = useHistory();
   const { t } = useTranslation("coolers-activity");
   const mainTheme = useSelector(selectMainTheme);
@@ -39,11 +40,18 @@ function PageCardedHeader() {
   };
 
   const submitFilter = () => {
-    history.push(`/coolers_activity?code=${filter.code}&date=${filter.date}`);
+    if (code) {
+      history.push(`/coolers_activity?code=${code}&date=${filter.date}`);
+    } else {
+      history.push(`/coolers_activity?code=${filter.code}&date=${filter.date}`);
+    }
   };
 
   const handleCHangeSearchCode = (e) => {
     setSearchCode(e.target.value);
+  };
+  const handleMoveCoolerActivity = () => {
+    history.push(`/coolers_activity_move/:id`);
   };
 
   useEffect(() => {
@@ -76,28 +84,46 @@ function PageCardedHeader() {
 
       <div className="flex flex-1 items-center justify-center px-12 gap-5">
         <ThemeProvider theme={mainTheme}>
-          <Paper
-            component={motion.div}
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}
-            className="flex items-center w-full max-w-512 px-8 py-4 rounded-16 shadow"
-          >
-            <Icon color="action" onClick={searchByCode}>
-              search
-            </Icon>
+          {!code ? (
+            <Paper
+              component={motion.div}
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}
+              className="flex items-center w-full max-w-512 px-8 py-4 rounded-16 shadow"
+            >
+              <Icon color="action" onClick={searchByCode}>
+                search
+              </Icon>
 
-            <Input
-              placeholder={t("SEARCH_BY_CODE")}
-              className="flex flex-1 mx-8"
-              onChange={handleCHangeSearchCode}
-              value={searchCode}
-              disableUnderline
-              fullWidth
-              inputProps={{
-                "aria-label": "Search",
-              }}
-            />
-          </Paper>
+              <Input
+                placeholder={t("SEARCH_BY_CODE")}
+                className="flex flex-1 mx-8"
+                onChange={handleCHangeSearchCode}
+                value={searchCode}
+                disableUnderline
+                fullWidth
+                inputProps={{
+                  "aria-label": "Search",
+                }}
+              />
+            </Paper>
+          ) : (
+            <motion.div
+              className="md:mr-5"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
+            >
+              <Button
+                className="whitespace-nowrap hidden sm:inline-block"
+                variant="contained"
+                color="secondary"
+                onClick={handleMoveCoolerActivity}
+              >
+                <EditLocation className="mr-5" />
+                {t("MOVE_ACTIVITY")}
+              </Button>
+            </motion.div>
+          )}
         </ThemeProvider>
       </div>
       <motion.div
@@ -122,9 +148,13 @@ function PageCardedHeader() {
         isOpen={dateRangeDlgIsOpen}
         namespace=""
         searchByDate={searchByDate}
+        toggleDateRangeDlgIsOpen={toggleDateRangeDlgIsOpen}
       />
     </div>
   );
 }
 
 export default PageCardedHeader;
+PageCardedHeader.propTypes = {
+  code: PropTypes.string,
+};
