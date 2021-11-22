@@ -19,7 +19,7 @@ function Categories() {
   const history = useHistory();
   const { t } = useTranslation("categories");
   const dispatch = useDispatch();
-  const [categories, populateCategories] = useState([]);
+  const [categories, populateCategories] = useState({ data: [] });
   const [loading, setLoading] = useState(false);
 
   const loadCategories = (pageSize = 10, pageNumber = 0, pattern = "") => {
