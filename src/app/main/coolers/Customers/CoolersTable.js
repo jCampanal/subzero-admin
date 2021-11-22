@@ -38,7 +38,7 @@ function CoolersTable(props) {
 
   function handleSelectAllClick(event) {
     if (event.target.checked) {
-      setSelected(data.data.map((n) => n.id));
+      setSelected(data.map((n) => n.id));
       return;
     }
     setSelected([]);
@@ -76,7 +76,7 @@ function CoolersTable(props) {
     setRowsPerPage(event.target.value);
   }
 
-  if (data.data.length === 0) {
+  if (data.length === 0) {
     return (
       <motion.div
         initial={{ opacity: 0 }}
@@ -101,12 +101,12 @@ function CoolersTable(props) {
             order={order}
             onSelectAllClick={handleSelectAllClick}
             onRequestSort={handleRequestSort}
-            rowCount={data.data.length}
+            rowCount={data.length}
             onMenuItemClick={handleDeselect}
           />
 
           <TableBody>
-            {data.data
+            {data
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((customerInfo) => {
                 const isSelected = selected.indexOf(customerInfo.id) !== -1;
@@ -147,7 +147,7 @@ function CoolersTable(props) {
       <TablePagination
         className="flex-shrink-0 border-t-1"
         component="div"
-        count={data.data.length}
+        count={data.length}
         labelRowsPerPage={t("ROWS_PER_PAGE")}
         rowsPerPage={rowsPerPage}
         page={page}
