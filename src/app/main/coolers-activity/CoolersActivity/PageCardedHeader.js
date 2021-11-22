@@ -1,4 +1,4 @@
-import React, { lazy, useState } from "react";
+import React, { lazy, useEffect, useState } from "react";
 import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
 import Input from "@material-ui/core/Input";
@@ -11,18 +11,46 @@ import { selectMainTheme } from "app/store/fuse/settingsSlice";
 import IconButton from "@material-ui/core/IconButton";
 import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router";
 
 const DateRangePicker = lazy(() =>
   import("../../coolers/Coolers/DateRangePicker")
 );
 
 function PageCardedHeader() {
+  const history = useHistory();
   const { t } = useTranslation("coolers-activity");
   const mainTheme = useSelector(selectMainTheme);
   const [dateRangeDlgIsOpen, openDateRangeDlg] = useState(false);
+  const [filter, setFilter] = useState({
+    code: "",
+    date: "",
+  });
+  const [searchCode, setSearchCode] = useState("");
   const toggleDateRangeDlgIsOpen = () => {
     openDateRangeDlg(!dateRangeDlgIsOpen);
   };
+
+  const searchByDate = (date) => {
+    setFilter({ ...filter, date: date.toLocaleDateString() });
+  };
+  const searchByCode = () => {
+    setFilter({ ...filter, code: searchCode });
+  };
+
+  const submitFilter = () => {
+    history.push(`/coolers_activity?code=${filter.code}&date=${filter.date}`);
+  };
+
+  const handleCHangeSearchCode = (e) => {
+    setSearchCode(e.target.value);
+  };
+
+  useEffect(() => {
+    if (filter.code !== "" || filter.date !== "") {
+      submitFilter();
+    }
+  }, [filter]);
 
   return (
     <div className="flex flex-1 items-center justify-between">
@@ -54,11 +82,15 @@ function PageCardedHeader() {
             animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}
             className="flex items-center w-full max-w-512 px-8 py-4 rounded-16 shadow"
           >
-            <Icon color="action">search</Icon>
+            <Icon color="action" onClick={searchByCode}>
+              search
+            </Icon>
 
             <Input
               placeholder={t("SEARCH_BY_CODE")}
               className="flex flex-1 mx-8"
+              onChange={handleCHangeSearchCode}
+              value={searchCode}
               disableUnderline
               fullWidth
               inputProps={{
@@ -86,7 +118,11 @@ function PageCardedHeader() {
           {t("SEARCH_BY_DATE")}
         </Button>
       </motion.div>
-      <DateRangePicker isOpen={dateRangeDlgIsOpen} namespace="" />
+      <DateRangePicker
+        isOpen={dateRangeDlgIsOpen}
+        namespace=""
+        searchByDate={searchByDate}
+      />
     </div>
   );
 }

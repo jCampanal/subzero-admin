@@ -9,13 +9,21 @@ import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
 import { DatePicker } from "@material-ui/pickers";
 import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router";
 
 function DateRangePicker(props) {
   const { t } = useTranslation(props.namespace);
   const [dialogIsOpen, openDialog] = useState(false);
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  const [date, setDate] = useState();
+
   const toggleDialog = () => {
+    openDialog(!dialogIsOpen);
+  };
+  const search = () => {
+    props.searchByDate(date);
+
+    console.log("date", date);
+
     openDialog(!dialogIsOpen);
   };
   useEffect(() => openDialog(props.isOpen), [props.isOpen]);
@@ -32,18 +40,11 @@ function DateRangePicker(props) {
         <div className="px-16 sm:px-24">
           <div className="flex -mx-4">
             <DatePicker
-              label={t("START_DATE")}
+              label={t("AcTIVITY_DATE")}
               inputVariant="outlined"
               className="mt-8 mb-16 mx-4"
-              value={startDate}
-              onChange={(e) => setStartDate(new Date(e))}
-            />
-            <DatePicker
-              label={t("END_DATE")}
-              inputVariant="outlined"
-              className="mt-8 mb-16 mx-4"
-              value={endDate}
-              onChange={(e) => setEndDate(new Date(e))}
+              value={date}
+              onChange={(e) => setDate(e)}
             />
           </div>
         </div>
@@ -64,7 +65,7 @@ function DateRangePicker(props) {
             type="submit"
             variant="contained"
             color="secondary"
-            onClick={toggleDialog}
+            onClick={search}
           >
             {t("SEARCH")}
           </Button>

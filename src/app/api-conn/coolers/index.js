@@ -13,18 +13,18 @@ const getCoolers = (
     .get(coolersUrl, { params: { pageSize, pageNumber, code, date, returned } })
     .then((response) => response.data);
 
-const getCoolersActivity = (
-  pageNumber = 0,
-  pageSize = 10,
-  code = undefined,
-  from = undefined,
-  to = undefined
-) =>
-  apiClient
-    .get(coolersUrl + "/getCoolerActivity", {
-      params: { pageSize, pageNumber, code, from, to },
-    })
+const getCoolersActivity = (params) => {
+  return apiClient
+    .get(
+      coolersUrl +
+        `/getCoolerActivity?${
+          params.dateTime ? "dateTime=" + params.dateTime + "&" : ""
+        }pageSize=${params.pageSize}&pageNumber=${params.pageNumber}${
+          params.code ? "&code=" + params.code : ""
+        }`
+    )
     .then((response) => response.data);
+};
 
 const moveCooler = (data) =>
   apiClient

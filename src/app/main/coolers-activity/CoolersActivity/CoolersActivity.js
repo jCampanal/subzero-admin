@@ -1,6 +1,6 @@
 import React, { lazy, memo, useEffect, useState } from "react";
 import FusePageCarded from "@fuse/core/FusePageCarded/FusePageCarded";
-import { useHistory } from "react-router";
+import { useHistory, useLocation, useParams } from "react-router";
 import { getCoolersActivity } from "app/api-conn/coolers";
 import { useDispatch, useSelector } from "react-redux";
 import { showMessage } from "app/store/fuse/messageSlice";
@@ -17,13 +17,7 @@ const rows = [
     label: "CODE",
     sort: true,
   },
-  // {
-  //   id: "image",
-  //   align: "left",
-  //   disablePadding: false,
-  //   label: "",
-  //   sort: true,
-  // },
+
   {
     id: "from",
     align: "left",
@@ -52,40 +46,34 @@ const rows = [
     label: "DATE",
     sort: true,
   },
-  {
-    id: "actions",
-    align: "left",
-    disablePadding: false,
-    label: "",
-    sort: false,
-  },
 ];
 
 function CoolersActivity() {
   const [coolersActivity, setCoolersActivity] = useState([]);
   const history = useHistory();
+  const location = useLocation();
+
   const {
     user: { logged },
   } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
-  const moveCooler = (id) => {
-    const cooler = coolersActivity.find((cooler) => cooler.code === id);
-
-    history.push(`/coolers_activity_move/${id}`, { cooler });
-  };
+  const [pageNumber, setPageNumber] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+  const [code, setCode] = useState(undefined);
+  const [dateTime, setDateTime] = useState(undefined);
 
   const loadCoolersActivity = (
     pageNumber = 0,
     pageSize = 10,
-    code = undefined
+    code = undefined,
+    dateTime = undefined
   ) => {
     setLoading(true);
-    getCoolersActivity(pageNumber, pageSize, code)
+    getCoolersActivity({ pageNumber, pageSize, code, dateTime })
       .then((response) => {
         setCoolersActivity(response.data.data);
-        console.log("coolers activity", response.data);
         setLoading(false);
       })
       .catch(() => {
@@ -106,7 +94,27 @@ function CoolersActivity() {
   useEffect(() => {
     document.title = "CoolersActivity - Subzero Ice Services";
   }, []);
-  useEffect(loadCoolersActivity, []);
+  useEffect(() => {
+    const _code = new URLSearchParams(location.search).get("code");
+    const _date = new URLSearchParams(location.search).get("date");
+    console.log("_code", _code);
+    console.log("_date", _date);
+    if (_date !== "" && _date) {
+      setDateTime(_date);
+    } else {
+      setDateTime(undefined);
+    }
+
+    if (_code !== "" && _code) {
+      setCode(_code);
+    } else {
+      setCode(undefined);
+    }
+  }, [location]);
+
+  useEffect(() => {
+    loadCoolersActivity(pageNumber, pageSize, code, dateTime);
+  }, [code, dateTime, pageSize, pageNumber]);
   return (
     <FusePageCarded
       classes={{
@@ -119,11 +127,7 @@ function CoolersActivity() {
         loading ? (
           <FuseLoading />
         ) : (
-          <CoolersActivityTable
-            coolersActivity={coolersActivity}
-            moveCallback={moveCooler}
-            rows={rows}
-          />
+          <CoolersActivityTable coolersActivity={coolersActivity} rows={rows} />
         )
       }
       innerScroll
