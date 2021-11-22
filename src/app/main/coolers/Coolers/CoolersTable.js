@@ -126,7 +126,9 @@ function CoolersTable(props) {
                     key={cooler.id}
                     selected={isSelected}
                     onClick={() =>
-                      history.push(`/coolers/${cooler.code}`, { cooler })
+                      history.push(`/coolers_activity?code=${cooler.code}`, {
+                        cooler,
+                      })
                     }
                   >
                     <TableCell

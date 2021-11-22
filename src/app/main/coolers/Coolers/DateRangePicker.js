@@ -11,24 +11,25 @@ import { DatePicker } from "@material-ui/pickers";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
 
-function DateRangePicker(props) {
-  const { t } = useTranslation(props.namespace);
-  const [dialogIsOpen, openDialog] = useState(false);
+function DateRangePicker({
+  toggleDateRangeDlgIsOpen,
+  isOpen,
+  namespace,
+  searchByDate,
+}) {
+  const { t } = useTranslation(namespace);
   const [date, setDate] = useState();
 
   const toggleDialog = () => {
-    openDialog(!dialogIsOpen);
+    toggleDateRangeDlgIsOpen();
   };
   const search = () => {
-    props.searchByDate(date);
-
-    console.log("date", date);
-
-    openDialog(!dialogIsOpen);
+    searchByDate(date);
+    toggleDateRangeDlgIsOpen();
   };
-  useEffect(() => openDialog(props.isOpen), [props.isOpen]);
+
   return (
-    <Dialog open={dialogIsOpen} onClose={toggleDialog} fullWidth maxWidth="sm">
+    <Dialog open={isOpen} onClose={toggleDialog} fullWidth maxWidth="sm">
       <AppBar position="static" elevation={0}>
         <Toolbar className="flex w-full">
           <Typography variant="subtitle1" color="inherit">
@@ -55,7 +56,7 @@ function DateRangePicker(props) {
             type="submit"
             variant="contained"
             color="secondary"
-            onClick={toggleDialog}
+            onClick={toggleDateRangeDlgIsOpen}
           >
             {t("CANCEL")}
           </Button>
@@ -80,4 +81,6 @@ export default DateRangePicker;
 DateRangePicker.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   namespace: PropTypes.string.isRequired,
+  searchByDate: PropTypes.func.isRequired,
+  toggleDateRangeDlgIsOpen: PropTypes.func.isRequired,
 };

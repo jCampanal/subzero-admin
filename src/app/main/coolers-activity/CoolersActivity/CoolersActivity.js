@@ -63,6 +63,7 @@ function CoolersActivity() {
   const [pageSize, setPageSize] = useState(10);
   const [code, setCode] = useState(undefined);
   const [dateTime, setDateTime] = useState(undefined);
+  const [coolerData, setCoolerData] = useState(null);
 
   const loadCoolersActivity = (
     pageNumber = 0,
@@ -97,8 +98,10 @@ function CoolersActivity() {
   useEffect(() => {
     const _code = new URLSearchParams(location.search).get("code");
     const _date = new URLSearchParams(location.search).get("date");
-    console.log("_code", _code);
-    console.log("_date", _date);
+    if (location.state) {
+      setCoolerData(location.state.cooler);
+    }
+
     if (_date !== "" && _date) {
       setDateTime(_date);
     } else {
@@ -122,7 +125,7 @@ function CoolersActivity() {
         contentCard: "overflow-hidden",
         header: "min-h-72 h-72 sm:h-136 sm:min-h-136",
       }}
-      header={<Header />}
+      header={<Header code={coolerData ? coolerData.code : null} />}
       content={
         loading ? (
           <FuseLoading />
