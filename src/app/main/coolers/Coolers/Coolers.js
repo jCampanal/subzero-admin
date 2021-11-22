@@ -19,6 +19,7 @@ function Coolers() {
   } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
+
   const loadCoolers = (pageNumber = 0, pageSize = 10, code = undefined) => {
     setLoading(true);
     getCoolers(pageNumber, pageSize, code)
