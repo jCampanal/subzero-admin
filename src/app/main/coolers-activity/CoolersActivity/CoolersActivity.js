@@ -46,6 +46,13 @@ const rows = [
     label: "DATE",
     sort: true,
   },
+  {
+    id: "actions",
+    align: "left",
+    disablePadding: false,
+    label: "",
+    sort: false,
+  },
 ];
 
 function CoolersActivity() {

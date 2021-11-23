@@ -12,6 +12,8 @@ import TableHeader from "app/main/products/Products/TableHeader";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
+import { Pageview } from "@material-ui/icons";
+import ViewModal from "./ViewModal";
 
 function CoolersActivityTable(props) {
   const history = useHistory();
@@ -20,6 +22,8 @@ function CoolersActivityTable(props) {
   const [data] = useState(props.coolersActivity);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [selectedCoolerActivity, setSelectedCoolerActivity] = useState();
+  const [isModal, setIsModal] = useState(false);
   const [order, setOrder] = useState({
     direction: "asc",
     id: null,
@@ -111,7 +115,7 @@ function CoolersActivityTable(props) {
           <TableBody>
             {data
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((coolerActivity) => {
+              .map((coolerActivity, i) => {
                 const isSelected = selected.indexOf(coolerActivity.id) !== -1;
 
                 const date = new Date(coolerActivity.deliveredTime);
@@ -123,7 +127,7 @@ function CoolersActivityTable(props) {
                     role="checkbox"
                     aria-checked={isSelected}
                     tabIndex={-1}
-                    key={coolerActivity.code}
+                    key={i}
                     selected={isSelected}
                   >
                     <TableCell
@@ -182,12 +186,21 @@ function CoolersActivityTable(props) {
                     >
                       {date.toLocaleDateString()}
                     </TableCell>
-                    <TableCell
-                      className="p-4 md:p-16"
-                      component="th"
-                      scope="row"
-                      align="right"
-                    ></TableCell>
+                    {coolerActivity.imageURL && (
+                      <TableCell
+                        className="p-4 md:p-16"
+                        component="th"
+                        scope="row"
+                        align="right"
+                      >
+                        <Pageview
+                          onClick={() => {
+                            setSelectedCoolerActivity(coolerActivity);
+                            setIsModal(true);
+                          }}
+                        />
+                      </TableCell>
+                    )}
                   </TableRow>
                 );
               })}
@@ -211,6 +224,13 @@ function CoolersActivityTable(props) {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
+      {selectedCoolerActivity && (
+        <ViewModal
+          coolerActivity={selectedCoolerActivity}
+          isModal={isModal}
+          setIsModal={setIsModal}
+        />
+      )}
     </div>
   );
 }
