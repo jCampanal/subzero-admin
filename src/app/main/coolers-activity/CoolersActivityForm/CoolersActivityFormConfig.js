@@ -14,7 +14,7 @@ const ProvidersConfig = {
   },
   routes: [
     {
-      path: "/coolers_activity_move/:id",
+      path: "/coolers_activity_move/",
       component: React.lazy(() => import("./CoolersActivityForm.js")),
     },
   ],

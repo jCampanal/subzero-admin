@@ -118,6 +118,12 @@ function CoolersActivity() {
   useEffect(() => {
     loadCoolersActivity(pageNumber, pageSize, code, dateTime);
   }, [code, dateTime, pageSize, pageNumber]);
+
+  const handleMoveCoolerActivity = () => {
+    history.push(`/coolers_activity_move/`, {
+      cooler: coolerData,
+    });
+  };
   return (
     <FusePageCarded
       classes={{
@@ -125,7 +131,12 @@ function CoolersActivity() {
         contentCard: "overflow-hidden",
         header: "min-h-72 h-72 sm:h-136 sm:min-h-136",
       }}
-      header={<Header code={coolerData ? coolerData.code : null} />}
+      header={
+        <Header
+          code={coolerData ? coolerData.code : null}
+          handleMoveCoolerActivity={handleMoveCoolerActivity}
+        />
+      }
       content={
         loading ? (
           <FuseLoading />

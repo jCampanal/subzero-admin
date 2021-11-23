@@ -11,8 +11,13 @@ import Header from "./Header";
 import Controls from "./Controls";
 
 const validationRules = yup.object().shape({
-  name: yup.string().required("REQUIRED"),
-  tags: yup.string().required("REQUIRED"),
+  receiverName: yup.string().required("REQUIRED"),
+  recierverLastName: yup.string().required("REQUIRED"),
+  file: yup.string(),
+  driverId: yup.string().required("REQUIRED"),
+  customerId: yup.string(),
+  moveTo: yup.string().required("REQUIRED"),
+  coolerId: yup.string().required("REQUIRED"),
 });
 
 const CoolersActivityForm = () => {
@@ -23,14 +28,20 @@ const CoolersActivityForm = () => {
   if (!logged) history.push("/login");
 
   const { t } = useTranslation("CoolersActivity-form");
-  const { id } = useParams();
+
   const { state } = useLocation();
 
-  const cooler = id ? state.cooler : undefined;
+  const cooler = state.cooler;
+
   const methods = useForm({
     defaultValues: {
-      name: id ? cooler.name : "",
-      tags: id ? cooler.tags : "",
+      receiverName: "",
+      recierverLastName: "",
+      file: "",
+      driverId: "",
+      customerId: "",
+      moveTo: "",
+      coolerId: cooler?.id,
     },
     mode: "all",
     resolver: yupResolver(validationRules),
@@ -52,7 +63,7 @@ const CoolersActivityForm = () => {
         header={<Header toggleLoading={toggleLoading} />}
         contentToolbar={
           <div className="p-16 sm:p-24 max-w-2xl">
-            {id ? cooler.name : t("CREATE")}
+            {cooler.name ? cooler.name : t("MOVE_COOLER")}
           </div>
         }
         content={loading ? <FuseLoading /> : <Controls />}

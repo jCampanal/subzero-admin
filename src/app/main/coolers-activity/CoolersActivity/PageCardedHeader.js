@@ -18,7 +18,7 @@ const DateRangePicker = lazy(() =>
   import("../../coolers/Coolers/DateRangePicker")
 );
 
-function PageCardedHeader({ code }) {
+function PageCardedHeader({ code, handleMoveCoolerActivity }) {
   const history = useHistory();
   const { t } = useTranslation("coolers-activity");
   const mainTheme = useSelector(selectMainTheme);
@@ -49,9 +49,6 @@ function PageCardedHeader({ code }) {
 
   const handleCHangeSearchCode = (e) => {
     setSearchCode(e.target.value);
-  };
-  const handleMoveCoolerActivity = () => {
-    history.push(`/coolers_activity_move/:id`);
   };
 
   useEffect(() => {
@@ -157,4 +154,5 @@ function PageCardedHeader({ code }) {
 export default PageCardedHeader;
 PageCardedHeader.propTypes = {
   code: PropTypes.string,
+  handleMoveCoolerActivity: PropTypes.func.isRequired,
 };

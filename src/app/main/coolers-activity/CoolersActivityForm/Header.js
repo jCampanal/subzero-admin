@@ -5,7 +5,7 @@ import { useTheme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { useHistory, useParams } from "react-router";
+import { useHistory, useLocation, useParams } from "react-router";
 import { useTranslation } from "react-i18next";
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
@@ -14,6 +14,7 @@ import SaveIcon from "@material-ui/icons/Save";
 import IconButton from "@material-ui/core/IconButton";
 import { showMessage } from "../../../store/fuse/messageSlice";
 import { postProviders, putProviders } from "../../../api-conn/providers";
+import { moveCooler } from "app/api-conn/coolers";
 
 function Header(props) {
   const theme = useTheme();
@@ -26,72 +27,62 @@ function Header(props) {
     formState: { dirtyFields, isValid },
   } = methods;
   const dispatch = useDispatch();
+  const { state } = useLocation();
+
+  const cooler = state.cooler;
 
   const saveData = () => {
     const data = {
-      name: getValues().name,
-      tags: getValues().tags,
+      receiverName: getValues().receiverName,
+      recierverLastName: getValues().recierverLastName,
+      file: getValues().file,
+      driverId: getValues().driverId,
+      customerId: getValues().customerId,
+      moveTo: getValues().moveTo,
+      coolerId: getValues().coolerId,
     };
+
+    const formData = new FormData();
+    formData.append("ReceiverName", getValues().receiverName);
+    formData.append("RecierverLastName", getValues().recierverLastName);
+    formData.append("DriverId", getValues().driverId);
+    formData.append("MoveTo", getValues().moveTo);
+    formData.append("CoolerId", getValues().coolerId);
+    if (getValues().file !== "") formData.append("File", getValues().file);
+    if (getValues().customerId !== "")
+      formData.append("CustomerId", getValues().customerId);
+
     props.toggleLoading();
-    if (id) {
-      putProviders(id, JSON.stringify(data))
-        .then(() => {
-          dispatch(
-            showMessage({
-              message: "The provider was updated successfully",
-              variant: "success",
-              anchorOrigin: {
-                vertical: "top",
-                horizontal: "right",
-              },
-            })
-          );
-          props.toggleLoading();
-          history.push("/providers");
-        })
-        .catch((error) => {
-          dispatch(
-            showMessage({
-              message: error.response.data.title,
-              variant: "error",
-              anchorOrigin: {
-                vertical: "top",
-                horizontal: "right",
-              },
-            })
-          );
-          props.toggleLoading();
+    moveCooler(formData)
+      .then(() => {
+        dispatch(
+          showMessage({
+            message: "The provider was updated successfully",
+            variant: "success",
+            anchorOrigin: {
+              vertical: "top",
+              horizontal: "right",
+            },
+          })
+        );
+        props.toggleLoading();
+        history.push(`/coolers_activity?code=${cooler.code}`, {
+          cooler: cooler,
         });
-    } else {
-      postProviders(JSON.stringify(data))
-        .then(() => {
-          dispatch(
-            showMessage({
-              message: "The provider was created successfully",
-              variant: "success",
-              anchorOrigin: {
-                vertical: "top",
-                horizontal: "right",
-              },
-            })
-          );
-          props.toggleLoading();
-          history.push("/providers");
-        })
-        .catch((error) => {
-          dispatch(
-            showMessage({
-              message: error.response.data.title,
-              variant: "error",
-              anchorOrigin: {
-                vertical: "top",
-                horizontal: "right",
-              },
-            })
-          );
-          props.toggleLoading();
-        });
-    }
+      })
+      .catch((error) => {
+        dispatch(
+          showMessage({
+            message: error.response.data.title,
+            variant: "error",
+            anchorOrigin: {
+              vertical: "top",
+              horizontal: "right",
+            },
+          })
+        );
+        props.toggleLoading();
+      });
   };
 
   return (
