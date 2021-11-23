@@ -33,7 +33,7 @@ function PageCardedHeader({ code, handleMoveCoolerActivity }) {
   };
 
   const searchByDate = (date) => {
-    setFilter({ ...filter, date: date.toLocaleDateString() });
+    setFilter({ ...filter, date: date });
   };
   const searchByCode = () => {
     setFilter({ ...filter, code: searchCode });

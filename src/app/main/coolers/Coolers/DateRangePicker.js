@@ -10,6 +10,22 @@ import PropTypes from "prop-types";
 import { DatePicker } from "@material-ui/pickers";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
+import { useDispatch } from "react-redux";
+import { showMessage } from "app/store/fuse/messageSlice";
+
+const formatDate = (date) => {
+  let formatted_date =
+    date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear();
+  return formatted_date;
+};
+const validateDate = (compareDate) => {
+  const today = new Date();
+  if (compareDate <= today) {
+    return true;
+  } else {
+    return false;
+  }
+};
 
 function DateRangePicker({
   toggleDateRangeDlgIsOpen,
@@ -19,13 +35,24 @@ function DateRangePicker({
 }) {
   const { t } = useTranslation(namespace);
   const [date, setDate] = useState();
+  const dispatch = useDispatch();
 
   const toggleDialog = () => {
     toggleDateRangeDlgIsOpen();
   };
   const search = () => {
-    searchByDate(date);
-    toggleDateRangeDlgIsOpen();
+    if (validateDate(date)) {
+      const formatedDate = formatDate(date);
+      searchByDate(formatedDate);
+      toggleDateRangeDlgIsOpen();
+    } else {
+      dispatch(
+        showMessage({
+          message: "Try a past date",
+          variant: "error",
+        })
+      );
+    }
   };
 
   return (
@@ -45,7 +72,7 @@ function DateRangePicker({
               inputVariant="outlined"
               className="mt-8 mb-16 mx-4"
               value={date}
-              onChange={(e) => setDate(e)}
+              onChange={(e) => setDate(new Date(e))}
             />
           </div>
         </div>
