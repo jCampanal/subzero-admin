@@ -12,14 +12,18 @@ import TableHeader from "app/main/products/Products/TableHeader";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
+import { Pageview } from "@material-ui/icons";
+import ViewModal from "./ViewModal";
 
 function CoolersActivityTable(props) {
   const history = useHistory();
   const { t } = useTranslation("coolers-activity");
   const [selected, setSelected] = useState([]);
-  const [data, setData] = useState(props.coolersActivity);
+  const [data] = useState(props.coolersActivity);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [selectedCoolerActivity, setSelectedCoolerActivity] = useState();
+  const [isModal, setIsModal] = useState(false);
   const [order, setOrder] = useState({
     direction: "asc",
     id: null,
@@ -49,10 +53,6 @@ function CoolersActivityTable(props) {
 
   function handleDeselect() {
     setSelected([]);
-  }
-
-  function handleClick(item) {
-    history.push(`/apps/e-commerce/products/${item.id}/${item.handle}`);
   }
 
   function handleCheck(event, id) {
@@ -115,8 +115,11 @@ function CoolersActivityTable(props) {
           <TableBody>
             {data
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((coolerActivity) => {
+              .map((coolerActivity, i) => {
                 const isSelected = selected.indexOf(coolerActivity.id) !== -1;
+
+                const date = new Date(coolerActivity.deliveredTime);
+
                 return (
                   <TableRow
                     className="h-72 cursor-pointer"
@@ -124,9 +127,8 @@ function CoolersActivityTable(props) {
                     role="checkbox"
                     aria-checked={isSelected}
                     tabIndex={-1}
-                    key={coolerActivity.id}
+                    key={i}
                     selected={isSelected}
-                    onClick={(event) => handleClick(coolerActivity)}
                   >
                     <TableCell
                       className="w-40 md:w-64 text-center"
@@ -173,7 +175,7 @@ function CoolersActivityTable(props) {
                       scope="row"
                       align="left"
                     >
-                      {coolerActivity.driver}
+                      {coolerActivity.driverName}
                     </TableCell>
 
                     <TableCell
@@ -182,8 +184,23 @@ function CoolersActivityTable(props) {
                       scope="row"
                       align="left"
                     >
-                      {coolerActivity.date.toLocaleDateString()}
+                      {date.toLocaleDateString()}
                     </TableCell>
+                    {coolerActivity.imageURL && (
+                      <TableCell
+                        className="p-4 md:p-16"
+                        component="th"
+                        scope="row"
+                        align="right"
+                      >
+                        <Pageview
+                          onClick={() => {
+                            setSelectedCoolerActivity(coolerActivity);
+                            setIsModal(true);
+                          }}
+                        />
+                      </TableCell>
+                    )}
                   </TableRow>
                 );
               })}
@@ -207,6 +224,13 @@ function CoolersActivityTable(props) {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
+      {selectedCoolerActivity && (
+        <ViewModal
+          coolerActivity={selectedCoolerActivity}
+          isModal={isModal}
+          setIsModal={setIsModal}
+        />
+      )}
     </div>
   );
 }

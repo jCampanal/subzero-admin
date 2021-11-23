@@ -9,18 +9,27 @@ import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
 import { DatePicker } from "@material-ui/pickers";
 import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router";
 
-function DateRangePicker(props) {
-  const { t } = useTranslation(props.namespace);
-  const [dialogIsOpen, openDialog] = useState(false);
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+function DateRangePicker({
+  toggleDateRangeDlgIsOpen,
+  isOpen,
+  namespace,
+  searchByDate,
+}) {
+  const { t } = useTranslation(namespace);
+  const [date, setDate] = useState();
+
   const toggleDialog = () => {
-    openDialog(!dialogIsOpen);
+    toggleDateRangeDlgIsOpen();
   };
-  useEffect(() => openDialog(props.isOpen), [props.isOpen]);
+  const search = () => {
+    searchByDate(date);
+    toggleDateRangeDlgIsOpen();
+  };
+
   return (
-    <Dialog open={dialogIsOpen} onClose={toggleDialog} fullWidth maxWidth="sm">
+    <Dialog open={isOpen} onClose={toggleDialog} fullWidth maxWidth="sm">
       <AppBar position="static" elevation={0}>
         <Toolbar className="flex w-full">
           <Typography variant="subtitle1" color="inherit">
@@ -32,18 +41,11 @@ function DateRangePicker(props) {
         <div className="px-16 sm:px-24">
           <div className="flex -mx-4">
             <DatePicker
-              label={t("START_DATE")}
+              label={t("AcTIVITY_DATE")}
               inputVariant="outlined"
               className="mt-8 mb-16 mx-4"
-              value={startDate}
-              onChange={(e) => setStartDate(new Date(e))}
-            />
-            <DatePicker
-              label={t("END_DATE")}
-              inputVariant="outlined"
-              className="mt-8 mb-16 mx-4"
-              value={endDate}
-              onChange={(e) => setEndDate(new Date(e))}
+              value={date}
+              onChange={(e) => setDate(e)}
             />
           </div>
         </div>
@@ -54,7 +56,7 @@ function DateRangePicker(props) {
             type="submit"
             variant="contained"
             color="secondary"
-            onClick={toggleDialog}
+            onClick={toggleDateRangeDlgIsOpen}
           >
             {t("CANCEL")}
           </Button>
@@ -64,7 +66,7 @@ function DateRangePicker(props) {
             type="submit"
             variant="contained"
             color="secondary"
-            onClick={toggleDialog}
+            onClick={search}
           >
             {t("SEARCH")}
           </Button>
@@ -79,4 +81,6 @@ export default DateRangePicker;
 DateRangePicker.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   namespace: PropTypes.string.isRequired,
+  searchByDate: PropTypes.func.isRequired,
+  toggleDateRangeDlgIsOpen: PropTypes.func.isRequired,
 };

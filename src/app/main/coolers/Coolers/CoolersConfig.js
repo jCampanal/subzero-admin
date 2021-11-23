@@ -1,24 +1,33 @@
-import i18next from 'i18next';
-import React from 'react';
-import en from './translations/en';
-import es from './translations/es';
+import i18next from "i18next";
+import React from "react";
+import en from "./translations/en";
+import es from "./translations/es";
 
-i18next.addResourceBundle('en', 'coolers', en);
-i18next.addResourceBundle('es', 'coolers', es);
+i18next.addResourceBundle("en", "coolers", en);
+i18next.addResourceBundle("es", "coolers", es);
 
 const CoolersConfig = {
-    settings: {
-        layout: {
-            config: {},
-        },
+  settings: {
+    layout: {
+      config: {},
     },
-    routes: [
-        {
-            path: '/coolers',
-            exact: true,
-            component: React.lazy(() => import('./Coolers').then((coolers) => coolers)),
-        },
-    ],
+  },
+  routes: [
+    {
+      path: "/coolers",
+      exact: true,
+      component: React.lazy(() =>
+        import("./Coolers").then((coolers) => coolers)
+      ),
+    },
+    {
+      path: "/coolers/:code",
+      exact: true,
+      component: React.lazy(() =>
+        import("./Coolers").then((coolers) => coolers)
+      ),
+    },
+  ],
 };
 
 export default CoolersConfig;
