@@ -22,8 +22,6 @@ function Coolers() {
   const [loading, setLoading] = useState(true);
   const [pageNumber, setPageNumber] = useState(0);
   const [pageSize, setPageSize] = useState(10);
-  const [code, setCode] = useState(undefined);
-  const [dateTime, setDateTime] = useState(undefined);
 
   const loadCoolers = (
     pageNumber = 0,
