@@ -26,7 +26,7 @@ function FormHeader(props) {
     formData.append("Code", getValues().code);
     formData.append("PickedUp", new Date().toDateString());
     formData.append("ProviderId", getValues().providerId);
-    if (id === undefined && getValues().file !== null)
+    if (id !== undefined && getValues().file !== null)
       formData.append("File", getValues().file);
     if (id) {
       putCooler(id, formData)

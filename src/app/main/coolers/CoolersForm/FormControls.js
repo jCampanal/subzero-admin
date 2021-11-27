@@ -10,6 +10,7 @@ import FormControl from "@material-ui/core/FormControl";
 import { InputLabel, MenuItem, Select } from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
 import { DatePicker } from "@material-ui/pickers";
+import { useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
   productImageFeaturedStar: {
@@ -53,6 +54,7 @@ function FormControls(props) {
   const { control, formState } = methods;
   const { errors } = formState;
   const classes = useStyles(props);
+  const [image, setImage] = useState(props.imageURL);
 
   return (
     <div className="flex flex-col justify-center sm:justify-start flex-wrap max-w-2xl">
@@ -143,9 +145,8 @@ function FormControls(props) {
                 id="button-file"
                 type="file"
                 onChange={(e) => {
-                  document.getElementById("preview").src = URL.createObjectURL(
-                    e.target.files[0]
-                  );
+                  setImage(URL.createObjectURL(e.target.files[0]));
+
                   onChange(e.target.files[0]);
                 }}
               />
@@ -155,17 +156,11 @@ function FormControls(props) {
             </label>
           )}
         />
-        <div>
-          <img
-            src={
-              id
-                ? props.imageURL
-                : `${process.env.PUBLIC_URL}/assets/images/ecommerce/cooler_image_placeholder.jpg`
-            }
-            alt={t("COOLER_THUMBNAIL")}
-            id="preview"
-          />
-        </div>
+        {image && (
+          <div>
+            <img src={image} alt={t("COOLER_THUMBNAIL")} id="preview" />
+          </div>
+        )}
       </div>
     </div>
   );
