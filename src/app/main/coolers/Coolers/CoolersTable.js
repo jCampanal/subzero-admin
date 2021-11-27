@@ -15,13 +15,20 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
 
-function CoolersTable(props) {
+function CoolersTable({
+  coolers,
+  page,
+  rows,
+  rowsPerPage,
+  handleChangeRowsPerPage,
+  handleChangePage,
+  editCallback,
+}) {
   const history = useHistory();
   const { t } = useTranslation("coolers");
   const [selected, setSelected] = useState([]);
-  const data = props.coolers;
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const data = coolers;
+
   const [order, setOrder] = useState({
     direction: "asc",
     id: null,
@@ -73,14 +80,6 @@ function CoolersTable(props) {
     setSelected(newSelected);
   }
 
-  function handleChangePage(event, value) {
-    setPage(value);
-  }
-
-  function handleChangeRowsPerPage(event) {
-    setRowsPerPage(event.target.value);
-  }
-
   if (data.data.length === 0) {
     return (
       <motion.div
@@ -101,14 +100,14 @@ function CoolersTable(props) {
         <Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
           <TableHeader
             namespace="coolers"
-            rows={props.rows}
+            rows={rows}
             selectedProductIds={selected}
             order={order}
             onSelectAllClick={handleSelectAllClick}
             onRequestSort={handleRequestSort}
             rowCount={data.data.length}
             onMenuItemClick={handleDeselect}
-            deleteSelectedItemsCallback={() => props.deleteCallback(selected)}
+            deleteSelectedItemsCallback={() => deleteCallback(selected)}
           />
 
           <TableBody>
@@ -204,7 +203,7 @@ function CoolersTable(props) {
                         color="primary"
                         onClick={(e) => {
                           e.stopPropagation();
-                          props.editCallback(cooler);
+                          editCallback(cooler);
                         }}
                       >
                         <Icon>edit</Icon> {t("EDIT")}
@@ -213,7 +212,7 @@ function CoolersTable(props) {
                         color="primary"
                         onClick={(e) => {
                           e.stopPropagation();
-                          props.deleteCallback([cooler.id]);
+                          deleteCallback([cooler.id]);
                         }}
                       >
                         <Icon>delete</Icon> {t("DELETE")}
@@ -250,5 +249,10 @@ export default CoolersTable;
 
 CoolersTable.propTypes = {
   coolers: PropTypes.object.isRequired,
+  page: PropTypes.number.isRequired,
   rows: PropTypes.array.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
+  handleChangeRowsPerPage: PropTypes.func.isRequired,
+  handleChangePage: PropTypes.func.isRequired,
+  editCallback: PropTypes.func.isRequired,
 };

@@ -75,6 +75,7 @@ const CoolerForm = () => {
     };
     fetchAllProviders().finally();
   }, []);
+
   return (
     <FormProvider {...methods}>
       <FusePageCarded

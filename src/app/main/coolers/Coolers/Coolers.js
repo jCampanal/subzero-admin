@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useState } from "react";
 import FusePageCarded from "@fuse/core/FusePageCarded";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteCooler, getCoolers } from "../../../api-conn/coolers";
 import rows from "./tableRows";
@@ -14,17 +14,28 @@ import CoolersTable from "./CoolersTable";
 function Coolers() {
   const [coolers, setCoolers] = useState({ data: [] });
   const history = useHistory();
+  const location = useLocation();
   const {
     user: { logged },
   } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
+  const [pageNumber, setPageNumber] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+  const [code, setCode] = useState(undefined);
+  const [dateTime, setDateTime] = useState(undefined);
 
-  const loadCoolers = (pageNumber = 0, pageSize = 10, code = undefined) => {
+  const loadCoolers = (
+    pageNumber = 0,
+    pageSize = 10,
+    code = undefined,
+    date = undefined
+  ) => {
     setLoading(true);
-    getCoolers(pageNumber, pageSize, code)
+    getCoolers(pageNumber, pageSize, code, date)
       .then((response) => {
         setCoolers(response.data);
+
         setLoading(false);
       })
       .catch(() => {
@@ -58,6 +69,12 @@ function Coolers() {
         setLoading(false);
       });
   };
+  function handleChangeRowsPerPage(event) {
+    setPageSize(event.target.value);
+  }
+  function handleChangePage(event, value) {
+    setPage(value);
+  }
 
   const createCooler = () => history.push("/coolers_create");
   const editCooler = (cooler) =>
@@ -83,7 +100,27 @@ function Coolers() {
   useEffect(() => {
     document.title = "Coolers - Subzero Ice Services";
   }, []);
-  useEffect(loadCoolers, []);
+
+  useEffect(() => {
+    const _code = new URLSearchParams(location.search).get("code");
+    const _date = new URLSearchParams(location.search).get("date");
+
+    if (_date !== "" && _date) {
+      setDateTime(_date);
+    } else {
+      setDateTime(undefined);
+    }
+
+    if (_code !== "" && _code) {
+      setCode(_code);
+    } else {
+      setCode(undefined);
+    }
+  }, [location]);
+
+  useEffect(() => {
+    loadCoolers(pageNumber, pageSize, code, dateTime);
+  }, [code, dateTime, pageSize, pageNumber]);
 
   return (
     <FusePageCarded
@@ -104,6 +141,10 @@ function Coolers() {
         ) : (
           <CoolersTable
             coolers={coolers}
+            rowsPerPage={pageSize}
+            handleChangeRowsPerPage={handleChangeRowsPerPage}
+            page={pageNumber}
+            handleChangePage={handleChangePage}
             rows={rows}
             editCallback={editCooler}
             deleteCallback={removeCooler}
