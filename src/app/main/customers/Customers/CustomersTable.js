@@ -9,18 +9,25 @@ import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import { motion } from "framer-motion";
 import React, { useState } from "react";
-import { withRouter } from "react-router-dom";
+import { useHistory, withRouter } from "react-router-dom";
 import TableHeader from "app/main/products/Products/TableHeader";
 import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 
-function CustomersTable(props) {
+function CustomersTable({
+  customers,
+  rows,
+  page,
+  rowsPerPage,
+  handleChangeRowsPerPage,
+  handleChangePage,
+}) {
   const { t } = useTranslation("customers");
+  const history = useHistory();
   const [selected, setSelected] = useState([]);
-  const [data] = useState(props.customers);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [data] = useState(customers);
+
   const [order, setOrder] = useState({
     direction: "asc",
     id: null,
@@ -53,7 +60,7 @@ function CustomersTable(props) {
   }
 
   function handleClick(item) {
-    props.history.push(`/apps/e-commerce/products/${item.id}/${item.handle}`);
+    history.push(`/apps/e-commerce/products/${item.id}/${item.handle}`);
   }
 
   function handleCheck(event, id) {
@@ -76,14 +83,6 @@ function CustomersTable(props) {
     setSelected(newSelected);
   }
 
-  function handleChangePage(event, value) {
-    setPage(value);
-  }
-
-  function handleChangeRowsPerPage(event) {
-    setRowsPerPage(event.target.value);
-  }
-
   if (data.data.length === 0) {
     return (
       <motion.div
@@ -104,7 +103,7 @@ function CustomersTable(props) {
         <Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
           <TableHeader
             namespace="customers"
-            rows={props.rows}
+            rows={rows}
             selectedProductIds={selected}
             order={order}
             onSelectAllClick={handleSelectAllClick}
@@ -241,4 +240,8 @@ export default withRouter(CustomersTable);
 CustomersTable.propTypes = {
   customers: PropTypes.object.isRequired,
   rows: PropTypes.array.isRequired,
+  page: PropTypes.number.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
+  handleChangeRowsPerPage: PropTypes.func.isRequired,
+  handleChangePage: PropTypes.func.isRequired,
 };

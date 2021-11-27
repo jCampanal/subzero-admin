@@ -28,6 +28,12 @@ function Customers() {
     setCustomers(data);
     setLoading(false);
   };
+  const handleChangePage = (event) => {
+    setPageSize(event.target.value);
+  };
+  function handlePageNumber(event, value) {
+    setPageNumber(value);
+  }
 
   useEffect(() => {
     let _name = new URLSearchParams(location.search).get("name");
@@ -61,7 +67,14 @@ function Customers() {
         loading ? (
           <FuseLoading />
         ) : (
-          <CustomersTable customers={customers} rows={rows} />
+          <CustomersTable
+            customers={customers}
+            rows={rows}
+            page={pageNumber}
+            rowsPerPage={pageSize}
+            handleChangeRowsPerPage={handleChangePage}
+            handleChangePage={handlePageNumber}
+          />
         )
       }
     />
