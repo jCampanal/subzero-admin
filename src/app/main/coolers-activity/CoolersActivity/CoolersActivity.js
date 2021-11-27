@@ -68,8 +68,6 @@ function CoolersActivity() {
 
   const [pageNumber, setPageNumber] = useState(0);
   const [pageSize, setPageSize] = useState(10);
-  const [code, setCode] = useState(undefined);
-  const [dateTime, setDateTime] = useState(undefined);
   const [coolerData, setCoolerData] = useState(null);
 
   const loadCoolersActivity = (
@@ -102,29 +100,30 @@ function CoolersActivity() {
   useEffect(() => {
     document.title = "CoolersActivity - Subzero Ice Services";
   }, []);
+  // useEffect(() => {
+
+  //   }
+  // }, [location]);
+
   useEffect(() => {
-    const _code = new URLSearchParams(location.search).get("code");
-    const _date = new URLSearchParams(location.search).get("date");
+    let _code = new URLSearchParams(location.search).get("code");
+    let _date = new URLSearchParams(location.search).get("date");
     if (location.state) {
       setCoolerData(location.state.cooler);
     }
 
     if (_date !== "" && _date) {
-      setDateTime(_date);
     } else {
-      setDateTime(undefined);
+      _date = undefined;
     }
 
     if (_code !== "" && _code) {
-      setCode(_code);
     } else {
-      setCode(undefined);
+      _code = undefined;
     }
-  }, [location]);
 
-  useEffect(() => {
-    loadCoolersActivity(pageNumber, pageSize, code, dateTime);
-  }, [code, dateTime, pageSize, pageNumber]);
+    loadCoolersActivity(pageNumber, pageSize, _code, _date);
+  }, [location, pageSize, pageNumber]);
 
   const handleMoveCoolerActivity = () => {
     history.push(`/coolers_activity_move/`, {

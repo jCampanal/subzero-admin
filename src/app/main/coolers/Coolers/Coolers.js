@@ -102,25 +102,21 @@ function Coolers() {
   }, []);
 
   useEffect(() => {
-    const _code = new URLSearchParams(location.search).get("code");
-    const _date = new URLSearchParams(location.search).get("date");
+    let _code = new URLSearchParams(location.search).get("code");
+    let _date = new URLSearchParams(location.search).get("date");
 
     if (_date !== "" && _date) {
-      setDateTime(_date);
     } else {
-      setDateTime(undefined);
+      _date = undefined;
     }
 
     if (_code !== "" && _code) {
-      setCode(_code);
     } else {
-      setCode(undefined);
+      _code = undefined;
     }
-  }, [location]);
 
-  useEffect(() => {
-    loadCoolers(pageNumber, pageSize, code, dateTime);
-  }, [code, dateTime, pageSize, pageNumber]);
+    loadCoolers(pageNumber, pageSize, _code, _date);
+  }, [location, pageSize, pageNumber]);
 
   return (
     <FusePageCarded

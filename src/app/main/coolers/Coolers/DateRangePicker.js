@@ -33,14 +33,15 @@ function DateRangePicker({
   searchByDate,
 }) {
   const { t } = useTranslation(namespace);
-  const [date, setDate] = useState();
+  const [date, setDate] = useState(new Date());
   const dispatch = useDispatch();
 
   const toggleDialog = () => {
     toggleDateRangeDlgIsOpen();
   };
   const search = () => {
-    if (validateDate(date)) {
+    console.log(date);
+    if (date && validateDate(date)) {
       const formatedDate = formatDate(date);
       searchByDate(formatedDate);
       toggleDateRangeDlgIsOpen();
