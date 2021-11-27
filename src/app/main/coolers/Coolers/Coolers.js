@@ -59,7 +59,7 @@ function Coolers() {
       });
   };
 
-  const createCooler = () => history.push("/coolers/create");
+  const createCooler = () => history.push("/coolers_create");
   const editCooler = (cooler) =>
     history.push(`/coolers/${cooler.id}/edit`, { cooler });
   const removeCooler = (itemId) => {

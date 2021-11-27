@@ -88,10 +88,6 @@ function PageCardedHeader({ code, handleMoveCoolerActivity }) {
               animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}
               className="flex items-center w-full max-w-512 px-8 py-4 rounded-16 shadow"
             >
-              <Icon color="action" onClick={searchByCode}>
-                search
-              </Icon>
-
               <Input
                 placeholder={t("SEARCH_BY_CODE")}
                 className="flex flex-1 mx-8"
@@ -103,6 +99,9 @@ function PageCardedHeader({ code, handleMoveCoolerActivity }) {
                   "aria-label": "Search",
                 }}
               />
+              <Icon color="action" onClick={searchByCode}>
+                search
+              </Icon>
             </Paper>
           ) : (
             <motion.div

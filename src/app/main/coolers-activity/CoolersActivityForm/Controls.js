@@ -188,6 +188,28 @@ const Controls = () => {
               name="driverId"
               control={control}
               render={({ field }) => (
+                // <FormControl className="mt-8 mb-16">
+                //         <InputLabel id="provider-select-label" className="pl-20 -mt-9">
+                //             {t('PROVIDER')}
+                //         </InputLabel>
+                //         <Select
+                //             {...field}
+                //             labelId="provider-select-label"
+                //             id="demo-simple-select"
+                //             required
+                //             displayEmpty
+                //             label={t('PROVIDER')}
+                //             inputProps={{'aria-label': 'Without label'}}
+                //             variant="outlined"
+                //         >
+                //             <MenuItem>{t('PROVIDER')}</MenuItem>
+                //             {props.providers.map((provider) => (
+                //                 <MenuItem key={provider.id} value={provider.id}>
+                //                     {provider.name}
+                //                 </MenuItem>
+                //             ))}
+                //         </Select>
+                //     </FormControl>
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">Driver</InputLabel>
                   <Select

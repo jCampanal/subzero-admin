@@ -60,6 +60,7 @@
         "react-swipeable": "6.1.2",
         "react-swipeable-views": "^0.14.0",
         "redux-logger": "4.0.0",
+        "styled-components": "^5.3.3",
         "typeface-poppins": "1.1.13",
         "velocity-animate": "1.5.2",
         "velocity-react": "1.4.3",
@@ -67,11 +68,11 @@
         "yup": "0.32.9"
     },
     "peerDependencies": {
+        "@popperjs/core": "2.10.1",
         "autoprefixer": "9.8.6",
         "postcss": "7.0.36",
         "react": "17.0.2",
-        "react-dom": "17.0.2",
-        "@popperjs/core": "2.10.1"
+        "react-dom": "17.0.2"
     },
     "resolutions": {
         "react": "17.0.2",

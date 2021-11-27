@@ -9,10 +9,9 @@ import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
 import { DatePicker } from "@material-ui/pickers";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
 import { showMessage } from "app/store/fuse/messageSlice";
-
+import styled from "styled-components";
 const formatDate = (date) => {
   let formatted_date =
     date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear();
@@ -70,9 +69,12 @@ function DateRangePicker({
             <DatePicker
               label={t("AcTIVITY_DATE")}
               inputVariant="outlined"
-              className="mt-8 mb-16 mx-4"
+              className="mt-8 mb-16 mx-4 DatePicker-cls"
               value={date}
               onChange={(e) => setDate(new Date(e))}
+              variant="dialog"
+              okLabel={<ButtonDatePickerS>OK</ButtonDatePickerS>}
+              cancelLabel={<ButtonDatePickerS>Cancel</ButtonDatePickerS>}
             />
           </div>
         </div>
@@ -111,3 +113,21 @@ DateRangePicker.propTypes = {
   searchByDate: PropTypes.func.isRequired,
   toggleDateRangeDlgIsOpen: PropTypes.func.isRequired,
 };
+
+const ButtonDatePickerS = styled.span`
+  background-color: #039be5;
+
+  color: rgb(255, 255, 255);
+  padding: 6px 16px;
+  font-size: 1.3rem;
+  min-width: 64px;
+  box-sizing: border-box;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  font-family: Poppins, Roboto, "Helvetica", Arial, sans-serif;
+  font-weight: 500;
+  line-height: 1.75;
+  border-radius: 18px;
+  text-transform: none;
+`;
