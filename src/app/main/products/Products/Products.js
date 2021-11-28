@@ -83,6 +83,9 @@ function Products() {
         ),
       })
     );
+  const submitFilter = (searchPattern) => {
+    history.push(`/products?name=${searchPattern}`);
+  };
 
   useEffect(() => {
     if (!logged) history.push("/login");
@@ -107,6 +110,7 @@ function Products() {
           addButtonCallback={createProduct}
           searchHint={t("SEARCH_BY_NAME")}
           searchCallback={loadProducts}
+          submitFilter={submitFilter}
         />
       }
       content={

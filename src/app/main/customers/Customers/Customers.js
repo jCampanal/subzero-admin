@@ -38,6 +38,9 @@ function Customers() {
   function handleEditCustomer(customer) {
     history.push(`/customers/${customer.id}/edit`, { customer });
   }
+  const submitFilter = (searchPattern) => {
+    history.push(`/customers?name=${searchPattern}`);
+  };
 
   useEffect(() => {
     let _name = new URLSearchParams(location.search).get("name");
@@ -65,6 +68,7 @@ function Customers() {
           addButtonLabel={t("ADD_CUSTOMER")}
           addButtonCallback={() => null}
           searchHint={t("SEARCH_BY_NAME")}
+          submitFilter={submitFilter}
         />
       }
       content={
