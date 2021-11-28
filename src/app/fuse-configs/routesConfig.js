@@ -33,6 +33,7 @@ import ProviderConfig from "../main/coolers/providers/Provider/ProviderConfig";
 import CoolersCustomersConfig from "../main/coolers/Customers/CoolersCustomersConfig";
 import CoolersCustomersFormConfig from "../main/coolers-activity/CoolersActivityForm/CoolersActivityFormConfig.js";
 import CustomersFormPageConfig from "app/main/customers/CustomersForm/CustomersFormConfig";
+import DriversFormPageConfig from "app/main/drivers/DriversForm/DriversFormConfig";
 
 const routeConfigs = [
   LoginPageConfig,
@@ -65,6 +66,7 @@ const routeConfigs = [
   DriversMonitorPageConfig,
   CoolersCustomersFormConfig,
   CustomersFormPageConfig,
+  DriversFormPageConfig,
 ];
 
 const routes = [

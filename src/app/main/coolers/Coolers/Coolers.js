@@ -71,7 +71,7 @@ function Coolers() {
     setPageSize(event.target.value);
   }
   function handleChangePage(event, value) {
-    setPage(value);
+    setPageNumber(value);
   }
 
   const createCooler = () => history.push("/coolers_create");

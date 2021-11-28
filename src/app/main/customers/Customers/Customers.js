@@ -7,7 +7,7 @@ import { getCustomers } from "../../../api-conn/customers";
 import { useHistory, useLocation } from "react-router";
 
 const Header = lazy(() =>
-  import("app/main/products/Products/PageCardedHeader").then((header) => header)
+  import("app/components/HeaderPage/PageCardedHeader").then((header) => header)
 );
 const CustomersTable = lazy(() =>
   import("./CustomersTable").then((table) => table)
@@ -48,8 +48,6 @@ function Customers() {
     if (_name === "" || !_name) {
       _name = undefined;
     }
-
-    console.log(name);
 
     loadCustomers(pageNumber, pageSize, _name);
   }, [location, pageSize, pageNumber]);

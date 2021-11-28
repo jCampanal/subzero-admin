@@ -9,7 +9,7 @@ import rows from "../../../common/productRows";
 import FuseLoading from "../../../../@fuse/core/FuseLoading";
 import { openDialog } from "../../../store/fuse/dialogSlice";
 import RemoveDlg from "../../../common/removeDlg";
-import PageCardedHeader from "./PageCardedHeader";
+import PageCardedHeader from "app/components/HeaderPage/PageCardedHeader";
 import ProductsTable from "./ProductsTable";
 
 function Products() {
