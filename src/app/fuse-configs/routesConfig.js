@@ -32,6 +32,7 @@ import ProductConfig from "../main/products/Product/ProductConfig";
 import ProviderConfig from "../main/coolers/providers/Provider/ProviderConfig";
 import CoolersCustomersConfig from "../main/coolers/Customers/CoolersCustomersConfig";
 import CoolersCustomersFormConfig from "../main/coolers-activity/CoolersActivityForm/CoolersActivityFormConfig.js";
+import CustomersFormPageConfig from "app/main/customers/CustomersForm/CustomersFormConfig";
 
 const routeConfigs = [
   LoginPageConfig,
@@ -63,6 +64,7 @@ const routeConfigs = [
   OrderCalendarPageConfig,
   DriversMonitorPageConfig,
   CoolersCustomersFormConfig,
+  CustomersFormPageConfig,
 ];
 
 const routes = [
@@ -84,9 +86,9 @@ const routes = [
     path: "/404",
     component: () => <Error404Page />,
   },
-  {
-    component: () => <Redirect to="/404" />,
-  },
+  // {
+  //   component: () => <Redirect to="/404" />,
+  // },
 ];
 
 export default routes;

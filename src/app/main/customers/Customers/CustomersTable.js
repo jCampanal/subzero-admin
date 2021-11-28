@@ -22,6 +22,7 @@ function CustomersTable({
   rowsPerPage,
   handleChangeRowsPerPage,
   handleChangePage,
+  handleClickEdit,
 }) {
   const { t } = useTranslation("customers");
   const history = useHistory();
@@ -60,7 +61,7 @@ function CustomersTable({
   }
 
   function handleClick(item) {
-    history.push(`/apps/e-commerce/products/${item.id}/${item.handle}`);
+    // history.push(`/apps/e-commerce/products/${item.id}/${item.handle}`);
   }
 
   function handleCheck(event, id) {
@@ -201,7 +202,10 @@ function CustomersTable({
                       scope="row"
                       align="right"
                     >
-                      <Button color="primary">
+                      <Button
+                        color="primary"
+                        onClick={() => handleClickEdit(customer)}
+                      >
                         <Icon>edit</Icon> {t("EDIT")}
                       </Button>
                       <Button color="primary">
@@ -244,4 +248,5 @@ CustomersTable.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
   handleChangeRowsPerPage: PropTypes.func.isRequired,
   handleChangePage: PropTypes.func.isRequired,
+  handleClickEdit: PropTypes.func.isRequired,
 };

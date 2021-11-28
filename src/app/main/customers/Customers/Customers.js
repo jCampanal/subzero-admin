@@ -4,7 +4,7 @@ import FusePageCarded from "@fuse/core/FusePageCarded";
 import FuseLoading from "@fuse/core/FuseLoading";
 import rows from "./rows";
 import { getCustomers } from "../../../api-conn/customers";
-import { useLocation } from "react-router";
+import { useHistory, useLocation } from "react-router";
 
 const Header = lazy(() =>
   import("app/main/products/Products/PageCardedHeader").then((header) => header)
@@ -16,6 +16,7 @@ const CustomersTable = lazy(() =>
 function Customers() {
   const { t } = useTranslation("customers");
   const location = useLocation();
+  const history = useHistory();
   const [customers, setCustomers] = useState({ data: [] });
   const [loading, setLoading] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);
@@ -33,6 +34,9 @@ function Customers() {
   };
   function handlePageNumber(event, value) {
     setPageNumber(value);
+  }
+  function handleEditCustomer(customer) {
+    history.push(`/customers/${customer.id}/edit`, { customer });
   }
 
   useEffect(() => {
@@ -74,6 +78,7 @@ function Customers() {
             rowsPerPage={pageSize}
             handleChangeRowsPerPage={handleChangePage}
             handleChangePage={handlePageNumber}
+            handleClickEdit={handleEditCustomer}
           />
         )
       }
