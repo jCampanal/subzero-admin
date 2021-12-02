@@ -74,7 +74,7 @@ function Drivers() {
   const [pageSize, setPageSize] = useState(10);
   const dispatch = useDispatch();
 
-  const loadDrivers = (pageSize = 10, pageNumber = 0, name = undefined) => {
+  const loadDrivers = (pageNumber = 0, pageSize = 10, name = undefined) => {
     setLoading(true);
     getDrivers(pageNumber, pageSize, name)
       .then((data) => {
