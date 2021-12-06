@@ -1,6 +1,5 @@
-import TextField from "@material-ui/core/TextField";
 import { Controller, useFormContext } from "react-hook-form";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 
 import FormControl from "@material-ui/core/FormControl";
@@ -11,11 +10,9 @@ import {
   MenuItem,
   Select,
 } from "@material-ui/core";
-import { Fragment } from "react";
-import FuseLoading from "@fuse/core/FuseLoading";
 
 function FormControls({ salesTax }) {
-  const { t } = useTranslation("category-form");
+  const { t } = useTranslation("customers-form");
   const methods = useFormContext();
   const { control, formState } = methods;
   const { errors } = formState;

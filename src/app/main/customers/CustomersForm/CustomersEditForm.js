@@ -8,7 +8,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import FormControls from "./FormEditControls";
 import FormHeader from "./FormHeader";
-import { getProvidersAll } from "../../../api-conn/providers";
 import { openDialog } from "../../../store/fuse/dialogSlice";
 import RemoveDlg from "../../../common/removeDlg";
 import { getAllsalesTax } from "app/api-conn/saleTaxes";

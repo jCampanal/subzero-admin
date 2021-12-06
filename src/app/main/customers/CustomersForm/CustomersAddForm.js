@@ -1,6 +1,6 @@
 import { FormProvider, useForm } from "react-hook-form";
 import FusePageCarded from "@fuse/core/FusePageCarded";
-import { useHistory, useLocation, useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";

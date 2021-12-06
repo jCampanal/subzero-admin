@@ -16,7 +16,7 @@ function FormHeader(props) {
   const theme = useTheme();
   const history = useHistory();
   const { id } = useParams();
-  const { t } = useTranslation("category-form");
+  const { t } = useTranslation("customer-form");
   const methods = useFormContext();
   const { getValues } = methods;
   const dispatch = useDispatch();
@@ -130,7 +130,7 @@ function FormHeader(props) {
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
       >
-        {id && (
+        {/* {id && (
           <Button
             className="whitespace-nowrap mx-4"
             variant="contained"
@@ -140,7 +140,7 @@ function FormHeader(props) {
           >
             {t("REMOVE")}
           </Button>
-        )}
+        )} */}
         <Button
           className="whitespace-nowrap mx-4"
           variant="contained"

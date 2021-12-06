@@ -5,6 +5,7 @@ const locale = {
   COMPANY_NAME: "Company name",
   CALLBACKURL: "Callback url",
   SALE_TAX: "Sale tax",
+  PRIORYTI: "Priority",
 };
 
 export default locale;

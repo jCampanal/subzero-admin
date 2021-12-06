@@ -1,13 +1,10 @@
 import TextField from "@material-ui/core/TextField";
 import { Controller, useFormContext } from "react-hook-form";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 
 import FormControl from "@material-ui/core/FormControl";
 import { InputLabel, MenuItem, Select } from "@material-ui/core";
-import { getAllsalesTax } from "app/api-conn/saleTaxes";
-import { Fragment } from "react";
-import FuseLoading from "@fuse/core/FuseLoading";
 
 function FormControls({ salesTax }) {
   const { t } = useTranslation("customers-form");
