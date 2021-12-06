@@ -9,7 +9,7 @@ import { useHistory, useParams } from "react-router";
 import { useTranslation } from "react-i18next";
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { postCooler, putCooler } from "../../../api-conn/coolers";
+import { registerCustomer, putCustomer } from "../../../api-conn/customers";
 import { showMessage } from "../../../store/fuse/messageSlice";
 
 function FormHeader(props) {
@@ -22,18 +22,16 @@ function FormHeader(props) {
   const dispatch = useDispatch();
 
   const saveData = () => {
-    const formData = new FormData();
-    formData.append("Code", getValues().code);
-    formData.append("PickedUp", new Date().toDateString());
-    formData.append("ProviderId", getValues().providerId);
-    if (id !== undefined && getValues().file !== null)
-      formData.append("File", getValues().file);
     if (id) {
-      putCooler(id, formData)
+      const formData = {
+        priorityCustomer: getValues().priorityCustomer,
+        salesTaxId: getValues().salesTaxId,
+      };
+      putCustomer(id, formData)
         .then(() => {
           dispatch(
             showMessage({
-              message: "The cooler was updated successfully",
+              message: "The customer was updated successfully",
               variant: "success",
               anchorOrigin: {
                 vertical: "top",
@@ -41,7 +39,7 @@ function FormHeader(props) {
               },
             })
           );
-          history.push("/coolers");
+          history.push("/customers");
         })
         .catch((error) =>
           dispatch(
@@ -56,11 +54,17 @@ function FormHeader(props) {
           )
         );
     } else {
-      postCooler(formData)
+      const formData = {
+        email: getValues().email,
+        companyName: getValues().companyName,
+        salesTaxId: getValues().salesTaxId,
+        callbackURL: getValues().callbackURL,
+      };
+      registerCustomer(formData)
         .then(() => {
           dispatch(
             showMessage({
-              message: "The cooler was created successfully",
+              message: "The customer was created successfully",
               variant: "success",
               anchorOrigin: {
                 vertical: "top",
@@ -68,7 +72,7 @@ function FormHeader(props) {
               },
             })
           );
-          history.push("/coolers");
+          history.push("/customers");
         })
         .catch((error) =>
           dispatch(
@@ -96,14 +100,14 @@ function FormHeader(props) {
             className="flex items-center sm:mb-12"
             component={Link}
             role="button"
-            to="/coolers"
+            to="/customers"
             color="inherit"
           >
             <Icon className="text-20">
               {theme.direction === "ltr" ? "arrow_back" : "arrow_forward"}
             </Icon>
             <span className="hidden sm:flex mx-4 font-medium">
-              {t("COOLERS")}
+              {t("CUSTOMER")}
             </span>
           </Typography>
         </motion.div>

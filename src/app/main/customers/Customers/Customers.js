@@ -41,6 +41,9 @@ function Customers() {
   const submitFilter = (searchPattern) => {
     history.push(`/customers?name=${searchPattern}`);
   };
+  function handleAddCustomer() {
+    history.push(`/customers_create`);
+  }
 
   useEffect(() => {
     let _name = new URLSearchParams(location.search).get("name");
@@ -64,7 +67,7 @@ function Customers() {
           iconText="person"
           title={t("CUSTOMERS")}
           addButtonLabel={t("ADD_CUSTOMER")}
-          addButtonCallback={() => null}
+          addButtonCallback={handleAddCustomer}
           searchHint={t("SEARCH_BY_NAME")}
           submitFilter={submitFilter}
         />

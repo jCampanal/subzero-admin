@@ -67,7 +67,6 @@ function FormControls(props) {
       .then((response) => {
         setWarehouses(response.data);
         setLoading(false);
-        console.log("response.data", response.data);
       })
       .catch(() => {
         dispatch(
