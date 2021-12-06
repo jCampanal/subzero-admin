@@ -67,16 +67,6 @@ function Coolers() {
         setLoading(false);
       });
   };
-  function handleChangeRowsPerPage(event) {
-    setPageSize(event.target.value);
-  }
-  function handleChangePage(event, value) {
-    setPageNumber(value);
-  }
-
-  const createCooler = () => history.push("/coolers_create");
-  const editCooler = (cooler) =>
-    history.push(`/coolers/${cooler.id}/edit`, { cooler });
   const removeCooler = (itemId) => {
     dispatch(
       openDialog({
@@ -91,6 +81,17 @@ function Coolers() {
       })
     );
   };
+
+  function handleChangeRowsPerPage(event) {
+    setPageSize(event.target.value);
+  }
+  function handleChangePage(event, value) {
+    setPageNumber(value);
+  }
+
+  const createCooler = () => history.push("/coolers_create");
+  const editCooler = (cooler) =>
+    history.push(`/coolers/${cooler.id}/edit`, { cooler });
 
   useEffect(() => {
     if (!logged) history.push("/login");

@@ -10,6 +10,9 @@ import FormControls from "./FormAddControls";
 import FormHeader from "./FormHeader";
 import { openDialog } from "../../../store/fuse/dialogSlice";
 import RemoveDlg from "../../../common/removeDlg";
+import FuseLoading from "@fuse/core/FuseLoading";
+import { getAllsalesTax } from "app/api-conn/saleTaxes";
+import { showMessage } from "app/store/fuse/messageSlice";
 
 const validationRules = yup.object().shape({
   email: yup
@@ -28,6 +31,8 @@ const CustomerForm = () => {
   } = useSelector((state) => state);
   const history = useHistory();
   const { id } = useParams();
+  const [salesTax, setsalesTax] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const customer = {
     email: "",
@@ -59,6 +64,29 @@ const CustomerForm = () => {
       })
     );
 
+  const loadSalesTax = () => {
+    setLoading(true);
+    getAllsalesTax()
+      .then((response) => {
+        setsalesTax(response.data);
+        setLoading(false);
+        console.log("response.data", response.data);
+      })
+      .catch(() => {
+        dispatch(
+          showMessage({
+            message: "There is something wrong, try to refresh the page",
+            variant: "error",
+          })
+        );
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    loadSalesTax();
+  }, []);
+
   useEffect(() => {
     if (!logged) history.push("/login");
     return <></>;
@@ -79,7 +107,7 @@ const CustomerForm = () => {
         }
         content={
           <div className="p-16 sm:p-24 max-w-2xl">
-            <FormControls />
+            {loading ? <FuseLoading /> : <FormControls salesTax={salesTax} />}
           </div>
         }
       />

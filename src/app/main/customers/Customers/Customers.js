@@ -3,8 +3,12 @@ import { useTranslation } from "react-i18next";
 import FusePageCarded from "@fuse/core/FusePageCarded";
 import FuseLoading from "@fuse/core/FuseLoading";
 import rows from "./rows";
-import { getCustomers } from "../../../api-conn/customers";
+import { deleteCustomer, getCustomers } from "../../../api-conn/customers";
 import { useHistory, useLocation } from "react-router";
+import { useDispatch } from "react-redux";
+import { openDialog } from "app/store/fuse/dialogSlice";
+import RemoveDlg from "app/common/removeDlg";
+import { showMessage } from "app/store/fuse/messageSlice";
 
 const Header = lazy(() =>
   import("app/components/HeaderPage/PageCardedHeader").then((header) => header)
@@ -15,6 +19,7 @@ const CustomersTable = lazy(() =>
 
 function Customers() {
   const { t } = useTranslation("customers");
+  const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
   const [customers, setCustomers] = useState({ data: [] });
@@ -44,6 +49,43 @@ function Customers() {
   function handleAddCustomer() {
     history.push(`/customers_create`);
   }
+
+  const onProceed = (itemIds) => {
+    setLoading(true);
+
+    deleteCustomer(JSON.stringify(itemIds))
+      .then(() => {
+        dispatch(
+          showMessage({
+            message: "Deletion completed!",
+          })
+        );
+        loadCustomers();
+      })
+      .catch(() => {
+        dispatch(
+          showMessage({
+            message: "Error during deletion. Please try again later",
+            variant: "error",
+          })
+        );
+        setLoading(false);
+      });
+  };
+  const removeCustomer = (itemId) => {
+    dispatch(
+      openDialog({
+        children: (
+          <RemoveDlg
+            itemId={itemId}
+            proceedCallback={() => onProceed(itemId)}
+            dlgTitle="Warning, you have requested a risky operation"
+            dlgText="You are attempting to delete a Customer, this operation cannot be undone. Are you sure you want to proceed with the deletion?"
+          />
+        ),
+      })
+    );
+  };
 
   useEffect(() => {
     let _name = new URLSearchParams(location.search).get("name");
@@ -84,6 +126,7 @@ function Customers() {
             handleChangeRowsPerPage={handleChangePage}
             handleChangePage={handlePageNumber}
             handleClickEdit={handleEditCustomer}
+            deleteCallback={removeCustomer}
           />
         )
       }

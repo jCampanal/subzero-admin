@@ -23,6 +23,7 @@ function CustomersTable({
   handleChangeRowsPerPage,
   handleChangePage,
   handleClickEdit,
+  deleteCallback,
 }) {
   const { t } = useTranslation("customers");
   const history = useHistory();
@@ -111,6 +112,7 @@ function CustomersTable({
             onRequestSort={handleRequestSort}
             rowCount={data.data.length}
             onMenuItemClick={handleDeselect}
+            deleteSelectedItemsCallback={() => deleteCallback(selected)}
           />
 
           <TableBody>
@@ -209,7 +211,15 @@ function CustomersTable({
                         <Icon>edit</Icon> {t("EDIT")}
                       </Button>
                       <Button color="primary">
-                        <Icon>delete</Icon> {t("DELETE")}
+                        <Icon
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            deleteCallback([customer.id]);
+                          }}
+                        >
+                          delete
+                        </Icon>{" "}
+                        {t("DELETE")}
                       </Button>
                     </TableCell>
                   </TableRow>
