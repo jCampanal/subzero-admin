@@ -18,7 +18,8 @@ import { useTranslation } from "react-i18next";
 function DriversTable({
   handleChangeRowsPerPage,
   handleChangePage,
-  drivers,
+  deleteCallback,
+  data,
   rows,
   pageNumber,
   pageSize,
@@ -26,7 +27,7 @@ function DriversTable({
   const { t } = useTranslation("drivers");
   const history = useHistory();
   const [selected, setSelected] = useState([]);
-  const [data] = useState(drivers);
+
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [order, setOrder] = useState({
@@ -119,102 +120,103 @@ function DriversTable({
             onRequestSort={handleRequestSort}
             rowCount={data.length}
             onMenuItemClick={handleDeselect}
+            deleteSelectedItemsCallback={() => deleteCallback(selected)}
           />
 
           <TableBody>
-            {data
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((driver) => {
-                const isSelected = selected.indexOf(driver.id) !== -1;
-                return (
-                  <TableRow
-                    className="h-72 cursor-pointer"
-                    hover
-                    role="checkbox"
-                    aria-checked={isSelected}
-                    tabIndex={-1}
-                    key={driver.id}
-                    selected={isSelected}
-                    onClick={(event) => handleClick(driver)}
+            {data.map((driver) => {
+              console.log("render data", driver);
+              const isSelected = selected.indexOf(driver.id) !== -1;
+              return (
+                <TableRow
+                  className="h-72 cursor-pointer"
+                  hover
+                  role="checkbox"
+                  aria-checked={isSelected}
+                  tabIndex={-1}
+                  key={driver.id}
+                  selected={isSelected}
+                >
+                  <TableCell
+                    className="w-40 md:w-64 text-center"
+                    padding="none"
                   >
-                    <TableCell
-                      className="w-40 md:w-64 text-center"
-                      padding="none"
-                    >
-                      <Checkbox
-                        checked={isSelected}
-                        onClick={(event) => event.stopPropagation()}
-                        onChange={(event) => handleCheck(event, driver.id)}
-                      />
-                    </TableCell>
+                    <Checkbox
+                      checked={isSelected}
+                      onClick={(event) => event.stopPropagation()}
+                      onChange={(event) => handleCheck(event, driver.id)}
+                    />
+                  </TableCell>
 
-                    <TableCell
-                      className="w-52 px-4 md:px-0"
-                      component="th"
-                      scope="row"
-                      padding="none"
-                    >
-                      <img
-                        className="w-full block rounded"
-                        src={`${process.env.PUBLIC_URL}/assets/images/avatars/profile.jpg`}
-                        alt={driver.name}
-                      />
-                    </TableCell>
+                  <TableCell
+                    className="w-52 px-4 md:px-0"
+                    component="th"
+                    scope="row"
+                    padding="none"
+                  >
+                    <img
+                      className="w-full block rounded"
+                      src={`${process.env.PUBLIC_URL}/assets/images/avatars/profile.jpg`}
+                      alt={driver.name}
+                    />
+                  </TableCell>
 
-                    <TableCell
-                      className="p-4 md:p-16"
-                      component="th"
-                      scope="row"
-                    >
-                      {driver.username}
-                    </TableCell>
+                  <TableCell className="p-4 md:p-16" component="th" scope="row">
+                    {driver.userName}
+                  </TableCell>
 
-                    <TableCell
-                      className="p-4 md:p-16"
-                      component="th"
-                      scope="row"
-                      align="left"
-                    >
-                      {driver.name}
-                    </TableCell>
+                  <TableCell
+                    className="p-4 md:p-16"
+                    component="th"
+                    scope="row"
+                    align="left"
+                  >
+                    {driver.name}
+                  </TableCell>
 
-                    <TableCell
-                      className="p-4 md:p-16"
-                      component="th"
-                      scope="row"
-                      align="left"
-                    >
-                      {driver.warehouse}
-                    </TableCell>
+                  <TableCell
+                    className="p-4 md:p-16"
+                    component="th"
+                    scope="row"
+                    align="left"
+                  >
+                    {driver.warehouse.name}
+                  </TableCell>
 
-                    <TableCell
-                      className="p-4 md:p-16"
-                      component="th"
-                      scope="row"
-                      align="right"
-                    >
+                  <TableCell
+                    className="p-4 md:p-16"
+                    component="th"
+                    scope="row"
+                    align="right"
+                  >
+                    <Button color="primary">
+                      <Icon>send</Icon> {t("SEND_TEST")}
+                    </Button>
+                    {driver.enabled ? (
                       <Button color="primary">
-                        <Icon>send</Icon> {t("SEND_TEST")}
+                        <Icon>remove_circle_outline</Icon> {t("DISABLE")}
                       </Button>
-                      {driver.enabled ? (
-                        <Button color="primary">
-                          <Icon>remove_circle_outline</Icon> {t("DISABLE")}
-                        </Button>
-                      ) : (
-                        <Button color="primary">
-                          <Icon>check_circle_outline</Icon> {t("ENABLE")}
-                        </Button>
-                      )}
+                    ) : (
                       <Button color="primary">
-                        <Icon>edit</Icon> {t("EDIT")}
+                        <Icon>check_circle_outline</Icon> {t("ENABLE")}
                       </Button>
-                      <Button color="primary">
-                        <Icon>delete</Icon> {t("DELETE")}
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+                    )}
+                    <Button color="primary">
+                      <Icon>edit</Icon> {t("EDIT")}
+                    </Button>
+                    <Button
+                      color="primary"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        deleteCallback([driver.id]);
+                      }}
+                    >
+                      <Icon>delete</Icon> {t("DELETE")}
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </FuseScrollbars>

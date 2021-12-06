@@ -9,25 +9,30 @@ import { useHistory, useParams } from "react-router";
 import { useTranslation } from "react-i18next";
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { postCooler, putCooler } from "../../../api-conn/coolers";
+import { putCooler } from "../../../api-conn/coolers";
 import { showMessage } from "../../../store/fuse/messageSlice";
+import { registerDriver } from "app/api-conn/drivers";
 
 function FormHeader(props) {
   const theme = useTheme();
   const history = useHistory();
   const { id } = useParams();
-  const { t } = useTranslation("category-form");
+  const { t } = useTranslation("drivers-form");
   const methods = useFormContext();
   const { getValues } = methods;
   const dispatch = useDispatch();
 
   const saveData = () => {
     const formData = new FormData();
-    formData.append("Code", getValues().code);
-    formData.append("PickedUp", new Date().toDateString());
-    formData.append("ProviderId", getValues().providerId);
-    if (id !== undefined && getValues().file !== null)
-      formData.append("File", getValues().file);
+    formData.append("Username", getValues().userName);
+    formData.append("Name", getValues().name);
+    formData.append("Lastname", getValues().lastName);
+    formData.append("Email", getValues().email);
+    formData.append("Password", getValues().password);
+    formData.append("ConfirmPassword", getValues().confirmPassword);
+    formData.append("PhoneNumber", getValues().phoneNumber);
+    formData.append("WarehouseId", getValues().warehouseId);
+    /* if (getValues().file !== null) formData.append("Image", getValues().image); */
     if (id) {
       putCooler(id, formData)
         .then(() => {
@@ -56,7 +61,7 @@ function FormHeader(props) {
           )
         );
     } else {
-      postCooler(formData)
+      registerDriver(formData)
         .then(() => {
           dispatch(
             showMessage({
@@ -68,12 +73,12 @@ function FormHeader(props) {
               },
             })
           );
-          history.push("/coolers");
+          history.push("/drivers");
         })
         .catch((error) =>
           dispatch(
             showMessage({
-              message: error.response.data.title,
+              message: error.response.data.title ?? error.response.data.message,
               variant: "error",
               anchorOrigin: {
                 vertical: "top",
@@ -103,7 +108,7 @@ function FormHeader(props) {
               {theme.direction === "ltr" ? "arrow_back" : "arrow_forward"}
             </Icon>
             <span className="hidden sm:flex mx-4 font-medium">
-              {t("COOLERS")}
+              {t("DRIVERS")}
             </span>
           </Typography>
         </motion.div>

@@ -12,23 +12,42 @@ import { getProvidersAll } from "../../../api-conn/providers";
 import { openDialog } from "../../../store/fuse/dialogSlice";
 import RemoveDlg from "../../../common/removeDlg";
 
-const today = new Date();
-
 const validationRules = yup.object().shape({
   userName: yup.string().required("REQUIRED"),
+  name: yup.string().required("REQUIRED"),
   lastName: yup.string().required("REQUIRED"),
-  password: yup.string().required("REQUIRED"),
-  confirmPassword: yup.string().required("REQUIRED"),
+  email: yup
+    .string()
+    .email("Must be a valid email")
+    .max(255)
+    .required("REQUIRED"),
+  password: yup
+    .string()
+    .max(255)
+    .min(6)
+    .required("REQUIRED")
+    .matches(/^(?=.*[a-z])/, "Must contain at least one lowercase character")
+    .matches(/^(?=.*[A-Z])/, "Must contain at least one uppercase character")
+    .matches(/^(?=.*[0-9])/, "Must contain at least one number")
+    .matches(/^(?=.*[!@#%&])/, "Must contain at least one special character"),
+  confirmPassword: yup
+    .string()
+    .max(255)
+    .min(6)
+    .required("REQUIRED")
+    .matches(/^(?=.*[a-z])/, "Must contain at least one lowercase character")
+    .matches(/^(?=.*[A-Z])/, "Must contain at least one uppercase character")
+    .matches(/^(?=.*[0-9])/, "Must contain at least one number")
+    .matches(/^(?=.*[!@#%&])/, "Must contain at least one special character")
+    .test("passwords-match", "Passwords must match", function (value) {
+      return this.parent.password === value;
+    }),
+  warehouseId: yup.string().required("REQUIRED"),
   phoneNumber: yup.string(),
-  companyName: yup.string().required("REQUIRED"),
-  companyAddressStreet: yup.string().required("REQUIRED"),
-  companyAddressCity: yup.string().required("REQUIRED"),
-  companyAddressState: yup.string().required("REQUIRED"),
-  companyAddressZipCode: yup.string().required("REQUIRED"),
-  SalesTxId: yup.string().required("REQUIRED"),
+  image: yup.mixed(),
 });
 
-const CustomerForm = () => {
+const driverForm = () => {
   const {
     user: { logged },
   } = useSelector((state) => state);
@@ -36,47 +55,42 @@ const CustomerForm = () => {
   const { id } = useParams();
   const { state } = useLocation();
 
-  const customer = id
-    ? state.customer
-    : {
-        id: "",
-        priorityCustomer: false,
-        userName: "",
-        name: "",
-        lastName: "",
-        email: "",
-        phoneNumber: "",
-        company: {
-          id: "",
-          name: "",
-        },
-      };
-  const { t } = useTranslation("customers-form");
-  const [providers, setProviders] = useState([]);
+  const driver = {
+    userName: "",
+    name: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    warehouseId: "",
+    phoneNumber: "",
+    image: null,
+  };
+  const { t } = useTranslation("drivers-form");
   const dispatch = useDispatch();
   const methods = useForm({
     defaultValues: {
-      priorityCustomer: customer.priorityCustomer,
-      userName: customer.userName,
-      name: customer.name,
-      lastName: customer.lastName,
-      email: customer.email,
-      phoneNumber: customer.phoneNumber,
-      company: {
-        id: customer.company.id,
-        name: customer.company.name,
-      },
+      userName: driver.userName,
+      name: driver.name,
+      lastName: driver.lastName,
+      email: driver.email,
+      password: driver.password,
+      confirmPassword: driver.confirmPassword,
+      warehouseId: driver.warehouseId,
+      phoneNumber: driver.phoneNumber,
+      image: null,
     },
     mode: "all",
     resolver: yupResolver(validationRules),
   });
-  const removecustomer = (itemId) =>
+
+  const removedriver = (itemId) =>
     dispatch(
       openDialog({
         children: (
           <RemoveDlg
             itemId={itemId}
-            proceedCallback={() => history.push("/customers")}
+            proceedCallback={() => history.push("/drivers")}
           />
         ),
       })
@@ -86,13 +100,6 @@ const CustomerForm = () => {
     if (!logged) history.push("/login");
     return <></>;
   }, [logged, history]);
-  useEffect(() => {
-    const fetchAllProviders = async () => {
-      const { data } = await getProvidersAll();
-      setProviders(data);
-    };
-    fetchAllProviders().finally();
-  }, []);
 
   return (
     <FormProvider {...methods}>
@@ -101,15 +108,15 @@ const CustomerForm = () => {
           toolbar: "p-0",
           header: "min-h-72 h-72 sm:h-136 sm:min-h-136",
         }}
-        header={<FormHeader removeCallback={removecustomer} />}
+        header={<FormHeader removeCallback={removedriver} />}
         contentToolbar={
           <div className="p-16 sm:p-24 max-w-2xl">
-            {id ? <h1>{customer.code}</h1> : <h1>{t("CREATE_NEW")}</h1>}
+            {id ? <h1>{driver.code}</h1> : <h1>{t("CREATE_NEW")}</h1>}
           </div>
         }
         content={
           <div className="p-16 sm:p-24 max-w-2xl">
-            <FormControls providers={providers} imageURL={customer.imageURL} />
+            <FormControls />
           </div>
         }
       />
@@ -117,4 +124,4 @@ const CustomerForm = () => {
   );
 };
 
-export default CustomerForm;
+export default driverForm;

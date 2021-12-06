@@ -8,20 +8,26 @@ import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import { motion } from "framer-motion";
-import TableHeader from "app/main/products/Products/TableHeader";
+import TableHeader from "app/components/TableHeader/TableHeader";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
 import { Pageview } from "@material-ui/icons";
 import ViewModal from "./ViewModal";
 
-function CoolersActivityTable(props) {
+function CoolersActivityTable({
+  coolersActivity,
+  rows,
+  page,
+  rowsPerPage,
+  handleChangePage,
+  handleChangeRowsPerPage,
+}) {
   const history = useHistory();
   const { t } = useTranslation("coolers-activity");
   const [selected, setSelected] = useState([]);
-  const [data] = useState(props.coolersActivity);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [data] = useState(coolersActivity);
+
   const [selectedCoolerActivity, setSelectedCoolerActivity] = useState();
   const [isModal, setIsModal] = useState(false);
   const [order, setOrder] = useState({
@@ -75,14 +81,6 @@ function CoolersActivityTable(props) {
     setSelected(newSelected);
   }
 
-  function handleChangePage(event, value) {
-    setPage(value);
-  }
-
-  function handleChangeRowsPerPage(event) {
-    setRowsPerPage(event.target.value);
-  }
-
   if (data.length === 0) {
     return (
       <motion.div
@@ -103,13 +101,11 @@ function CoolersActivityTable(props) {
         <Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
           <TableHeader
             namespace="coolers-activity"
-            rows={props.rows}
-            selectedProductIds={selected}
+            rows={rows}
             order={order}
-            onSelectAllClick={handleSelectAllClick}
             onRequestSort={handleRequestSort}
             rowCount={data.length}
-            onMenuItemClick={handleDeselect}
+            disableCheck
           />
 
           <TableBody>
@@ -130,7 +126,7 @@ function CoolersActivityTable(props) {
                     key={i}
                     selected={isSelected}
                   >
-                    <TableCell
+                    {/* <TableCell
                       className="w-40 md:w-64 text-center"
                       padding="none"
                     >
@@ -141,7 +137,7 @@ function CoolersActivityTable(props) {
                           handleCheck(event, coolerActivity.id)
                         }
                       />
-                    </TableCell>
+                    </TableCell> */}
 
                     <TableCell
                       className="p-4 md:p-16"

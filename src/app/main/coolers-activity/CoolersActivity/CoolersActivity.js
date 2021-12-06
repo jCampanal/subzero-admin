@@ -130,6 +130,15 @@ function CoolersActivity() {
       cooler: coolerData,
     });
   };
+
+  function handleChangePage(event, value) {
+    setPageNumber(value);
+  }
+
+  function handleChangeRowsPerPage(event) {
+    setPageSize(event.target.value);
+  }
+
   return (
     <FusePageCarded
       classes={{
@@ -147,7 +156,14 @@ function CoolersActivity() {
         loading ? (
           <FuseLoading />
         ) : (
-          <CoolersActivityTable coolersActivity={coolersActivity} rows={rows} />
+          <CoolersActivityTable
+            coolersActivity={coolersActivity}
+            rows={rows}
+            page={pageNumber}
+            rowsPerPage={pageSize}
+            handleChangePage={handleChangePage}
+            handleChangeRowsPerPage={handleChangeRowsPerPage}
+          />
         )
       }
       innerScroll

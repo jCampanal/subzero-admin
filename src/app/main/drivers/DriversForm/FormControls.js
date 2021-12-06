@@ -9,8 +9,11 @@ import { useParams } from "react-router";
 import FormControl from "@material-ui/core/FormControl";
 import { InputLabel, MenuItem, Select } from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
-import { DatePicker } from "@material-ui/pickers";
 import { useState } from "react";
+import { useEffect } from "react";
+import { getAllWarehouses } from "app/api-conn/warehouses";
+import { useDispatch } from "react-redux";
+import { showMessage } from "app/store/fuse/messageSlice";
 
 const useStyles = makeStyles((theme) => ({
   productImageFeaturedStar: {
@@ -48,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function FormControls(props) {
+  const dispatch = useDispatch();
   const { id } = useParams();
   const { t } = useTranslation("category-form");
   const methods = useFormContext();
@@ -55,77 +59,193 @@ function FormControls(props) {
   const { errors } = formState;
   const classes = useStyles(props);
   const [image, setImage] = useState(props.imageURL);
+  const [warehouses, setWarehouses] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const loadWareHouses = () => {
+    setLoading(true);
+    getAllWarehouses()
+      .then((response) => {
+        setWarehouses(response.data);
+        setLoading(false);
+        console.log("response.data", response.data);
+      })
+      .catch(() => {
+        dispatch(
+          showMessage({
+            message: "There is something wrong, try to refresh the page",
+            variant: "error",
+          })
+        );
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    loadWareHouses();
+  }, []);
 
   return (
     <div className="flex flex-col justify-center sm:justify-start flex-wrap max-w-2xl">
       <Controller
-        name="code"
+        name="userName"
         control={control}
         render={({ field }) => (
           <TextField
             {...field}
             className="mt-8 mb-16"
-            error={!!errors.code}
+            error={!!errors.userName}
             required
-            helperText={errors?.code?.message}
-            label={t("CODE")}
+            helperText={errors?.userName?.message}
+            label={t("USERNAME")}
             autoFocus
-            id="code"
+            id="userName"
+            variant="outlined"
+            fullWidth
+          />
+        )}
+      />
+      <Controller
+        name="name"
+        control={control}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            className="mt-8 mb-16"
+            error={!!errors.name}
+            required
+            helperText={errors?.name?.message}
+            label={t("NAME")}
+            autoFocus
+            id="name"
+            variant="outlined"
+            fullWidth
+          />
+        )}
+      />
+      <Controller
+        name="lastName"
+        control={control}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            className="mt-8 mb-16"
+            error={!!errors.lastName}
+            required
+            helperText={errors?.lastName?.message}
+            label={t("LASTNAME")}
+            autoFocus
+            id="lastName"
+            variant="outlined"
+            fullWidth
+          />
+        )}
+      />
+      <Controller
+        name="email"
+        control={control}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            className="mt-8 mb-16"
+            error={!!errors.email}
+            required
+            type="email"
+            helperText={errors?.email?.message}
+            label={t("email")}
+            autoFocus
+            id="email"
+            variant="outlined"
+            fullWidth
+          />
+        )}
+      />
+      <Controller
+        name="password"
+        control={control}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            className="mt-8 mb-16"
+            error={!!errors.password}
+            required
+            type="password"
+            helperText={errors?.password?.message}
+            label={t("PASSWORD")}
+            autoFocus
+            id="password"
+            variant="outlined"
+            fullWidth
+          />
+        )}
+      />
+      <Controller
+        name="confirmPassword"
+        control={control}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            className="mt-8 mb-16"
+            error={!!errors.confirmPassword}
+            required
+            type="password"
+            helperText={errors?.confirmPassword?.message}
+            label={t("CONFIRMPASSWORD")}
+            autoFocus
+            id="confirmPassword"
+            variant="outlined"
+            fullWidth
+          />
+        )}
+      />
+      <Controller
+        name="warehouseId"
+        control={control}
+        render={({ field }) => (
+          <FormControl className="mt-8 mb-16">
+            <InputLabel id="warehouseId-select-label" className="pl-20 -mt-9">
+              {t("WAREHOUSEID")}
+            </InputLabel>
+            <Select
+              {...field}
+              labelId="warehouseId-select-label"
+              id="demo-simple-select"
+              required
+              displayEmpty
+              label={t("WAREHOUSEID")}
+              inputProps={{ "aria-label": "Without label" }}
+              variant="outlined"
+            >
+              {warehouses.map((wareHouse) => {
+                return (
+                  <MenuItem key={wareHouse.id} value={wareHouse.id}>
+                    {wareHouse.name}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+        )}
+      />
+
+      <Controller
+        name="phoneNumber"
+        control={control}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            className="mt-8 mb-16"
+            error={!!errors.phoneNumber}
+            required
+            helperText={errors?.phoneNumber?.message}
+            label={t("PHONENUMBER")}
+            autoFocus
+            id="phoneNumber"
             variant="outlined"
             fullWidth
           />
         )}
       />
 
-      <Controller
-        name="providerId"
-        control={control}
-        render={({ field }) => (
-          <FormControl className="mt-8 mb-16">
-            <InputLabel id="provider-select-label" className="pl-20 -mt-9">
-              {t("PROVIDER")}
-            </InputLabel>
-            <Select
-              {...field}
-              labelId="provider-select-label"
-              id="demo-simple-select"
-              required
-              displayEmpty
-              label={t("PROVIDER")}
-              inputProps={{ "aria-label": "Without label" }}
-              variant="outlined"
-            >
-              <MenuItem>{t("PROVIDER")}</MenuItem>
-              {props.providers.map((provider) => (
-                <MenuItem key={provider.id} value={provider.id}>
-                  {provider.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        )}
-      />
-      {/* <Controller
-        name="pickup"
-        control={control}
-        render={({ field }) => (
-          <FormControl className="mt-8 mb-16">
-            <DatePicker
-              {...field}
-              inputFormat="MM/dd/yyyy"
-              renderInput={(params) => <TextField {...params} />}
-              error={!!errors.pickup}
-              required
-              helperText={errors?.pickup?.message}
-              label={t("PickedUp")}
-              autoFocus
-              id="pickup"
-              variant="outlined"
-              fullWidth
-            />
-          </FormControl>
-        )}
-      /> */}
       <div className="flex flex-col sm:flex-row sm:gap-7">
         <Controller
           name="file"

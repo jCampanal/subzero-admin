@@ -1,11 +1,13 @@
 import React, { lazy, memo, useEffect, useState } from "react";
 import FusePageCarded from "@fuse/core/FusePageCarded";
 import { useTranslation } from "react-i18next";
-import { getDrivers } from "app/api-conn/drivers";
-import { useLocation } from "react-router";
+import { deleteDriver, getDrivers } from "app/api-conn/drivers";
+import { useHistory, useLocation } from "react-router";
 import { useDispatch } from "react-redux";
 import FuseLoading from "@fuse/core/FuseLoading";
 import { showMessage } from "app/store/fuse/messageSlice";
+import RemoveDlg from "app/common/removeDlg";
+import { openDialog } from "app/store/fuse/dialogSlice";
 
 const Header = lazy(() => import("app/components/HeaderPage/PageCardedHeader"));
 const DriversTable = lazy(() => import("./DriversTable"));
@@ -26,10 +28,10 @@ const rows = [
     sort: true,
   },
   {
-    id: "full-name",
+    id: "name",
     align: "left",
     disablePadding: false,
-    label: "FULL_NAME",
+    label: "NAME",
     sort: true,
   },
   {
@@ -67,6 +69,7 @@ const dummyDrivers = [
 
 function Drivers() {
   const location = useLocation();
+  const history = useHistory();
   const { t } = useTranslation("drivers");
   const [drivers, setDrivers] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -79,6 +82,7 @@ function Drivers() {
     getDrivers(pageNumber, pageSize, name)
       .then((data) => {
         setDrivers(data.data.data);
+        console.log("data drivers", data.data.data);
         setLoading(false);
       })
       .catch(() => {
@@ -101,6 +105,43 @@ function Drivers() {
   function handleChangePage(event, value) {
     setPageNumber(value);
   }
+  const handleClickAdd = () => {
+    history.push("/drivers_create");
+  };
+  const onProceed = (itemIds) => {
+    setLoading(true);
+    deleteDriver(JSON.stringify(itemIds))
+      .then(() => {
+        dispatch(
+          showMessage({
+            message: "Deletion completed!",
+          })
+        );
+        loadDrivers();
+      })
+      .catch(() => {
+        dispatch(
+          showMessage({
+            message: "Error during deletion. Please try again later",
+            variant: "error",
+          })
+        );
+        setLoading(false);
+      });
+  };
+  const removeDriver = (itemIds) =>
+    dispatch(
+      openDialog({
+        children: (
+          <RemoveDlg
+            itemId={itemIds}
+            proceedCallback={() => onProceed(itemIds)}
+            dlgTitle="Warning, you have requested a risky operation"
+            dlgText="You are attempting to delete a Driver, this operation cannot be undone. Are you sure you want to proceed with the deletion?"
+          />
+        ),
+      })
+    );
 
   useEffect(() => {
     let _name = new URLSearchParams(location.search).get("name");
@@ -110,6 +151,7 @@ function Drivers() {
     loadDrivers(pageNumber, pageSize, _name);
   }, [location, pageSize, pageNumber]);
 
+  console.log("loading", loading);
   return (
     <FusePageCarded
       classes={{
@@ -124,19 +166,21 @@ function Drivers() {
           addButtonLabel={t("ADD_DRIVER")}
           searchHint={t("SEARCH_BY_NAME")}
           disableSearch
+          addButtonCallback={handleClickAdd}
         />
       }
       content={
-        loading ? (
+        false ? (
           <FuseLoading />
         ) : (
           <DriversTable
-            drivers={drivers}
+            data={drivers}
             rows={rows}
             handleChangeRowsPerPage={handleChangeRowsPerPage}
             handleChangePage={handleChangePage}
             pageNumber={pageNumber}
             pageSize={pageSize}
+            deleteCallback={removeDriver}
           />
         )
       }
