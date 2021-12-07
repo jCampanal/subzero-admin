@@ -15,12 +15,19 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
 
-function AdminsTable(props) {
+function AdminsTable({
+  handleChangeRowsPerPage,
+  handleChangePage,
+  deleteCallback,
+  handleClickEdit,
+  data,
+  rows,
+  page,
+  rowsPerPage,
+}) {
   const { t } = useTranslation("admins");
   const [selected, setSelected] = useState([]);
-  const [data] = useState(props.admins);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+
   const history = useHistory();
   const [order, setOrder] = useState({
     direction: "asc",
@@ -77,14 +84,6 @@ function AdminsTable(props) {
     setSelected(newSelected);
   }
 
-  function handleChangePage(event, value) {
-    setPage(value);
-  }
-
-  function handleChangeRowsPerPage(event) {
-    setRowsPerPage(event.target.value);
-  }
-
   if (data.length === 0) {
     return (
       <motion.div
@@ -105,7 +104,7 @@ function AdminsTable(props) {
         <Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
           <TableHeader
             namespace="admins"
-            rows={props.rows}
+            rows={rows}
             selectedProductIds={selected}
             order={order}
             onSelectAllClick={handleSelectAllClick}
@@ -186,10 +185,19 @@ function AdminsTable(props) {
                       scope="row"
                       align="right"
                     >
-                      <Button color="primary">
+                      <Button
+                        color="primary"
+                        onClick={() => handleClickEdit(admin)}
+                      >
                         <Icon>edit</Icon> {t("EDIT")}
                       </Button>
-                      <Button color="primary">
+                      <Button
+                        color="primary"
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          deleteCallback([admin.id]);
+                        }}
+                      >
                         <Icon>delete</Icon> {t("DELETE")}
                       </Button>
                     </TableCell>
@@ -223,6 +231,11 @@ function AdminsTable(props) {
 export default AdminsTable;
 
 AdminsTable.propTypes = {
-  admins: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
   rows: PropTypes.array.isRequired,
+  page: PropTypes.number.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
+  handleChangeRowsPerPage: PropTypes.func.isRequired,
+  handleChangePage: PropTypes.func.isRequired,
+  handleClickEdit: PropTypes.func.isRequired,
 };
