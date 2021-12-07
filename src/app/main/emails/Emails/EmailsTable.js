@@ -10,7 +10,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import { motion } from "framer-motion";
 import { useHistory, withRouter } from "react-router-dom";
-import TableHeader from "app/main/products/Products/TableHeader";
+import TableHeader from "app/components/TableHeader/TableHeader";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 
@@ -23,7 +23,6 @@ function EmailsTable({
   handleChangePage,
 }) {
   const { t } = useTranslation("emails");
-  const [selected, setSelected] = useState([]);
   const history = useHistory();
   const [order, setOrder] = useState({
     direction: "asc",
@@ -105,41 +104,27 @@ function EmailsTable({
           <TableHeader
             namespace="emails"
             rows={rows}
-            selectedProductIds={selected}
             order={order}
             onSelectAllClick={handleSelectAllClick}
             onRequestSort={handleRequestSort}
             rowCount={data.length}
             onMenuItemClick={handleDeselect}
+            disableCheck
           />
 
           <TableBody>
-            {data.data
+            {data
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((email) => {
-                const isSelected = selected.indexOf(email.id) !== -1;
                 return (
                   <TableRow
                     className="h-72 cursor-pointer"
                     hover
                     role="checkbox"
-                    aria-checked={isSelected}
                     tabIndex={-1}
-                    key={email.id}
-                    selected={isSelected}
+                    key={email.emailId}
                     onClick={(event) => handleClick(email)}
                   >
-                    <TableCell
-                      className="w-40 md:w-64 text-center"
-                      padding="none"
-                    >
-                      <Checkbox
-                        checked={isSelected}
-                        onClick={(event) => event.stopPropagation()}
-                        onChange={(event) => handleCheck(event, email.id)}
-                      />
-                    </TableCell>
-
                     {/* <TableCell
                       className="w-52 px-4 md:px-0"
                       component="th"
@@ -149,22 +134,30 @@ function EmailsTable({
                       {email.hasAttachments && <Icon>attach_file</Icon>}
                     </TableCell> */}
 
-                    <TableCell
+                    {/* <TableCell
                       className="p-4 md:p-16"
                       component="th"
                       scope="row"
                     >
                       {email.id}
-                    </TableCell>
+                    </TableCell> */}
 
                     <TableCell
                       className="p-4 md:p-16"
                       component="th"
                       scope="row"
                     >
-                      {email.to}
+                      {email.toEmail}
                     </TableCell>
 
+                    <TableCell
+                      className="p-4 md:p-16"
+                      component="th"
+                      scope="row"
+                      align="left"
+                    >
+                      {email.subtitle.slice(0, 49)}
+                    </TableCell>
                     <TableCell
                       className="p-4 md:p-16"
                       component="th"
@@ -172,15 +165,6 @@ function EmailsTable({
                       align="left"
                     >
                       {email.subject.slice(0, 49)}
-                    </TableCell>
-
-                    <TableCell
-                      className="p-4 md:p-16"
-                      component="th"
-                      scope="row"
-                      align="left"
-                    >
-                      {email.status}
                     </TableCell>
                   </TableRow>
                 );

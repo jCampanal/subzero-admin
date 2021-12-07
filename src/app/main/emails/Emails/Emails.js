@@ -7,6 +7,143 @@ import { getEmails } from "../../../api-conn/emails";
 import { showMessage } from "../../../store/fuse/messageSlice";
 import FuseLoading from "@fuse/core/FuseLoading";
 
+const fakeDataEmail = [
+  {
+    emailId: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+    subject: "Dear John Doe",
+    subtitle: "Hello User",
+    callBackURL: "controller/usercontroller/confirmEmail",
+    rawBody:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    order: {
+      id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+      tag: "Dry Ice",
+      status: "Waiting",
+      priority: 1,
+      pickUp: false,
+      address: {
+        id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+        street: "Wall Street",
+        city: "New York",
+        state: "New York",
+        zipCode: 10001,
+      },
+      driver: {
+        id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+        userName: "Pedro",
+        name: "Juan",
+        lastName: "Pérez",
+        email: "test@admin.com",
+        phoneNumber: "test@admin.com",
+        warehouse: {
+          id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+          name: "FLL Warehouse",
+          address: {
+            id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+            street: "Wall Street",
+            city: "New York",
+            state: "New York",
+            zipCode: 10001,
+          },
+        },
+      },
+      customer: {
+        id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+        priorityCustomer: false,
+        userName: "Juan",
+        name: "Juan",
+        lastName: "Pérez",
+        email: "test@admin.com",
+        phoneNumber: "test@admin.com",
+        company: {
+          id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+          name: "Company 1",
+        },
+      },
+      products: [
+        {
+          id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+          pendingQuanty: 200,
+          completed: true,
+          description: "Dry Ice 4 kg",
+          quanty: 1,
+          name: "Dry Ice",
+          productTypeId: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+        },
+      ],
+    },
+    fileURL: "string",
+    toEmail: "example123@gmail.com",
+  },
+  {
+    emailId: "67b6e540-0985-49e2-8a7a-3af8278f6e2es",
+    subject: "Dear John Doe",
+    subtitle: "Hello User",
+    callBackURL: "controller/usercontroller/confirmEmail",
+    rawBody:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    order: {
+      id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+      tag: "Dry Ice",
+      status: "Waiting",
+      priority: 1,
+      pickUp: false,
+      address: {
+        id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+        street: "Wall Street",
+        city: "New York",
+        state: "New York",
+        zipCode: 10001,
+      },
+      driver: {
+        id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+        userName: "Pedro",
+        name: "Juan",
+        lastName: "Pérez",
+        email: "test@admin.com",
+        phoneNumber: "test@admin.com",
+        warehouse: {
+          id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+          name: "FLL Warehouse",
+          address: {
+            id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+            street: "Wall Street",
+            city: "New York",
+            state: "New York",
+            zipCode: 10001,
+          },
+        },
+      },
+      customer: {
+        id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+        priorityCustomer: false,
+        userName: "Juan",
+        name: "Juan",
+        lastName: "Pérez",
+        email: "test@admin.com",
+        phoneNumber: "test@admin.com",
+        company: {
+          id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+          name: "Company 1",
+        },
+      },
+      products: [
+        {
+          id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+          pendingQuanty: 200,
+          completed: true,
+          description: "Dry Ice 4 kg",
+          quanty: 1,
+          name: "Dry Ice",
+          productTypeId: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+        },
+      ],
+    },
+    fileURL: "string",
+    toEmail: "example123@gmail.com",
+  },
+];
+
 const Header = lazy(() =>
   import("app/components/HeaderPage/PageCardedHeader").then((header) => header)
 );
@@ -14,7 +151,7 @@ const EmailsTable = lazy(() => import("./EmailsTable").then((table) => table));
 
 function Emails() {
   const { t } = useTranslation("emails");
-  const [emails, setEmails] = useState({ data: [] });
+  const [emails, setEmails] = useState(fakeDataEmail);
   const [loading, setLoading] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);
   const [pageSize, setPageSize] = useState(10);
@@ -51,9 +188,9 @@ function Emails() {
     setPageSize(event.target.value);
   }
 
-  useEffect(() => {
-    loadEmails(pageNumber, pageSize);
-  }, [pageSize, pageNumber]);
+  // useEffect(() => {
+  //   loadEmails(pageNumber, pageSize);
+  // }, [pageSize, pageNumber]);
 
   return (
     <FusePageCarded

@@ -6,18 +6,25 @@ const rows = [
   //     label: '',
   //     sort: false,
   // },
-  {
-    id: "id",
-    align: "left",
-    disablePadding: false,
-    label: "ID",
-    sort: true,
-  },
+  // {
+  //   id: "id",
+  //   align: "left",
+  //   disablePadding: false,
+  //   label: "ID",
+  //   sort: true,
+  // },
   {
     id: "to",
     align: "left",
-    disablePadding: false,
+    disablePadding: true,
     label: "TO",
+    sort: true,
+  },
+  {
+    id: "subtitle",
+    align: "left",
+    disablePadding: true,
+    label: "SUBTITLE",
     sort: true,
   },
   {
@@ -25,13 +32,6 @@ const rows = [
     align: "left",
     disablePadding: false,
     label: "SUBJECT",
-    sort: true,
-  },
-  {
-    id: "status",
-    align: "left",
-    disablePadding: false,
-    label: "STATUS",
     sort: true,
   },
 ];
