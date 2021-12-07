@@ -51,7 +51,6 @@ const CustomerForm = () => {
       .then((response) => {
         setsalesTax(response.data);
         setLoading(false);
-        console.log("response.data", response.data);
       })
       .catch(() => {
         dispatch(

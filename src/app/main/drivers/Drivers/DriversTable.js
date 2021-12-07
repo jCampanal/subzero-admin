@@ -125,7 +125,6 @@ function DriversTable({
 
           <TableBody>
             {data.map((driver) => {
-              console.log("render data", driver);
               const isSelected = selected.indexOf(driver.id) !== -1;
               return (
                 <TableRow
@@ -226,8 +225,8 @@ function DriversTable({
         component="div"
         count={data.length}
         labelRowsPerPage={t("ROWS_PER_PAGE")}
-        rowsPerPage={pageSize}
-        page={pageNumber}
+        rowsPerPage={rowsPerPage}
+        page={page}
         backIconButtonProps={{
           "aria-label": "Previous Page",
         }}
@@ -244,6 +243,10 @@ function DriversTable({
 export default withRouter(DriversTable);
 
 DriversTable.propTypes = {
-  drivers: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
   rows: PropTypes.array.isRequired,
+  page: PropTypes.number.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
+  handleChangeRowsPerPage: PropTypes.func.isRequired,
+  handleChangePage: PropTypes.func.isRequired,
 };

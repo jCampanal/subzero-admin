@@ -176,8 +176,8 @@ function Drivers() {
             rows={rows}
             handleChangeRowsPerPage={handleChangeRowsPerPage}
             handleChangePage={handleChangePage}
-            pageNumber={pageNumber}
-            pageSize={pageSize}
+            page={pageNumber}
+            rowsPerPage={pageSize}
             deleteCallback={removeDriver}
           />
         )
