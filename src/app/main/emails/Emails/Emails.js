@@ -5,35 +5,55 @@ import { useDispatch } from "react-redux";
 import rows from "./rows";
 import { getEmails } from "../../../api-conn/emails";
 import { showMessage } from "../../../store/fuse/messageSlice";
+import FuseLoading from "@fuse/core/FuseLoading";
 
 const Header = lazy(() =>
-  import("app/main/products/Products/PageCardedHeader").then((header) => header)
+  import("app/components/HeaderPage/PageCardedHeader").then((header) => header)
 );
 const EmailsTable = lazy(() => import("./EmailsTable").then((table) => table));
 
 function Emails() {
   const { t } = useTranslation("emails");
   const [emails, setEmails] = useState({ data: [] });
+  const [loading, setLoading] = useState(false);
+  const [pageNumber, setPageNumber] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
   const dispatch = useDispatch();
 
-  const fetchEmailData = () => {
-    const loadEmails = async () => {
-      const { data, error } = await getEmails()
-        .then((response) => ({ data: response.data }))
-        .catch((e) => ({ error: e }));
-      if (data) setEmails(data);
-      if (error)
+  const loadEmails = (pageNumber = 0, pageSize = 10) => {
+    setLoading(true);
+    getEmails(pageNumber, pageSize, name)
+      .then((data) => {
+        setEmails(data.data.data);
+        console.log("data.data.data", data.data.data);
+        setLoading(false);
+      })
+      .catch(() => {
         dispatch(
           showMessage({
-            message: error.message,
+            message: t("PROBLEM_FETCHING"),
+            anchorOrigin: {
+              vertical: "top",
+              horizontal: "right",
+            },
             variant: "error",
           })
         );
-    };
-    loadEmails().finally();
+        setLoading(false);
+      });
   };
 
-  useEffect(fetchEmailData, [dispatch]);
+  function handleChangePage(event, value) {
+    setPageNumber(value);
+  }
+
+  function handleChangeRowsPerPage(event) {
+    setPageSize(event.target.value);
+  }
+
+  useEffect(() => {
+    loadEmails(pageNumber, pageSize);
+  }, [pageSize, pageNumber]);
 
   return (
     <FusePageCarded
@@ -50,7 +70,20 @@ function Emails() {
           searchHint=""
         />
       }
-      content={<EmailsTable emails={emails} rows={rows} />}
+      content={
+        loading ? (
+          <FuseLoading />
+        ) : (
+          <EmailsTable
+            data={emails}
+            rows={rows}
+            handleChangeRowsPerPage={handleChangeRowsPerPage}
+            handleChangePage={handleChangePage}
+            page={pageNumber}
+            rowsPerPage={pageSize}
+          />
+        )
+      }
       innerScroll
     />
   );

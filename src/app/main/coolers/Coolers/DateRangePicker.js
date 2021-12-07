@@ -12,11 +12,8 @@ import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { showMessage } from "app/store/fuse/messageSlice";
 import styled from "styled-components";
-const formatDate = (date) => {
-  let formatted_date =
-    date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear();
-  return formatted_date;
-};
+import { formatDate } from "app/lib/formatDate";
+
 const validateDate = (compareDate) => {
   const today = new Date();
   if (compareDate <= today) {
@@ -40,7 +37,6 @@ function DateRangePicker({
     toggleDateRangeDlgIsOpen();
   };
   const search = () => {
-    console.log(date);
     if (date && validateDate(date)) {
       const formatedDate = formatDate(date);
       searchByDate(formatedDate);

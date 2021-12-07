@@ -14,12 +14,16 @@ import TableHeader from "app/main/products/Products/TableHeader";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 
-function EmailsTable(props) {
+function EmailsTable({
+  data,
+  rows,
+  page,
+  rowsPerPage,
+  handleChangeRowsPerPage,
+  handleChangePage,
+}) {
   const { t } = useTranslation("emails");
   const [selected, setSelected] = useState([]);
-  const [data, setData] = useState(props.emails);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
   const history = useHistory();
   const [order, setOrder] = useState({
     direction: "asc",
@@ -42,7 +46,7 @@ function EmailsTable(props) {
 
   function handleSelectAllClick(event) {
     if (event.target.checked) {
-      setSelected(data.data.map((n) => n.id));
+      setSelected(data.map((n) => n.id));
       return;
     }
     setSelected([]);
@@ -76,15 +80,7 @@ function EmailsTable(props) {
     setSelected(newSelected);
   }
 
-  function handleChangePage(event, value) {
-    setPage(value);
-  }
-
-  function handleChangeRowsPerPage(event) {
-    setRowsPerPage(event.target.value);
-  }
-
-  if (data.data.length === 0) {
+  if (data.length === 0) {
     return (
       <motion.div
         initial={{ opacity: 0 }}
@@ -108,7 +104,7 @@ function EmailsTable(props) {
         <Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
           <TableHeader
             namespace="emails"
-            rows={props.rows}
+            rows={rows}
             selectedProductIds={selected}
             order={order}
             onSelectAllClick={handleSelectAllClick}
@@ -144,14 +140,14 @@ function EmailsTable(props) {
                       />
                     </TableCell>
 
-                    <TableCell
+                    {/* <TableCell
                       className="w-52 px-4 md:px-0"
                       component="th"
                       scope="row"
                       padding="none"
                     >
                       {email.hasAttachments && <Icon>attach_file</Icon>}
-                    </TableCell>
+                    </TableCell> */}
 
                     <TableCell
                       className="p-4 md:p-16"
@@ -196,7 +192,7 @@ function EmailsTable(props) {
       <TablePagination
         className="flex-shrink-0 border-t-1"
         component="div"
-        count={data.data.length}
+        count={data.length}
         labelRowsPerPage={t("ROWS_PER_PAGE")}
         rowsPerPage={rowsPerPage}
         page={page}
@@ -216,6 +212,10 @@ function EmailsTable(props) {
 export default withRouter(EmailsTable);
 
 EmailsTable.propTypes = {
-  emails: PropTypes.object.isRequired,
+  data: PropTypes.array.isRequired,
   rows: PropTypes.array.isRequired,
+  page: PropTypes.number.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
+  handleChangeRowsPerPage: PropTypes.func.isRequired,
+  handleChangePage: PropTypes.func.isRequired,
 };

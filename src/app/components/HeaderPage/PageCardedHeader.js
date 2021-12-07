@@ -125,7 +125,7 @@ PageCardedHeader.propTypes = {
   iconText: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   addButtonLabel: PropTypes.string.isRequired,
-  setSearchName: PropTypes.func.isRequired,
+  setSearchName: PropTypes.func,
   addButtonCallback: PropTypes.func,
   submitFilter: PropTypes.func,
   searchHint: PropTypes.string,

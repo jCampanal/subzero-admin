@@ -11,20 +11,23 @@ import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { postCooler, putCooler } from "../../../api-conn/coolers";
 import { showMessage } from "../../../store/fuse/messageSlice";
+import { formatDate } from "app/lib/formatDate";
 
 function FormHeader(props) {
   const theme = useTheme();
   const history = useHistory();
   const { id } = useParams();
-  const { t } = useTranslation("category-form");
+  const { t } = useTranslation("coolers-form");
   const methods = useFormContext();
   const { getValues } = methods;
   const dispatch = useDispatch();
 
   const saveData = () => {
+    const newDate = formatDate(new Date());
     const formData = new FormData();
+    console.log("newDate", newDate);
     formData.append("Code", getValues().code);
-    formData.append("PickedUp", new Date().toDateString());
+    formData.append("PickedUp", newDate);
     formData.append("ProviderId", getValues().providerId);
     if (id !== undefined && getValues().file !== null)
       formData.append("File", getValues().file);

@@ -82,7 +82,6 @@ function Drivers() {
     getDrivers(pageNumber, pageSize, name)
       .then((data) => {
         setDrivers(data.data.data);
-        console.log("data drivers", data.data.data);
         setLoading(false);
       })
       .catch(() => {
@@ -151,7 +150,6 @@ function Drivers() {
     loadDrivers(pageNumber, pageSize, _name);
   }, [location, pageSize, pageNumber]);
 
-  console.log("loading", loading);
   return (
     <FusePageCarded
       classes={{
@@ -170,7 +168,7 @@ function Drivers() {
         />
       }
       content={
-        false ? (
+        loading ? (
           <FuseLoading />
         ) : (
           <DriversTable
