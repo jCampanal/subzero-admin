@@ -9,7 +9,7 @@ import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import { motion } from "framer-motion";
-import TableHeader from "app/main/products/Products/TableHeader";
+import TableHeader from "app/components/TableHeader/TableHeader";
 import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
@@ -111,6 +111,7 @@ function AdminsTable({
             onRequestSort={handleRequestSort}
             rowCount={data.length}
             onMenuItemClick={handleDeselect}
+            deleteSelectedItemsCallback={() => deleteCallback(selected)}
           />
 
           <TableBody>
@@ -158,7 +159,14 @@ function AdminsTable({
                       component="th"
                       scope="row"
                     >
-                      {admin.firstName}
+                      {admin.email}
+                    </TableCell>
+                    <TableCell
+                      className="p-4 md:p-16"
+                      component="th"
+                      scope="row"
+                    >
+                      {admin.name}
                     </TableCell>
 
                     <TableCell

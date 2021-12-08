@@ -13,7 +13,7 @@ import { postCooler, putCooler } from "../../../api-conn/coolers";
 import { showMessage } from "../../../store/fuse/messageSlice";
 import { formatDate } from "app/lib/formatDate";
 
-function FormHeader(props) {
+function FormHeader() {
   const theme = useTheme();
   const history = useHistory();
   const { id } = useParams();
@@ -129,7 +129,7 @@ function FormHeader(props) {
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
       >
-        {id && (
+        {/* {id && (
           <Button
             className="whitespace-nowrap mx-4"
             variant="contained"
@@ -139,7 +139,7 @@ function FormHeader(props) {
           >
             {t("REMOVE")}
           </Button>
-        )}
+        )} */}
         <Button
           className="whitespace-nowrap mx-4"
           variant="contained"

@@ -191,7 +191,7 @@ function DriversTable({
                     <Button color="primary">
                       <Icon>send</Icon> {t("SEND_TEST")}
                     </Button>
-                    {driver.enabled ? (
+                    {!driver.enabled ? (
                       <Button color="primary">
                         <Icon>remove_circle_outline</Icon> {t("DISABLE")}
                       </Button>

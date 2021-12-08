@@ -23,6 +23,7 @@ function CoolersTable({
   handleChangeRowsPerPage,
   handleChangePage,
   editCallback,
+  deleteCallback,
 }) {
   const history = useHistory();
   const { t } = useTranslation("coolers");
@@ -255,4 +256,5 @@ CoolersTable.propTypes = {
   handleChangeRowsPerPage: PropTypes.func.isRequired,
   handleChangePage: PropTypes.func.isRequired,
   editCallback: PropTypes.func.isRequired,
+  deleteCallback: PropTypes.func.isRequired,
 };

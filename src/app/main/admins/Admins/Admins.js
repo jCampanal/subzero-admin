@@ -5,18 +5,21 @@ import { useDispatch } from "react-redux";
 import { showMessage } from "app/store/fuse/messageSlice";
 import FuseLoading from "@fuse/core/FuseLoading";
 import { deleteUser, getAdmins } from "app/api-conn/User";
+import { useLocation } from "react-router";
+import RemoveDlg from "app/common/removeDlg";
+import { openDialog } from "app/store/fuse/dialogSlice";
 
 const Header = lazy(() => import("app/components/HeaderPage/PageCardedHeader"));
 const AdminsTable = lazy(() => import("./AdminsTable"));
 
 const rows = [
-  // {
-  //     id: 'image',
-  //     align: 'left',
-  //     disablePadding: true,
-  //     label: '',
-  //     sort: false,
-  // },
+  {
+    id: "image",
+    align: "left",
+    disablePadding: true,
+    label: "",
+    sort: false,
+  },
   {
     id: "email",
     align: "left",
@@ -56,6 +59,7 @@ const rows = [
 
 function Admins() {
   const { t } = useTranslation("admins");
+  const location = useLocation();
   const [admins, setAdmins] = useState([]);
   const [loading, setLoading] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);
@@ -64,9 +68,9 @@ function Admins() {
 
   const loadAdmins = (pageNumber = 0, pageSize = 10, name = undefined) => {
     setLoading(true);
-    getAdmins(pageNumber, pageSize, name)
+    getAdmins(pageSize, pageNumber, name)
       .then((data) => {
-        setAdmins(data.data);
+        setAdmins(data.data.data);
         setLoading(false);
       })
       .catch(() => {
@@ -90,33 +94,33 @@ function Admins() {
   function handlePageNumber(event, value) {
     setPageNumber(value);
   }
-  function handleEditCustomer(customer) {
-    history.push(`/customers/${customer.id}/edit`, { customer });
+  function handleEditAdmin(admin) {
+    history.push(`/admins/${admin.id}/edit`, { admin });
   }
 
   const onProceed = (itemIds) => {
     setLoading(true);
-
-    deleteUser(JSON.stringify(itemIds))
-      .then(() => {
-        dispatch(
-          showMessage({
-            message: "Deletion completed!",
-          })
-        );
-        loadCustomers();
-      })
-      .catch(() => {
-        dispatch(
-          showMessage({
-            message: "Error during deletion. Please try again later",
-            variant: "error",
-          })
-        );
-        setLoading(false);
-      });
+    console.log(itemIds);
+    // deleteUser(JSON.stringify(itemIds))
+    //   .then(() => {
+    //     dispatch(
+    //       showMessage({
+    //         message: "Deletion completed!",
+    //       })
+    //     );
+    //     loadAdmins();
+    //   })
+    //   .catch(() => {
+    //     dispatch(
+    //       showMessage({
+    //         message: "Error during deletion. Please try again later",
+    //         variant: "error",
+    //       })
+    //     );
+    //     setLoading(false);
+    //   });
   };
-  const removeCustomer = (itemId) => {
+  const removeAdmin = (itemId) => {
     dispatch(
       openDialog({
         children: (
@@ -124,7 +128,7 @@ function Admins() {
             itemId={itemId}
             proceedCallback={() => onProceed(itemId)}
             dlgTitle="Warning, you have requested a risky operation"
-            dlgText="You are attempting to delete a Customer, this operation cannot be undone. Are you sure you want to proceed with the deletion?"
+            dlgText="You are attempting to delete a Admin, this operation cannot be undone. Are you sure you want to proceed with the deletion?"
           />
         ),
       })
@@ -132,8 +136,12 @@ function Admins() {
   };
 
   useEffect(() => {
-    loadAdmins(pageNumber, pageSize);
-  }, [pageSize, pageNumber]);
+    let _name = new URLSearchParams(location.search).get("name");
+    if (_name === "" || !_name) {
+      _name = undefined;
+    }
+    loadAdmins(pageNumber, pageSize, _name);
+  }, [location, pageSize, pageNumber]);
 
   return (
     <FusePageCarded
@@ -148,6 +156,7 @@ function Admins() {
           title={t("ADMINS")}
           addButtonLabel={t("ADD_ADMIN")}
           searchHint={t("SEARCH_BY_NAME")}
+          urlSearchCallBack={"admins"}
         />
       }
       content={
@@ -161,8 +170,8 @@ function Admins() {
             rowsPerPage={pageSize}
             handleChangeRowsPerPage={handleChangePage}
             handleChangePage={handlePageNumber}
-            handleClickEdit={handleEditCustomer}
-            deleteCallback={removeCustomer}
+            handleClickEdit={handleEditAdmin}
+            deleteCallback={removeAdmin}
           />
         )
       }

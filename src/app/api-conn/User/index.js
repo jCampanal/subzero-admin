@@ -8,7 +8,7 @@ export const postLogin = (credentials) =>
 export const getAdmins = (pageSize, pageNumber, name = undefined) =>
   apiClient
     .get(userURL + `/get/${pageSize}/${pageNumber}`, {
-      params: { pageNumber, pageSize, name },
+      params: { name },
     })
     .then((response) => response.data);
 export const deleteUser = (ids) =>

@@ -11,22 +11,26 @@ import { selectMainTheme } from "app/store/fuse/settingsSlice";
 import IconButton from "@material-ui/core/IconButton";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import PropTypes from "prop-types";
+import { useHistory } from "react-router";
 
 function PageCardedHeader({
   iconText,
   title,
   addButtonLabel,
-  submitFilter,
   addButtonCallback,
   searchHint,
   disableSearch,
+  urlSearchCallBack,
 }) {
   const mainTheme = useSelector(selectMainTheme);
-
+  const history = useHistory();
   const [searchPattern, setSearchPattern] = useState("");
 
   const handleChangeSearchName = (e) => {
     setSearchPattern(e.target.value);
+  };
+  const submitFilter = () => {
+    history.push(`/${urlSearchCallBack}?name=${searchPattern}`);
   };
 
   return (
@@ -127,6 +131,6 @@ PageCardedHeader.propTypes = {
   addButtonLabel: PropTypes.string.isRequired,
   setSearchName: PropTypes.func,
   addButtonCallback: PropTypes.func,
-  submitFilter: PropTypes.func,
+  urlSearchCallBack: PropTypes.string,
   searchHint: PropTypes.string,
 };
