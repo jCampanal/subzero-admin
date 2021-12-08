@@ -7,16 +7,23 @@ import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import { motion } from "framer-motion";
-import TableHeader from "app/main/products/Products/TableHeader";
+import TableHeader from "app/components/TableHeader/TableHeader";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
+import { Checkbox } from "@material-ui/core";
 
-function CoolersTable(props) {
+function CoolersTable({
+  data,
+  rows,
+  showCoolersList,
+  page,
+  rowsPerPage,
+  handleChangePage,
+  handleChangeRowsPerPage,
+}) {
   const { t } = useTranslation("coolers");
   const [selected, setSelected] = useState([]);
-  const data = props.coolers;
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+
   const [order, setOrder] = useState({
     direction: "asc",
     id: null,
@@ -68,14 +75,6 @@ function CoolersTable(props) {
     setSelected(newSelected);
   }
 
-  function handleChangePage(event, value) {
-    setPage(value);
-  }
-
-  function handleChangeRowsPerPage(event) {
-    setRowsPerPage(event.target.value);
-  }
-
   if (data.length === 0) {
     return (
       <motion.div
@@ -96,20 +95,21 @@ function CoolersTable(props) {
         <Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
           <TableHeader
             namespace="coolers"
-            rows={props.rows}
+            rows={rows}
             selectedProductIds={selected}
             order={order}
             onSelectAllClick={handleSelectAllClick}
             onRequestSort={handleRequestSort}
             rowCount={data.length}
             onMenuItemClick={handleDeselect}
+            disableCheck
           />
 
           <TableBody>
             {data
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((customerInfo) => {
-                const isSelected = selected.indexOf(customerInfo.id) !== -1;
+              .map((cooler) => {
+                const isSelected = selected.indexOf(cooler.item1.id) !== -1;
                 return (
                   <TableRow
                     className="h-72 cursor-pointer"
@@ -117,16 +117,33 @@ function CoolersTable(props) {
                     role="checkbox"
                     aria-checked={isSelected}
                     tabIndex={-1}
-                    key={customerInfo.company.id}
+                    key={cooler.item1.id}
                     selected={isSelected}
-                    onClick={() => props.showCoolersList(customerInfo.cooler)}
+                    onClick={() => showCoolersList(cooler)}
                   >
+                    <TableCell
+                      className="w-52 px-4 md:px-0"
+                      component="th"
+                      scope="row"
+                      padding="none"
+                    >
+                      <img
+                        className="w-full block rounded"
+                        src={
+                          cooler.item1.imageURL
+                            ? cooler.item1.imageURL
+                            : `${process.env.PUBLIC_URL}/assets/images/ecommerce/product-image-placeholder.png`
+                        }
+                        alt={cooler.code}
+                      />
+                    </TableCell>
+
                     <TableCell
                       className="p-4 md:p-16"
                       component="th"
                       scope="row"
                     >
-                      {customerInfo.company.name}
+                      {cooler.item1.code}
                     </TableCell>
 
                     <TableCell
@@ -135,7 +152,34 @@ function CoolersTable(props) {
                       scope="row"
                       align="left"
                     >
-                      {customerInfo.cooler.length}
+                      {cooler.item1.providerName}
+                    </TableCell>
+
+                    <TableCell
+                      className="p-4 md:p-16"
+                      component="th"
+                      scope="row"
+                      align="left"
+                    >
+                      {cooler.item1.coolerStatus}
+                    </TableCell>
+
+                    <TableCell
+                      className="p-4 md:p-16"
+                      component="th"
+                      scope="row"
+                      align="left"
+                    >
+                      {new Date(cooler.item1.pickedUp).toLocaleDateString()}
+                    </TableCell>
+
+                    <TableCell
+                      className="p-4 md:p-16"
+                      component="th"
+                      scope="row"
+                      align="left"
+                    >
+                      {new Date(cooler.item2).toLocaleDateString()}
                     </TableCell>
                   </TableRow>
                 );

@@ -11,9 +11,12 @@ const locale = {
   PROVIDER: "Proveedor",
   STATUS: "Estado",
   REGISTRATION_DATE: "Fecha de Registro",
+  DELIVERY_DATE: "Fecha de entrega",
+  PICKEDUP_DATE: "Fecha de recogida",
   EDIT: "Editar",
   DELETE: "Eliminar",
   ROWS_PER_PAGE: "Neveras por página",
+  COOLERS_CUSTOMERS: "Clientes",
 };
 
 export default locale;

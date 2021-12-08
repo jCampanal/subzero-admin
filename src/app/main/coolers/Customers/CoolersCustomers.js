@@ -13,20 +13,21 @@ import CoolersTable from "./CoolersTable";
 import CoolersListDlg from "./CoolersListDlg";
 
 function CoolersCustomers() {
-  const [coolersCustomers, setCoolersCustomers] = useState([]);
+  const [coolersCustomers, setCoolersCustomers] = useState(["s"]);
   const history = useHistory();
   const {
     user: { logged },
   } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
+  const [pageNumber, setPageNumber] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
 
   const loadCustomers = (pageNumber = 0, pageSize = 10) => {
     setLoading(true);
     getCoolersByCustomers(pageNumber, pageSize)
       .then((response) => {
-        setCoolersCustomers(response.data);
-        console.log("response.data", response.data);
+        setCoolersCustomers(response.data.data[0].cooler);
         setLoading(false);
       })
       .catch(() => {
@@ -47,13 +48,22 @@ function CoolersCustomers() {
     );
   };
 
+  function handleChangeRowsPerPage(event) {
+    setPageSize(event.target.value);
+  }
+  function handleChangePage(event, value) {
+    setPageNumber(value);
+  }
+
   useEffect(() => {
     if (!logged) history.push("/login");
   }, [logged, history]);
   useEffect(() => {
     document.title = "Coolers customers - Subzero Ice Services";
   }, []);
-  useEffect(loadCustomers, []);
+  useEffect(() => {
+    loadCustomers(pageNumber, pageSize);
+  }, [pageNumber, pageSize]);
 
   return (
     <FusePageCarded
@@ -68,9 +78,13 @@ function CoolersCustomers() {
           <FuseLoading />
         ) : (
           <CoolersTable
-            coolers={coolersCustomers.data}
+            data={coolersCustomers}
             rows={rows}
             showCoolersList={showCoolers}
+            rowsPerPage={pageSize}
+            handleChangeRowsPerPage={handleChangeRowsPerPage}
+            page={pageNumber}
+            handleChangePage={handleChangePage}
           />
         )
       }

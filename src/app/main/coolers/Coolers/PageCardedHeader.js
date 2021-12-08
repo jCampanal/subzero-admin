@@ -150,7 +150,7 @@ function PageCardedHeader(props) {
         </Button>
         <Button
           className="whitespace-nowrap inline-block uppercase"
-          onClick={() => history.push("/coolers/customers")}
+          onClick={() => history.push("/coolers_customers")}
         >
           {t("CLIENTS")}
         </Button>
