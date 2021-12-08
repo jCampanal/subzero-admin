@@ -34,6 +34,7 @@ import CoolersCustomersConfig from "../main/coolers/Customers/CoolersCustomersCo
 import CoolersCustomersFormConfig from "../main/coolers-activity/CoolersActivityForm/CoolersActivityFormConfig.js";
 import CustomersFormPageConfig from "app/main/customers/CustomersForm/CustomersFormConfig";
 import DriversFormPageConfig from "app/main/drivers/DriversForm/DriversFormConfig";
+import AdminsFormPageConfig from "app/main/admins/AdminsForm/AdminsFormConfig";
 
 const routeConfigs = [
   LoginPageConfig,
@@ -67,6 +68,7 @@ const routeConfigs = [
   CoolersCustomersFormConfig,
   CustomersFormPageConfig,
   DriversFormPageConfig,
+  AdminsFormPageConfig,
 ];
 
 const routes = [

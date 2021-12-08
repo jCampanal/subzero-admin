@@ -60,9 +60,9 @@ function AdminsTable({
     setSelected([]);
   }
 
-  function handleClick(item) {
-    history.push(`/apps/e-commerce/products/${item.id}/${item.handle}`);
-  }
+  // function handleClick(item) {
+  //   history.push(`/apps/e-commerce/products/${item.id}/${item.handle}`);
+  // }
 
   function handleCheck(event, id) {
     const selectedIndex = selected.indexOf(id);
@@ -128,7 +128,7 @@ function AdminsTable({
                     tabIndex={-1}
                     key={admin.id}
                     selected={isSelected}
-                    onClick={(event) => handleClick(admin)}
+                    // onClick={(event) => handleClick(admin)}
                   >
                     <TableCell
                       className="w-40 md:w-64 text-center"

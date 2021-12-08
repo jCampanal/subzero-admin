@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { showMessage } from "app/store/fuse/messageSlice";
 import FuseLoading from "@fuse/core/FuseLoading";
 import { deleteUser, getAdmins } from "app/api-conn/User";
-import { useLocation } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import RemoveDlg from "app/common/removeDlg";
 import { openDialog } from "app/store/fuse/dialogSlice";
 
@@ -60,6 +60,7 @@ const rows = [
 function Admins() {
   const { t } = useTranslation("admins");
   const location = useLocation();
+  const history = useHistory();
   const [admins, setAdmins] = useState([]);
   const [loading, setLoading] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);
@@ -95,7 +96,10 @@ function Admins() {
     setPageNumber(value);
   }
   function handleEditAdmin(admin) {
-    history.push(`/admins/${admin.id}/edit`, { admin });
+    history.push(`/admins_edit/${admin.id}`, { admin });
+  }
+  function handleAddAdmin() {
+    history.push(`/admins_create`);
   }
 
   const onProceed = (itemIds) => {
@@ -157,6 +161,7 @@ function Admins() {
           addButtonLabel={t("ADD_ADMIN")}
           searchHint={t("SEARCH_BY_NAME")}
           urlSearchCallBack={"admins"}
+          addButtonCallback={handleAddAdmin}
         />
       }
       content={

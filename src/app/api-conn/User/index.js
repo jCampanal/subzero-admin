@@ -11,6 +11,19 @@ export const getAdmins = (pageSize, pageNumber, name = undefined) =>
       params: { name },
     })
     .then((response) => response.data);
+export const registerAdmin = (data) =>
+  apiClient
+    .post(userURL + "/register", data, {
+      headers: { "Content-Type": "multipart/form-data" },
+    })
+    .then((response) => response.data);
+export const putAdmin = (id, data) =>
+  apiClient
+    .put(userURL + `/${id}`, data, {
+      headers: { "Content-Type": "multipart/form-data" },
+    })
+    .then((response) => response.data);
+
 export const deleteUser = (ids) =>
   apiClient
     .delete(userURL + "/delete", { data: ids })
