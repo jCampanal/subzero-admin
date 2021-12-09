@@ -18,6 +18,7 @@ function EmailsTable({
   data,
   rows,
   page,
+  totalItems,
   rowsPerPage,
   handleChangeRowsPerPage,
   handleChangePage,
@@ -176,7 +177,7 @@ function EmailsTable({
       <TablePagination
         className="flex-shrink-0 border-t-1"
         component="div"
-        count={81}
+        count={totalItems}
         labelRowsPerPage={t("ROWS_PER_PAGE")}
         rowsPerPage={rowsPerPage}
         page={page}
@@ -199,6 +200,7 @@ EmailsTable.propTypes = {
   data: PropTypes.array.isRequired,
   rows: PropTypes.array.isRequired,
   page: PropTypes.number.isRequired,
+  totalItems: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   handleChangeRowsPerPage: PropTypes.func.isRequired,
   handleChangePage: PropTypes.func.isRequired,

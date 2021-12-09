@@ -151,10 +151,11 @@ const EmailsTable = lazy(() => import("./EmailsTable").then((table) => table));
 
 function Emails() {
   const { t } = useTranslation("emails");
-  const [emails, setEmails] = useState(fakeDataEmail);
+  const [emails, setEmails] = useState([]);
   const [loading, setLoading] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);
   const [pageSize, setPageSize] = useState(10);
+  const [totalItems, setTotalItems] = useState(0);
   const dispatch = useDispatch();
 
   const loadEmails = (pageNumber = 0, pageSize = 10) => {
@@ -162,7 +163,8 @@ function Emails() {
     getEmails(pageNumber, pageSize, name)
       .then((data) => {
         setEmails(data.data.data);
-        console.log("data.data.data", data.data.data);
+        setTotalItems(data.data.totalItems);
+
         setLoading(false);
       })
       .catch(() => {
@@ -219,6 +221,7 @@ function Emails() {
             handleChangePage={handleChangePage}
             page={pageNumber}
             rowsPerPage={pageSize}
+            totalItems={totalItems}
           />
         )
       }
