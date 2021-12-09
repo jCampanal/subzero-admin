@@ -29,10 +29,21 @@ function Customers() {
 
   const loadCustomers = async (pageNumber, pageSize, name) => {
     setLoading(true);
-    const { data } = await getCustomers(pageNumber, pageSize, name);
-
-    setCustomers(data);
-    setLoading(false);
+    getCustomers(pageNumber, pageSize, name)
+      .then((response) => {
+        setCustomers(response.data.data);
+        setLoading(false);
+      })
+      .catch(() => {
+        dispatch(
+          showMessage({
+            message: "There is something wrong, try to refresh the page",
+            variant: "error",
+          })
+        );
+        setLoading(false);
+      });
+    setLoading(true);
   };
   const handleChangePage = (event) => {
     setPageSize(event.target.value);

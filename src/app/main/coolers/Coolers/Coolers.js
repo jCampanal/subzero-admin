@@ -33,7 +33,6 @@ function Coolers() {
     getCoolers(pageNumber, pageSize, code, date)
       .then((response) => {
         setCoolers(response.data);
-
         setLoading(false);
       })
       .catch(() => {

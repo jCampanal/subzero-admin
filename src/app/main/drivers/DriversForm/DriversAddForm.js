@@ -84,17 +84,17 @@ const driverForm = () => {
     resolver: yupResolver(validationRules),
   });
 
-  const removedriver = (itemId) =>
-    dispatch(
-      openDialog({
-        children: (
-          <RemoveDlg
-            itemId={itemId}
-            proceedCallback={() => history.push("/drivers")}
-          />
-        ),
-      })
-    );
+  // const removedriver = (itemId) =>
+  //   dispatch(
+  //     openDialog({
+  //       children: (
+  //         <RemoveDlg
+  //           itemId={itemId}
+  //           proceedCallback={() => history.push("/drivers")}
+  //         />
+  //       ),
+  //     })
+  //   );
 
   useEffect(() => {
     if (!logged) history.push("/login");
@@ -108,7 +108,7 @@ const driverForm = () => {
           toolbar: "p-0",
           header: "min-h-72 h-72 sm:h-136 sm:min-h-136",
         }}
-        header={<FormHeader removeCallback={removedriver} />}
+        header={<FormHeader />}
         contentToolbar={
           <div className="p-16 sm:p-24 max-w-2xl">
             {id ? <h1>{driver.code}</h1> : <h1>{t("CREATE_NEW")}</h1>}

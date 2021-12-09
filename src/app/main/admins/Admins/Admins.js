@@ -104,25 +104,25 @@ function Admins() {
 
   const onProceed = (itemIds) => {
     setLoading(true);
-    console.log(itemIds);
-    // deleteUser(JSON.stringify(itemIds))
-    //   .then(() => {
-    //     dispatch(
-    //       showMessage({
-    //         message: "Deletion completed!",
-    //       })
-    //     );
-    //     loadAdmins();
-    //   })
-    //   .catch(() => {
-    //     dispatch(
-    //       showMessage({
-    //         message: "Error during deletion. Please try again later",
-    //         variant: "error",
-    //       })
-    //     );
-    //     setLoading(false);
-    //   });
+
+    deleteUser(JSON.stringify(itemIds))
+      .then(() => {
+        dispatch(
+          showMessage({
+            message: "Deletion completed!",
+          })
+        );
+        loadAdmins();
+      })
+      .catch(() => {
+        dispatch(
+          showMessage({
+            message: "Error during deletion. Please try again later",
+            variant: "error",
+          })
+        );
+        setLoading(false);
+      });
   };
   const removeAdmin = (itemId) => {
     dispatch(

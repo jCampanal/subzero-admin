@@ -13,7 +13,7 @@ import CoolersTable from "./CoolersTable";
 import CoolersListDlg from "./CoolersListDlg";
 
 function CoolersCustomers() {
-  const [coolersCustomers, setCoolersCustomers] = useState(["s"]);
+  const [coolersCustomers, setCoolersCustomers] = useState([]);
   const history = useHistory();
   const {
     user: { logged },
