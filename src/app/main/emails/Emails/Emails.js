@@ -182,15 +182,16 @@ function Emails() {
 
   function handleChangePage(event, value) {
     setPageNumber(value);
+    console.log("page", value);
   }
 
   function handleChangeRowsPerPage(event) {
     setPageSize(event.target.value);
   }
 
-  // useEffect(() => {
-  //   loadEmails(pageNumber, pageSize);
-  // }, [pageSize, pageNumber]);
+  useEffect(() => {
+    loadEmails(pageNumber, pageSize);
+  }, [pageSize, pageNumber]);
 
   return (
     <FusePageCarded
