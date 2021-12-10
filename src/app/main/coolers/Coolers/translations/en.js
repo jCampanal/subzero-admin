@@ -17,6 +17,12 @@ const locale = {
   DELETE: "Delete",
   ROWS_PER_PAGE: "Rows per page",
   COOLERS_CUSTOMERS: "Customers",
+  ADVANCED_SEARCH: "Search by Date",
+  DATE_1: "From ",
+  DATE_2: "Up To ",
+  OK: "Ok",
+  Cancel: "Cancel",
+  SEARCH: "Search",
 };
 
 export default locale;

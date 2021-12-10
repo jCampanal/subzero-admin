@@ -41,8 +41,7 @@ function DateRangePicker({
     if (dateFrom && validateDate(dateFrom) && dateTo && validateDate(dateTo)) {
       const formatedDateFrom = formatDate(dateFrom);
       const formatedDateTo = formatDate(dateTo);
-      console.log("formatedDateFrom", formatedDateFrom);
-      console.log("formatedDateTo", formatedDateTo);
+
       searchByDate(formatedDateFrom, formatedDateTo);
       toggleDateRangeDlgIsOpen();
     } else {
@@ -68,28 +67,28 @@ function DateRangePicker({
         <div className="px-16 sm:px-24">
           <div className="flex -mx-4">
             <DatePicker
-              label={t("AcTIVITY_DATE")}
+              label={t("DATE_1")}
               inputVariant="outlined"
               className="mt-8 mb-16 mx-4 DatePicker-cls"
               value={dateFrom}
               onChange={(e) => setDateFrom(new Date(e))}
               variant="dialog"
-              okLabel={<ButtonDatePickerS>OK</ButtonDatePickerS>}
-              cancelLabel={<ButtonDatePickerS>Cancel</ButtonDatePickerS>}
+              okLabel={<ButtonDatePickerS>{t("OK")}</ButtonDatePickerS>}
+              cancelLabel={<ButtonDatePickerS>{t("CANCEL")}</ButtonDatePickerS>}
             />
           </div>
         </div>
         <div className="px-16 sm:px-24">
           <div className="flex -mx-4">
             <DatePicker
-              label={t("AcTIVITY_DATE")}
+              label={t("DATE_2")}
               inputVariant="outlined"
               className="mt-8 mb-16 mx-4 DatePicker-cls"
               value={dateTo}
               onChange={(e) => setDateTo(new Date(e))}
               variant="dialog"
-              okLabel={<ButtonDatePickerS>OK</ButtonDatePickerS>}
-              cancelLabel={<ButtonDatePickerS>Cancel</ButtonDatePickerS>}
+              okLabel={<ButtonDatePickerS>{t("OK")}</ButtonDatePickerS>}
+              cancelLabel={<ButtonDatePickerS>{t("CANCEL")}</ButtonDatePickerS>}
             />
           </div>
         </div>

@@ -74,10 +74,11 @@ function CoolersActivity() {
     pageNumber = 0,
     pageSize = 10,
     code = undefined,
-    dateTime = undefined
+    pickedUpFrom = undefined,
+    pickedUpTo = undefined
   ) => {
     setLoading(true);
-    getCoolersActivity({ pageNumber, pageSize, code, dateTime })
+    getCoolersActivity(pageNumber, pageSize, code, pickedUpFrom, pickedUpTo)
       .then((response) => {
         setCoolersActivity(response.data.data);
         setLoading(false);
@@ -107,14 +108,19 @@ function CoolersActivity() {
 
   useEffect(() => {
     let _code = new URLSearchParams(location.search).get("code");
-    let _date = new URLSearchParams(location.search).get("date");
+    let pickedUpFrom = new URLSearchParams(location.search).get("pickedUpFrom");
+    let pickedUpTo = new URLSearchParams(location.search).get("pickedUpTo");
     if (location.state) {
       setCoolerData(location.state.cooler);
     }
 
-    if (_date !== "" && _date) {
+    if (pickedUpFrom !== "" && pickedUpFrom) {
     } else {
-      _date = undefined;
+      pickedUpFrom = undefined;
+    }
+    if (pickedUpTo !== "" && pickedUpTo) {
+    } else {
+      pickedUpTo = undefined;
     }
 
     if (_code !== "" && _code) {
@@ -122,7 +128,7 @@ function CoolersActivity() {
       _code = undefined;
     }
 
-    loadCoolersActivity(pageNumber, pageSize, _code, _date);
+    loadCoolersActivity(pageNumber, pageSize, _code, pickedUpFrom, pickedUpTo);
   }, [location, pageSize, pageNumber]);
 
   const handleMoveCoolerActivity = () => {

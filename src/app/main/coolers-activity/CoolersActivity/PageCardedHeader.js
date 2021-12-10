@@ -25,26 +25,32 @@ function PageCardedHeader({ code, handleMoveCoolerActivity }) {
   const [dateRangeDlgIsOpen, openDateRangeDlg] = useState(false);
   const [filter, setFilter] = useState({
     code: "",
-    date: "",
+    dateFrom: "",
+    dateTo: "",
   });
   const [searchCode, setSearchCode] = useState("");
   const toggleDateRangeDlgIsOpen = () => {
     openDateRangeDlg(!dateRangeDlgIsOpen);
   };
 
-  const searchByDate = (date) => {
-    setFilter({ ...filter, date: date });
+  const searchByDate = (dateFrom, dateTo) => {
+    setFilter({ ...filter, dateFrom: dateFrom, dateTo: dateTo });
   };
   const searchByCode = () => {
     setFilter({ ...filter, code: searchCode });
   };
 
+  // const submitFilter = () => {
+  //   if (code) {
+  //     history.push(`/coolers_activity?code=${code}&date=${filter.date}`);
+  //   } else {
+  //     history.push(`/coolers_activity?code=${filter.code}&date=${filter.date}`);
+  //   }
+  // };
   const submitFilter = () => {
-    if (code) {
-      history.push(`/coolers_activity?code=${code}&date=${filter.date}`);
-    } else {
-      history.push(`/coolers_activity?code=${filter.code}&date=${filter.date}`);
-    }
+    history.push(
+      `/coolers_activity?code=${filter.code}&pickedUpFrom=${filter.dateFrom}&pickedUpTo=${filter.dateTo}`
+    );
   };
 
   const handleCHangeSearchCode = (e) => {
@@ -52,7 +58,7 @@ function PageCardedHeader({ code, handleMoveCoolerActivity }) {
   };
 
   useEffect(() => {
-    if (filter.code !== "" || filter.date !== "") {
+    if (filter.code !== "" || filter.dateFrom !== "" || filter.dateTo !== "") {
       submitFilter();
     }
   }, [filter]);
@@ -142,7 +148,7 @@ function PageCardedHeader({ code, handleMoveCoolerActivity }) {
       </motion.div>
       <DateRangePicker
         isOpen={dateRangeDlgIsOpen}
-        namespace=""
+        namespace="coolers"
         searchByDate={searchByDate}
         toggleDateRangeDlgIsOpen={toggleDateRangeDlgIsOpen}
       />
