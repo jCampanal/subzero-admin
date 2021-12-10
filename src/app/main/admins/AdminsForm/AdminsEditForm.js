@@ -24,11 +24,11 @@ const AdminForm = () => {
   const methods = useForm({
     defaultValues: {
       name: admin.name,
-      lastName: admin.lastName,
+      lastname: admin.lastName,
       image: null,
     },
-    mode: "all",
     resolver: yupResolver(validationRules),
+    mode: "all",
   });
 
   useEffect(() => {

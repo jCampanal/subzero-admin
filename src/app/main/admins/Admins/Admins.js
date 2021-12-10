@@ -65,12 +65,14 @@ function Admins() {
   const [loading, setLoading] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);
   const [pageSize, setPageSize] = useState(10);
+  const [totalItems, setTotalItems] = useState(0);
   const dispatch = useDispatch();
 
   const loadAdmins = (pageNumber = 0, pageSize = 10, name = undefined) => {
     setLoading(true);
     getAdmins(pageSize, pageNumber, name)
       .then((data) => {
+        setTotalItems(data.data.totalItems);
         setAdmins(data.data.data);
         setLoading(false);
       })
@@ -162,6 +164,7 @@ function Admins() {
           searchHint={t("SEARCH_BY_NAME")}
           urlSearchCallBack={"admins"}
           addButtonCallback={handleAddAdmin}
+          totalItems={totalItems}
         />
       }
       content={

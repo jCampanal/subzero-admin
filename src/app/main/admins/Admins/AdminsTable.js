@@ -24,6 +24,7 @@ function AdminsTable({
   rows,
   page,
   rowsPerPage,
+  totalItems,
 }) {
   const { t } = useTranslation("admins");
   const [selected, setSelected] = useState([]);
@@ -219,7 +220,7 @@ function AdminsTable({
       <TablePagination
         className="flex-shrink-0 border-t-1"
         component="div"
-        count={data.length}
+        count={totalItems}
         labelRowsPerPage={t("ROWS_PER_PAGE")}
         rowsPerPage={rowsPerPage}
         page={page}

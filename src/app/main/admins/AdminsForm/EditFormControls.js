@@ -6,14 +6,9 @@ import { orange } from "@material-ui/core/colors";
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router";
-import FormControl from "@material-ui/core/FormControl";
-import { InputLabel, MenuItem, Select } from "@material-ui/core";
+
 import Icon from "@material-ui/core/Icon";
 import { useState } from "react";
-import { useEffect } from "react";
-import { getAllWarehouses } from "app/api-conn/warehouses";
-import { useDispatch } from "react-redux";
-import { showMessage } from "app/store/fuse/messageSlice";
 
 const useStyles = makeStyles((theme) => ({
   productImageFeaturedStar: {
@@ -68,11 +63,10 @@ function FormControls(props) {
           <TextField
             {...field}
             className="mt-8 mb-16"
-            error={!!errors.name}
+            error={errors.name}
             required
             helperText={errors?.name?.message}
             label={t("NAME")}
-            autoFocus
             id="name"
             variant="outlined"
             fullWidth
@@ -80,18 +74,17 @@ function FormControls(props) {
         )}
       />
       <Controller
-        name="lastName"
+        name="lastname"
         control={control}
         render={({ field }) => (
           <TextField
             {...field}
             className="mt-8 mb-16"
-            error={!!errors.lastName}
+            error={errors.lastname}
             required
-            helperText={errors?.lastName?.message}
-            label={t("LASTNAME")}
-            autoFocus
-            id="lastName"
+            helperText={errors?.lastname?.message}
+            label={t("lastname")}
+            id="lastname"
             variant="outlined"
             fullWidth
           />

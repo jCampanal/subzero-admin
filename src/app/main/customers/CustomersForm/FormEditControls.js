@@ -58,7 +58,6 @@ function FormControls({ salesTax }) {
             error={!!errors.priorityCustomer}
             required
             helperText={errors?.priorityCustomer?.message}
-            label={t("priorityCustomer")}
             autoFocus
             id="priorityCustomer"
             variant="outlined"

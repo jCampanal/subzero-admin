@@ -1,6 +1,6 @@
 import { FormProvider, useForm } from "react-hook-form";
 import FusePageCarded from "@fuse/core/FusePageCarded";
-import { useHistory, useParams } from "react-router";
+import { useHistory } from "react-router";
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
@@ -12,7 +12,7 @@ import FormHeader from "./FormHeader";
 const validationRules = yup.object().shape({
   username: yup.string().required("REQUIRED"),
   name: yup.string().required("REQUIRED"),
-  lastName: yup.string().required("REQUIRED"),
+  lastname: yup.string().required("REQUIRED"),
   email: yup
     .string()
     .email("Must be a valid email")
@@ -48,12 +48,11 @@ const adminForm = () => {
     user: { logged },
   } = useSelector((state) => state);
   const history = useHistory();
-  const { id } = useParams();
 
   const admin = {
     username: "",
     name: "",
-    lastName: "",
+    lastname: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -65,7 +64,7 @@ const adminForm = () => {
     defaultValues: {
       username: admin.username,
       name: admin.name,
-      lastName: admin.lastName,
+      lastname: admin.lastname,
       email: admin.email,
       password: admin.password,
       confirmPassword: admin.confirmPassword,

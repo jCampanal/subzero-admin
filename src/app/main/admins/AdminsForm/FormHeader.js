@@ -16,9 +16,12 @@ function FormHeader() {
   const theme = useTheme();
   const history = useHistory();
   const { id } = useParams();
-  const { t } = useTranslation("drivers-form");
+  const { t } = useTranslation("admins-form");
   const methods = useFormContext();
-  const { getValues } = methods;
+  const {
+    getValues,
+    formState: { dirtyFields, isValid },
+  } = methods;
   const dispatch = useDispatch();
 
   const saveData = () => {
@@ -35,7 +38,7 @@ function FormHeader() {
     // if (getValues().image !== null) formData.append("Image", getValues().image);
     const formData = new FormData();
     formData.append("Name", getValues().name);
-    formData.append("Lastname", getValues().lastName);
+    formData.append("Lastname", getValues().lastname);
     if (getValues().image !== null) formData.append("Image", getValues().image);
 
     if (id) {
@@ -157,6 +160,7 @@ function FormHeader() {
           variant="contained"
           color="secondary"
           onClick={() => saveData()}
+          disabled={dirtyFields === {} || !isValid}
           startIcon={<Icon className="hidden sm:flex">save</Icon>}
         >
           {t("SAVE")}

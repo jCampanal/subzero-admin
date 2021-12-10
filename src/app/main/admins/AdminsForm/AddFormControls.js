@@ -6,14 +6,9 @@ import { orange } from "@material-ui/core/colors";
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router";
-import FormControl from "@material-ui/core/FormControl";
-import { InputLabel, MenuItem, Select } from "@material-ui/core";
+
 import Icon from "@material-ui/core/Icon";
 import { useState } from "react";
-import { useEffect } from "react";
-import { getAllWarehouses } from "app/api-conn/warehouses";
-import { useDispatch } from "react-redux";
-import { showMessage } from "app/store/fuse/messageSlice";
 
 const useStyles = makeStyles((theme) => ({
   productImageFeaturedStar: {
@@ -51,7 +46,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function FormControls(props) {
-  const dispatch = useDispatch();
   const { id } = useParams();
   const { t } = useTranslation("admins-form");
   const methods = useFormContext();
@@ -59,29 +53,6 @@ function FormControls(props) {
   const { errors } = formState;
   const classes = useStyles(props);
   const [image, setImage] = useState(props.imageURL);
-  const [warehouses, setWarehouses] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const loadWareHouses = () => {
-    setLoading(true);
-    getAllWarehouses()
-      .then((response) => {
-        setWarehouses(response.data);
-        setLoading(false);
-      })
-      .catch(() => {
-        dispatch(
-          showMessage({
-            message: "There is something wrong, try to refresh the page",
-            variant: "error",
-          })
-        );
-        setLoading(false);
-      });
-  };
-
-  useEffect(() => {
-    loadWareHouses();
-  }, []);
 
   return (
     <div className="flex flex-col justify-center sm:justify-start flex-wrap max-w-2xl">
@@ -92,11 +63,9 @@ function FormControls(props) {
           <TextField
             {...field}
             className="mt-8 mb-16"
-            error={!!errors.username}
-            required
+            error={errors.username}
             helperText={errors?.username?.message}
             label={t("USERNAME")}
-            autoFocus
             id="username"
             variant="outlined"
             fullWidth
@@ -110,11 +79,9 @@ function FormControls(props) {
           <TextField
             {...field}
             className="mt-8 mb-16"
-            error={!!errors.name}
-            required
+            error={errors.name}
             helperText={errors?.name?.message}
             label={t("NAME")}
-            autoFocus
             id="name"
             variant="outlined"
             fullWidth
@@ -122,18 +89,16 @@ function FormControls(props) {
         )}
       />
       <Controller
-        name="lastName"
+        name="lastname"
         control={control}
         render={({ field }) => (
           <TextField
             {...field}
             className="mt-8 mb-16"
-            error={!!errors.lastName}
-            required
-            helperText={errors?.lastName?.message}
+            error={errors.lastname}
+            helperText={errors?.lastname?.message}
             label={t("LASTNAME")}
-            autoFocus
-            id="lastName"
+            id="lastname"
             variant="outlined"
             fullWidth
           />
@@ -146,12 +111,10 @@ function FormControls(props) {
           <TextField
             {...field}
             className="mt-8 mb-16"
-            error={!!errors.email}
-            required
+            error={errors.email}
             type="email"
             helperText={errors?.email?.message}
             label={t("email")}
-            autoFocus
             id="email"
             variant="outlined"
             fullWidth
@@ -165,12 +128,10 @@ function FormControls(props) {
           <TextField
             {...field}
             className="mt-8 mb-16"
-            error={!!errors.password}
-            required
+            error={errors.password}
             type="password"
             helperText={errors?.password?.message}
             label={t("PASSWORD")}
-            autoFocus
             id="password"
             variant="outlined"
             fullWidth
@@ -184,12 +145,10 @@ function FormControls(props) {
           <TextField
             {...field}
             className="mt-8 mb-16"
-            error={!!errors.confirmPassword}
-            required
+            error={errors.confirmPassword}
             type="password"
             helperText={errors?.confirmPassword?.message}
             label={t("CONFIRMPASSWORD")}
-            autoFocus
             id="confirmPassword"
             variant="outlined"
             fullWidth
@@ -204,11 +163,9 @@ function FormControls(props) {
           <TextField
             {...field}
             className="mt-8 mb-16"
-            error={!!errors.phoneNumber}
-            required
+            error={errors.phoneNumber}
             helperText={errors?.phoneNumber?.message}
             label={t("PHONENUMBER")}
-            autoFocus
             id="phoneNumber"
             variant="outlined"
             fullWidth
