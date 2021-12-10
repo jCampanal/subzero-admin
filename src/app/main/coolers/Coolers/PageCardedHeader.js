@@ -22,7 +22,8 @@ function PageCardedHeader(props) {
   const [dateRangeDlgIsOpen, openDateRangeDlg] = useState(false);
   const [filter, setFilter] = useState({
     code: "",
-    date: "",
+    dateFrom: "",
+    dateTo: "",
   });
   const [searchCode, setSearchCode] = useState("");
 
@@ -34,16 +35,18 @@ function PageCardedHeader(props) {
     setFilter({ ...filter, code: searchCode });
   };
 
-  const searchByDate = (date) => {
-    setFilter({ ...filter, date: date });
+  const searchByDate = (dateFrom, dateTo) => {
+    setFilter({ ...filter, dateFrom: dateFrom, dateTo: dateTo });
   };
 
   const submitFilter = () => {
-    history.push(`/coolers?code=${filter.code}&date=${filter.date}`);
+    history.push(
+      `/coolers?code=${filter.code}&pickedUpFrom=${filter.dateFrom}&pickedUpTo=${filter.dateTo}`
+    );
   };
 
   useEffect(() => {
-    if (filter.code !== "" || filter.date !== "") {
+    if (filter.code !== "" || filter.dateFrom !== "" || filter.dateTo !== "") {
       submitFilter();
     }
   }, [filter]);

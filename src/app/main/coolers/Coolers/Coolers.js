@@ -27,10 +27,11 @@ function Coolers() {
     pageNumber = 0,
     pageSize = 10,
     code = undefined,
-    date = undefined
+    pickedUpFrom = undefined,
+    pickedUpTo = undefined
   ) => {
     setLoading(true);
-    getCoolers(pageNumber, pageSize, code, date)
+    getCoolers(pageNumber, pageSize, code, pickedUpFrom, pickedUpTo)
       .then((response) => {
         setCoolers(response.data);
         setLoading(false);
@@ -101,11 +102,16 @@ function Coolers() {
 
   useEffect(() => {
     let _code = new URLSearchParams(location.search).get("code");
-    let _date = new URLSearchParams(location.search).get("date");
+    let pickedUpFrom = new URLSearchParams(location.search).get("pickedUpFrom");
+    let pickedUpTo = new URLSearchParams(location.search).get("pickedUpTo");
 
-    if (_date !== "" && _date) {
+    if (pickedUpFrom !== "" && pickedUpFrom) {
     } else {
-      _date = undefined;
+      pickedUpFrom = undefined;
+    }
+    if (pickedUpTo !== "" && pickedUpTo) {
+    } else {
+      pickedUpTo = undefined;
     }
 
     if (_code !== "" && _code) {
@@ -113,7 +119,7 @@ function Coolers() {
       _code = undefined;
     }
 
-    loadCoolers(pageNumber, pageSize, _code, _date);
+    loadCoolers(pageNumber, pageSize, _code, pickedUpFrom, pickedUpTo);
   }, [location, pageSize, pageNumber]);
 
   return (

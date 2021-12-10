@@ -6,23 +6,40 @@ const getCoolers = (
   pageNumber = 0,
   pageSize = 10,
   code = undefined,
-  date = undefined,
+  pickedUpFrom = undefined,
+  pickedUpTo = undefined,
   returned = undefined
 ) =>
   apiClient
-    .get(coolersUrl, { params: { pageSize, pageNumber, code, date, returned } })
+    .get(coolersUrl, {
+      params: {
+        pageSize,
+        pageNumber,
+        code,
+        pickedUpFrom,
+        pickedUpTo,
+        returned,
+      },
+    })
     .then((response) => response.data);
 
-const getCoolersActivity = (params) => {
+const getCoolersActivity = (
+  pageNumber = 0,
+  pageSize = 10,
+  code = undefined,
+  pickedUpFrom = undefined,
+  pickedUpTo = undefined
+) => {
   return apiClient
-    .get(
-      coolersUrl +
-        `/getCoolerActivity?${
-          params.dateTime ? "dateTime=" + params.dateTime + "&" : ""
-        }pageSize=${params.pageSize}&pageNumber=${params.pageNumber}${
-          params.code ? "&code=" + params.code : ""
-        }`
-    )
+    .get(coolersUrl + "/getCoolerActivity", {
+      params: {
+        pageSize,
+        pageNumber,
+        code,
+        pickedUpFrom,
+        pickedUpTo,
+      },
+    })
     .then((response) => response.data);
 };
 

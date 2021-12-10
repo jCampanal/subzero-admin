@@ -30,16 +30,20 @@ function DateRangePicker({
   searchByDate,
 }) {
   const { t } = useTranslation(namespace);
-  const [date, setDate] = useState(new Date());
+  const [dateFrom, setDateFrom] = useState(new Date());
+  const [dateTo, setDateTo] = useState(new Date());
   const dispatch = useDispatch();
 
   const toggleDialog = () => {
     toggleDateRangeDlgIsOpen();
   };
   const search = () => {
-    if (date && validateDate(date)) {
-      const formatedDate = formatDate(date);
-      searchByDate(formatedDate);
+    if (dateFrom && validateDate(dateFrom) && dateTo && validateDate(dateTo)) {
+      const formatedDateFrom = formatDate(dateFrom);
+      const formatedDateTo = formatDate(dateTo);
+      console.log("formatedDateFrom", formatedDateFrom);
+      console.log("formatedDateTo", formatedDateTo);
+      searchByDate(formatedDateFrom, formatedDateTo);
       toggleDateRangeDlgIsOpen();
     } else {
       dispatch(
@@ -67,8 +71,22 @@ function DateRangePicker({
               label={t("AcTIVITY_DATE")}
               inputVariant="outlined"
               className="mt-8 mb-16 mx-4 DatePicker-cls"
-              value={date}
-              onChange={(e) => setDate(new Date(e))}
+              value={dateFrom}
+              onChange={(e) => setDateFrom(new Date(e))}
+              variant="dialog"
+              okLabel={<ButtonDatePickerS>OK</ButtonDatePickerS>}
+              cancelLabel={<ButtonDatePickerS>Cancel</ButtonDatePickerS>}
+            />
+          </div>
+        </div>
+        <div className="px-16 sm:px-24">
+          <div className="flex -mx-4">
+            <DatePicker
+              label={t("AcTIVITY_DATE")}
+              inputVariant="outlined"
+              className="mt-8 mb-16 mx-4 DatePicker-cls"
+              value={dateTo}
+              onChange={(e) => setDateTo(new Date(e))}
               variant="dialog"
               okLabel={<ButtonDatePickerS>OK</ButtonDatePickerS>}
               cancelLabel={<ButtonDatePickerS>Cancel</ButtonDatePickerS>}
