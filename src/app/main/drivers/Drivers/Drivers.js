@@ -107,6 +107,9 @@ function Drivers() {
   const handleClickAdd = () => {
     history.push("/drivers_create");
   };
+  const handleClickEdit = (driver) => {
+    history.push(`/drivers_edit/${driver.id}`, { driver });
+  };
   const onProceed = (itemIds) => {
     setLoading(true);
     deleteDriver(JSON.stringify(itemIds))
@@ -179,6 +182,7 @@ function Drivers() {
             page={pageNumber}
             rowsPerPage={pageSize}
             deleteCallback={removeDriver}
+            editCallback={handleClickEdit}
           />
         )
       }

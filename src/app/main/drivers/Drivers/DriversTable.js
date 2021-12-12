@@ -21,6 +21,7 @@ function DriversTable({
   deleteCallback,
   data,
   rows,
+  editCallback,
   pageNumber,
   pageSize,
 }) {
@@ -200,7 +201,10 @@ function DriversTable({
                         <Icon>check_circle_outline</Icon> {t("ENABLE")}
                       </Button>
                     )}
-                    <Button color="primary">
+                    <Button
+                      color="primary"
+                      onClick={() => editCallback(driver)}
+                    >
                       <Icon>edit</Icon> {t("EDIT")}
                     </Button>
                     <Button

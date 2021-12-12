@@ -21,7 +21,7 @@ const DriversFormPageConfig = {
       ),
     },
     {
-      path: "/drivers/:id/edit",
+      path: "/drivers_edit/:id",
       exact: true,
       component: React.lazy(() =>
         import("./DriversEditForm").then((form) => form)

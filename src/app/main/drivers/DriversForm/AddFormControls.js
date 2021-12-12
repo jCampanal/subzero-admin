@@ -50,38 +50,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function FormControls(props) {
-  const dispatch = useDispatch();
+function FormControls({ warehouses, ...props }) {
   const { id } = useParams();
-  const { t } = useTranslation("category-form");
+  const { t } = useTranslation("drivers-form");
   const methods = useFormContext();
   const { control, formState } = methods;
   const { errors } = formState;
   const classes = useStyles(props);
-  const [image, setImage] = useState(props.imageURL);
-  const [warehouses, setWarehouses] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const loadWareHouses = () => {
-    setLoading(true);
-    getAllWarehouses()
-      .then((response) => {
-        setWarehouses(response.data);
-        setLoading(false);
-      })
-      .catch(() => {
-        dispatch(
-          showMessage({
-            message: "There is something wrong, try to refresh the page",
-            variant: "error",
-          })
-        );
-        setLoading(false);
-      });
-  };
-
-  useEffect(() => {
-    loadWareHouses();
-  }, []);
+  const [image, setImage] = useState();
 
   return (
     <div className="flex flex-col justify-center sm:justify-start flex-wrap max-w-2xl">

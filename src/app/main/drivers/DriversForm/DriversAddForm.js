@@ -6,11 +6,12 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import FormControls from "./FormControls";
+import FormControls from "./AddFormControls";
 import FormHeader from "./FormHeader";
 import { getProvidersAll } from "../../../api-conn/providers";
 import { openDialog } from "../../../store/fuse/dialogSlice";
 import RemoveDlg from "../../../common/removeDlg";
+import FuseLoading from "@fuse/core/FuseLoading";
 
 const validationRules = yup.object().shape({
   userName: yup.string().required("REQUIRED"),
@@ -83,7 +84,29 @@ const driverForm = () => {
     mode: "all",
     resolver: yupResolver(validationRules),
   });
+  const [warehouses, setWarehouses] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const loadWareHouses = () => {
+    setLoading(true);
+    getAllWarehouses()
+      .then((response) => {
+        setWarehouses(response.data);
+        setLoading(false);
+      })
+      .catch(() => {
+        dispatch(
+          showMessage({
+            message: "There is something wrong, try to refresh the page",
+            variant: "error",
+          })
+        );
+        setLoading(false);
+      });
+  };
 
+  useEffect(() => {
+    loadWareHouses();
+  }, []);
   // const removedriver = (itemId) =>
   //   dispatch(
   //     openDialog({
@@ -116,7 +139,11 @@ const driverForm = () => {
         }
         content={
           <div className="p-16 sm:p-24 max-w-2xl">
-            <FormControls />
+            {loading ? (
+              <FuseLoading />
+            ) : (
+              <FormControls warehouses={warehouses} />
+            )}
           </div>
         }
       />

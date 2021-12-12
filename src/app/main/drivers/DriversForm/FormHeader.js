@@ -19,26 +19,23 @@ function FormHeader() {
   const { id } = useParams();
   const { t } = useTranslation("drivers-form");
   const methods = useFormContext();
-  const { getValues } = methods;
+  const {
+    getValues,
+    formState: { dirtyFields, isValid },
+  } = methods;
   const dispatch = useDispatch();
 
   const saveData = () => {
-    const formData = new FormData();
-    formData.append("Username", getValues().userName);
-    formData.append("Name", getValues().name);
-    formData.append("Lastname", getValues().lastName);
-    formData.append("Email", getValues().email);
-    formData.append("Password", getValues().password);
-    formData.append("ConfirmPassword", getValues().confirmPassword);
-    formData.append("PhoneNumber", getValues().phoneNumber);
-    formData.append("WarehouseId", getValues().warehouseId);
-    /* if (getValues().file !== null) formData.append("Image", getValues().image); */
     if (id) {
+      const formData = {
+        userId: getValues().userId,
+        warehouseId: getValues().warehouseId,
+      };
       putCooler(id, formData)
         .then(() => {
           dispatch(
             showMessage({
-              message: "The cooler was updated successfully",
+              message: "The drivers was updated successfully",
               variant: "success",
               anchorOrigin: {
                 vertical: "top",
@@ -61,6 +58,17 @@ function FormHeader() {
           )
         );
     } else {
+      const formData = new FormData();
+      formData.append("Username", getValues().userName);
+      formData.append("Name", getValues().name);
+      formData.append("Lastname", getValues().lastName);
+      formData.append("Email", getValues().email);
+      formData.append("Password", getValues().password);
+      formData.append("ConfirmPassword", getValues().confirmPassword);
+      formData.append("PhoneNumber", getValues().phoneNumber);
+      formData.append("WarehouseId", getValues().warehouseId);
+      if (getValues().file !== null)
+        formData.append("Image", getValues().image);
       registerDriver(formData)
         .then(() => {
           dispatch(
@@ -148,6 +156,7 @@ function FormHeader() {
           color="secondary"
           onClick={() => saveData()}
           startIcon={<Icon className="hidden sm:flex">save</Icon>}
+          disabled={dirtyFields === {} || !isValid}
         >
           {t("SAVE")}
         </Button>
