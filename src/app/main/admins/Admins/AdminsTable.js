@@ -150,7 +150,10 @@ function AdminsTable({
                     >
                       <img
                         className="w-full block rounded"
-                        src={`${process.env.PUBLIC_URL}/assets/images/ecommerce/product-image-placeholder.png`}
+                        src={
+                          admin.imageURL ??
+                          `${process.env.PUBLIC_URL}/assets/images/ecommerce/product-image-placeholder.png`
+                        }
                         alt={admin.name}
                       />
                     </TableCell>
