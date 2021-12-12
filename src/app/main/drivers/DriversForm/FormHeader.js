@@ -46,7 +46,7 @@ function FormHeader() {
               },
             })
           );
-          history.push("/coolers");
+          history.push("/drivers");
         })
         .catch((error) =>
           dispatch(
@@ -101,7 +101,7 @@ function FormHeader() {
             className="flex items-center sm:mb-12"
             component={Link}
             role="button"
-            to="/coolers"
+            to="/drivers"
             color="inherit"
           >
             <Icon className="text-20">

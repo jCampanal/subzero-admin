@@ -96,7 +96,6 @@ function FormControls(props) {
             required
             helperText={errors?.userName?.message}
             label={t("USERNAME")}
-            autoFocus
             id="userName"
             variant="outlined"
             fullWidth
@@ -114,7 +113,6 @@ function FormControls(props) {
             required
             helperText={errors?.name?.message}
             label={t("NAME")}
-            autoFocus
             id="name"
             variant="outlined"
             fullWidth
@@ -132,7 +130,6 @@ function FormControls(props) {
             required
             helperText={errors?.lastName?.message}
             label={t("LASTNAME")}
-            autoFocus
             id="lastName"
             variant="outlined"
             fullWidth
@@ -151,7 +148,6 @@ function FormControls(props) {
             type="email"
             helperText={errors?.email?.message}
             label={t("email")}
-            autoFocus
             id="email"
             variant="outlined"
             fullWidth
@@ -170,7 +166,6 @@ function FormControls(props) {
             type="password"
             helperText={errors?.password?.message}
             label={t("PASSWORD")}
-            autoFocus
             id="password"
             variant="outlined"
             fullWidth
@@ -189,7 +184,6 @@ function FormControls(props) {
             type="password"
             helperText={errors?.confirmPassword?.message}
             label={t("CONFIRMPASSWORD")}
-            autoFocus
             id="confirmPassword"
             variant="outlined"
             fullWidth
@@ -237,7 +231,6 @@ function FormControls(props) {
             required
             helperText={errors?.phoneNumber?.message}
             label={t("PHONENUMBER")}
-            autoFocus
             id="phoneNumber"
             variant="outlined"
             fullWidth

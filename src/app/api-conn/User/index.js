@@ -25,6 +25,4 @@ export const putAdmin = (id, data) =>
     .then((response) => response.data);
 
 export const deleteUser = (ids) =>
-  apiClient
-    .delete(userURL + "/delete", { data: ids })
-    .then((response) => response.data);
+  apiClient.delete(userURL, { data: ids }).then((response) => response.data);
