@@ -24,9 +24,24 @@ function FormHeader(props) {
   const saveData = () => {
     if (id) {
       const formData = {
+        companyAddress: {
+          street: getValues().streetAddress,
+          city: getValues().cityAddress,
+          state: getValues().stateAddress,
+          zipCode: getValues().zipCodeAddress,
+        },
+        companyAddressId: getValues().companyAddressId,
+        companyName: getValues().companyName,
+        email: getValues().email,
+        lastname: getValues().lastname,
+        name: getValues().name,
+        phoneNumber: getValues().phoneNumber,
         priorityCustomer: getValues().priorityCustomer,
         salesTaxId: getValues().salesTaxId,
+        username: getValues().username,
       };
+
+      console.log("formData", formData);
       putCustomer(id, formData)
         .then(() => {
           dispatch(

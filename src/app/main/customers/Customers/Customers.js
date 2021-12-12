@@ -22,7 +22,7 @@ function Customers() {
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
-  const [customers, setCustomers] = useState({ data: [] });
+  const [customers, setCustomers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);
   const [pageSize, setPageSize] = useState(10);

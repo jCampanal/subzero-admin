@@ -51,7 +51,7 @@ function CustomersTable({
 
   function handleSelectAllClick(event) {
     if (event.target.checked) {
-      setSelected(data.data.map((n) => n.id));
+      setSelected(data.map((n) => n.id));
       return;
     }
     setSelected([]);
@@ -85,7 +85,7 @@ function CustomersTable({
     setSelected(newSelected);
   }
 
-  if (data.data.length === 0) {
+  if (data.length === 0) {
     return (
       <motion.div
         initial={{ opacity: 0 }}
@@ -110,13 +110,13 @@ function CustomersTable({
             order={order}
             onSelectAllClick={handleSelectAllClick}
             onRequestSort={handleRequestSort}
-            rowCount={data.data.length}
+            rowCount={data.length}
             onMenuItemClick={handleDeselect}
             deleteSelectedItemsCallback={() => deleteCallback(selected)}
           />
 
           <TableBody>
-            {data.data
+            {data
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((customer) => {
                 const isSelected = selected.indexOf(customer.id) !== -1;
@@ -150,7 +150,10 @@ function CustomersTable({
                     >
                       <img
                         className="w-full block rounded"
-                        src={`${process.env.PUBLIC_URL}/assets/images/ecommerce/product-image-placeholder.png`}
+                        src={
+                          customer.imageURL ??
+                          `${process.env.PUBLIC_URL}/assets/images/ecommerce/product-image-placeholder.png`
+                        }
                         alt={customer.name}
                       />
                     </TableCell>
@@ -232,7 +235,7 @@ function CustomersTable({
       <TablePagination
         className="flex-shrink-0 border-t-1"
         component="div"
-        count={data.data.length}
+        count={data.length}
         labelRowsPerPage={t("ROWS_PER_PAGE")}
         rowsPerPage={rowsPerPage}
         page={page}

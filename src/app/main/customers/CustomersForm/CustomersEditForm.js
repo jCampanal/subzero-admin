@@ -15,8 +15,23 @@ import { showMessage } from "app/store/fuse/messageSlice";
 import FuseLoading from "@fuse/core/FuseLoading";
 
 const validationRules = yup.object().shape({
-  priorityCustomer: yup.boolean().required("REQUIRED"),
+  streetAddress: "",
+  cityAddress: "",
+  stateAddress: "",
+  zipCodeAddress: "",
+  companyAddressId: "",
+  companyName: "",
+  email: yup
+    .string()
+    .email("Must be a valid email")
+    .max(255)
+    .required("REQUIRED"),
+  lastname: yup.string().required("REQUIRED"),
+  name: yup.string().required("REQUIRED"),
+  phoneNumber: yup.string().required("REQUIRED"),
+  priorityCustomer: yup.boolean(),
   salesTaxId: yup.string().required("REQUIRED"),
+  username: yup.string().required("REQUIRED"),
 });
 
 const CustomerForm = () => {
@@ -35,9 +50,20 @@ const CustomerForm = () => {
   const { t } = useTranslation("customers-form");
   const methods = useForm({
     defaultValues: {
-      priorityCustomer: customer.priorityCustomer,
-      salesTaxId: customer.salesTaxId,
-      id: customer.id,
+      id: state.customer.id,
+      streetAddress: "",
+      cityAddress: "",
+      stateAddress: "",
+      zipCodeAddress: "",
+      companyAddressId: "",
+      companyName: state.customer.company.name,
+      email: state.customer.email,
+      lastname: state.customer.lastName,
+      name: state.customer.name,
+      phoneNumber: state.customer.phoneNumber,
+      priorityCustomer: state.customer.priorityCustomer,
+      username: state.customer.userName,
+      salesTaxId: "",
     },
     mode: "all",
     resolver: yupResolver(validationRules),

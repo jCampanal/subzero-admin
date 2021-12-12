@@ -26,7 +26,6 @@ function FormControls({ salesTax }) {
             required
             helperText={errors?.email?.message}
             label={t("EMAIL")}
-            autoFocus
             id="email"
             variant="outlined"
             fullWidth
@@ -45,7 +44,6 @@ function FormControls({ salesTax }) {
             required
             helperText={errors?.companyName?.message}
             label={t("COMPANY_NAME")}
-            autoFocus
             id="companyName"
             variant="outlined"
             fullWidth
@@ -64,7 +62,6 @@ function FormControls({ salesTax }) {
             required
             helperText={errors?.callbackURL?.message}
             label={t("CALLBACKURL")}
-            autoFocus
             id="callbackURL"
             variant="outlined"
             fullWidth
