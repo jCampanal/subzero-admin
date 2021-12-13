@@ -9,7 +9,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import { motion } from "framer-motion";
 import React, { useState } from "react";
-import { useHistory, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import TableHeader from "app/main/products/Products/TableHeader";
 import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
@@ -20,13 +20,13 @@ function CustomersTable({
   rows,
   page,
   rowsPerPage,
+  totalItems,
   handleChangeRowsPerPage,
   handleChangePage,
   handleClickEdit,
   deleteCallback,
 }) {
   const { t } = useTranslation("customers");
-  const history = useHistory();
   const [selected, setSelected] = useState([]);
   const [data] = useState(customers);
 
@@ -235,7 +235,7 @@ function CustomersTable({
       <TablePagination
         className="flex-shrink-0 border-t-1"
         component="div"
-        count={data.length}
+        count={totalItems}
         labelRowsPerPage={t("ROWS_PER_PAGE")}
         rowsPerPage={rowsPerPage}
         page={page}
@@ -255,7 +255,7 @@ function CustomersTable({
 export default withRouter(CustomersTable);
 
 CustomersTable.propTypes = {
-  customers: PropTypes.object.isRequired,
+  customers: PropTypes.array.isRequired,
   rows: PropTypes.array.isRequired,
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,

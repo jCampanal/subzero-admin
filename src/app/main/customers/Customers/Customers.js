@@ -26,12 +26,14 @@ function Customers() {
   const [loading, setLoading] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);
   const [pageSize, setPageSize] = useState(10);
+  const [totalItems, setTotalItems] = useState(0);
 
   const loadCustomers = async (pageNumber, pageSize, name) => {
     setLoading(true);
     getCustomers(pageNumber, pageSize, name)
       .then((response) => {
         setCustomers(response.data.data);
+        setTotalItems(response.data.totalItems);
         setLoading(false);
       })
       .catch(() => {
@@ -123,6 +125,7 @@ function Customers() {
           addButtonCallback={handleAddCustomer}
           searchHint={t("SEARCH_BY_NAME")}
           submitFilter={submitFilter}
+          urlSearchCallBack="customers"
         />
       }
       content={
@@ -138,6 +141,7 @@ function Customers() {
             handleChangePage={handlePageNumber}
             handleClickEdit={handleEditCustomer}
             deleteCallback={removeCustomer}
+            totalItems={totalItems}
           />
         )
       }

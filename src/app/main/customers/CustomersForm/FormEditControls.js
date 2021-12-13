@@ -27,12 +27,11 @@ function FormControls({ salesTax }) {
           <TextField
             {...field}
             className="mt-8 mb-16"
-            error={errors.companyName}
+            error={!!errors.companyName}
             helperText={errors?.companyName?.message}
             label={t("companyName")}
             id="companyName"
             variant="outlined"
-            fullWidth
           />
         )}
       />
@@ -45,12 +44,11 @@ function FormControls({ salesTax }) {
             <TextField
               {...field}
               className="mt-8 mb-16"
-              error={errors.name}
+              error={!!errors.name}
               helperText={errors?.name?.message}
               label={t("name")}
               id="name"
               variant="outlined"
-              fullWidth
             />
           )}
         />
@@ -63,12 +61,11 @@ function FormControls({ salesTax }) {
             <TextField
               {...field}
               className="mt-8 mb-16"
-              error={errors.lastname}
+              error={!!errors.lastname}
               helperText={errors?.lastname?.message}
               label={t("lastname")}
               id="lastname"
               variant="outlined"
-              fullWidth
             />
           )}
         />
@@ -81,12 +78,11 @@ function FormControls({ salesTax }) {
             <TextField
               {...field}
               className="mt-8 mb-16"
-              error={errors.email}
+              error={!!errors.email}
               helperText={errors?.email?.message}
               label={t("email")}
               id="email"
               variant="outlined"
-              fullWidth
             />
           )}
         />
@@ -97,12 +93,11 @@ function FormControls({ salesTax }) {
             <TextField
               {...field}
               className="mt-8 mb-16"
-              error={errors.phoneNumber}
+              error={!!errors.phoneNumber}
               helperText={errors?.phoneNumber?.message}
               label={t("phoneNumber")}
               id="phoneNumber"
               variant="outlined"
-              fullWidth
             />
           )}
         />
@@ -114,12 +109,11 @@ function FormControls({ salesTax }) {
           <TextField
             {...field}
             className="mt-8 mb-16"
-            error={errors.username}
+            error={!!errors.username}
             helperText={errors?.username?.message}
             label={t("USERNAME")}
             id="username"
             variant="outlined"
-            fullWidth
           />
         )}
       />
@@ -130,12 +124,11 @@ function FormControls({ salesTax }) {
           <TextField
             {...field}
             className="mt-8 mb-16"
-            error={errors.streetAddress}
+            error={!!errors.streetAddress}
             helperText={errors?.streetAddress?.message}
             label={t("streetAddress")}
             id="streetAddress"
             variant="outlined"
-            fullWidth
           />
         )}
       />
@@ -146,12 +139,11 @@ function FormControls({ salesTax }) {
           <TextField
             {...field}
             className="mt-8 mb-16"
-            error={errors.cityAddress}
+            error={!!errors.cityAddress}
             helperText={errors?.cityAddress?.message}
             label={t("cityAddress")}
             id="cityAddress"
             variant="outlined"
-            fullWidth
           />
         )}
       />
@@ -162,12 +154,11 @@ function FormControls({ salesTax }) {
           <TextField
             {...field}
             className="mt-8 mb-16"
-            error={errors.stateAddress}
+            error={!!errors.stateAddress}
             helperText={errors?.stateAddress?.message}
             label={t("stateAddress")}
             id="stateAddress"
             variant="outlined"
-            fullWidth
           />
         )}
       />
@@ -178,12 +169,11 @@ function FormControls({ salesTax }) {
           <TextField
             {...field}
             className="mt-8 mb-16"
-            error={errors.zipCodeAddress}
+            error={!!errors.zipCodeAddress}
             helperText={errors?.zipCodeAddress?.message}
             label={t("zipCodeAddress")}
             id="zipCodeAddress"
             variant="outlined"
-            fullWidth
           />
         )}
       />
@@ -201,6 +191,7 @@ function FormControls({ salesTax }) {
             </InputLabel>
             <Select
               {...field}
+              error={!!errors.companyAddressId}
               labelId="companyAddressId-select-label"
               id="demo-simple-select"
               required
@@ -230,6 +221,7 @@ function FormControls({ salesTax }) {
             </InputLabel>
             <Select
               {...field}
+              error={!!errors.salesTaxId}
               labelId="salesTaxId-select-label"
               id="demo-simple-select"
               required
@@ -256,13 +248,8 @@ function FormControls({ salesTax }) {
         render={({ field }) => (
           <FormControlLabel
             className="mt-8 mb-16"
-            error={!!errors.priorityCustomer}
-            required
-            helperText={errors?.priorityCustomer?.message}
-            autoFocus
             id="priorityCustomer"
             variant="outlined"
-            fullWidth
             control={
               <Checkbox
                 {...field}

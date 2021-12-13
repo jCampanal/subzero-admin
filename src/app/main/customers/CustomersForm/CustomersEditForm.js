@@ -15,12 +15,12 @@ import { showMessage } from "app/store/fuse/messageSlice";
 import FuseLoading from "@fuse/core/FuseLoading";
 
 const validationRules = yup.object().shape({
-  streetAddress: "",
-  cityAddress: "",
-  stateAddress: "",
-  zipCodeAddress: "",
-  companyAddressId: "",
-  companyName: "",
+  streetAddress: yup.string().required("REQUIRED"),
+  cityAddress: yup.string().required("REQUIRED"),
+  stateAddress: yup.string().required("REQUIRED"),
+  zipCodeAddress: yup.string().required("REQUIRED"),
+  companyAddressId: yup.string().required("REQUIRED"),
+  companyName: yup.string().required("REQUIRED"),
   email: yup
     .string()
     .email("Must be a valid email")
@@ -61,7 +61,7 @@ const CustomerForm = () => {
       lastname: state.customer.lastName,
       name: state.customer.name,
       phoneNumber: state.customer.phoneNumber,
-      priorityCustomer: state.customer.priorityCustomer,
+      priorityCustomer: true,
       username: state.customer.userName,
       salesTaxId: "",
     },
