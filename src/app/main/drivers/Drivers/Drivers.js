@@ -81,9 +81,10 @@ function Drivers() {
   const loadDrivers = (pageNumber = 0, pageSize = 10, name = undefined) => {
     setLoading(true);
     getDrivers(pageNumber, pageSize, name)
-      .then((data) => {
-        setDrivers(data.data.data);
-        setTotalItems(response.data.totalItems);
+      .then((res) => {
+        setDrivers(res.data.data);
+        setTotalItems(res.data.totalItems);
+
         setLoading(false);
       })
       .catch(() => {

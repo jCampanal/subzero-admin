@@ -16,7 +16,15 @@ import { showMessage } from "app/store/fuse/messageSlice";
 const today = new Date();
 
 const validationRules = yup.object().shape({
-  userId: yup.string().required("REQUIRED"),
+  email: yup
+    .string()
+    .email("Must be a valid email")
+    .max(255)
+    .required("REQUIRED"),
+  lastname: yup.string().required("REQUIRED"),
+  name: yup.string().required("REQUIRED"),
+  username: yup.string().required("REQUIRED"),
+  phoneNumber: yup.string(),
   warehouseId: yup.string().required("REQUIRED"),
 });
 
@@ -26,20 +34,27 @@ const CustomerForm = () => {
   } = useSelector((state) => state);
   const history = useHistory();
   const dispatch = useDispatch();
+
+  const { state } = useLocation();
+
+  const driver = state.driver;
+
+  const [warehouses, setWarehouses] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const methods = useForm({
     defaultValues: {
-      userId: "",
-      warehouseId: "",
+      email: driver.email,
+      lastname: driver.lastName,
+      name: driver.name,
+      phoneNumber: driver.phoneNumber,
+      username: driver.userName,
+      warehouseId: driver.warehouse.id,
     },
     mode: "all",
     resolver: yupResolver(validationRules),
   });
-  const { state } = useLocation();
-
-  const driver = state.driver;
-  const [warehouses, setWarehouses] = useState([]);
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(false);
   const loadWareHouses = () => {
     getAllWarehouses()
       .then((response) => {

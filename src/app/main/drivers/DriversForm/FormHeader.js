@@ -9,9 +9,8 @@ import { useHistory, useParams } from "react-router";
 import { useTranslation } from "react-i18next";
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { putCooler } from "../../../api-conn/coolers";
 import { showMessage } from "../../../store/fuse/messageSlice";
-import { registerDriver } from "app/api-conn/drivers";
+import { putDriver, registerDriver } from "app/api-conn/drivers";
 
 function FormHeader() {
   const theme = useTheme();
@@ -28,10 +27,16 @@ function FormHeader() {
   const saveData = () => {
     if (id) {
       const formData = {
-        userId: getValues().userId,
+        email: getValues().email,
+        lastname: getValues().lastname,
+        name: getValues().name,
+        phoneNumber: getValues().phoneNumber,
+        username: getValues().username,
         warehouseId: getValues().warehouseId,
       };
-      putCooler(id, formData)
+
+      console.log("formData", formData);
+      putDriver(id, formData)
         .then(() => {
           dispatch(
             showMessage({

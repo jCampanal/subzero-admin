@@ -12,6 +12,8 @@ import { getProvidersAll } from "../../../api-conn/providers";
 import { openDialog } from "../../../store/fuse/dialogSlice";
 import RemoveDlg from "../../../common/removeDlg";
 import FuseLoading from "@fuse/core/FuseLoading";
+import { getAllWarehouses } from "app/api-conn/warehouses";
+import { showMessage } from "app/store/fuse/messageSlice";
 
 const validationRules = yup.object().shape({
   userName: yup.string().required("REQUIRED"),

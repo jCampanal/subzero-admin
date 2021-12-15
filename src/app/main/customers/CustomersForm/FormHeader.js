@@ -69,19 +69,12 @@ function FormHeader(props) {
           )
         );
     } else {
-      const formData = new FormData();
-      formData.append("Name", getValues().name);
-      formData.append("Lastname", getValues().lastname);
-      formData.append("Username", getValues().lastname);
-      formData.append("Password ", getValues().lastname);
-      formData.append("ConfirmPassword ", getValues().lastname);
-      formData.append("PhoneNumber", getValues().lastname);
-      // formData.append("CompanyName ", getValues().lastname);
-      // formData.append("CompanyName ", getValues().lastname);
-      // formData.append("CompanyName ", getValues().lastname);
-      if (getValues().image !== null)
-        formData.append("Image", getValues().image);
-
+      const formData = {
+        email: getValues().email,
+        companyName: getValues().companyName,
+        salesTaxId: getValues().salesTaxId,
+        callbackURL: getValues().callbackURL,
+      };
       registerCustomer(formData)
         .then(() => {
           dispatch(
