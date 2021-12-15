@@ -122,23 +122,28 @@ const Controls = () => {
               <input {...field} type="hidden" name="coolerId" />
             )}
           />
+
           <div className="min-w-full mt-8 mb-16">
             <Controller
               name="moveTo"
               control={control}
               render={({ field }) => (
                 <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Mov to</InputLabel>
+                  <InputLabel id="moveTo-select-label" className="pl-20 -mt-9">
+                    {t("MOVE_TO")}
+                  </InputLabel>
                   <Select
                     {...field}
-                    labelId="moveTo-label"
-                    id="moveTo"
-                    label="Move to"
-                    fullWidth
                     onChange={(e) => {
-                      setMoveToState(e.target.value);
-                      field.onChange(e);
+                      setMoveToState(e.target.value), field.onChange(e);
                     }}
+                    labelId="moveTo-select-label"
+                    id="demo-simple-select"
+                    required
+                    displayEmpty
+                    label={t("MOVE_TO")}
+                    inputProps={{ "aria-label": "Without label" }}
+                    variant="outlined"
                   >
                     {moveTo.map((place, index) => {
                       return (
@@ -159,15 +164,21 @@ const Controls = () => {
                 control={control}
                 render={({ field }) => (
                   <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">
-                      Customer
+                    <InputLabel
+                      id="customerId-select-label"
+                      className="pl-20 -mt-9"
+                    >
+                      {t("CUSTOMER")}
                     </InputLabel>
                     <Select
                       {...field}
-                      labelId="customerId-label"
-                      id="customerId"
-                      label="Customer"
-                      fullWidth
+                      labelId="customerId-select-label"
+                      id="demo-simple-select"
+                      required
+                      displayEmpty
+                      label={t("CUSTOMER")}
+                      inputProps={{ "aria-label": "Without label" }}
+                      variant="outlined"
                     >
                       {customers.map((customer) => {
                         return (
@@ -188,36 +199,22 @@ const Controls = () => {
               name="driverId"
               control={control}
               render={({ field }) => (
-                // <FormControl className="mt-8 mb-16">
-                //         <InputLabel id="provider-select-label" className="pl-20 -mt-9">
-                //             {t('PROVIDER')}
-                //         </InputLabel>
-                //         <Select
-                //             {...field}
-                //             labelId="provider-select-label"
-                //             id="demo-simple-select"
-                //             required
-                //             displayEmpty
-                //             label={t('PROVIDER')}
-                //             inputProps={{'aria-label': 'Without label'}}
-                //             variant="outlined"
-                //         >
-                //             <MenuItem>{t('PROVIDER')}</MenuItem>
-                //             {props.providers.map((provider) => (
-                //                 <MenuItem key={provider.id} value={provider.id}>
-                //                     {provider.name}
-                //                 </MenuItem>
-                //             ))}
-                //         </Select>
-                //     </FormControl>
                 <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Driver</InputLabel>
+                  <InputLabel
+                    id="driverId-select-label"
+                    className="pl-20 -mt-9"
+                  >
+                    {t("DRIVER")}
+                  </InputLabel>
                   <Select
                     {...field}
-                    labelId="driverId-label"
-                    id="driverId"
-                    label="Driver"
-                    fullWidth
+                    labelId="driverId-select-label"
+                    id="demo-simple-select"
+                    required
+                    displayEmpty
+                    label={t("DRIVER")}
+                    inputProps={{ "aria-label": "Without label" }}
+                    variant="outlined"
                   >
                     {drivers.map((driver) => {
                       return (

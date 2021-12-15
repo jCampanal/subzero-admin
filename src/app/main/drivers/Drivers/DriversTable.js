@@ -18,19 +18,18 @@ import { useTranslation } from "react-i18next";
 function DriversTable({
   handleChangeRowsPerPage,
   handleChangePage,
+  page,
+  rowsPerPage,
   deleteCallback,
   data,
   rows,
   editCallback,
-  pageNumber,
-  pageSize,
+  totalItems,
 }) {
   const { t } = useTranslation("drivers");
   const history = useHistory();
   const [selected, setSelected] = useState([]);
 
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [order, setOrder] = useState({
     direction: "asc",
     id: null,
@@ -84,14 +83,6 @@ function DriversTable({
     }
 
     setSelected(newSelected);
-  }
-
-  function handleChangePage(event, value) {
-    setPage(value);
-  }
-
-  function handleChangeRowsPerPage(event) {
-    setRowsPerPage(event.target.value);
   }
 
   if (data.length === 0) {
@@ -227,7 +218,7 @@ function DriversTable({
       <TablePagination
         className="flex-shrink-0 border-t-1"
         component="div"
-        count={data.length}
+        count={totalItems}
         labelRowsPerPage={t("ROWS_PER_PAGE")}
         rowsPerPage={rowsPerPage}
         page={page}

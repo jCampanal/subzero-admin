@@ -105,7 +105,7 @@ function FormControls(props) {
           </FormControl>
         )}
       />
-      {/* <Controller
+      <Controller
         name="pickup"
         control={control}
         render={({ field }) => (
@@ -118,14 +118,13 @@ function FormControls(props) {
               required
               helperText={errors?.pickup?.message}
               label={t("PickedUp")}
-              autoFocus
               id="pickup"
               variant="outlined"
               fullWidth
             />
           </FormControl>
         )}
-      /> */}
+      />
       <div className="flex flex-col sm:flex-row sm:gap-7">
         <Controller
           name="file"

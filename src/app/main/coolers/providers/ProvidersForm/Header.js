@@ -135,25 +135,6 @@ function Header(props) {
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
       >
-        {id && (
-          <>
-            <IconButton
-              className="sm:hidden"
-              onClick={() => props.removeCallback([id])}
-            >
-              <DeleteIcon className="mr-5" />
-            </IconButton>
-            <Button
-              className="whitespace-nowrap hidden sm:inline-block mr-4"
-              variant="contained"
-              color="secondary"
-              onClick={() => props.removeCallback([id])}
-            >
-              <DeleteIcon className="mr-5" />
-              {t("REMOVE")}
-            </Button>
-          </>
-        )}
         <IconButton
           className="sm:hidden"
           disabled={dirtyFields === {} || !isValid}

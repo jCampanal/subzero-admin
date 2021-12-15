@@ -119,7 +119,7 @@ function CoolersTable({
                     tabIndex={-1}
                     key={cooler.item1.id}
                     selected={isSelected}
-                    onClick={() => showCoolersList(cooler)}
+                    // onClick={() => showCoolersList(cooler)}
                   >
                     <TableCell
                       className="w-52 px-4 md:px-0"

@@ -30,14 +30,9 @@ const CoolerForm = () => {
   const cooler = id
     ? state.cooler
     : {
-        id: "",
         code: "",
-        pickedUp: "",
-        imageURL: "",
-        providerName: "",
+        pickedUp: today,
         providerId: "",
-        coolerStatus: "",
-        customerName: "",
       };
   const { t } = useTranslation("coolers-form");
   const [providers, setProviders] = useState([]);
@@ -46,7 +41,7 @@ const CoolerForm = () => {
     defaultValues: {
       code: cooler.code,
       providerId: cooler.providerId,
-      //   pickup: cooler.pickedUp,
+      pickup: new Date(cooler.pickedUp),
       file: null,
     },
     mode: "all",

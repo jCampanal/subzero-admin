@@ -19,18 +19,19 @@ function FormHeader() {
   const { id } = useParams();
   const { t } = useTranslation("coolers-form");
   const methods = useFormContext();
-  const { getValues } = methods;
+  const {
+    getValues,
+    formState: { dirtyFields, isValid },
+  } = methods;
   const dispatch = useDispatch();
 
   const saveData = () => {
-    const newDate = formatDate(new Date());
     const formData = new FormData();
-    console.log("newDate", newDate);
+    console.log("getValues().pickup", getValues().pickup);
     formData.append("Code", getValues().code);
-    formData.append("PickedUp", newDate);
+    formData.append("PickedUp", formatDate(getValues().pickup));
     formData.append("ProviderId", getValues().providerId);
-    if (id !== undefined && getValues().file !== null)
-      formData.append("File", getValues().file);
+    if (getValues().file !== null) formData.append("File", getValues().file);
     if (id) {
       putCooler(id, formData)
         .then(() => {
@@ -146,6 +147,7 @@ function FormHeader() {
           color="secondary"
           onClick={() => saveData()}
           startIcon={<Icon className="hidden sm:flex">save</Icon>}
+          disabled={dirtyFields === {} || !isValid}
         >
           {t("SAVE")}
         </Button>

@@ -75,6 +75,7 @@ function Drivers() {
   const [loading, setLoading] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);
   const [pageSize, setPageSize] = useState(10);
+  const [totalItems, setTotalItems] = useState(0);
   const dispatch = useDispatch();
 
   const loadDrivers = (pageNumber = 0, pageSize = 10, name = undefined) => {
@@ -82,6 +83,7 @@ function Drivers() {
     getDrivers(pageNumber, pageSize, name)
       .then((data) => {
         setDrivers(data.data.data);
+        setTotalItems(response.data.totalItems);
         setLoading(false);
       })
       .catch(() => {
@@ -183,6 +185,7 @@ function Drivers() {
             rowsPerPage={pageSize}
             deleteCallback={removeDriver}
             editCallback={handleClickEdit}
+            totalItems={totalItems}
           />
         )
       }
