@@ -15,14 +15,18 @@ import { getAllsalesTax } from "app/api-conn/saleTaxes";
 import { showMessage } from "app/store/fuse/messageSlice";
 
 const validationRules = yup.object().shape({
-  email: yup
-    .string()
-    .email("Must be a valid email")
-    .max(255)
-    .required("REQUIRED"),
+  name: yup.string().required("REQUIRED"),
+  lastname: yup.string().required("REQUIRED"),
+  username: yup.string().required("REQUIRED"),
+  password: yup.string().required("REQUIRED"),
+  confirmPassword: yup.string().required("REQUIRED"),
+  phoneNumber: yup.string(),
   companyName: yup.string().required("REQUIRED"),
+  companyAddressStreet: yup.string().required("REQUIRED"),
+  companyAddressCity: yup.string().required("REQUIRED"),
+  companyAddressState: yup.string().required("REQUIRED"),
+  companyAddressZipCode: yup.string().required("REQUIRED"),
   salesTaxId: yup.string().required("REQUIRED"),
-  callbackURL: yup.string().required("REQUIRED"),
 });
 
 const CustomerForm = () => {
@@ -35,19 +39,36 @@ const CustomerForm = () => {
   const [loading, setLoading] = useState(false);
 
   const customer = {
-    email: "",
+    name: "",
+    lastname: "",
+    username: "",
+    password: "",
+    confirmPassword: "",
+    phoneNumber: "",
     companyName: "",
+    companyAddressStreet: "",
+    companyAddressCity: "",
+    companyAddressState: "",
+    companyAddressZipCode: "",
     salesTaxId: "",
-    callbackURL: "",
   };
   const { t } = useTranslation("customers-form");
   const dispatch = useDispatch();
   const methods = useForm({
     defaultValues: {
-      email: customer.email,
+      name: customer.name,
+      lastname: customer.lastname,
+      username: customer.username,
+      password: customer.password,
+      confirmPassword: customer.confirmPassword,
+      phoneNumber: customer.phoneNumber,
       companyName: customer.companyName,
+      companyAddressStreet: customer.companyAddressStreet,
+      companyAddressCity: customer.companyAddressCity,
+      companyAddressState: customer.companyAddressState,
+      companyAddressZipCode: customer.companyAddressZipCode,
       salesTaxId: customer.salesTaxId,
-      callbackURL: customer.callbackURL,
+      image: null,
     },
     mode: "all",
     resolver: yupResolver(validationRules),

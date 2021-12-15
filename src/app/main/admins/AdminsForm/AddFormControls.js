@@ -52,7 +52,7 @@ function FormControls(props) {
   const { control, formState } = methods;
   const { errors } = formState;
   const classes = useStyles(props);
-  const [image, setImage] = useState(props.imageURL);
+  const [image, setImage] = useState();
 
   return (
     <div className="flex flex-col justify-center sm:justify-start flex-wrap max-w-2xl">
