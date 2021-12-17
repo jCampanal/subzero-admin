@@ -14,6 +14,7 @@ import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
 import DateRangePicker from "./DateRangePicker";
+import { CancelRounded } from "@material-ui/icons";
 
 function PageCardedHeader(props) {
   const { t } = useTranslation("coolers");
@@ -43,6 +44,17 @@ function PageCardedHeader(props) {
     history.push(
       `/coolers?code=${filter.code}&pickedUpFrom=${filter.dateFrom}&pickedUpTo=${filter.dateTo}`
     );
+  };
+  const clearFilter = () => {
+    if (filter.code !== "" || filter.dateFrom !== "" || filter.dateTo !== "") {
+      setFilter({
+        code: "",
+        dateFrom: "",
+        dateTo: "",
+      });
+      setSearchCode("");
+      history.push(`/coolers`);
+    }
   };
 
   useEffect(() => {
@@ -90,6 +102,7 @@ function PageCardedHeader(props) {
                 className="flex flex-1 mx-8"
                 disableUnderline
                 fullWidth
+                value={searchCode}
                 inputProps={{
                   "aria-label": "Search",
                 }}
@@ -121,8 +134,48 @@ function PageCardedHeader(props) {
           </Button>
         </motion.div>
         <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
+          className="inline-block mx-10"
+        >
+          <IconButton className="sm:hidden" onClick={clearFilter}>
+            <CancelRounded />
+          </IconButton>
+          <Button
+            className="whitespace-nowrap hidden sm:inline-block"
+            variant="contained"
+            color="default"
+            onClick={clearFilter}
+          >
+            <CancelRounded className="mr-5" />
+            {t("Clear search")}
+          </Button>
+        </motion.div>
+
+        <DateRangePicker
+          isOpen={dateRangeDlgIsOpen}
+          namespace="coolers"
+          searchByDate={searchByDate}
+          toggleDateRangeDlgIsOpen={toggleDateRangeDlgIsOpen}
+        />
+      </div>
+      <div className="sm:flex-1 text-right mt-5">
+        <Button
+          className="whitespace-nowrap inline-block uppercase"
+          onClick={() => history.push("/providers")}
+        >
+          {t("PROVIDERS")}
+        </Button>
+        <Button
+          className="whitespace-nowrap inline-block uppercase"
+          onClick={() => history.push("/coolers_customers")}
+        >
+          {t("CLIENTS")}
+        </Button>
+        <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
+          className="inline-block ml-12"
         >
           <IconButton className="sm:hidden" onClick={() => props.addCallback()}>
             <AddCircleIcon />
@@ -137,26 +190,6 @@ function PageCardedHeader(props) {
             {t("REGISTER")}
           </Button>
         </motion.div>
-        <DateRangePicker
-          isOpen={dateRangeDlgIsOpen}
-          namespace="coolers"
-          searchByDate={searchByDate}
-          toggleDateRangeDlgIsOpen={toggleDateRangeDlgIsOpen}
-        />
-      </div>
-      <div className="sm:flex-1 text-right">
-        <Button
-          className="whitespace-nowrap inline-block uppercase"
-          onClick={() => history.push("/providers")}
-        >
-          {t("PROVIDERS")}
-        </Button>
-        <Button
-          className="whitespace-nowrap inline-block uppercase"
-          onClick={() => history.push("/coolers_customers")}
-        >
-          {t("CLIENTS")}
-        </Button>
       </div>
     </div>
   );

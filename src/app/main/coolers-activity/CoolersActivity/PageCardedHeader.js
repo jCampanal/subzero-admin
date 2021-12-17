@@ -13,7 +13,7 @@ import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
 import PropTypes from "prop-types";
-import { EditLocation } from "@material-ui/icons";
+import { CancelRounded, EditLocation } from "@material-ui/icons";
 const DateRangePicker = lazy(() =>
   import("../../coolers/Coolers/DateRangePicker")
 );
@@ -51,6 +51,17 @@ function PageCardedHeader({ code, handleMoveCoolerActivity }) {
     history.push(
       `/coolers_activity?code=${filter.code}&pickedUpFrom=${filter.dateFrom}&pickedUpTo=${filter.dateTo}`
     );
+  };
+  const clearFilter = () => {
+    if (filter.code !== "" || filter.dateFrom !== "" || filter.dateTo !== "") {
+      setFilter({
+        code: "",
+        dateFrom: "",
+        dateTo: "",
+      });
+      setSearchCode("");
+      history.push(`/coolers_activity`);
+    }
   };
 
   const handleCHangeSearchCode = (e) => {
@@ -101,6 +112,7 @@ function PageCardedHeader({ code, handleMoveCoolerActivity }) {
                 value={searchCode}
                 disableUnderline
                 fullWidth
+                value={searchCode}
                 inputProps={{
                   "aria-label": "Search",
                 }}
@@ -144,6 +156,24 @@ function PageCardedHeader({ code, handleMoveCoolerActivity }) {
         >
           <CalendarTodayIcon className="mr-5" />
           {t("SEARCH_BY_DATE")}
+        </Button>
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
+        className="inline-block mx-10"
+      >
+        <IconButton className="sm:hidden" onClick={clearFilter}>
+          <CancelRounded />
+        </IconButton>
+        <Button
+          className="whitespace-nowrap hidden sm:inline-block"
+          variant="contained"
+          color="default"
+          onClick={clearFilter}
+        >
+          <CancelRounded className="mr-5" />
+          {t("Clear search")}
         </Button>
       </motion.div>
       <DateRangePicker
