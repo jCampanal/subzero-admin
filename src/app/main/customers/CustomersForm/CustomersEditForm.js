@@ -15,12 +15,11 @@ import { showMessage } from "app/store/fuse/messageSlice";
 import FuseLoading from "@fuse/core/FuseLoading";
 
 const validationRules = yup.object().shape({
-  streetAddress: yup.string().required("REQUIRED"),
-  cityAddress: yup.string().required("REQUIRED"),
-  stateAddress: yup.string().required("REQUIRED"),
-  zipCodeAddress: yup.string().required("REQUIRED"),
-  companyAddressId: yup.string().required("REQUIRED"),
-  companyName: yup.string().required("REQUIRED"),
+  street: yup.string(),
+  city: yup.string(),
+  state: yup.string(),
+  zipCode: yup.number(),
+  companyName: yup.string(),
   email: yup
     .string()
     .email("Must be a valid email")
@@ -42,20 +41,15 @@ const CustomerForm = () => {
   const { id } = useParams();
   const { state } = useLocation();
 
-  const customer = {
-    id: state.customer.id,
-    priorityCustomer: state.customer.priorityCustomer,
-    salesTaxId: "",
-  };
   const { t } = useTranslation("customers-form");
   const methods = useForm({
     defaultValues: {
       id: state.customer.id,
-      streetAddress: "",
-      cityAddress: "",
-      stateAddress: "",
-      zipCodeAddress: "",
-      companyAddressId: "",
+      street: "",
+      city: "",
+      state: "",
+      zipCode: "",
+
       companyName: state.customer.company.name,
       email: state.customer.email,
       lastname: state.customer.lastName,
@@ -119,7 +113,7 @@ const CustomerForm = () => {
         header={<FormHeader removeCallback={removecustomer} />}
         contentToolbar={
           <div className="p-16 sm:p-24 max-w-2xl">
-            {id ? <h1>{customer.code}</h1> : <h1>{t("CREATE_NEW")}</h1>}
+            <h1>{state.customer.name}</h1>
           </div>
         }
         content={

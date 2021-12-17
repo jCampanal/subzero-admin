@@ -18,19 +18,15 @@ function FormHeader(props) {
   const { id } = useParams();
   const { t } = useTranslation("customer-form");
   const methods = useFormContext();
-  const { getValues } = methods;
+  const {
+    getValues,
+    formState: { dirtyFields, isValid },
+  } = methods;
   const dispatch = useDispatch();
 
   const saveData = () => {
     if (id) {
       const formData = {
-        companyAddress: {
-          street: getValues().streetAddress,
-          city: getValues().cityAddress,
-          state: getValues().stateAddress,
-          zipCode: getValues().zipCodeAddress,
-        },
-        companyAddressId: getValues().companyAddressId,
         companyName: getValues().companyName,
         email: getValues().email,
         lastname: getValues().lastname,
@@ -40,6 +36,19 @@ function FormHeader(props) {
         salesTaxId: getValues().salesTaxId,
         username: getValues().username,
       };
+
+      if (getValues().street !== "") {
+        formData.street = getValues().street;
+      }
+      if (getValues().city !== "") {
+        formData.city = getValues().city;
+      }
+      if (getValues().state !== "") {
+        formData.state = getValues().state;
+      }
+      if (getValues().zipCode !== "") {
+        formData.zipCode = parseInt(getValues().zipCode);
+      }
 
       console.log("formData", formData);
       putCustomer(id, formData)
@@ -162,6 +171,7 @@ function FormHeader(props) {
           color="secondary"
           onClick={() => saveData()}
           startIcon={<Icon className="hidden sm:flex">save</Icon>}
+          disabled={dirtyFields === {} || !isValid}
         >
           {t("SAVE")}
         </Button>

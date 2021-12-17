@@ -10,31 +10,27 @@ import {
   MenuItem,
   Select,
   TextField,
+  Switch,
 } from "@material-ui/core";
+import { useState } from "react";
 
 function FormControls({ salesTax }) {
   const { t } = useTranslation("customers-form");
   const methods = useFormContext();
   const { control, formState } = methods;
   const { errors } = formState;
+  const [showCompanyName, setShowCompanyName] = useState(false);
+  const [showCompanyAddress, setShowCompanyAddress] = useState(false);
+
+  const handleChangeShowCompanyName = (event) => {
+    setShowCompanyName(event.target.checked);
+  };
+  const handleChangeShowCompanyAddress = (event) => {
+    setShowCompanyAddress(event.target.checked);
+  };
 
   return (
     <div className="flex flex-col justify-center sm:justify-start flex-wrap max-w-2xl">
-      <Controller
-        name="companyName"
-        control={control}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            className="mt-8 mb-16"
-            error={!!errors.companyName}
-            helperText={errors?.companyName?.message}
-            label={t("companyName")}
-            id="companyName"
-            variant="outlined"
-          />
-        )}
-      />
       <div className="grid gap-x-48 grid-cols-1 sm:grid-cols-2">
         <Controller
           className=""
@@ -117,100 +113,7 @@ function FormControls({ salesTax }) {
           />
         )}
       />
-      <Controller
-        name="streetAddress"
-        control={control}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            className="mt-8 mb-16"
-            error={!!errors.streetAddress}
-            helperText={errors?.streetAddress?.message}
-            label={t("streetAddress")}
-            id="streetAddress"
-            variant="outlined"
-          />
-        )}
-      />
-      <Controller
-        name="cityAddress"
-        control={control}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            className="mt-8 mb-16"
-            error={!!errors.cityAddress}
-            helperText={errors?.cityAddress?.message}
-            label={t("cityAddress")}
-            id="cityAddress"
-            variant="outlined"
-          />
-        )}
-      />
-      <Controller
-        name="stateAddress"
-        control={control}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            className="mt-8 mb-16"
-            error={!!errors.stateAddress}
-            helperText={errors?.stateAddress?.message}
-            label={t("stateAddress")}
-            id="stateAddress"
-            variant="outlined"
-          />
-        )}
-      />
-      <Controller
-        name="zipCodeAddress"
-        control={control}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            className="mt-8 mb-16"
-            error={!!errors.zipCodeAddress}
-            helperText={errors?.zipCodeAddress?.message}
-            label={t("zipCodeAddress")}
-            id="zipCodeAddress"
-            variant="outlined"
-          />
-        )}
-      />
 
-      <Controller
-        name="companyAddressId"
-        control={control}
-        render={({ field }) => (
-          <FormControl className="mt-8 mb-16">
-            <InputLabel
-              id="companyAddressId-select-label"
-              className="pl-20 -mt-9"
-            >
-              {t("companyAddressId")}
-            </InputLabel>
-            <Select
-              {...field}
-              error={!!errors.companyAddressId}
-              labelId="companyAddressId-select-label"
-              id="demo-simple-select"
-              required
-              displayEmpty
-              label={t("companyAddressId")}
-              inputProps={{ "aria-label": "Without label" }}
-              variant="outlined"
-            >
-              {salesTax.map((saleTax) => {
-                return (
-                  <MenuItem key={saleTax.id} value={saleTax.id}>
-                    {saleTax.name}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
-        )}
-      />
       <Controller
         name="salesTaxId"
         control={control}
@@ -225,7 +128,6 @@ function FormControls({ salesTax }) {
               labelId="salesTaxId-select-label"
               id="demo-simple-select"
               required
-              displayEmpty
               label={t("SALE_TAX")}
               inputProps={{ "aria-label": "Without label" }}
               variant="outlined"
@@ -261,6 +163,116 @@ function FormControls({ salesTax }) {
           />
         )}
       />
+
+      <div className="grid gap-x-48 grid-cols-1 sm:grid-cols-2">
+        <div className="flex flex-col">
+          <FormControlLabel
+            control={
+              <Switch
+                checked={showCompanyName}
+                onChange={handleChangeShowCompanyName}
+                inputProps={{ "aria-label": "controlled" }}
+              />
+            }
+            label="Modify Company Name"
+          />
+          {showCompanyName && (
+            <Controller
+              name="companyName"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  className="mt-8 mb-16"
+                  error={!!errors.companyName}
+                  helperText={errors?.companyName?.message}
+                  label={t("companyName")}
+                  id="companyName"
+                  variant="outlined"
+                />
+              )}
+            />
+          )}
+        </div>
+
+        <div className="flex flex-col">
+          <FormControlLabel
+            control={
+              <Switch
+                checked={showCompanyAddress}
+                onChange={handleChangeShowCompanyAddress}
+                inputProps={{ "aria-label": "controlled" }}
+              />
+            }
+            label="Modify Company Adress"
+          />
+
+          {showCompanyAddress && (
+            <>
+              <Controller
+                name="street"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    className="mt-8 mb-16"
+                    error={!!errors.street}
+                    helperText={errors?.street?.message}
+                    label={t("street")}
+                    id="street"
+                    variant="outlined"
+                  />
+                )}
+              />
+              <Controller
+                name="city"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    className="mt-8 mb-16"
+                    error={!!errors.city}
+                    helperText={errors?.city?.message}
+                    label={t("city")}
+                    id="city"
+                    variant="outlined"
+                  />
+                )}
+              />
+              <Controller
+                name="state"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    className="mt-8 mb-16"
+                    error={!!errors.state}
+                    helperText={errors?.state?.message}
+                    label={t("state")}
+                    id="state"
+                    variant="outlined"
+                  />
+                )}
+              />
+              <Controller
+                name="zipCode"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    className="mt-8 mb-16"
+                    error={!!errors.zipCode}
+                    helperText={errors?.zipCode?.message}
+                    label={t("zipCode")}
+                    id="zipCode"
+                    variant="outlined"
+                  />
+                )}
+              />
+            </>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
