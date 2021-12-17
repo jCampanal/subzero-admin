@@ -52,7 +52,6 @@ apiClient.interceptors.response.use(
         axios.defaults.headers.common.Authorization = `Bearer ${token}`;
       } else {
         store.dispatch(logoutUser());
-        console.log("log out user");
       }
       return apiClient(originalRequest);
     }

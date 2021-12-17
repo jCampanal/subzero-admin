@@ -7,9 +7,12 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Popover from "@material-ui/core/Popover";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "app/store/user/userSlice";
 
 function UserMenu() {
   const [userMenu, setUserMenu] = useState(null);
+  const dispatch = useDispatch();
 
   const userMenuClick = (event) => {
     setUserMenu(event.currentTarget);
@@ -19,6 +22,9 @@ function UserMenu() {
     setUserMenu(null);
   };
 
+  const handleLogOut = () => {
+    dispatch(logoutUser());
+  };
   return (
     <>
       <Button
@@ -51,7 +57,7 @@ function UserMenu() {
         }}
       >
         <>
-          <MenuItem component={Link} to="/login" role="button">
+          <MenuItem component={"span"} role="button" onClick={handleLogOut}>
             <ListItemIcon className="min-w-40">
               <Icon>lock</Icon>
             </ListItemIcon>
