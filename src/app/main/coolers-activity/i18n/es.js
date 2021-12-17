@@ -11,6 +11,9 @@ const locale = {
   MOVE: "Mover",
   DATE: "Fecha",
   ROWS_PER_PAGE: "Actividades por fila",
+  PROOF: "Prueba de entrega",
+  PICKUP_DATE: "Fecha de recogida",
+  DELIVER_DATE: "Fecha de entrega",
 };
 
 export default locale;

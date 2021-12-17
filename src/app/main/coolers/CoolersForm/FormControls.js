@@ -9,7 +9,7 @@ import { useParams } from "react-router";
 import FormControl from "@material-ui/core/FormControl";
 import { InputLabel, MenuItem, Select } from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
-import { DatePicker } from "@material-ui/pickers";
+import { DatePicker, DateTimePicker } from "@material-ui/pickers";
 import { useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
@@ -110,7 +110,7 @@ function FormControls(props) {
         control={control}
         render={({ field }) => (
           <FormControl className="mt-8 mb-16">
-            <DatePicker
+            <DateTimePicker
               {...field}
               inputFormat="MM/dd/yyyy"
               renderInput={(params) => <TextField {...params} />}

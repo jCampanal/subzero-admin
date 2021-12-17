@@ -1,5 +1,57 @@
 export const formatDate = (date) => {
   let formatted_date =
-    date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear();
+    date.getMonth() +
+    1 +
+    "/" +
+    date.getDate() +
+    "/" +
+    date.getFullYear() +
+    " " +
+    date.getHours() +
+    ":" +
+    date.getMinutes();
   return formatted_date;
+};
+export const formatDisplayDate = (date) => {
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  const monthIndex = date.getMonth(); // 11
+  const monthName = months[monthIndex]; //December
+  const dayIndex = date.getDay(); //0
+  const dayName = days[dayIndex]; //Monday
+  const year = date.getFullYear(); // 2019
+  const dayNumber = date.getDate(); // 24
+  let hour = date.getHours(); // 11
+  let minutes = date.getMinutes(); // 56
+
+  /* am o pm */
+  var ampm = hour >= 12 ? "pm" : "am";
+  hour = hour % 12;
+  hour = hour ? hour : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+
+  const formattedDate = `${dayName}, ${monthName} ${dayNumber}, ${year} ${hour}:${minutes} ${ampm}`;
+
+  return formattedDate;
 };

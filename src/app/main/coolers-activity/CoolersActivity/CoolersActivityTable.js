@@ -14,6 +14,7 @@ import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
 import { Pageview } from "@material-ui/icons";
 import ViewModal from "./ViewModal";
+import { formatDisplayDate } from "app/lib/formatDate";
 
 function CoolersActivityTable({
   coolersActivity,
@@ -114,7 +115,9 @@ function CoolersActivityTable({
               .map((coolerActivity, i) => {
                 const isSelected = selected.indexOf(coolerActivity.id) !== -1;
 
-                const date = new Date(coolerActivity.deliveredTime);
+                const date = formatDisplayDate(
+                  new Date(coolerActivity.deliveredTime)
+                );
 
                 return (
                   <TableRow
@@ -180,23 +183,23 @@ function CoolersActivityTable({
                       scope="row"
                       align="left"
                     >
-                      {date.toLocaleDateString()}
+                      {date}
                     </TableCell>
-                    {coolerActivity.imageURL && (
-                      <TableCell
-                        className="p-4 md:p-16"
-                        component="th"
-                        scope="row"
-                        align="right"
-                      >
+                    <TableCell
+                      className="p-4 md:p-16"
+                      component="th"
+                      scope="row"
+                      align="right"
+                    >
+                      {coolerActivity.imageURL && (
                         <Pageview
                           onClick={() => {
                             setSelectedCoolerActivity(coolerActivity);
                             setIsModal(true);
                           }}
                         />
-                      </TableCell>
-                    )}
+                      )}
+                    </TableCell>
                   </TableRow>
                 );
               })}

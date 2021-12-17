@@ -40,10 +40,10 @@ const rows = [
     sort: true,
   },
   {
-    id: "date",
+    id: "deliver-date",
     align: "left",
     disablePadding: false,
-    label: "DATE",
+    label: "DELIVER_DATE",
     sort: true,
   },
   {

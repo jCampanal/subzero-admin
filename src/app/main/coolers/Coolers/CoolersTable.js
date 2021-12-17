@@ -14,6 +14,7 @@ import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
+import { formatDisplayDate } from "app/lib/formatDate";
 
 function CoolersTable({
   coolers,
@@ -116,6 +117,7 @@ function CoolersTable({
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((cooler) => {
                 const isSelected = selected.indexOf(cooler.id) !== -1;
+
                 return (
                   <TableRow
                     className="h-72 cursor-pointer"
@@ -191,7 +193,7 @@ function CoolersTable({
                       scope="row"
                       align="left"
                     >
-                      {new Date(cooler.pickedUp).toLocaleDateString()}
+                      {formatDisplayDate(new Date(cooler.pickedUp))}
                     </TableCell>
 
                     <TableCell

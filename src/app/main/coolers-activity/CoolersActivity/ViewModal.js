@@ -7,6 +7,7 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
+import { formatDisplayDate } from "app/lib/formatDate";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
@@ -36,7 +37,9 @@ const ViewModal = ({ coolerActivity, isModal, setIsModal }) => {
               Delivered to {coolerActivity.receiverName}{" "}
               {coolerActivity.recierverLastName}
             </h3>
-            <span className="small">{coolerActivity.deliveredTime}</span>
+            <span className="small">
+              {formatDisplayDate(new Date(coolerActivity.deliveredTime))}
+            </span>
           </div>
           <div className="p-5 sm:px-24 full-width mt-20">
             <img

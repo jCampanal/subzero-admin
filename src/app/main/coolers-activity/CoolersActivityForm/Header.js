@@ -32,16 +32,6 @@ function Header(props) {
   const cooler = state.cooler;
 
   const saveData = () => {
-    const data = {
-      receiverName: getValues().receiverName,
-      recierverLastName: getValues().recierverLastName,
-      file: getValues().file,
-      driverId: getValues().driverId,
-      customerId: getValues().customerId,
-      moveTo: getValues().moveTo,
-      coolerId: getValues().coolerId,
-    };
-
     const formData = new FormData();
     formData.append("ReceiverName", getValues().receiverName);
     formData.append("RecierverLastName", getValues().recierverLastName);
@@ -96,14 +86,14 @@ function Header(props) {
             className="flex items-center sm:mb-12"
             component={Link}
             role="button"
-            to="/providers"
+            to="/coolers_activity"
             color="inherit"
           >
             <Icon className="text-20">
               {theme.direction === "ltr" ? "arrow_back" : "arrow_forward"}
             </Icon>
             <span className="hidden sm:flex mx-4 font-medium">
-              {t("PROVIDERS")}
+              {t("coolers_activity")}
             </span>
           </Typography>
         </motion.div>
