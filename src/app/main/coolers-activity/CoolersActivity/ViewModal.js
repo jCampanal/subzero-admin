@@ -7,12 +7,39 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
+
 import { formatDisplayDate } from "app/lib/formatDate";
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+
+const SocialDrawer = React.lazy(() =>
+  import("app/components/SocialDrawer/SocialDrawer")
+);
 
 const ViewModal = ({ coolerActivity, isModal, setIsModal }) => {
   const { t } = useTranslation("coolers-activity");
+  const [openShateDrawer, setOpenShateDrawer] = useState(false);
+  const toggleDrawer = (open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setOpenShateDrawer(open);
+  };
+  const socialButoonInfo = {
+    link: coolerActivity.imageURL,
+    subject: "Prueba de en evio",
+    text: `Codigo : ${coolerActivity.code}%0AConductor : ${
+      coolerActivity.receiverName
+    } ${
+      coolerActivity.recierverLastName
+    }%0AFecha de entrega : ${formatDisplayDate(
+      new Date(coolerActivity.deliveredTime)
+    )}`,
+  };
   return (
     <Dialog
       open={isModal}
@@ -50,7 +77,17 @@ const ViewModal = ({ coolerActivity, isModal, setIsModal }) => {
           </div>
         </div>
       </DialogContent>
-      <DialogActions className="px-8 py-16 justify-end gap-5">
+      <DialogActions className="px-8 py-16 justify-end">
+        <div className="px-16">
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            onClick={toggleDrawer(true)}
+          >
+            {t("SHARE")}
+          </Button>
+        </div>
         <div className="px-16">
           <Button
             type="submit"
@@ -62,6 +99,11 @@ const ViewModal = ({ coolerActivity, isModal, setIsModal }) => {
           </Button>
         </div>
       </DialogActions>
+      <SocialDrawer
+        openShateDrawer={openShateDrawer}
+        toggleDrawer={toggleDrawer}
+        urlInfo={socialButoonInfo}
+      />
     </Dialog>
   );
 };
