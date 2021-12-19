@@ -1,14 +1,4 @@
-import {
-  Box,
-  Button,
-  Divider,
-  Drawer,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-} from "@material-ui/core";
-import { Mail, MoveToInbox } from "@material-ui/icons";
+import { Drawer } from "@material-ui/core";
 
 import React from "react";
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import FuseScrollbars from "@fuse/core/FuseScrollbars";
-import Checkbox from "@material-ui/core/Checkbox";
+
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
