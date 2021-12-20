@@ -1,11 +1,13 @@
 import FuseLoading from "@fuse/core/FuseLoading";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Button } from "@material-ui/core";
 
 import { getAllsalesTax } from "app/api-conn/saleTaxes";
 import { showMessage } from "app/store/fuse/messageSlice";
 import React, { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 import * as yup from "yup";
 
@@ -66,6 +68,12 @@ const CustomersRegisterForm = () => {
     mode: "all",
     resolver: yupResolver(validationRules),
   });
+
+  const {
+    getValues,
+    formState: { dirtyFields, isValid },
+  } = methods;
+
   const [salesTax, setsalesTax] = useState([]);
 
   const [loading, setLoading] = useState(false);
@@ -98,7 +106,34 @@ const CustomersRegisterForm = () => {
         <FuseLoading />
       ) : (
         <FormProvider {...methods}>
-          <Controls salesTax={salesTax} />
+          <div className="w-full h-full pb-56 bg-grey-50">
+            <div className="w-full flex justify-center ">
+              <div className="w-11/12 sm:w-3/4 max-w-640 mt-72 bg-grey-50-500  rounded-8 shadow-20 p-44 pt-56 pb-56 text-center">
+                <h1 className="mb-10 justify-center">Get Started</h1>
+                <p className="mb-10">
+                  Already have an account?
+                  <Link to={"/login"}> Login</Link>
+                </p>
+
+                <main>
+                  <form action="">
+                    <Controls salesTax={salesTax} />
+                    <div className="w-full">
+                      <Button
+                        type="submit"
+                        color="secondary"
+                        variant="contained"
+                        fullWidth
+                        disabled={dirtyFields === {} || !isValid}
+                      >
+                        Submit
+                      </Button>
+                    </div>
+                  </form>
+                </main>
+              </div>
+            </div>
+          </div>
         </FormProvider>
       )}
     </>
