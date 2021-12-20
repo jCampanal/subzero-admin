@@ -82,7 +82,10 @@ function FormHeader(props) {
         email: getValues().email,
         companyName: getValues().companyName,
         salesTaxId: getValues().salesTaxId,
-        callbackURL: getValues().callbackURL,
+        callbackURL:
+          process.env.NODE_ENV === "production"
+            ? "http://31.220.21.190:1337/customers_register"
+            : "http://localhost:3000/customers_register",
       };
       registerCustomer(formData)
         .then(() => {
