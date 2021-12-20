@@ -7,6 +7,18 @@ const getCustomers = (pageNumber = 0, pageSize = 10, name = undefined) =>
     .get(customersURL, { params: { pageNumber, pageSize, name } })
     .then((response) => response.data);
 
+const verifyCustomer = (
+  UserId = undefined,
+  Token = undefined,
+  CompanyName = undefined,
+  SalesTxId = undefined
+) =>
+  apiClient
+    .get("/api/User/confirmCustomerEmail", {
+      params: { UserId, Token, CompanyName, SalesTxId },
+    })
+    .then((response) => response.data);
+
 const getAllCustomers = () =>
   apiClient.get(customersURL).then((response) => response.data);
 
@@ -17,6 +29,7 @@ const postCustomer = (userId, data) =>
   apiClient
     .post(`${customersURL}/${userId}`, data)
     .then((response) => response.data);
+
 const registerCustomer = (data) =>
   apiClient
     .post("/User/registerCustomer", data)
@@ -40,4 +53,5 @@ export {
   putCustomer,
   deleteCustomer,
   registerCustomer,
+  verifyCustomer,
 };

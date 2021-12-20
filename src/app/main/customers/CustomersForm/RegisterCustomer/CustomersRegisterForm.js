@@ -1,13 +1,15 @@
 import FuseLoading from "@fuse/core/FuseLoading";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button } from "@material-ui/core";
+import { Button, Icon } from "@material-ui/core";
+import { Cancel } from "@material-ui/icons";
+import { verifyCustomer } from "app/api-conn/customers";
 
 import { getAllsalesTax } from "app/api-conn/saleTaxes";
 import { showMessage } from "app/store/fuse/messageSlice";
 import React, { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import * as yup from "yup";
 
@@ -48,17 +50,31 @@ const validationRules = yup.object().shape({
 
 const CustomersRegisterForm = () => {
   const dispatch = useDispatch();
+
+  const [salesTax, setsalesTax] = useState([]);
+  const location = useLocation();
+
+  const [loading, setLoading] = useState(false);
+  const [isVerified, setIsVerified] = useState(true);
+  const [verifying, setVerifying] = useState(true);
+
+  const urlData = {
+    id: new URLSearchParams(location.search).get("UserId"),
+    token: new URLSearchParams(location.search).get("Token"),
+    companyName: new URLSearchParams(location.search).get("CompanyName"),
+    saleTaxId: new URLSearchParams(location.search).get("SalesTxId"),
+  };
+
   const methods = useForm({
     defaultValues: {
-      id: "as6das+6das6d56asd",
       city: "",
-      companyName: "",
+      companyName: urlData.companyName,
       confirmPassword: "",
       lastname: "",
       name: "",
       password: "",
       phoneNumber: "",
-      salesTaxId: "",
+      salesTaxId: urlData.saleTaxId,
       state: "",
       street: "",
       username: "",
@@ -73,10 +89,6 @@ const CustomersRegisterForm = () => {
     getValues,
     formState: { dirtyFields, isValid },
   } = methods;
-
-  const [salesTax, setsalesTax] = useState([]);
-
-  const [loading, setLoading] = useState(false);
 
   const loadSalesTax = () => {
     setLoading(true);
@@ -96,15 +108,44 @@ const CustomersRegisterForm = () => {
       });
   };
 
+  const checkCustomer = () => {
+    setLoading(true);
+    setVerifying(true);
+    const { id, token, companyName, saleTaxId } = urlData;
+    verifyCustomer(id, token, companyName, saleTaxId)
+      .then((res) => {
+        console.log("Todo bien con res", res);
+        console.log("Todo bien");
+        setIsVerified(true);
+        setLoading(false);
+        setVerifying(false);
+        console.log("Todo bien");
+      })
+      .catch(() => {
+        dispatch(
+          showMessage({
+            message: "Sorry, we could not verify it",
+            variant: "error",
+          })
+        );
+        setLoading(false);
+        setIsVerified(true);
+        setVerifying(false);
+      });
+  };
+
   useEffect(() => {
     loadSalesTax();
-  }, []);
+    checkCustomer();
+  }, [location]);
 
   return (
     <>
-      {loading ? (
+      {verifying ? (
+        <FuseLoading message="Verifiando usuario espere un momento por favor" />
+      ) : loading ? (
         <FuseLoading />
-      ) : (
+      ) : isVerified ? (
         <FormProvider {...methods}>
           <div className="w-full h-full pb-56 bg-grey-50">
             <div className="w-full flex justify-center ">
@@ -135,6 +176,20 @@ const CustomersRegisterForm = () => {
             </div>
           </div>
         </FormProvider>
+      ) : (
+        <div className="h-full items-center flex justify-center text-center flex-col px-52">
+          <div className="flex items-center flex-wrap justify-center mb-14">
+            <span className="mr-10">
+              <Cancel fontSize="large" />
+            </span>{" "}
+            <h1>Usuario no verificado </h1>
+          </div>
+          <p className="max-w-lg">
+            Comuniquese con un manager para revisar su problema o intente
+            recargar la pagina. Tenga en cuenta que solo se puede llegar aqui
+            mediante un link enviado al email.
+          </p>
+        </div>
       )}
     </>
   );

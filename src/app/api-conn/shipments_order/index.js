@@ -5,7 +5,7 @@ const shipmentURL = "/driver/Order";
 
 const getShipments = (pageNumber = 0, pageSize = 10) =>
   apiClient
-    .get(shipmentURL, { params: { pageNumber, pageSize } })
+    .get(orderURL, { params: { pageNumber, pageSize } })
     .then((response) => response.data);
 
 const getAllOrders = () =>
