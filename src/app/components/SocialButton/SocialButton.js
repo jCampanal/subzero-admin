@@ -6,10 +6,11 @@ const SocialButton = ({ link, icon, backColor, textColor, copyInfo }) => {
   const dispatch = useDispatch();
 
   const handleCopy = () => {
-    if (!navigator.clipboard) {
-      alert("Your browser does not support this operation");
-      return;
-    }
+    console.log("navigator.clipboard", navigator.clipboard);
+    // if (!navigator.clipboard) {
+    //   alert("Your browser does not support this operation");
+    //   return;
+    // }
     const message = copyInfo.replaceAll("%0A", "\n");
     navigator.clipboard
       .writeText(message)
