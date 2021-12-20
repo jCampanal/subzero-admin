@@ -5,6 +5,7 @@ import { getCoolersActivity } from "app/api-conn/coolers";
 import { useDispatch, useSelector } from "react-redux";
 import { showMessage } from "app/store/fuse/messageSlice";
 import FuseLoading from "@fuse/core/FuseLoading";
+import whithProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
 
 const Header = lazy(() => import("./PageCardedHeader"));
 const CoolersActivityTable = lazy(() => import("./CoolersActivityTable"));
@@ -60,9 +61,6 @@ function CoolersActivity() {
   const history = useHistory();
   const location = useLocation();
 
-  const {
-    user: { logged },
-  } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
@@ -95,16 +93,8 @@ function CoolersActivity() {
   };
 
   useEffect(() => {
-    if (!logged) history.push("/login");
-  }, [logged, history]);
-
-  useEffect(() => {
     document.title = "CoolersActivity - Subzero Ice Services";
   }, []);
-  // useEffect(() => {
-
-  //   }
-  // }, [location]);
 
   useEffect(() => {
     let _code = new URLSearchParams(location.search).get("code");
@@ -177,4 +167,4 @@ function CoolersActivity() {
   );
 }
 
-export default memo(CoolersActivity);
+export default memo(whithProtectedRoute(CoolersActivity));
