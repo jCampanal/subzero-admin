@@ -11,11 +11,11 @@ const verifyCustomer = (
   UserId = undefined,
   Token = undefined,
   CompanyName = undefined,
-  SalesTxId = undefined
+  SalesTaxId = undefined
 ) =>
   apiClient
     .get("/api/User/confirmCustomerEmail", {
-      params: { UserId, Token, CompanyName, SalesTxId },
+      params: { UserId, Token, CompanyName, SalesTaxId },
     })
     .then((response) => response);
 
