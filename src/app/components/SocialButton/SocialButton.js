@@ -10,13 +10,15 @@ const SocialButton = ({ link, icon, backColor, textColor, copyInfo }) => {
       alert("Your browser does not support this operation");
       return;
     }
+    const message = copyInfo.replaceAll("%0A", "\n");
     navigator.clipboard
-      .writeText(copyInfo)
+      .writeText(message)
       .then(() => {
         dispatch(
           showMessage({
             message: "Copied",
             variant: "success",
+            autoHideDuration: 1500,
           })
         );
       })
@@ -33,7 +35,7 @@ const SocialButton = ({ link, icon, backColor, textColor, copyInfo }) => {
   if (copyInfo) {
     return (
       <div
-        className="w-52 h-52 flex justify-center items-center text-white rounded-md text-24"
+        className="w-52 h-52 flex justify-center items-center text-white rounded-md text-24 m-12 cursor-pointer"
         style={{ backgroundColor: backColor, color: textColor }}
         onClick={handleCopy}
       >
