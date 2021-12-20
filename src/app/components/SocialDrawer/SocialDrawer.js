@@ -4,7 +4,6 @@ import CustomDrawer from "../Drawer/CustomDrawer";
 import SocialButton from "../SocialButton/SocialButton";
 
 const SocialDrawer = ({ openShateDrawer, toggleDrawer, urlInfo }) => {
-  console.log(toggleDrawer);
   return (
     <CustomDrawer
       open={openShateDrawer}

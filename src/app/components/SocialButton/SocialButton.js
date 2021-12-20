@@ -1,14 +1,21 @@
-import { copyToClipboard } from "app/lib/copyToClipboard";
 import { showMessage } from "app/store/fuse/messageSlice";
 import React from "react";
 import { useDispatch } from "react-redux";
 
 const SocialButton = ({ link, icon, backColor, textColor, copyInfo }) => {
   const dispatch = useDispatch();
-
   const handleCopy = () => {
     const message = copyInfo.replaceAll("%0A", "\n");
-    copyToClipboard(message)
+    if (!navigator.clipboard) {
+      const noClipboardMessage =
+        "Your browser does not support this operation at the moment but this is what you want to copy :\n" +
+        message;
+      alert(noClipboardMessage);
+      return;
+    }
+
+    navigator.clipboard
+      .writeText(message)
       .then(() => {
         dispatch(
           showMessage({
