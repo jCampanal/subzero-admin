@@ -17,7 +17,7 @@ const verifyCustomer = (
     .get("/api/User/confirmCustomerEmail", {
       params: { UserId, Token, CompanyName, SalesTxId },
     })
-    .then((response) => response.data);
+    .then((response) => response);
 
 const getAllCustomers = () =>
   apiClient.get(customersURL).then((response) => response.data);

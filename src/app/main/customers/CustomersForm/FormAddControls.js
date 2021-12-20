@@ -50,24 +50,7 @@ function FormControls({ salesTax }) {
           />
         )}
       />
-      <Controller
-        name="callbackURL"
-        control={control}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            type="callbackURL"
-            className="mt-8 mb-16"
-            error={!!errors.callbackURL}
-            required
-            helperText={errors?.callbackURL?.message}
-            label={t("CALLBACKURL")}
-            id="callbackURL"
-            variant="outlined"
-            fullWidth
-          />
-        )}
-      />
+
       <Controller
         name="salesTaxId"
         control={control}

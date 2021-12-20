@@ -114,8 +114,8 @@ const CustomersRegisterForm = () => {
     const { id, token, companyName, saleTaxId } = urlData;
     verifyCustomer(id, token, companyName, saleTaxId)
       .then((res) => {
-        console.log("Todo bien con res", res);
         console.log("Todo bien");
+        console.log("Todo bien con res", res);
         setIsVerified(true);
         setLoading(false);
         setVerifying(false);
@@ -129,7 +129,7 @@ const CustomersRegisterForm = () => {
           })
         );
         setLoading(false);
-        setIsVerified(true);
+        setIsVerified(false);
         setVerifying(false);
       });
   };

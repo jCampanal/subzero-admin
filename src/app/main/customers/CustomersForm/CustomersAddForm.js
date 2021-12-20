@@ -22,7 +22,6 @@ const validationRules = yup.object().shape({
     .required("REQUIRED"),
   companyName: yup.string().required("REQUIRED"),
   salesTaxId: yup.string().required("REQUIRED"),
-  callbackURL: yup.string().required("REQUIRED"),
 });
 
 const CustomerForm = () => {
@@ -38,7 +37,6 @@ const CustomerForm = () => {
     email: "",
     companyName: "",
     salesTaxId: "",
-    callbackURL: "",
   };
   const { t } = useTranslation("customers-form");
   const dispatch = useDispatch();
