@@ -1,74 +1,138 @@
-import React, {lazy, memo} from 'react';
-import {useTranslation} from 'react-i18next';
-import FusePageCarded from '@fuse/core/FusePageCarded/FusePageCarded';
-
-const Header = lazy(() => import('app/main/products/Products/PageCardedHeader'));
-const ShipmentsTab = lazy(() => import('./ShipmentsTab'));
-const rows = [
-    {
-        id: 'warehouse',
-        align: 'left',
-        disablePadding: false,
-        label: 'WAREHOUSE',
-        sort: true,
-    },
-    {
-        id: 'date',
-        align: 'left',
-        disablePadding: false,
-        label: 'DATE',
-        sort: true,
-    },
-    {
-        id: 'actions',
-        align: 'right',
-        disablePadding: false,
-        label: '',
-        sort: false,
-    },
-];
-const dummyShipments = [
-    {
-        id: 1,
-        name: 'Glue',
-        shipments: [
-            {id: 1, warehouse: 'Lorem', date: new Date()},
-            {id: 2, warehouse: 'Lorem', date: new Date()},
-            {id: 3, warehouse: 'Lorem', date: new Date()},
-        ],
-    },
-    {
-        id: 2,
-        name: 'Glue',
-        shipments: [{id: 1, warehouse: 'Lorem', date: new Date()}],
-    },
-    {
-        id: 3,
-        name: 'Glue',
-        shipments: [
-            {id: 1, warehouse: 'Lorem', date: new Date()},
-            {id: 2, warehouse: 'Lorem', date: new Date()},
-            {id: 3, warehouse: 'Lorem', date: new Date()},
-            {id: 4, warehouse: 'Lorem', date: new Date()},
-            {id: 5, warehouse: 'Lorem', date: new Date()},
-        ],
-    },
-];
+import React, { lazy, memo, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import FusePageCarded from "@fuse/core/FusePageCarded/FusePageCarded";
+import rows from "./rows";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useLocation } from "react-router";
+import { showMessage } from "app/store/fuse/messageSlice";
+import whitProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
+import FuseLoading from "@fuse/core/FuseLoading";
+import { getShipments } from "app/api-conn/shipments_order";
+const Header = lazy(() => import("app/components/HeaderPage/PageCardedHeader"));
+const ShipmentsTab = lazy(() => import("./ShipmentsTab"));
 
 function Shipments() {
-    const {t} = useTranslation('shipments');
-    return (
-        <FusePageCarded
-            classes={{
-                content: 'flex',
-                contentCard: 'overflow-hidden',
-                header: 'min-h-72 h-72 sm:h-136 sm:min-h-136',
-            }}
-            header={<Header title={t('SHIPMENTS')} iconText="fa-truck-loading" addButtonLabel="" />}
-            content={<ShipmentsTab tabItems={dummyShipments} rows={rows} />}
-            innerScroll
-        />
+  const { t } = useTranslation("Shipments");
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const history = useHistory();
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [pageNumber, setPageNumber] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+  const [totalItems, setTotalItems] = useState(0);
+
+  const loadData = async (pageNumber, pageSize) => {
+    setLoading(true);
+    getShipments(pageNumber, pageSize)
+      .then((response) => {
+        setData(response.data.data);
+        setTotalItems(response.data.totalItems);
+        setLoading(false);
+      })
+      .catch(() => {
+        dispatch(
+          showMessage({
+            message: "There is something wrong, try to refresh the page",
+            variant: "error",
+          })
+        );
+        setLoading(false);
+      });
+    setLoading(true);
+  };
+  const handleChangePage = (event) => {
+    setPageSize(event.target.value);
+  };
+  function handlePageNumber(event, value) {
+    setPageNumber(value);
+  }
+  function handleEditShipment(shipment) {
+    history.push(`/shipments_edit/${Shipment.id}/`, { shipment });
+  }
+
+  function handleAddShipment() {
+    history.push(`/shipments_create`);
+  }
+
+  const onProceed = (itemIds) => {
+    setLoading(true);
+
+    deleteShipments(JSON.stringify(itemIds))
+      .then(() => {
+        dispatch(
+          showMessage({
+            message: "Deletion completed!",
+          })
+        );
+        loadData();
+      })
+      .catch(() => {
+        dispatch(
+          showMessage({
+            message: "Error during deletion. Please try again later",
+            variant: "error",
+          })
+        );
+        setLoading(false);
+      });
+  };
+  const removeShipment = (itemId) => {
+    dispatch(
+      openDialog({
+        children: (
+          <RemoveDlg
+            itemId={itemId}
+            proceedCallback={() => onProceed(itemId)}
+            dlgTitle="Warning, you have requested a risky operation"
+            dlgText="You are attempting to delete a Shipment, this operation cannot be undone. Are you sure you want to proceed with the deletion?"
+          />
+        ),
+      })
     );
+  };
+
+  useEffect(() => {
+    loadData(pageNumber, pageSize);
+  }, [location, pageSize, pageNumber]);
+
+  return (
+    <FusePageCarded
+      classes={{
+        content: "flex",
+        contentCard: "overflow-hidden",
+        header: "min-h-72 h-72 sm:h-136 sm:min-h-136",
+      }}
+      header={
+        <Header
+          title={t("SHIPMENTS")}
+          iconText="fa-truck-loading"
+          addButtonLabel={t("ADD_SHIPMENTS")}
+          addButtonCallback={handleAddShipment}
+          disableSearch
+        />
+      }
+      content={
+        loading ? (
+          <FuseLoading />
+        ) : (
+          <ShipmentsTab
+            tabItems={data}
+            rows={rows}
+            rows={rows}
+            page={pageNumber}
+            rowsPerPage={pageSize}
+            handleChangeRowsPerPage={handleChangePage}
+            handleChangePage={handlePageNumber}
+            handleClickEdit={handleEditShipment}
+            deleteCallback={removeShipment}
+            totalItems={totalItems}
+          />
+        )
+      }
+      innerScroll
+    />
+  );
 }
 
-export default memo(Shipments);
+export default memo(whitProtectedRoute(Shipments));

@@ -10,14 +10,13 @@ import { showMessage } from "../../../store/fuse/messageSlice";
 import FuseLoading from "../../../../@fuse/core/FuseLoading";
 import PageCardedHeader from "./PageCardedHeader";
 import CoolersTable from "./CoolersTable";
+import whitProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
 
 function Coolers() {
   const [coolers, setCoolers] = useState({ data: [] });
   const history = useHistory();
   const location = useLocation();
-  const {
-    user: { logged },
-  } = useSelector((state) => state);
+
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const [pageNumber, setPageNumber] = useState(0);
@@ -94,9 +93,6 @@ function Coolers() {
     history.push(`/coolers/${cooler.id}/edit`, { cooler });
 
   useEffect(() => {
-    if (!logged) history.push("/login");
-  }, [logged, history]);
-  useEffect(() => {
     document.title = "Coolers - Subzero Ice Services";
   }, []);
 
@@ -156,4 +152,4 @@ function Coolers() {
   );
 }
 
-export default memo(Coolers);
+export default memo(whitProtectedRoute(Coolers));

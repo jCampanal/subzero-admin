@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { openDialog } from "app/store/fuse/dialogSlice";
 import RemoveDlg from "app/common/removeDlg";
 import { showMessage } from "app/store/fuse/messageSlice";
+import whitProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
 
 const Header = lazy(() =>
   import("app/components/HeaderPage/PageCardedHeader").then((header) => header)
@@ -149,4 +150,4 @@ function Customers() {
   );
 }
 
-export default memo(Customers);
+export default memo(whitProtectedRoute(Customers));
