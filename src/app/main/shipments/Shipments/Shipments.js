@@ -9,7 +9,7 @@ import whitProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
 import FuseLoading from "@fuse/core/FuseLoading";
 import { getShipments } from "app/api-conn/shipments_order";
 const Header = lazy(() => import("app/components/HeaderPage/PageCardedHeader"));
-const ShipmentsTab = lazy(() => import("./ShipmentsTab"));
+const ShipmentsTab = lazy(() => import("./ShipmentsTable"));
 
 function Shipments() {
   const { t } = useTranslation("Shipments");
@@ -117,8 +117,7 @@ function Shipments() {
           <FuseLoading />
         ) : (
           <ShipmentsTab
-            tabItems={data}
-            rows={rows}
+            data={data}
             rows={rows}
             page={pageNumber}
             rowsPerPage={pageSize}

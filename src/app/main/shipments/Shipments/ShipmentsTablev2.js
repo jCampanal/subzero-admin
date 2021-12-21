@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import FuseScrollbars from "@fuse/core/FuseScrollbars";
 import Checkbox from "@material-ui/core/Checkbox";
 import Icon from "@material-ui/core/Icon";
@@ -8,27 +9,19 @@ import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import { motion } from "framer-motion";
-import React, { useState } from "react";
-import { withRouter } from "react-router-dom";
 import TableHeader from "app/main/products/Products/TableHeader";
 import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router";
 
-function ShipmentsTable({
-  data,
-  rows,
-  page,
-  rowsPerPage,
-  totalItems,
-  handleChangeRowsPerPage,
-  handleChangePage,
-  handleClickEdit,
-  deleteCallback,
-}) {
+function ShipmentsTable(props) {
   const { t } = useTranslation("shipments");
   const [selected, setSelected] = useState([]);
-
+  const [data, setData] = useState(props.items);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const history = useHistory();
   const [order, setOrder] = useState({
     direction: "asc",
     id: null,
@@ -61,7 +54,7 @@ function ShipmentsTable({
   }
 
   function handleClick(item) {
-    // history.push(`/apps/e-commerce/products/${item.id}/${item.handle}`);
+    history.push(`/apps/e-commerce/products/${item.id}/${item.handle}`);
   }
 
   function handleCheck(event, id) {
@@ -84,6 +77,14 @@ function ShipmentsTable({
     setSelected(newSelected);
   }
 
+  function handleChangePage(event, value) {
+    setPage(value);
+  }
+
+  function handleChangeRowsPerPage(event) {
+    setRowsPerPage(event.target.value);
+  }
+
   if (data.length === 0) {
     return (
       <motion.div
@@ -92,7 +93,7 @@ function ShipmentsTable({
         className="flex flex-1 items-center justify-center h-full"
       >
         <Typography color="textSecondary" variant="h5">
-          {t("NO_Shipments")}
+          {t("NO_SHIPMENTS")}
         </Typography>
       </motion.div>
     );
@@ -100,25 +101,24 @@ function ShipmentsTable({
 
   return (
     <div className="w-full flex flex-col">
-      <FuseScrollbars className="flex-grow overflow-x-auto overflow-y-auto">
+      <FuseScrollbars className="flex-grow overflow-x-auto">
         <Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
           <TableHeader
-            namespace="Shipments"
-            rows={rows}
+            namespace="shipments"
+            rows={props.rows}
             selectedProductIds={selected}
             order={order}
             onSelectAllClick={handleSelectAllClick}
             onRequestSort={handleRequestSort}
             rowCount={data.length}
             onMenuItemClick={handleDeselect}
-            deleteSelectedItemsCallback={() => deleteCallback(selected)}
           />
 
           <TableBody>
             {data
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((customer) => {
-                const isSelected = selected.indexOf(customer.id) !== -1;
+              .map((item) => {
+                const isSelected = selected.indexOf(item.id) !== -1;
                 return (
                   <TableRow
                     className="h-72 cursor-pointer"
@@ -126,9 +126,9 @@ function ShipmentsTable({
                     role="checkbox"
                     aria-checked={isSelected}
                     tabIndex={-1}
-                    key={customer.id}
+                    key={item.id}
                     selected={isSelected}
-                    onClick={(event) => handleClick(customer)}
+                    onClick={(event) => handleClick(item)}
                   >
                     <TableCell
                       className="w-40 md:w-64 text-center"
@@ -137,23 +137,7 @@ function ShipmentsTable({
                       <Checkbox
                         checked={isSelected}
                         onClick={(event) => event.stopPropagation()}
-                        onChange={(event) => handleCheck(event, customer.id)}
-                      />
-                    </TableCell>
-
-                    <TableCell
-                      className="w-52 px-4 md:px-0"
-                      component="th"
-                      scope="row"
-                      padding="none"
-                    >
-                      <img
-                        className="w-full block rounded"
-                        src={
-                          customer.imageURL ??
-                          `${process.env.PUBLIC_URL}/assets/images/ecommerce/product-image-placeholder.png`
-                        }
-                        alt={customer.name}
+                        onChange={(event) => handleCheck(event, item.id)}
                       />
                     </TableCell>
 
@@ -161,16 +145,9 @@ function ShipmentsTable({
                       className="p-4 md:p-16"
                       component="th"
                       scope="row"
+                      align="left"
                     >
-                      {customer.name}
-                    </TableCell>
-
-                    <TableCell
-                      className="p-4 md:p-16"
-                      component="th"
-                      scope="row"
-                    >
-                      {customer.lastName}
+                      {item.warehouse}
                     </TableCell>
 
                     <TableCell
@@ -179,25 +156,7 @@ function ShipmentsTable({
                       scope="row"
                       align="left"
                     >
-                      {customer.company.name}
-                    </TableCell>
-
-                    <TableCell
-                      className="p-4 md:p-16"
-                      component="th"
-                      scope="row"
-                      align="left"
-                    >
-                      {customer.phoneNumber}
-                    </TableCell>
-
-                    <TableCell
-                      className="p-4 md:p-16"
-                      component="th"
-                      scope="row"
-                      align="left"
-                    >
-                      {customer.email}
+                      {item.date.toLocaleDateString()}
                     </TableCell>
 
                     <TableCell
@@ -206,22 +165,11 @@ function ShipmentsTable({
                       scope="row"
                       align="right"
                     >
-                      <Button
-                        color="primary"
-                        onClick={() => handleClickEdit(customer)}
-                      >
-                        <Icon>edit</Icon> {t("EDIT")}
+                      <Button color="primary">
+                        <Icon>reply_all</Icon>
                       </Button>
                       <Button color="primary">
-                        <Icon
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            deleteCallback([customer.id]);
-                          }}
-                        >
-                          delete
-                        </Icon>{" "}
-                        {t("DELETE")}
+                        <i className="fa fa-business-time" />
                       </Button>
                     </TableCell>
                   </TableRow>
@@ -234,7 +182,7 @@ function ShipmentsTable({
       <TablePagination
         className="flex-shrink-0 border-t-1"
         component="div"
-        count={totalItems}
+        count={data.length}
         labelRowsPerPage={t("ROWS_PER_PAGE")}
         rowsPerPage={rowsPerPage}
         page={page}
@@ -251,14 +199,9 @@ function ShipmentsTable({
   );
 }
 
-export default withRouter(ShipmentsTable);
+export default ShipmentsTable;
 
 ShipmentsTable.propTypes = {
-  Shipments: PropTypes.array.isRequired,
+  items: PropTypes.array.isRequired,
   rows: PropTypes.array.isRequired,
-  page: PropTypes.number.isRequired,
-  rowsPerPage: PropTypes.number.isRequired,
-  handleChangeRowsPerPage: PropTypes.func.isRequired,
-  handleChangePage: PropTypes.func.isRequired,
-  handleClickEdit: PropTypes.func.isRequired,
 };

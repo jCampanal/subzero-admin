@@ -36,6 +36,7 @@ import CustomersFormPageConfig from "app/main/customers/CustomersForm/CustomersF
 import DriversFormPageConfig from "app/main/drivers/DriversForm/DriversFormConfig";
 import AdminsFormPageConfig from "app/main/admins/AdminsForm/AdminsFormConfig";
 import CustomerRegisterConfig from "app/main/customers/CustomersForm/RegisterCustomer/CustomerRegisterConfig";
+import ShipmentsFormPageConfig from "app/main/shipments/ShipmentsForm/shipmentsFormConfig";
 
 const routeConfigs = [
   LoginPageConfig,
@@ -71,6 +72,7 @@ const routeConfigs = [
   CustomerRegisterConfig,
   DriversFormPageConfig,
   AdminsFormPageConfig,
+  ShipmentsFormPageConfig,
 ];
 
 const routes = [

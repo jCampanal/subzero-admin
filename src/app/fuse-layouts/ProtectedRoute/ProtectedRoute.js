@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 
-const whithProtectedRoute =
+const withProtectedRoute =
   (Component) =>
   ({ ...props }) => {
     const {
@@ -20,4 +20,4 @@ const whithProtectedRoute =
     );
   };
 
-export default whithProtectedRoute;
+export default withProtectedRoute;
