@@ -2,7 +2,7 @@ import FuseLoading from "@fuse/core/FuseLoading";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Icon } from "@material-ui/core";
 import { Cancel } from "@material-ui/icons";
-import { verifyCustomer } from "app/api-conn/customers";
+import { postCustomer, verifyCustomer } from "app/api-conn/customers";
 
 import { getAllsalesTax } from "app/api-conn/saleTaxes";
 import { showMessage } from "app/store/fuse/messageSlice";
@@ -40,7 +40,7 @@ const validationRules = yup.object().shape({
       /^(?=.*[!@#$%&*_+-,./';)(><^=-?])/,
       "Must contain at least one special character"
     ),
-  phoneNumber: yup.string(),
+  phoneNumber: yup.number(),
   salesTaxId: yup.string().required("REQUIRED"),
   state: yup.string(),
   street: yup.string(),
@@ -86,9 +86,11 @@ const CustomersRegisterForm = () => {
   });
 
   const {
-    getValues,
+    handleSubmit,
     formState: { dirtyFields, isValid },
   } = methods;
+  console.log(dirtyFields);
+  console.log(isValid);
 
   const loadSalesTax = () => {
     setLoading(true);
@@ -110,7 +112,7 @@ const CustomersRegisterForm = () => {
 
   const checkCustomer = () => {
     setLoading(true);
-    setVerifying(true);
+
     const { id, token, companyName, saleTaxId } = urlData;
     verifyCustomer(id, token, companyName, saleTaxId)
       .then((res) => {
@@ -139,6 +141,58 @@ const CustomersRegisterForm = () => {
     checkCustomer();
   }, [location]);
 
+  const onSubmit = (data) => {
+    console.log(data);
+    const formData = new FormData();
+
+    formData.append("CompanyName", data.companyName),
+      formData.append("ConfirmPassword", data.confirmPassword),
+      formData.append("Password", data.password),
+      formData.append("Lastname", data.lastname);
+    formData.append("Name", data.name),
+      formData.append("SalesTxId", data.salesTaxId),
+      formData.append("Username", data.username),
+      formData.append("Street", data.street),
+      formData.append("State", data.state),
+      formData.append("City", data.city),
+      formData.append("ZipCode", data.zipCode);
+
+    if (data.phoneNumber !== "") {
+      formData.append("PhoneNumber", data.phoneNumber);
+    }
+
+    if (data.image) {
+      formData.append("Image", data.image);
+    }
+
+    postCustomer(urlData.id, formData)
+      .then(() => {
+        dispatch(
+          showMessage({
+            message: "The customer was created successfully",
+            variant: "success",
+            anchorOrigin: {
+              vertical: "top",
+              horizontal: "right",
+            },
+          })
+        );
+        history.push("/customers");
+      })
+      .catch((error) =>
+        dispatch(
+          showMessage({
+            message: error.response.data.message ?? error.response.data.title,
+            variant: "error",
+            anchorOrigin: {
+              vertical: "top",
+              horizontal: "right",
+            },
+          })
+        )
+      );
+  };
+
   return (
     <>
       {verifying ? (
@@ -157,7 +211,7 @@ const CustomersRegisterForm = () => {
                 </p>
 
                 <main>
-                  <form action="">
+                  <form onSubmit={handleSubmit(onSubmit)}>
                     <Controls salesTax={salesTax} />
                     <div className="w-full">
                       <Button

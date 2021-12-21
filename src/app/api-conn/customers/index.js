@@ -27,7 +27,9 @@ const getCustomer = (id) =>
 
 const postCustomer = (userId, data) =>
   apiClient
-    .post(`${customersURL}/${userId}`, data)
+    .post(`${customersURL}/${userId}`, data, {
+      headers: { "Content-Type": "multipart/form-data" },
+    })
     .then((response) => response.data);
 
 const registerCustomer = (data) =>
