@@ -8,6 +8,7 @@ import { deleteUser, getAdmins } from "app/api-conn/User";
 import { useHistory, useLocation } from "react-router";
 import RemoveDlg from "app/common/removeDlg";
 import { openDialog } from "app/store/fuse/dialogSlice";
+import withProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
 
 const Header = lazy(() => import("app/components/HeaderPage/PageCardedHeader"));
 const AdminsTable = lazy(() => import("./AdminsTable"));
@@ -188,4 +189,4 @@ function Admins() {
   );
 }
 
-export default memo(Admins);
+export default memo(withProtectedRoute(Admins));

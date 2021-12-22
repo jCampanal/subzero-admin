@@ -39,6 +39,11 @@ function FormHeader() {
     const formData = new FormData();
     formData.append("Name", getValues().name);
     formData.append("Lastname", getValues().lastname);
+    formData.append("Username", getValues().username);
+    formData.append("Email", getValues().email);
+    formData.append("Password", getValues().password);
+    formData.append("ConfirmPassword", getValues().confirmPassword);
+    formData.append("PhoneNumber", getValues().phoneNumber);
     if (getValues().image !== null) formData.append("Image", getValues().image);
 
     if (id) {
@@ -69,11 +74,6 @@ function FormHeader() {
           )
         );
     } else {
-      formData.append("Username", getValues().username);
-      formData.append("Email", getValues().email);
-      formData.append("Password", getValues().password);
-      formData.append("ConfirmPassword", getValues().confirmPassword);
-      formData.append("PhoneNumber", getValues().phoneNumber);
       registerAdmin(formData)
         .then(() => {
           dispatch(

@@ -67,7 +67,6 @@ const adminForm = () => {
       email: admin.email,
       password: admin.password,
       confirmPassword: admin.confirmPassword,
-      warehouseId: admin.warehouseId,
       phoneNumber: admin.phoneNumber,
       image: null,
     },

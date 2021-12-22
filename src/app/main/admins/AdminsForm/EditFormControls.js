@@ -57,6 +57,22 @@ function FormControls(props) {
   return (
     <div className="flex flex-col justify-center sm:justify-start flex-wrap max-w-2xl">
       <Controller
+        name="username"
+        control={control}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            className="mt-8 mb-16"
+            error={errors.username}
+            helperText={errors?.username?.message}
+            label={t("USERNAME")}
+            id="username"
+            variant="outlined"
+            fullWidth
+          />
+        )}
+      />
+      <Controller
         name="name"
         control={control}
         render={({ field }) => (
@@ -64,7 +80,6 @@ function FormControls(props) {
             {...field}
             className="mt-8 mb-16"
             error={errors.name}
-            required
             helperText={errors?.name?.message}
             label={t("NAME")}
             id="name"
@@ -81,10 +96,77 @@ function FormControls(props) {
             {...field}
             className="mt-8 mb-16"
             error={errors.lastname}
-            required
             helperText={errors?.lastname?.message}
-            label={t("lastname")}
+            label={t("LASTNAME")}
             id="lastname"
+            variant="outlined"
+            fullWidth
+          />
+        )}
+      />
+      <Controller
+        name="email"
+        control={control}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            className="mt-8 mb-16"
+            error={errors.email}
+            type="email"
+            helperText={errors?.email?.message}
+            label={t("email")}
+            id="email"
+            variant="outlined"
+            fullWidth
+          />
+        )}
+      />
+      <Controller
+        name="password"
+        control={control}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            className="mt-8 mb-16"
+            error={errors.password}
+            type="password"
+            helperText={errors?.password?.message}
+            label={t("PASSWORD")}
+            id="password"
+            variant="outlined"
+            fullWidth
+          />
+        )}
+      />
+      <Controller
+        name="confirmPassword"
+        control={control}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            className="mt-8 mb-16"
+            error={errors.confirmPassword}
+            type="password"
+            helperText={errors?.confirmPassword?.message}
+            label={t("CONFIRMPASSWORD")}
+            id="confirmPassword"
+            variant="outlined"
+            fullWidth
+          />
+        )}
+      />
+
+      <Controller
+        name="phoneNumber"
+        control={control}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            className="mt-8 mb-16"
+            error={errors.phoneNumber}
+            helperText={errors?.phoneNumber?.message}
+            label={t("PHONENUMBER")}
+            id="phoneNumber"
             variant="outlined"
             fullWidth
           />
@@ -122,7 +204,7 @@ function FormControls(props) {
           )}
         />
         {image && (
-          <div className="max-w-sm ">
+          <div>
             <img src={image} alt={t("COOLER_THUMBNAIL")} id="preview" />
           </div>
         )}

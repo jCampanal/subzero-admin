@@ -9,8 +9,36 @@ import FormControls from "./EditFormControls";
 import FormHeader from "./FormHeader";
 
 const validationRules = yup.object().shape({
+  username: yup.string().required("REQUIRED"),
   name: yup.string().required("REQUIRED"),
   lastname: yup.string().required("REQUIRED"),
+  email: yup
+    .string()
+    .email("Must be a valid email")
+    .max(255)
+    .required("REQUIRED"),
+  password: yup
+    .string()
+    .max(255)
+    .min(6)
+    .required("REQUIRED")
+    .matches(/^(?=.*[a-z])/, "Must contain at least one lowercase character")
+    .matches(/^(?=.*[A-Z])/, "Must contain at least one uppercase character")
+    .matches(/^(?=.*[0-9])/, "Must contain at least one number")
+    .matches(
+      /^(?=.*[!@#$%&*_+-,./';)(><^=-?])/,
+      "Must contain at least one special character"
+    ),
+  confirmPassword: yup
+    .string()
+    .max(255)
+    .min(6)
+    .required("REQUIRED")
+    .test("passwords-match", "Passwords must match", function (value) {
+      return this.parent.password === value;
+    }),
+  phoneNumber: yup.string().required("REQUIRED"),
+  image: yup.mixed(),
 });
 
 const AdminForm = () => {
@@ -23,8 +51,13 @@ const AdminForm = () => {
   const admin = state.admin;
   const methods = useForm({
     defaultValues: {
+      username: admin.userName,
       name: admin.name,
       lastname: admin.lastName,
+      email: admin.email,
+      password: "",
+      confirmPassword: "",
+      phoneNumber: admin.phoneNumber,
       image: null,
     },
     resolver: yupResolver(validationRules),
