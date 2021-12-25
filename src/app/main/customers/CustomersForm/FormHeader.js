@@ -104,7 +104,7 @@ function FormHeader(props) {
         .catch((error) =>
           dispatch(
             showMessage({
-              message: error.response.data.title,
+              message: error.response.data.title || error.response.data.message,
               variant: "error",
               anchorOrigin: {
                 vertical: "top",

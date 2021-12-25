@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-
+import { useHistory } from "react-router";
 import * as yup from "yup";
 
 import Controls from "./Controls";
@@ -50,6 +50,7 @@ const validationRules = yup.object().shape({
 
 const CustomersRegisterForm = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [salesTax, setsalesTax] = useState([]);
   const location = useLocation();
@@ -89,8 +90,6 @@ const CustomersRegisterForm = () => {
     handleSubmit,
     formState: { dirtyFields, isValid },
   } = methods;
-  console.log(dirtyFields);
-  console.log(isValid);
 
   const loadSalesTax = () => {
     setLoading(true);
@@ -116,12 +115,9 @@ const CustomersRegisterForm = () => {
     const { id, token, companyName, saleTaxId } = urlData;
     verifyCustomer(id, token, companyName, saleTaxId)
       .then((res) => {
-        console.log("Todo bien");
-        console.log("Todo bien con res", res);
         setIsVerified(true);
         setLoading(false);
         setVerifying(false);
-        console.log("Todo bien");
       })
       .catch(() => {
         dispatch(
@@ -179,7 +175,7 @@ const CustomersRegisterForm = () => {
         );
         history.push("/customers");
       })
-      .catch((error) =>
+      .catch((error) => {
         dispatch(
           showMessage({
             message: error.response.data.message ?? error.response.data.title,
@@ -189,8 +185,8 @@ const CustomersRegisterForm = () => {
               horizontal: "right",
             },
           })
-        )
-      );
+        );
+      });
   };
 
   return (
