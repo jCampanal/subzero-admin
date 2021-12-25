@@ -12,7 +12,9 @@ const getAllOrders = () =>
   apiClient.get(orderURL).then((response) => response.data);
 
 const getShipment = (id) =>
-  apiClient.get(`${orderURL}/${id}`).then((response) => response.data);
+  apiClient
+    .get(`${orderURL}/getByDriver/${id}`)
+    .then((response) => response.data);
 
 const postShipment = (userId, data) =>
   apiClient

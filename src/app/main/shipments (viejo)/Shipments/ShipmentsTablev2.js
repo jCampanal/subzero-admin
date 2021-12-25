@@ -15,16 +15,10 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
 
-export const ShipmentStatus = {
-  1: { name: "SHIPPING", icon: "fa-truck", tColor: "blue-700" },
-  2: { name: "DELIVERED", icon: "fa-handshake", tColor: "green-700" },
-  3: { name: "CANCELED", icon: "fa-times", tColor: "red-700" },
-};
-
-function OrdersTable({ data, row }) {
-  const { t } = useTranslation("orders-admin");
+function ShipmentsTable(props) {
+  const { t } = useTranslation("shipments");
   const [selected, setSelected] = useState([]);
-
+  const [data, setData] = useState(props.items);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const history = useHistory();
@@ -99,7 +93,7 @@ function OrdersTable({ data, row }) {
         className="flex flex-1 items-center justify-center h-full"
       >
         <Typography color="textSecondary" variant="h5">
-          {t("NO_ORDERS")}
+          {t("NO_SHIPMENTS")}
         </Typography>
       </motion.div>
     );
@@ -110,7 +104,7 @@ function OrdersTable({ data, row }) {
       <FuseScrollbars className="flex-grow overflow-x-auto">
         <Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
           <TableHeader
-            namespace="orders-admin"
+            namespace="shipments"
             rows={props.rows}
             selectedProductIds={selected}
             order={order}
@@ -153,7 +147,7 @@ function OrdersTable({ data, row }) {
                       scope="row"
                       align="left"
                     >
-                      {item.company}
+                      {item.warehouse}
                     </TableCell>
 
                     <TableCell
@@ -162,25 +156,7 @@ function OrdersTable({ data, row }) {
                       scope="row"
                       align="left"
                     >
-                      {item.arriveTime.toLocaleDateString()}
-                    </TableCell>
-
-                    <TableCell
-                      className="p-4 md:p-16"
-                      component="th"
-                      scope="row"
-                      align="left"
-                    >
-                      <span
-                        className={`text-${ShipmentStatus[item.status].tColor}`}
-                      >
-                        <i
-                          className={`fa ${
-                            ShipmentStatus[item.status].icon
-                          } mr-2`}
-                        />
-                        {t(ShipmentStatus[item.status].name)}
-                      </span>
+                      {item.date.toLocaleDateString()}
                     </TableCell>
 
                     <TableCell
@@ -190,10 +166,10 @@ function OrdersTable({ data, row }) {
                       align="right"
                     >
                       <Button color="primary">
-                        <Icon>edit</Icon> {t("EDIT")}
+                        <Icon>reply_all</Icon>
                       </Button>
                       <Button color="primary">
-                        <Icon>delete</Icon> {t("DELETE")}
+                        <i className="fa fa-business-time" />
                       </Button>
                     </TableCell>
                   </TableRow>
@@ -223,9 +199,9 @@ function OrdersTable({ data, row }) {
   );
 }
 
-export default OrdersTable;
+export default ShipmentsTable;
 
-OrdersTable.propTypes = {
+ShipmentsTable.propTypes = {
   items: PropTypes.array.isRequired,
   rows: PropTypes.array.isRequired,
 };

@@ -8,7 +8,6 @@ import { showMessage } from "app/store/fuse/messageSlice";
 import whitProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
 import FuseLoading from "@fuse/core/FuseLoading";
 import { getShipments } from "app/api-conn/shipments_order";
-import { getDrivers } from "app/api-conn/drivers";
 const Header = lazy(() => import("app/components/HeaderPage/PageCardedHeader"));
 const ShipmentsTab = lazy(() => import("./ShipmentsTable"));
 
@@ -25,7 +24,7 @@ function Shipments() {
 
   const loadData = async (pageNumber, pageSize) => {
     setLoading(true);
-    getDrivers(pageNumber, pageSize)
+    getShipments(pageNumber, pageSize)
       .then((response) => {
         setData(response.data.data);
         setTotalItems(response.data.totalItems);
@@ -48,54 +47,54 @@ function Shipments() {
   function handlePageNumber(event, value) {
     setPageNumber(value);
   }
-  // function handleEditShipment(shipment) {
-  //   history.push(`/shipments_edit/${Shipment.id}/`, { shipment });
-  // }
+  function handleEditShipment(shipment) {
+    history.push(`/shipments_edit/${Shipment.id}/`, { shipment });
+  }
 
-  // function handleAddShipment() {
-  //   history.push(`/shipments_create`);
-  // }
+  function handleAddShipment() {
+    history.push(`/shipments_create`);
+  }
 
-  // const onProceed = (itemIds) => {
-  //   setLoading(true);
+  const onProceed = (itemIds) => {
+    setLoading(true);
 
-  //   deleteShipments(JSON.stringify(itemIds))
-  //     .then(() => {
-  //       dispatch(
-  //         showMessage({
-  //           message: "Deletion completed!",
-  //         })
-  //       );
-  //       loadData();
-  //     })
-  //     .catch(() => {
-  //       dispatch(
-  //         showMessage({
-  //           message: "Error during deletion. Please try again later",
-  //           variant: "error",
-  //         })
-  //       );
-  //       setLoading(false);
-  //     });
-  // };
-  // const removeShipment = (itemId) => {
-  //   dispatch(
-  //     openDialog({
-  //       children: (
-  //         <RemoveDlg
-  //           itemId={itemId}
-  //           proceedCallback={() => onProceed(itemId)}
-  //           dlgTitle="Warning, you have requested a risky operation"
-  //           dlgText="You are attempting to delete a Shipment, this operation cannot be undone. Are you sure you want to proceed with the deletion?"
-  //         />
-  //       ),
-  //     })
-  //   );
-  // };
+    deleteShipments(JSON.stringify(itemIds))
+      .then(() => {
+        dispatch(
+          showMessage({
+            message: "Deletion completed!",
+          })
+        );
+        loadData();
+      })
+      .catch(() => {
+        dispatch(
+          showMessage({
+            message: "Error during deletion. Please try again later",
+            variant: "error",
+          })
+        );
+        setLoading(false);
+      });
+  };
+  const removeShipment = (itemId) => {
+    dispatch(
+      openDialog({
+        children: (
+          <RemoveDlg
+            itemId={itemId}
+            proceedCallback={() => onProceed(itemId)}
+            dlgTitle="Warning, you have requested a risky operation"
+            dlgText="You are attempting to delete a Shipment, this operation cannot be undone. Are you sure you want to proceed with the deletion?"
+          />
+        ),
+      })
+    );
+  };
 
   useEffect(() => {
     loadData(pageNumber, pageSize);
-  }, [pageSize, pageNumber]);
+  }, [location, pageSize, pageNumber]);
 
   return (
     <FusePageCarded
@@ -109,7 +108,7 @@ function Shipments() {
           title={t("SHIPMENTS")}
           iconText="fa-truck-loading"
           addButtonLabel={t("ADD_SHIPMENTS")}
-          // addButtonCallback={handleAddShipment}
+          addButtonCallback={handleAddShipment}
           disableSearch
         />
       }
@@ -124,8 +123,8 @@ function Shipments() {
             rowsPerPage={pageSize}
             handleChangeRowsPerPage={handleChangePage}
             handleChangePage={handlePageNumber}
-            // handleClickEdit={handleEditShipment}
-            // deleteCallback={removeShipment}
+            handleClickEdit={handleEditShipment}
+            deleteCallback={removeShipment}
             totalItems={totalItems}
           />
         )

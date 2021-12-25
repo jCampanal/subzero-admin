@@ -10,43 +10,11 @@ import Typography from "@material-ui/core/Typography";
 import { motion } from "framer-motion";
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
-import TableHeader from "app/components/TableHeader/TableHeader";
+import TableHeader from "app/main/products/Products/TableHeader";
 import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import { TableHead } from "@material-ui/core";
-import CustomTableRow from "./CustomTableRow";
-
-function createData(name, calories, fat, carbs, protein, price) {
-  return {
-    name,
-    calories,
-    fat,
-    carbs,
-    protein,
-    price,
-    history: [
-      {
-        date: "2020-01-05",
-        customerId: "11091700",
-        amount: 3,
-      },
-      {
-        date: "2020-01-02",
-        customerId: "Anonymous",
-        amount: 1,
-      },
-    ],
-  };
-}
-
-const rows2 = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0, 3.99),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3, 4.99),
-  createData("Eclair", 262, 16.0, 24, 6.0, 3.79),
-  createData("Cupcake", 305, 3.7, 67, 4.3, 2.5),
-  createData("Gingerbread", 356, 16.0, 49, 3.9, 1.5),
-];
+import { Box, TableHead } from "@material-ui/core";
 
 function ShipmentsTable({
   data,
@@ -133,33 +101,83 @@ function ShipmentsTable({
 
   return (
     <div className="w-full flex flex-col">
-      <FuseScrollbars className="flex-grow overflow-x-auto overflow-y-auto">
-        <Table
-          stickyHeader
-          className="min-w-xl"
-          aria-labelledby="tableTitle"
-          aria-label="collapsible table"
-        >
-          <TableHeader
-            namespace="Shipments"
-            rows={rows}
-            selectedProductIds={selected}
-            order={order}
-            onSelectAllClick={handleSelectAllClick}
-            onRequestSort={handleRequestSort}
-            rowCount={data.length}
-            onMenuItemClick={handleDeselect}
-            deleteSelectedItemsCallback={() => deleteCallback(selected)}
-            disableCheck
-          />
-
+      <Box sx={{ margin: 1 }} className="pb-10">
+        <Typography variant="h6" gutterBottom component="div">
+          Orders
+        </Typography>
+        <Table size="small" aria-label="purchases">
+          <TableHead>
+            <TableRow>
+              {rows.map((row) => {
+                return (
+                  <TableCell
+                    className="p-4 md:p-16"
+                    key={row.id}
+                    align={row.align}
+                    padding={row.disablePadding ? "none" : "normal"}
+                    // sortDirection={
+                    //   props.order.id === row.id ? props.order.direction : false
+                    // }
+                  >
+                    <span>{t(`${row.label}`)}</span>
+                  </TableCell>
+                );
+              })}
+            </TableRow>
+          </TableHead>
           <TableBody>
-            {data.map((row) => {
-              return <CustomTableRow key={row.name} row={row} />;
+            {data.map((order) => {
+              return (
+                <TableRow key={order.id}>
+                  <TableCell
+                    className="p-4 md:p-16"
+                    component="th"
+                    align="left"
+                    scope="row"
+                  >
+                    {order.driver.name}
+                  </TableCell>
+                  <TableCell
+                    className="p-4 md:p-16"
+                    component="th"
+                    align="left"
+                    scope="row"
+                  >
+                    {order.customer.name}
+                  </TableCell>
+                  <TableCell
+                    className="p-4 md:p-16"
+                    component="th"
+                    align="left"
+                    scope="row"
+                  >
+                    {order.address.city}
+                  </TableCell>
+                  <TableCell
+                    className="p-4 md:p-16"
+                    component="th"
+                    align="left"
+                    scope="row"
+                  >
+                    {order.products.length}
+                  </TableCell>
+                  <TableCell
+                    className="p-4 md:p-16"
+                    component="th"
+                    align="left"
+                    scope="row"
+                  >
+                    {order.status}
+                  </TableCell>
+                </TableRow>
+              );
             })}
+
+            {/* {row.history.map((historyRow) => (
+                  ))} */}
           </TableBody>
         </Table>
-      </FuseScrollbars>
+      </Box>
 
       <TablePagination
         className="flex-shrink-0 border-t-1"
@@ -181,13 +199,4 @@ function ShipmentsTable({
   );
 }
 
-export default withRouter(ShipmentsTable);
-
-ShipmentsTable.propTypes = {
-  data: PropTypes.array.isRequired,
-  rows: PropTypes.array.isRequired,
-  page: PropTypes.number.isRequired,
-  rowsPerPage: PropTypes.number.isRequired,
-  handleChangeRowsPerPage: PropTypes.func.isRequired,
-  handleChangePage: PropTypes.func.isRequired,
-};
+export default ShipmentsTable;
