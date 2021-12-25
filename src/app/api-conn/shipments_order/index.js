@@ -1,15 +1,11 @@
 import apiClient from "../index";
 
 const orderURL = "/admin/Order";
-const shipmentURL = "/driver/Order";
-
-const getShipments = (pageNumber = 0, pageSize = 10) =>
-  apiClient
-    .get(orderURL, { params: { pageNumber, pageSize } })
-    .then((response) => response.data);
 
 const getAllOrders = () =>
-  apiClient.get(orderURL).then((response) => response.data);
+  apiClient
+    .get(orderURL, { params: { pageNumber: 0, pageSize: 10 } })
+    .then((response) => response.data);
 
 const getShipment = (id) =>
   apiClient
@@ -23,6 +19,12 @@ const postShipment = (userId, data) =>
 
 const putShipment = (id, data) =>
   apiClient.put(`${orderURL}/${id}`, data).then((response) => response.data);
+const reassignOrder = (idOrder, idDriver) =>
+  apiClient
+    .put(`${orderURL}/toggleToDriver`, {
+      params: { orderId: idOrder, driverId: idDriver },
+    })
+    .then((response) => response.data);
 
 const deleteShipment = (ids) =>
   apiClient.delete(orderURL, { data: ids }).then((response) => response.data);
@@ -33,11 +35,11 @@ const registerShipment = (data) =>
     .then((response) => response.data);
 
 export {
-  getShipments,
   getAllOrders,
   getShipment,
   postShipment,
   putShipment,
+  reassignOrder,
   deleteShipment,
   registerShipment,
 };

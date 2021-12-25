@@ -5,7 +5,7 @@ import rows from "./rows";
 import { useDispatch } from "react-redux";
 import { showMessage } from "app/store/fuse/messageSlice";
 
-const dummyOrders = [
+export const dummyOrders = [
   {
     id: "67b6e540-0985-asdsd49e2-8a7a-3af8278f664e2e",
     tag: "Dry Ice",
@@ -277,7 +277,7 @@ const dummyOrders = [
 ];
 
 const Orders = ({ driverId }) => {
-  const [orders, setOrders] = useState({ data: dummyOrders, totalItems: 10 });
+  const [orders, setOrders] = useState({ data: dummyOrders, totalItems: 20 });
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(0);
   const [rowPerPage, setRowPerPage] = useState(10);

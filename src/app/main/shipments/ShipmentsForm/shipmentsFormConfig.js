@@ -8,17 +8,10 @@ const ShipmentsFormPageConfig = {
   },
   routes: [
     {
-      path: "/shipments_create",
+      path: "/shipments_reassign",
       exact: true,
       component: React.lazy(() =>
-        import("./ShipmentsAddForm").then((form) => form)
-      ),
-    },
-    {
-      path: "/shipments_edit/:id",
-      exact: true,
-      component: React.lazy(() =>
-        import("./ShipmentsEditForm").then((form) => form)
+        import("./ShipmentsForm").then((form) => form)
       ),
     },
   ],

@@ -52,9 +52,9 @@ function Shipments() {
   //   history.push(`/shipments_edit/${Shipment.id}/`, { shipment });
   // }
 
-  // function handleAddShipment() {
-  //   history.push(`/shipments_create`);
-  // }
+  function handleReassign() {
+    history.push(`/shipments_reassign`);
+  }
 
   // const onProceed = (itemIds) => {
   //   setLoading(true);
@@ -108,8 +108,8 @@ function Shipments() {
         <Header
           title={t("SHIPMENTS")}
           iconText="fa-truck-loading"
-          addButtonLabel={t("ADD_SHIPMENTS")}
-          // addButtonCallback={handleAddShipment}
+          addButtonLabel={t("REASSIGN_ORDER")}
+          addButtonCallback={handleReassign}
           disableSearch
         />
       }

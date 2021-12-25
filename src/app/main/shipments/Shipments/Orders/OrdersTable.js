@@ -183,7 +183,7 @@ function ShipmentsTable({
         className="flex-shrink-0 border-t-1"
         component="div"
         count={totalItems}
-        labelRowsPerPage={t("ROWS_PER_PAGE")}
+        labelRowsPerPage={t("ROWS2_PER_PAGE")}
         rowsPerPage={rowsPerPage}
         page={page}
         backIconButtonProps={{
