@@ -11,16 +11,21 @@ import FuseLoading from "../../../../@fuse/core/FuseLoading";
 import PageCardedHeader from "./PageCardedHeader";
 import CoolersTable from "./CoolersTable";
 import whitProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
+import { useTranslation } from "react-i18next";
 
 function Coolers() {
   const [coolers, setCoolers] = useState({ data: [] });
   const history = useHistory();
   const location = useLocation();
-
+  const { t } = useTranslation("coolers");
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const [pageNumber, setPageNumber] = useState(0);
   const [pageSize, setPageSize] = useState(10);
+
+  const [codigoSearch, setcodigoSearch] = useState("");
+  const [dateSearch, setDateSearch] = useState("");
+  const [dateSearch2, setDateSearch2] = useState("");
 
   const loadCoolers = (
     pageNumber = 0,
@@ -115,6 +120,10 @@ function Coolers() {
       _code = undefined;
     }
 
+    setcodigoSearch(_code);
+    setDateSearch(pickedUpFrom);
+    setDateSearch2(pickedUpTo);
+
     loadCoolers(pageNumber, pageSize, _code, pickedUpFrom, pickedUpTo);
   }, [location, pageSize, pageNumber]);
 
@@ -130,6 +139,34 @@ function Coolers() {
           addCallback={createCooler}
           searchCallback={loadCoolers}
         />
+      }
+      contentToolbar={
+        <div className="p-16 sm:p-24 max-w-2xl">
+          {(codigoSearch || dateSearch || dateSearch2) && (
+            <span>
+              {t("SEARCH_RESULT")} (
+              {codigoSearch && (
+                <span className="mr-10">
+                  {" "}
+                  <b> {t("CODE")}:</b> {codigoSearch}
+                </span>
+              )}
+              {dateSearch && (
+                <span className="mr-10">
+                  {" "}
+                  <b>{t("DATE_1")}:</b> {dateSearch}
+                </span>
+              )}
+              {dateSearch2 && (
+                <span className="mr-10">
+                  {" "}
+                  <b> {t("DATE_2")}:</b> {dateSearch2}{" "}
+                </span>
+              )}
+              )
+            </span>
+          )}
+        </div>
       }
       content={
         loading ? (

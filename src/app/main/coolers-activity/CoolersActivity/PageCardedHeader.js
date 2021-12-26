@@ -60,8 +60,8 @@ function PageCardedHeader({ code, handleMoveCoolerActivity }) {
         dateTo: "",
       });
       setSearchCode("");
-      history.push(`/coolers_activity`);
     }
+    history.push(`/coolers_activity`);
   };
 
   const handleCHangeSearchCode = (e) => {

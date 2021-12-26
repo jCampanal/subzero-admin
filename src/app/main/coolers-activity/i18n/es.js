@@ -15,6 +15,9 @@ const locale = {
   PICKUP_DATE: "Fecha de recogida",
   DELIVER_DATE: "Fecha de entrega",
   CLEAR_SEARCH: "Limpiar búsqueda",
+  SEARCH_RESULT: "Resultados de la búsqueda para",
+  DATE_1: "Desde",
+  DATE_2: "Hasta",
 };
 
 export default locale;

@@ -24,6 +24,7 @@ const locale = {
   CANCEL: "Cancelar",
   SEARCH: "Buscar",
   CLEAR_SEARCH: "Limpiar búsqueda",
+  SEARCH_RESULT: "Resultados de la búsqueda para",
 };
 
 export default locale;

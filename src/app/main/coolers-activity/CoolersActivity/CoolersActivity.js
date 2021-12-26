@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { showMessage } from "app/store/fuse/messageSlice";
 import FuseLoading from "@fuse/core/FuseLoading";
 import whithProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
+import { useTranslation } from "react-i18next";
 
 const Header = lazy(() => import("./PageCardedHeader"));
 const CoolersActivityTable = lazy(() => import("./CoolersActivityTable"));
@@ -60,6 +61,7 @@ function CoolersActivity() {
   const [coolersActivity, setCoolersActivity] = useState([]);
   const history = useHistory();
   const location = useLocation();
+  const { t } = useTranslation("coolers-activity");
 
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
@@ -67,6 +69,10 @@ function CoolersActivity() {
   const [pageNumber, setPageNumber] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [coolerData, setCoolerData] = useState(null);
+
+  const [codigoSearch, setcodigoSearch] = useState("");
+  const [dateSearch, setDateSearch] = useState("");
+  const [dateSearch2, setDateSearch2] = useState("");
 
   const loadCoolersActivity = (
     pageNumber = 0,
@@ -118,6 +124,10 @@ function CoolersActivity() {
       _code = undefined;
     }
 
+    setcodigoSearch(_code);
+    setDateSearch(pickedUpFrom);
+    setDateSearch2(pickedUpTo);
+
     loadCoolersActivity(pageNumber, pageSize, _code, pickedUpFrom, pickedUpTo);
   }, [location, pageSize, pageNumber]);
 
@@ -147,6 +157,34 @@ function CoolersActivity() {
           code={coolerData ? coolerData.code : null}
           handleMoveCoolerActivity={handleMoveCoolerActivity}
         />
+      }
+      contentToolbar={
+        <div className="p-16 sm:p-24 max-w-2xl">
+          {(codigoSearch || dateSearch || dateSearch2) && (
+            <span>
+              {t("SEARCH_RESULT")} (
+              {codigoSearch && (
+                <span className="mr-10">
+                  {" "}
+                  <b> {t("CODE")}:</b> {codigoSearch}
+                </span>
+              )}
+              {dateSearch && (
+                <span className="mr-10">
+                  {" "}
+                  <b>{t("DATE_1")}:</b> {dateSearch?.split(" ")[0]}
+                </span>
+              )}
+              {dateSearch2 && (
+                <span className="mr-10">
+                  {" "}
+                  <b> {t("DATE_2")}:</b> {dateSearch2?.split(" ")[0]}{" "}
+                </span>
+              )}
+              )
+            </span>
+          )}
+        </div>
       }
       content={
         loading ? (

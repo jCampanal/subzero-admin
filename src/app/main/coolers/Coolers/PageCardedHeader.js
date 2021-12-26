@@ -53,8 +53,8 @@ function PageCardedHeader(props) {
         dateTo: "",
       });
       setSearchCode("");
-      history.push(`/coolers`);
     }
+    history.push(`/coolers`);
   };
 
   useEffect(() => {
