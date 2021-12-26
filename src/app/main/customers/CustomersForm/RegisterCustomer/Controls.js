@@ -21,16 +21,7 @@ function FormControls({ salesTax }) {
   const { control, formState } = methods;
   const { errors } = formState;
 
-  const [showCompanyName, setShowCompanyName] = useState(false);
-  const [showCompanyAddress, setShowCompanyAddress] = useState(false);
   const [image, setImage] = useState();
-
-  const handleChangeShowCompanyName = (event) => {
-    setShowCompanyName(event.target.checked);
-  };
-  const handleChangeShowCompanyAddress = (event) => {
-    setShowCompanyAddress(event.target.checked);
-  };
 
   return (
     <div className="flex flex-col justify-center sm:justify-start flex-wrap max-w-2xl">
@@ -166,113 +157,86 @@ function FormControls({ salesTax }) {
         )}
       />
 
-      <div className="grid gap-x-48 grid-cols-1 sm:grid-cols-2">
+      <div className="grid gap-x-48 grid-cols-1 ">
         <div className="flex flex-col">
-          <FormControlLabel
-            control={
-              <Switch
-                checked={showCompanyName}
-                onChange={handleChangeShowCompanyName}
-                inputProps={{ "aria-label": "controlled" }}
+          <Controller
+            name="companyName"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                className="mt-8 mb-16"
+                error={!!errors.companyName}
+                helperText={errors?.companyName?.message}
+                label={t("companyName")}
+                id="companyName"
+                variant="outlined"
               />
-            }
-            label="Modify Company Name"
+            )}
           />
-          {showCompanyName && (
-            <Controller
-              name="companyName"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  className="mt-8 mb-16"
-                  error={!!errors.companyName}
-                  helperText={errors?.companyName?.message}
-                  label={t("companyName")}
-                  id="companyName"
-                  variant="outlined"
-                />
-              )}
-            />
-          )}
         </div>
 
         <div className="flex flex-col">
-          <FormControlLabel
-            control={
-              <Switch
-                checked={showCompanyAddress}
-                onChange={handleChangeShowCompanyAddress}
-                inputProps={{ "aria-label": "controlled" }}
+          <Controller
+            name="street"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                className="mt-8 mb-16"
+                error={!!errors.street}
+                helperText={errors?.street?.message}
+                label={t("street")}
+                id="street"
+                variant="outlined"
               />
-            }
-            label="Modify Company Adress"
+            )}
           />
-
-          {showCompanyAddress && (
-            <>
-              <Controller
-                name="street"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    className="mt-8 mb-16"
-                    error={!!errors.street}
-                    helperText={errors?.street?.message}
-                    label={t("street")}
-                    id="street"
-                    variant="outlined"
-                  />
-                )}
+          <Controller
+            name="city"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                className="mt-8 mb-16"
+                error={!!errors.city}
+                helperText={errors?.city?.message}
+                label={t("city")}
+                id="city"
+                variant="outlined"
               />
-              <Controller
-                name="city"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    className="mt-8 mb-16"
-                    error={!!errors.city}
-                    helperText={errors?.city?.message}
-                    label={t("city")}
-                    id="city"
-                    variant="outlined"
-                  />
-                )}
+            )}
+          />
+          <Controller
+            name="state"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                className="mt-8 mb-16"
+                error={!!errors.state}
+                helperText={errors?.state?.message}
+                label={t("state")}
+                id="state"
+                variant="outlined"
               />
-              <Controller
-                name="state"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    className="mt-8 mb-16"
-                    error={!!errors.state}
-                    helperText={errors?.state?.message}
-                    label={t("state")}
-                    id="state"
-                    variant="outlined"
-                  />
-                )}
+            )}
+          />
+          <Controller
+            name="zipCode"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                className="mt-8 mb-16"
+                error={!!errors.zipCode}
+                helperText={errors?.zipCode?.message}
+                label={t("zipCode")}
+                id="zipCode"
+                variant="outlined"
               />
-              <Controller
-                name="zipCode"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    className="mt-8 mb-16"
-                    error={!!errors.zipCode}
-                    helperText={errors?.zipCode?.message}
-                    label={t("zipCode")}
-                    id="zipCode"
-                    variant="outlined"
-                  />
-                )}
-              />
-            </>
-          )}
+            )}
+          />
         </div>
       </div>
       <div className="flex flex-col sm:flex-row sm:gap-7 mt-32 ">
