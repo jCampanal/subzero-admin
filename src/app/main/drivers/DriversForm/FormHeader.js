@@ -66,11 +66,11 @@ function FormHeader() {
       formData.append("Username", getValues().userName);
       formData.append("Name", getValues().name);
       formData.append("Lastname", getValues().lastName);
-      formData.append("Email", getValues().email);
       formData.append("Password", getValues().password);
       formData.append("ConfirmPassword", getValues().confirmPassword);
       formData.append("PhoneNumber", getValues().phoneNumber);
       formData.append("WarehouseId", getValues().warehouseId);
+      if (getValues().email !== "") formData.append("Email", getValues().email);
       if (getValues().file !== null)
         formData.append("Image", getValues().image);
       registerDriver(formData)

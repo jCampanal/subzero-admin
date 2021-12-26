@@ -112,24 +112,7 @@ function FormControls({ warehouses, ...props }) {
           />
         )}
       />
-      <Controller
-        name="email"
-        control={control}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            className="mt-8 mb-16"
-            error={!!errors.email}
-            required
-            type="email"
-            helperText={errors?.email?.message}
-            label={t("EMAIL")}
-            id="email"
-            variant="outlined"
-            fullWidth
-          />
-        )}
-      />
+
       <Controller
         name="password"
         control={control}
@@ -195,7 +178,23 @@ function FormControls({ warehouses, ...props }) {
           </FormControl>
         )}
       />
-
+      <Controller
+        name="email"
+        control={control}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            className="mt-8 mb-16"
+            error={!!errors.email}
+            type="email"
+            helperText={errors?.email?.message}
+            label={t("EMAIL")}
+            id="email"
+            variant="outlined"
+            fullWidth
+          />
+        )}
+      />
       <Controller
         name="phoneNumber"
         control={control}

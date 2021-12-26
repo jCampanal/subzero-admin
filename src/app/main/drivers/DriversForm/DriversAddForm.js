@@ -31,11 +31,7 @@ const driverForm = () => {
     userName: yup.string().required(t("REQUIRED")),
     name: yup.string().required(t("REQUIRED")),
     lastName: yup.string().required(t("REQUIRED")),
-    email: yup
-      .string()
-      .email(t("NOT_EMAIL"))
-      .max(255)
-      .required(t(t("REQUIRED"))),
+    email: yup.string().email(t("NOT_EMAIL")).max(255),
     password: yup
       .string()
       .max(255)
