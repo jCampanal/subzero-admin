@@ -114,7 +114,7 @@ function FormControls(props) {
             error={errors.email}
             type="email"
             helperText={errors?.email?.message}
-            label={t("email")}
+            label={t("EMAIL")}
             id="email"
             variant="outlined"
             fullWidth
@@ -165,7 +165,7 @@ function FormControls(props) {
             className="mt-8 mb-16"
             error={errors.phoneNumber}
             helperText={errors?.phoneNumber?.message}
-            label={t("PHONENUMBER")}
+            label={t("PHONO")}
             id="phoneNumber"
             variant="outlined"
             fullWidth
