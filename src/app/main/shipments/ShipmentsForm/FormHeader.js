@@ -16,7 +16,7 @@ function FormHeader() {
   const theme = useTheme();
   const history = useHistory();
   const { id } = useParams();
-  const { t } = useTranslation("shipments-form");
+  const { t } = useTranslation("shipments");
   const methods = useFormContext();
   const {
     getValues,

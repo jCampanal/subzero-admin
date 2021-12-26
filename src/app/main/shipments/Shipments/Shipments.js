@@ -13,7 +13,7 @@ const Header = lazy(() => import("app/components/HeaderPage/PageCardedHeader"));
 const ShipmentsTab = lazy(() => import("./ShipmentsTable"));
 
 function Shipments() {
-  const { t } = useTranslation("Shipments");
+  const { t } = useTranslation("shipments");
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();

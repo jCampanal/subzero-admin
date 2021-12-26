@@ -1,47 +1,14 @@
-import TextField from "@material-ui/core/TextField";
 import { Controller, useFormContext } from "react-hook-form";
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 
 import FormControl from "@material-ui/core/FormControl";
-import {
-  Checkbox,
-  FormControlLabel,
-  Input,
-  InputLabel,
-  ListItemText,
-  MenuItem,
-  Select,
-  Switch,
-} from "@material-ui/core";
-import { DateTimePicker } from "@material-ui/pickers";
-
-const optionsStatus = [
-  "Waiting",
-  "Processing",
-  "Shipping",
-  "Delivered",
-  "Canceled",
-];
-const optionsTermOrder = ["Net30", "Net7", "COD", "NET60"];
-
-const MenuProps = {
-  variant: "menu",
-  anchorOrigin: {
-    vertical: "bottom",
-    horizontal: "left",
-  },
-  transformOrigin: {
-    vertical: "top",
-    horizontal: "left",
-  },
-  getContentAnchorEl: null,
-};
+import { InputLabel, MenuItem, Select } from "@material-ui/core";
 
 function FormControls({ orders, drivers }) {
   const methods = useFormContext();
   const { control, formState } = methods;
-  const { t } = useTranslation("customers-form");
+  const { t } = useTranslation("shipments");
   const { errors } = formState;
 
   return (

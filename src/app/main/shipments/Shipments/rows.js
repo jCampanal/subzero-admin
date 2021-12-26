@@ -24,14 +24,14 @@ const rows = [
     id: "phoneNumber",
     align: "left",
     disablePadding: false,
-    label: "PHONENUMBER",
+    label: "PHONO",
     sort: true,
   },
   {
     id: "warehouse",
     align: "left",
     disablePadding: false,
-    label: "WAREHOUSE",
+    label: "WAREHOUSEID",
     sort: true,
   },
 ];

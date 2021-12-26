@@ -20,17 +20,16 @@ import { intRegex, phoneRegex } from "app/lib/regexs";
 import { getAllOrders } from "app/api-conn/shipments_order";
 import { dummyOrders } from "../Shipments/Orders/Orders";
 
-const validationRules = yup.object().shape({
-  orderId: yup.string().required(t("REQUIRED")),
-  driverId: yup.string().required(t("REQUIRED")),
-});
-
 const ShipmentAddForm = () => {
-  const history = useHistory();
   const [orderAll, setOrderAll] = useState(dummyOrders);
   const [driverAll, setDrivertAll] = useState([]);
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation("Shipments");
+  const validationRules = yup.object().shape({
+    orderId: yup.string().required(t("REQUIRED")),
+    driverId: yup.string().required(t("REQUIRED")),
+  });
+
   const dispatch = useDispatch();
   const methods = useForm({
     defaultValues: {

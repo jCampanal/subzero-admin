@@ -141,7 +141,7 @@ function ShipmentsTable({
           aria-label="collapsible table"
         >
           <TableHeader
-            namespace="Shipments"
+            namespace="shipments"
             rows={rows}
             selectedProductIds={selected}
             order={order}
