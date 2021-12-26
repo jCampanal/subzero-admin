@@ -39,7 +39,7 @@ const validationRules = yup.object().shape({
   tag: yup.string().required(t("REQUIRED")),
   termOrder: yup.string().required(t("REQUIRED")),
   zipCode: yup.string().matches(intRegex, {
-    message: "It is not a number",
+    message: t("NOT_NUMBER"),
     excludeEmptyString: true,
   }),
 });

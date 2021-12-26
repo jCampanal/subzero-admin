@@ -8,6 +8,7 @@ import FuseLoading from "@fuse/core/FuseLoading";
 import { showMessage } from "app/store/fuse/messageSlice";
 import RemoveDlg from "app/common/removeDlg";
 import { openDialog } from "app/store/fuse/dialogSlice";
+import withProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
 
 const Header = lazy(() => import("app/components/HeaderPage/PageCardedHeader"));
 const DriversTable = lazy(() => import("./DriversTable"));
@@ -178,4 +179,4 @@ function Drivers() {
   );
 }
 
-export default memo(Drivers);
+export default memo(withProtectedRoute(Drivers));
