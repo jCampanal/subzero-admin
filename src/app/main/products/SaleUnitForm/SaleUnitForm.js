@@ -15,19 +15,18 @@ import {
 import { showMessage } from "../../../store/fuse/messageSlice";
 import FuseLoading from "../../../../@fuse/core/FuseLoading";
 
-const validationRules = yup.object().shape({
-  name: yup.string().required(t("REQUIRED")),
-  /*         .min(3, 'MORE_THAN_2')
-        .matches(/^[a-z]([\w ]*)[a-z]$/gi, 'UNACCEPTED_CHARACTER') */ value: yup
-    .string()
-    .required(t("REQUIRED")) /* 
-        .min(2, 'MORE_THAN_1')
-        .matches(/^[a-z]([\w]*)[a-z]$/gi, 'UNACCEPTED_CHARACTER'),
- */,
-});
 const SaleUnitForm = (props) => {
   const dispatch = useDispatch();
   const { t } = useTranslation("product-form");
+  const validationRules = yup.object().shape({
+    name: yup.string().required(t("REQUIRED")),
+    /*         .min(3, 'MORE_THAN_2')
+          .matches(/^[a-z]([\w ]*)[a-z]$/gi, 'UNACCEPTED_CHARACTER') */ value:
+      yup.string().required(t("REQUIRED")) /* 
+          .min(2, 'MORE_THAN_1')
+          .matches(/^[a-z]([\w]*)[a-z]$/gi, 'UNACCEPTED_CHARACTER'),
+   */,
+  });
   const [loading, setLoading] = useState(false);
   const methods = useForm({
     defaultValues: {

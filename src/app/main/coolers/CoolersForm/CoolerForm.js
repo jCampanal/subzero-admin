@@ -14,12 +14,6 @@ import RemoveDlg from "../../../common/removeDlg";
 
 const today = new Date();
 
-const validationRules = yup.object().shape({
-  code: yup.string().required(t("REQUIRED")),
-  pickup: yup.date().required(t("REQUIRED")).max(today),
-  providerId: yup.string().required(t("REQUIRED")),
-});
-
 const CoolerForm = () => {
   const {
     user: { logged },
@@ -35,6 +29,12 @@ const CoolerForm = () => {
         providerId: "",
       };
   const { t } = useTranslation("coolers-form");
+  const validationRules = yup.object().shape({
+    code: yup.string().required(t("REQUIRED")),
+    pickup: yup.date().required(t("REQUIRED")).max(today),
+    providerId: yup.string().required(t("REQUIRED")),
+  });
+
   const [providers, setProviders] = useState([]);
   const dispatch = useDispatch();
   const methods = useForm({

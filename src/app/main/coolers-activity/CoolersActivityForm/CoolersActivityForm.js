@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
-import { useHistory, useLocation, useParams } from "react-router";
-import { useSelector } from "react-redux";
+import { useLocation } from "react-router";
 import FusePageCarded from "@fuse/core/FusePageCarded";
 import FuseLoading from "@fuse/core/FuseLoading";
 import { useTranslation } from "react-i18next";
@@ -9,25 +8,19 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Header from "./Header";
 import Controls from "./Controls";
-
-const validationRules = yup.object().shape({
-  receiverName: yup.string().required(t("REQUIRED")),
-  recierverLastName: yup.string().required(t("REQUIRED")),
-  file: yup.string(),
-  driverId: yup.string().required(t("REQUIRED")),
-  customerId: yup.string(),
-  moveTo: yup.string().required(t("REQUIRED")),
-  coolerId: yup.string().required(t("REQUIRED")),
-});
+import withProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
 
 const CoolersActivityForm = () => {
-  const history = useHistory();
-  const {
-    user: { logged },
-  } = useSelector((state) => state);
-  if (!logged) history.push("/login");
-
   const { t } = useTranslation("CoolersActivity-form");
+  const validationRules = yup.object().shape({
+    receiverName: yup.string().required(t("REQUIRED")),
+    recierverLastName: yup.string().required(t("REQUIRED")),
+    file: yup.string(),
+    driverId: yup.string().required(t("REQUIRED")),
+    customerId: yup.string(),
+    moveTo: yup.string().required(t("REQUIRED")),
+    coolerId: yup.string().required(t("REQUIRED")),
+  });
 
   const { state } = useLocation();
 
@@ -72,4 +65,4 @@ const CoolersActivityForm = () => {
   );
 };
 
-export default CoolersActivityForm;
+export default withProtectedRoute(CoolersActivityForm);

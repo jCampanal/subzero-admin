@@ -18,7 +18,6 @@ import withProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
 
 const CustomerForm = () => {
   const history = useHistory();
-  const { id } = useParams();
   const { state } = useLocation();
 
   const { t } = useTranslation("customers-form");

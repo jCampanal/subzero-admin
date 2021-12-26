@@ -21,7 +21,7 @@ export const ShipmentStatus = {
   3: { name: "CANCELED", icon: "fa-times", tColor: "red-700" },
 };
 
-function OrdersTable({ data, row }) {
+function OrdersTable({ data, rows }) {
   const { t } = useTranslation("orders-admin");
   const [selected, setSelected] = useState([]);
 
@@ -111,7 +111,7 @@ function OrdersTable({ data, row }) {
         <Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
           <TableHeader
             namespace="orders-admin"
-            rows={props.rows}
+            rows={rows}
             selectedProductIds={selected}
             order={order}
             onSelectAllClick={handleSelectAllClick}

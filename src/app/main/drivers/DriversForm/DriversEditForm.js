@@ -16,8 +16,6 @@ import { useTranslation } from "react-i18next";
 import withProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
 import { phoneRegex } from "app/lib/regexs";
 
-const today = new Date();
-
 const CustomerForm = () => {
   const dispatch = useDispatch();
 

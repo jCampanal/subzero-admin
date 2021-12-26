@@ -18,21 +18,6 @@ import { showMessage } from "../../../store/fuse/messageSlice";
 import { openDialog } from "../../../store/fuse/dialogSlice";
 import RemoveDlg from "../../../common/removeDlg";
 
-const validationRules = yup.object().shape({
-  name: yup
-    .string()
-    .required(t("REQUIRED"))
-    .min(3, "MORE_THAN_2")
-    .matches(/^[a-z]([\w ]*)[a-z]$/gi, "UNACCEPTED_CHARACTER"),
-  link: yup
-    .string()
-    .required(t("REQUIRED"))
-    .min(3, "MORE_THAN_2")
-    .max(21, "LESS_THAN_10")
-    .trim()
-    .matches(/^[a-z]([\w]*)[a-z]$/gi, "UNACCEPTED_CHARACTER"),
-});
-
 const CategoryForm = () => {
   const { id } = useParams();
   const location = useLocation();
@@ -42,6 +27,21 @@ const CategoryForm = () => {
   console.log("location", location);
   console.log("category", category);
   const { t } = useTranslation("category-form");
+  const validationRules = yup.object().shape({
+    name: yup
+      .string()
+      .required(t("REQUIRED"))
+      .min(3, "MORE_THAN_2")
+      .matches(/^[a-z]([\w ]*)[a-z]$/gi, "UNACCEPTED_CHARACTER"),
+    link: yup
+      .string()
+      .required(t("REQUIRED"))
+      .min(3, "MORE_THAN_2")
+      .max(21, "LESS_THAN_10")
+      .trim()
+      .matches(/^[a-z]([\w]*)[a-z]$/gi, "UNACCEPTED_CHARACTER"),
+  });
+
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();

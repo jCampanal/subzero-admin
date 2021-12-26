@@ -27,7 +27,9 @@ function CoolersCustomers() {
     setLoading(true);
     getCoolersByCustomers(pageNumber, pageSize)
       .then((response) => {
-        setCoolersCustomers(response.data.data[0].cooler);
+        if (response.data?.data[0]?.cooler) {
+          setCoolersCustomers(response.data?.data[0]?.cooler);
+        }
         setLoading(false);
       })
       .catch(() => {
