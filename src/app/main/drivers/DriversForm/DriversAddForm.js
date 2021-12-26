@@ -32,24 +32,10 @@ const driverForm = () => {
     name: yup.string().required(t("REQUIRED")),
     lastName: yup.string().required(t("REQUIRED")),
     email: yup.string().email(t("NOT_EMAIL")).max(255),
-    password: yup
-      .string()
-      .max(255)
-      .min(6)
-      .required(t("REQUIRED"))
-      .matches(/^(?=.*[a-z])/, t("NOT_LETTER"))
-      .matches(/^(?=.*[A-Z])/, t("NOT_CHARATER"))
-      .matches(/^(?=.*[0-9])/, t("NOT_NUMBER"))
-      .matches(/^(?=.*[!@#%&])/, t("NOT_SPECIAL_CHARATER")),
+    password: yup.string().max(255).min(8).required(t("REQUIRED")),
     confirmPassword: yup
       .string()
-      .max(255)
-      .min(6)
-      .required(t("REQUIRED"))
-      .matches(/^(?=.*[a-z])/, t("NOT_LETTER"))
-      .matches(/^(?=.*[A-Z])/, t("NOT_CHARATER"))
-      .matches(/^(?=.*[0-9])/, t("NOT_NUMBER"))
-      .matches(/^(?=.*[!@#%&])/, t("NOT_SPECIAL_CHARATER"))
+
       .test("passwords-match", "Passwords must match", function (value) {
         return this.parent.password === value;
       }),

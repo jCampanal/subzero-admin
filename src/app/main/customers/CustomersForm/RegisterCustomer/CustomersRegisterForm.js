@@ -40,23 +40,15 @@ const CustomersRegisterForm = () => {
     companyName: yup.string(),
     confirmPassword: yup
       .string()
-      .max(255)
-      .min(6)
+
       .required(t("REQUIRED"))
       .test("passwords-match", t("MATCH_PASS"), function (value) {
         return this.parent.password === value;
       }),
     lastname: yup.string().required(t("REQUIRED")),
     name: yup.string().required(t("REQUIRED")),
-    password: yup
-      .string()
-      .max(255)
-      .min(6)
-      .required(t("REQUIRED"))
-      .matches(/^(?=.*[a-z])/, t("NOT_LETTER"))
-      .matches(/^(?=.*[A-Z])/, t("NOT_CHARATER"))
-      .matches(/^(?=.*[0-9])/, t("NOT_PASS_NUMBER"))
-      .matches(/^(?=.*[!@#$%&*_+-,./';)(><^=-?])/, t("NOT_SPECIAL_CHARATER")),
+    password: yup.string().max(255).min(8).required(t("REQUIRED")),
+
     phoneNumber: yup.string().matches(phoneRegex, {
       message: t("NOT_PHONE"),
       excludeEmptyString: true,
