@@ -12,11 +12,11 @@ import { useDispatch } from "react-redux";
 import { registerCustomer, putCustomer } from "../../../api-conn/customers";
 import { showMessage } from "../../../store/fuse/messageSlice";
 
-function FormHeader(props) {
+function FormHeader() {
   const theme = useTheme();
   const history = useHistory();
   const { id } = useParams();
-  const { t } = useTranslation("customer-form");
+  const { t } = useTranslation("customers-form");
   const methods = useFormContext();
   const {
     getValues,
@@ -27,16 +27,22 @@ function FormHeader(props) {
   const saveData = () => {
     if (id) {
       const formData = {
-        companyName: getValues().companyName,
         email: getValues().email,
         lastname: getValues().lastname,
         name: getValues().name,
-        phoneNumber: getValues().phoneNumber,
         priorityCustomer: getValues().priorityCustomer,
-        salesTaxId: getValues().salesTaxId,
         username: getValues().username,
       };
 
+      if (getValues().companyName !== "") {
+        formData.companyName = getValues().companyName;
+      }
+      if (getValues().phoneNumber !== "") {
+        formData.phoneNumber = getValues().phoneNumber;
+      }
+      if (getValues().salesTaxId !== "") {
+        formData.salesTaxId = getValues().salesTaxId;
+      }
       if (getValues().street !== "") {
         formData.street = getValues().street;
       }
@@ -55,7 +61,7 @@ function FormHeader(props) {
         .then(() => {
           dispatch(
             showMessage({
-              message: "The customer was updated successfully",
+              message: t("SUCCESS_UPDATE"),
               variant: "success",
               anchorOrigin: {
                 vertical: "top",
@@ -91,7 +97,7 @@ function FormHeader(props) {
         .then(() => {
           dispatch(
             showMessage({
-              message: "The customer was created successfully",
+              message: t("SUCCESS_CREATE"),
               variant: "success",
               anchorOrigin: {
                 vertical: "top",
@@ -146,7 +152,7 @@ function FormHeader(props) {
               animate={{ x: 0, transition: { delay: 0.3 } }}
             >
               <Typography className="text-16 sm:text-20 truncate font-semibold">
-                {t(id ? "EDIT" : "CREATE")}
+                {t(id ? "EDIT" : "CREATE_NEW")}
               </Typography>
             </motion.div>
           </div>

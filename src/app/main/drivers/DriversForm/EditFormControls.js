@@ -30,7 +30,7 @@ function FormControls({ warehouses, users }) {
               className="mt-8 mb-16"
               error={!!errors.name}
               helperText={errors?.name?.message}
-              label={t("name")}
+              label={t("NAME")}
               id="name"
               variant="outlined"
             />
@@ -47,7 +47,7 @@ function FormControls({ warehouses, users }) {
               className="mt-8 mb-16"
               error={!!errors.lastname}
               helperText={errors?.lastname?.message}
-              label={t("lastname")}
+              label={t("LASTNAME")}
               id="lastname"
               variant="outlined"
             />
@@ -64,7 +64,7 @@ function FormControls({ warehouses, users }) {
               className="mt-8 mb-16"
               error={!!errors.email}
               helperText={errors?.email?.message}
-              label={t("email")}
+              label={t("EMAIL")}
               id="email"
               variant="outlined"
             />
@@ -79,7 +79,7 @@ function FormControls({ warehouses, users }) {
               className="mt-8 mb-16"
               error={!!errors.phoneNumber}
               helperText={errors?.phoneNumber?.message}
-              label={t("phoneNumber")}
+              label={t("PHONO")}
               id="phoneNumber"
               variant="outlined"
             />

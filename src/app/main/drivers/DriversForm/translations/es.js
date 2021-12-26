@@ -1,6 +1,30 @@
 const locale = {
   CREATE_NEW: "Crear nuevo conductor",
   DRIVERS: "Conductores",
+  SAVE: "Guardar",
+  NOT_NUMBER: "Esto no es un numbero",
+  NOT_EMAIL: "Esto no es un email",
+  NOT_PHONE: "Esto no es un numero de teléfono válido",
+  USERNAME: "Usuario",
+  NAME: "Nombre",
+  LASTNAME: "Apellidos",
+  EMAIL: "Email",
+  PHONO: "Número de teéfono",
+  WAREHOUSEID: "Almacén",
+  PASSWORD: "Password",
+  CONFIRMPASSWORD: "Confirmar password",
+  NOT_LETTER: "Debe contener al menos un carácter en minúscula",
+  NOT_CHARATER: "Debe contener al menos un carácter en mayúscula",
+  NOT_NUMBER: "Debe contener al menos un número",
+  NOT_SPECIAL_CHARATER: "Debe contener al menos un carácter especial",
+  REQUIRED: "Este campo es requerido",
+  ERRO_LOADING: "Hay algo que no funciona, intente actualizar la página",
+  SUCCESS_UPDATE: "El conductor ha sido actualizado con éxito",
+  SUCCESS_CREATE: "El conductor ha sido creado con éxito",
+
+  CLICK_TO_CHANGE: "Click para cambiar la imagen",
+  CLICK_TO_LOAD: "Click para cargar una imagen",
+  EDIT: "Editar",
 };
 
 export default locale;

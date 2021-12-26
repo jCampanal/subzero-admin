@@ -1,63 +1,20 @@
 import { FormProvider, useForm } from "react-hook-form";
 import FusePageCarded from "@fuse/core/FusePageCarded";
-import { useHistory, useLocation, useParams } from "react-router";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import FormControls from "./AddFormControls";
 import FormHeader from "./FormHeader";
-import { getProvidersAll } from "../../../api-conn/providers";
-import { openDialog } from "../../../store/fuse/dialogSlice";
-import RemoveDlg from "../../../common/removeDlg";
+
 import FuseLoading from "@fuse/core/FuseLoading";
 import { getAllWarehouses } from "app/api-conn/warehouses";
 import { showMessage } from "app/store/fuse/messageSlice";
-
-const validationRules = yup.object().shape({
-  userName: yup.string().required("REQUIRED"),
-  name: yup.string().required("REQUIRED"),
-  lastName: yup.string().required("REQUIRED"),
-  email: yup
-    .string()
-    .email("Must be a valid email")
-    .max(255)
-    .required("REQUIRED"),
-  password: yup
-    .string()
-    .max(255)
-    .min(6)
-    .required("REQUIRED")
-    .matches(/^(?=.*[a-z])/, "Must contain at least one lowercase character")
-    .matches(/^(?=.*[A-Z])/, "Must contain at least one uppercase character")
-    .matches(/^(?=.*[0-9])/, "Must contain at least one number")
-    .matches(/^(?=.*[!@#%&])/, "Must contain at least one special character"),
-  confirmPassword: yup
-    .string()
-    .max(255)
-    .min(6)
-    .required("REQUIRED")
-    .matches(/^(?=.*[a-z])/, "Must contain at least one lowercase character")
-    .matches(/^(?=.*[A-Z])/, "Must contain at least one uppercase character")
-    .matches(/^(?=.*[0-9])/, "Must contain at least one number")
-    .matches(/^(?=.*[!@#%&])/, "Must contain at least one special character")
-    .test("passwords-match", "Passwords must match", function (value) {
-      return this.parent.password === value;
-    }),
-  warehouseId: yup.string().required("REQUIRED"),
-  phoneNumber: yup.string(),
-  image: yup.mixed(),
-});
+import { phoneRegex } from "app/lib/regexs";
+import withProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
 
 const driverForm = () => {
-  const {
-    user: { logged },
-  } = useSelector((state) => state);
-  const history = useHistory();
-  const { id } = useParams();
-  const { state } = useLocation();
-
   const driver = {
     userName: "",
     name: "",
@@ -70,6 +27,44 @@ const driverForm = () => {
     image: null,
   };
   const { t } = useTranslation("drivers-form");
+  const validationRules = yup.object().shape({
+    userName: yup.string().required(t("REQUIRED")),
+    name: yup.string().required(t("REQUIRED")),
+    lastName: yup.string().required(t("REQUIRED")),
+    email: yup
+      .string()
+      .email(t("NOT_EMAIL"))
+      .max(255)
+      .required(t(t("REQUIRED"))),
+    password: yup
+      .string()
+      .max(255)
+      .min(6)
+      .required(t("REQUIRED"))
+      .matches(/^(?=.*[a-z])/, t("NOT_LETTER"))
+      .matches(/^(?=.*[A-Z])/, t("NOT_CHARATER"))
+      .matches(/^(?=.*[0-9])/, t("NOT_NUMBER"))
+      .matches(/^(?=.*[!@#%&])/, t("NOT_SPECIAL_CHARATER")),
+    confirmPassword: yup
+      .string()
+      .max(255)
+      .min(6)
+      .required(t("REQUIRED"))
+      .matches(/^(?=.*[a-z])/, t("NOT_LETTER"))
+      .matches(/^(?=.*[A-Z])/, t("NOT_CHARATER"))
+      .matches(/^(?=.*[0-9])/, t("NOT_NUMBER"))
+      .matches(/^(?=.*[!@#%&])/, t("NOT_SPECIAL_CHARATER"))
+      .test("passwords-match", "Passwords must match", function (value) {
+        return this.parent.password === value;
+      }),
+    warehouseId: yup.string().required(t("REQUIRED")),
+    phoneNumber: yup.string().matches(phoneRegex, {
+      message: t("NOT_PHONE"),
+      excludeEmptyString: true,
+    }),
+    image: yup.mixed(),
+  });
+
   const dispatch = useDispatch();
   const methods = useForm({
     defaultValues: {
@@ -98,7 +93,7 @@ const driverForm = () => {
       .catch(() => {
         dispatch(
           showMessage({
-            message: "There is something wrong, try to refresh the page",
+            message: t("ERRO_LOADING"),
             variant: "error",
           })
         );
@@ -109,22 +104,6 @@ const driverForm = () => {
   useEffect(() => {
     loadWareHouses();
   }, []);
-  // const removedriver = (itemId) =>
-  //   dispatch(
-  //     openDialog({
-  //       children: (
-  //         <RemoveDlg
-  //           itemId={itemId}
-  //           proceedCallback={() => history.push("/drivers")}
-  //         />
-  //       ),
-  //     })
-  //   );
-
-  useEffect(() => {
-    if (!logged) history.push("/login");
-    return <></>;
-  }, [logged, history]);
 
   return (
     <FormProvider {...methods}>
@@ -134,11 +113,6 @@ const driverForm = () => {
           header: "min-h-72 h-72 sm:h-136 sm:min-h-136",
         }}
         header={<FormHeader />}
-        contentToolbar={
-          <div className="p-16 sm:p-24 max-w-2xl">
-            {id ? <h1>{driver.code}</h1> : <h1>{t("CREATE_NEW")}</h1>}
-          </div>
-        }
         content={
           <div className="p-16 sm:p-24 max-w-2xl">
             {loading ? (
@@ -153,4 +127,4 @@ const driverForm = () => {
   );
 };
 
-export default driverForm;
+export default withProtectedRoute(driverForm);

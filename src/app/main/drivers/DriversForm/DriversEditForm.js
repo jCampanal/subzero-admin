@@ -1,8 +1,8 @@
 import { FormProvider, useForm } from "react-hook-form";
 import FusePageCarded from "@fuse/core/FusePageCarded";
-import { useHistory, useLocation } from "react-router";
+import { useLocation } from "react-router";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import FormControls from "./EditFormControls";
@@ -12,36 +12,37 @@ import { getAllUsers } from "app/api-conn/User";
 import FuseLoading from "@fuse/core/FuseLoading";
 import { getAllWarehouses } from "app/api-conn/warehouses";
 import { showMessage } from "app/store/fuse/messageSlice";
+import { useTranslation } from "react-i18next";
+import withProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
+import { phoneRegex } from "app/lib/regexs";
 
 const today = new Date();
 
-const validationRules = yup.object().shape({
-  email: yup
-    .string()
-    .email("Must be a valid email")
-    .max(255)
-    .required("REQUIRED"),
-  lastname: yup.string().required("REQUIRED"),
-  name: yup.string().required("REQUIRED"),
-  username: yup.string().required("REQUIRED"),
-  phoneNumber: yup.string(),
-  warehouseId: yup.string().required("REQUIRED"),
-});
-
 const CustomerForm = () => {
-  const {
-    user: { logged },
-  } = useSelector((state) => state);
-  const history = useHistory();
   const dispatch = useDispatch();
 
   const { state } = useLocation();
 
   const driver = state.driver;
-
+  const { t } = useTranslation("drivers-form");
   const [warehouses, setWarehouses] = useState([]);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const validationRules = yup.object().shape({
+    email: yup
+      .string()
+      .email("Must be a valid email")
+      .max(255)
+      .required(t("REQUIRED")),
+    lastname: yup.string().required(t("REQUIRED")),
+    name: yup.string().required(t("REQUIRED")),
+    username: yup.string().required(t("REQUIRED")),
+    phoneNumber: yup.string().matches(phoneRegex, {
+      message: t("NOT_PHONE"),
+      excludeEmptyString: true,
+    }),
+    warehouseId: yup.string().required(t("REQUIRED")),
+  });
 
   const methods = useForm({
     defaultValues: {
@@ -93,10 +94,6 @@ const CustomerForm = () => {
     loadWareHouses();
     loadUSers();
   }, []);
-  useEffect(() => {
-    if (!logged) history.push("/login");
-    return <></>;
-  }, [logged, history]);
 
   return (
     <FormProvider {...methods}>
@@ -125,4 +122,4 @@ const CustomerForm = () => {
   );
 };
 
-export default CustomerForm;
+export default withProtectedRoute(CustomerForm);

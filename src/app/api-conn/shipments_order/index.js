@@ -3,9 +3,7 @@ import apiClient from "../index";
 const orderURL = "/admin/Order";
 
 const getAllOrders = () =>
-  apiClient
-    .get(orderURL, { params: { pageNumber: 0, pageSize: 10 } })
-    .then((response) => response.data);
+  apiClient.get(orderURL + "/getAll").then((response) => response.data);
 
 const getShipment = (id) =>
   apiClient

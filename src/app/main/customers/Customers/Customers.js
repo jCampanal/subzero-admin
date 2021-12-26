@@ -93,8 +93,8 @@ function Customers() {
           <RemoveDlg
             itemId={itemId}
             proceedCallback={() => onProceed(itemId)}
-            dlgTitle="Warning, you have requested a risky operation"
-            dlgText="You are attempting to delete a Customer, this operation cannot be undone. Are you sure you want to proceed with the deletion?"
+            dlgTitle={t("DELETE_WARNING_TITLE")}
+            dlgText={t("DELETE_WARNING_TEXT")}
           />
         ),
       })

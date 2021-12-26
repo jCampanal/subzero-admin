@@ -173,7 +173,7 @@ function PageCardedHeader({ code, handleMoveCoolerActivity }) {
           onClick={clearFilter}
         >
           <CancelRounded className="mr-5" />
-          {t("Clear search")}
+          {t("CLEAR_SEARCH")}
         </Button>
       </motion.div>
       <DateRangePicker

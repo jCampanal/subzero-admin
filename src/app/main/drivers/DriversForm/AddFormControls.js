@@ -123,7 +123,7 @@ function FormControls({ warehouses, ...props }) {
             required
             type="email"
             helperText={errors?.email?.message}
-            label={t("email")}
+            label={t("EMAIL")}
             id="email"
             variant="outlined"
             fullWidth
@@ -204,9 +204,8 @@ function FormControls({ warehouses, ...props }) {
             {...field}
             className="mt-8 mb-16"
             error={!!errors.phoneNumber}
-            required
             helperText={errors?.phoneNumber?.message}
-            label={t("PHONENUMBER")}
+            label={t("PHONO")}
             id="phoneNumber"
             variant="outlined"
             fullWidth

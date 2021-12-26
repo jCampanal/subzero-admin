@@ -18,11 +18,12 @@ const locale = {
   ROWS_PER_PAGE: "Neveras por página",
   COOLERS_CUSTOMERS: "Clientes",
   ADVANCED_SEARCH: "Buscar por fecha",
-  DATE_1: "Dsede",
+  DATE_1: "Desde",
   DATE_2: "Hasta",
   OK: "Aceptar",
-  Cancel: "Cancelar",
+  CANCEL: "Cancelar",
   SEARCH: "Buscar",
+  CLEAR_SEARCH: "Limpiar búsqueda",
 };
 
 export default locale;

@@ -21,8 +21,9 @@ const locale = {
   DATE_1: "From ",
   DATE_2: "Up To ",
   OK: "Ok",
-  Cancel: "Cancel",
+  CANCEL: "Cancel",
   SEARCH: "Search",
+  CLEAR_SEARCH: "Clear Search",
 };
 
 export default locale;

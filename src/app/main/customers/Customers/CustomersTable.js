@@ -213,16 +213,14 @@ function CustomersTable({
                       >
                         <Icon>edit</Icon> {t("EDIT")}
                       </Button>
-                      <Button color="primary">
-                        <Icon
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            deleteCallback([customer.id]);
-                          }}
-                        >
-                          delete
-                        </Icon>{" "}
-                        {t("DELETE")}
+                      <Button
+                        color="primary "
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          deleteCallback([customer.id]);
+                        }}
+                      >
+                        <Icon>delete</Icon> {t("DELETE")}
                       </Button>
                     </TableCell>
                   </TableRow>

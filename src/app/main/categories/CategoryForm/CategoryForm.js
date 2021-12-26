@@ -21,12 +21,12 @@ import RemoveDlg from "../../../common/removeDlg";
 const validationRules = yup.object().shape({
   name: yup
     .string()
-    .required("REQUIRED")
+    .required(t("REQUIRED"))
     .min(3, "MORE_THAN_2")
     .matches(/^[a-z]([\w ]*)[a-z]$/gi, "UNACCEPTED_CHARACTER"),
   link: yup
     .string()
-    .required("REQUIRED")
+    .required(t("REQUIRED"))
     .min(3, "MORE_THAN_2")
     .max(21, "LESS_THAN_10")
     .trim()

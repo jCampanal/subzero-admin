@@ -16,11 +16,11 @@ import { showMessage } from "../../../store/fuse/messageSlice";
 import FuseLoading from "../../../../@fuse/core/FuseLoading";
 
 const validationRules = yup.object().shape({
-  name: yup.string().required("REQUIRED"),
+  name: yup.string().required(t("REQUIRED")),
   /*         .min(3, 'MORE_THAN_2')
         .matches(/^[a-z]([\w ]*)[a-z]$/gi, 'UNACCEPTED_CHARACTER') */ value: yup
     .string()
-    .required("REQUIRED") /* 
+    .required(t("REQUIRED")) /* 
         .min(2, 'MORE_THAN_1')
         .matches(/^[a-z]([\w]*)[a-z]$/gi, 'UNACCEPTED_CHARACTER'),
  */,

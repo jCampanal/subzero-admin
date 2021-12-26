@@ -21,8 +21,8 @@ import { getAllOrders } from "app/api-conn/shipments_order";
 import { dummyOrders } from "../Shipments/Orders/Orders";
 
 const validationRules = yup.object().shape({
-  orderId: yup.string().required("REQUIRED"),
-  driverId: yup.string().required("REQUIRED"),
+  orderId: yup.string().required(t("REQUIRED")),
+  driverId: yup.string().required(t("REQUIRED")),
 });
 
 const ShipmentAddForm = () => {
@@ -46,7 +46,7 @@ const ShipmentAddForm = () => {
     getAllOrders()
       .then((response) => {
         // setOrderAll(response.data.data); esto va en realidad
-        setOrderAll(response.data.data);
+        setOrderAll(response.data);
         console.log("setOrderAll(response.data.data);", response.data.data);
         setLoading(false);
       })

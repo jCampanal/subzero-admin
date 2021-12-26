@@ -21,6 +21,9 @@ const locale = {
   SEND_AFTER_KEY: "Enviar luego de generar la clave",
   GENERATE: "Generar",
   CANCEL: "Cancelar",
+  DELETE_WARNING_TITLE: "Advertencia, ha solicitado una operación de riesgo",
+  DELETE_WARNING_TEXT:
+    "Está intentando eliminar un cliente, esta operación no se puede deshacer. ¿Está seguro de que quiere proceder a la eliminación?",
 };
 
 export default locale;

@@ -1,6 +1,30 @@
 const locale = {
   CREATE_NEW: "Create new driver",
   DRIVERS: "Drivers",
+  SAVE: "Save",
+  NOT_NUMBER: "This is not a number",
+  NOT_EMAIL: "This is not a email",
+  NOT_PHONE: "This is not a valid phone number",
+  USERNAME: "Username",
+  NAME: "Name",
+  LASTNAME: "Lastname",
+  EMAIL: "Email",
+  PHONO: "Phone number",
+  WAREHOUSEID: "Warehouse",
+  PASSWORD: "Password",
+  CONFIRMPASSWORD: "Confirm password",
+  NOT_LETTER: "Must contain at least one lowercase character",
+  NOT_CHARATER: "Must contain at least one uppercase character",
+  NOT_NUMBER: "Must contain at least one number",
+  NOT_SPECIAL_CHARATER: "Must contain at least one special character",
+  REQUIRED: "This field is required",
+  ERRO_LOADING: "Hay algo que no funciona, intente actualizar la página",
+  SUCCESS_UPDATE: "The driver was updated successfully",
+  SUCCESS_CREATE: "The driver was created successfully",
+
+  CLICK_TO_CHANGE: "Click to change the image",
+  CLICK_TO_LOAD: "Click to load a image",
+  EDIT: "Edit",
 };
 
 export default locale;

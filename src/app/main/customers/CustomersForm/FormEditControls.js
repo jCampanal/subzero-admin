@@ -42,7 +42,7 @@ function FormControls({ salesTax }) {
               className="mt-8 mb-16"
               error={!!errors.name}
               helperText={errors?.name?.message}
-              label={t("name")}
+              label={t("NAME")}
               id="name"
               variant="outlined"
             />
@@ -59,7 +59,7 @@ function FormControls({ salesTax }) {
               className="mt-8 mb-16"
               error={!!errors.lastname}
               helperText={errors?.lastname?.message}
-              label={t("lastname")}
+              label={t("LASTNAME")}
               id="lastname"
               variant="outlined"
             />
@@ -76,7 +76,7 @@ function FormControls({ salesTax }) {
               className="mt-8 mb-16"
               error={!!errors.email}
               helperText={errors?.email?.message}
-              label={t("email")}
+              label={t("EMAIL")}
               id="email"
               variant="outlined"
             />
@@ -91,7 +91,7 @@ function FormControls({ salesTax }) {
               className="mt-8 mb-16"
               error={!!errors.phoneNumber}
               helperText={errors?.phoneNumber?.message}
-              label={t("phoneNumber")}
+              label={t("PHONO")}
               id="phoneNumber"
               variant="outlined"
             />
@@ -174,7 +174,7 @@ function FormControls({ salesTax }) {
                 inputProps={{ "aria-label": "controlled" }}
               />
             }
-            label="Modify Company Name"
+            label={t("Modify_Company_Name")}
           />
           {showCompanyName && (
             <Controller
@@ -186,7 +186,7 @@ function FormControls({ salesTax }) {
                   className="mt-8 mb-16"
                   error={!!errors.companyName}
                   helperText={errors?.companyName?.message}
-                  label={t("companyName")}
+                  label={t("COMPANYNAME")}
                   id="companyName"
                   variant="outlined"
                 />
@@ -204,7 +204,7 @@ function FormControls({ salesTax }) {
                 inputProps={{ "aria-label": "controlled" }}
               />
             }
-            label="Modify Company Adress"
+            label={t("Modify_Company_Adress")}
           />
 
           {showCompanyAddress && (
@@ -218,7 +218,7 @@ function FormControls({ salesTax }) {
                     className="mt-8 mb-16"
                     error={!!errors.street}
                     helperText={errors?.street?.message}
-                    label={t("street")}
+                    label={t("STREET")}
                     id="street"
                     variant="outlined"
                   />
@@ -233,7 +233,7 @@ function FormControls({ salesTax }) {
                     className="mt-8 mb-16"
                     error={!!errors.city}
                     helperText={errors?.city?.message}
-                    label={t("city")}
+                    label={t("CITY")}
                     id="city"
                     variant="outlined"
                   />
@@ -248,7 +248,7 @@ function FormControls({ salesTax }) {
                     className="mt-8 mb-16"
                     error={!!errors.state}
                     helperText={errors?.state?.message}
-                    label={t("state")}
+                    label={t("STATE")}
                     id="state"
                     variant="outlined"
                   />
@@ -263,7 +263,7 @@ function FormControls({ salesTax }) {
                     className="mt-8 mb-16"
                     error={!!errors.zipCode}
                     helperText={errors?.zipCode?.message}
-                    label={t("zipCode")}
+                    label={t("ZIPCODE")}
                     id="zipCode"
                     variant="outlined"
                   />

@@ -11,13 +11,13 @@ import Header from "./Header";
 import Controls from "./Controls";
 
 const validationRules = yup.object().shape({
-  receiverName: yup.string().required("REQUIRED"),
-  recierverLastName: yup.string().required("REQUIRED"),
+  receiverName: yup.string().required(t("REQUIRED")),
+  recierverLastName: yup.string().required(t("REQUIRED")),
   file: yup.string(),
-  driverId: yup.string().required("REQUIRED"),
+  driverId: yup.string().required(t("REQUIRED")),
   customerId: yup.string(),
-  moveTo: yup.string().required("REQUIRED"),
-  coolerId: yup.string().required("REQUIRED"),
+  moveTo: yup.string().required(t("REQUIRED")),
+  coolerId: yup.string().required(t("REQUIRED")),
 });
 
 const CoolersActivityForm = () => {

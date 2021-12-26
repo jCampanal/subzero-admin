@@ -49,23 +49,6 @@ const rows = [
     sort: false,
   },
 ];
-const dummyDrivers = [
-  { id: 1, username: "gue", name: "Gue Ipsum", warehouse: "Lorem" },
-  { id: 2, username: "gue", name: "Gue Ipsum", warehouse: "Lorem" },
-  { id: 3, username: "gue", name: "Gue Ipsum", warehouse: "Lorem" },
-  { id: 4, username: "gue", name: "Gue Ipsum", warehouse: "Lorem" },
-  { id: 5, username: "gue", name: "Gue Ipsum", warehouse: "Lorem" },
-  { id: 6, username: "gue", name: "Gue Ipsum", warehouse: "Lorem" },
-  { id: 7, username: "gue", name: "Gue Ipsum", warehouse: "Lorem" },
-  { id: 8, username: "gue", name: "Gue Ipsum", warehouse: "Lorem" },
-  { id: 9, username: "gue", name: "Gue Ipsum", warehouse: "Lorem" },
-  { id: 10, username: "gue", name: "Gue Ipsum", warehouse: "Lorem" },
-  { id: 11, username: "gue", name: "Gue Ipsum", warehouse: "Lorem" },
-  { id: 12, username: "gue", name: "Gue Ipsum", warehouse: "Lorem" },
-  { id: 13, username: "gue", name: "Gue Ipsum", warehouse: "Lorem" },
-  { id: 14, username: "gue", name: "Gue Ipsum", warehouse: "Lorem" },
-  { id: 15, username: "gue", name: "Gue Ipsum", warehouse: "Lorem" },
-];
 
 function Drivers() {
   const location = useLocation();
@@ -141,8 +124,8 @@ function Drivers() {
           <RemoveDlg
             itemId={itemIds}
             proceedCallback={() => onProceed(itemIds)}
-            dlgTitle="Warning, you have requested a risky operation"
-            dlgText="You are attempting to delete a Driver, this operation cannot be undone. Are you sure you want to proceed with the deletion?"
+            dlgTitle={t("DELETE_WARNING_TITLE")}
+            dlgText={t("DELETE_WARNING_TEXT")}
           />
         ),
       })

@@ -35,12 +35,11 @@ function FormHeader() {
         warehouseId: getValues().warehouseId,
       };
 
-      console.log("formData", formData);
       putDriver(id, formData)
         .then(() => {
           dispatch(
             showMessage({
-              message: "The drivers was updated successfully",
+              message: t("SUCCESS_UPDATE"),
               variant: "success",
               anchorOrigin: {
                 vertical: "top",
@@ -78,7 +77,7 @@ function FormHeader() {
         .then(() => {
           dispatch(
             showMessage({
-              message: "The cooler was created successfully",
+              message: t("SUCCESS_CREATE"),
               variant: "success",
               anchorOrigin: {
                 vertical: "top",
@@ -133,7 +132,7 @@ function FormHeader() {
               animate={{ x: 0, transition: { delay: 0.3 } }}
             >
               <Typography className="text-16 sm:text-20 truncate font-semibold">
-                {t(id ? "EDIT" : "CREATE")}
+                {t(id ? "EDIT" : "CREATE_NEW")}
               </Typography>
             </motion.div>
           </div>
@@ -144,17 +143,6 @@ function FormHeader() {
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
       >
-        {/* {id && (
-          <Button
-            className="whitespace-nowrap mx-4"
-            variant="contained"
-            color="secondary"
-            onClick={() => props.removeCallback(id)}
-            startIcon={<Icon className="hidden sm:flex">delete</Icon>}
-          >
-            {t("REMOVE")}
-          </Button>
-        )} */}
         <Button
           className="whitespace-nowrap mx-4"
           variant="contained"

@@ -20,24 +20,24 @@ import { intRegex, phoneRegex } from "app/lib/regexs";
 
 const validationRules = yup.object().shape({
   city: yup.string(),
-  customerId: yup.string().required("REQUIRED"),
-  deliveryTime: yup.string().required("REQUIRED"),
-  driverId: yup.string().required("REQUIRED"),
+  customerId: yup.string().required(t("REQUIRED")),
+  deliveryTime: yup.string().required(t("REQUIRED")),
+  driverId: yup.string().required(t("REQUIRED")),
   pickUp: yup.boolean(),
   poNo: yup.string().matches(phoneRegex, {
     message: "not valid phone no",
     excludeEmptyString: true,
   }), //no required
-  priority: yup.number().required("REQUIRED"),
+  priority: yup.number().required(t("REQUIRED")),
   products: yup.array().test({
     message: "The error message if length === 1",
     test: (arr) => arr.length > 0,
   }),
   state: yup.string(),
-  status: yup.string().required("REQUIRED"),
+  status: yup.string().required(t("REQUIRED")),
   street: yup.string(),
-  tag: yup.string().required("REQUIRED"),
-  termOrder: yup.string().required("REQUIRED"),
+  tag: yup.string().required(t("REQUIRED")),
+  termOrder: yup.string().required(t("REQUIRED")),
   zipCode: yup.string().matches(intRegex, {
     message: "It is not a number",
     excludeEmptyString: true,

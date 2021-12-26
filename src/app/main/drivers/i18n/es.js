@@ -12,6 +12,10 @@ const locale = {
   EDIT: "Editar",
   DELETE: "Eliminar",
   ROWS_PER_PAGE: "Conductores por página",
+
+  DELETE_WARNING_TITLE: "Advertencia, ha solicitado una operación de riesgo",
+  DELETE_WARNING_TEXT:
+    "Está intentando eliminar un cliente, esta operación no se puede deshacer. ¿Está seguro de que quiere proceder a la eliminación?",
 };
 
 export default locale;

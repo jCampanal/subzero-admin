@@ -15,9 +15,9 @@ import RemoveDlg from "../../../common/removeDlg";
 const today = new Date();
 
 const validationRules = yup.object().shape({
-  code: yup.string().required("REQUIRED"),
-  pickup: yup.date().required("REQUIRED").max(today),
-  providerId: yup.string().required("REQUIRED"),
+  code: yup.string().required(t("REQUIRED")),
+  pickup: yup.date().required(t("REQUIRED")).max(today),
+  providerId: yup.string().required(t("REQUIRED")),
 });
 
 const CoolerForm = () => {

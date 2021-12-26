@@ -10,19 +10,19 @@ import FormControls from "./AddFormControls";
 import FormHeader from "./FormHeader";
 
 const validationRules = yup.object().shape({
-  username: yup.string().required("REQUIRED"),
-  name: yup.string().required("REQUIRED"),
-  lastname: yup.string().required("REQUIRED"),
+  username: yup.string().required(t("REQUIRED")),
+  name: yup.string().required(t("REQUIRED")),
+  lastname: yup.string().required(t("REQUIRED")),
   email: yup
     .string()
     .email("Must be a valid email")
     .max(255)
-    .required("REQUIRED"),
+    .required(t("REQUIRED")),
   password: yup
     .string()
     .max(255)
     .min(6)
-    .required("REQUIRED")
+    .required(t("REQUIRED"))
     .matches(/^(?=.*[a-z])/, "Must contain at least one lowercase character")
     .matches(/^(?=.*[A-Z])/, "Must contain at least one uppercase character")
     .matches(/^(?=.*[0-9])/, "Must contain at least one number")
@@ -34,11 +34,11 @@ const validationRules = yup.object().shape({
     .string()
     .max(255)
     .min(6)
-    .required("REQUIRED")
+    .required(t("REQUIRED"))
     .test("passwords-match", "Passwords must match", function (value) {
       return this.parent.password === value;
     }),
-  phoneNumber: yup.string().required("REQUIRED"),
+  phoneNumber: yup.string().required(t("REQUIRED")),
   image: yup.mixed(),
 });
 

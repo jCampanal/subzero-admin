@@ -14,6 +14,7 @@ const locale = {
   PROOF: "Prueba de entrega",
   PICKUP_DATE: "Fecha de recogida",
   DELIVER_DATE: "Fecha de entrega",
+  CLEAR_SEARCH: "Limpiar búsqueda",
 };
 
 export default locale;

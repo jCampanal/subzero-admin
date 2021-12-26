@@ -13,23 +13,9 @@ import RemoveDlg from "../../../common/removeDlg";
 import FuseLoading from "@fuse/core/FuseLoading";
 import { getAllsalesTax } from "app/api-conn/saleTaxes";
 import { showMessage } from "app/store/fuse/messageSlice";
-
-const validationRules = yup.object().shape({
-  email: yup
-    .string()
-    .email("Must be a valid email")
-    .max(255)
-    .required("REQUIRED"),
-  companyName: yup.string().required("REQUIRED"),
-  salesTaxId: yup.string().required("REQUIRED"),
-});
+import withProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
 
 const CustomerForm = () => {
-  const {
-    user: { logged },
-  } = useSelector((state) => state);
-  const history = useHistory();
-  const { id } = useParams();
   const [salesTax, setsalesTax] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -39,6 +25,13 @@ const CustomerForm = () => {
     salesTaxId: "",
   };
   const { t } = useTranslation("customers-form");
+
+  const validationRules = yup.object().shape({
+    email: yup.string().email(t("NOT_EMAIL")).max(255).required(t("REQUIRED")),
+    companyName: yup.string().required(t("REQUIRED")),
+    salesTaxId: yup.string().required(t("REQUIRED")),
+  });
+
   const dispatch = useDispatch();
   const methods = useForm({
     defaultValues: {
@@ -50,17 +43,6 @@ const CustomerForm = () => {
     mode: "all",
     resolver: yupResolver(validationRules),
   });
-  const removecustomer = (itemId) =>
-    dispatch(
-      openDialog({
-        children: (
-          <RemoveDlg
-            itemId={itemId}
-            proceedCallback={() => history.push("/customers")}
-          />
-        ),
-      })
-    );
 
   const loadSalesTax = () => {
     setLoading(true);
@@ -72,7 +54,7 @@ const CustomerForm = () => {
       .catch(() => {
         dispatch(
           showMessage({
-            message: "There is something wrong, try to refresh the page",
+            message: t("ERRO_LOADING"),
             variant: "error",
           })
         );
@@ -84,11 +66,6 @@ const CustomerForm = () => {
     loadSalesTax();
   }, []);
 
-  useEffect(() => {
-    if (!logged) history.push("/login");
-    return <></>;
-  }, [logged, history]);
-
   return (
     <FormProvider {...methods}>
       <FusePageCarded
@@ -96,12 +73,7 @@ const CustomerForm = () => {
           toolbar: "p-0",
           header: "min-h-72 h-72 sm:h-136 sm:min-h-136",
         }}
-        header={<FormHeader removeCallback={removecustomer} />}
-        contentToolbar={
-          <div className="p-16 sm:p-24 max-w-2xl">
-            {id ? <h1>{customer.code}</h1> : <h1>{t("CREATE_NEW")}</h1>}
-          </div>
-        }
+        header={<FormHeader />}
         content={
           <div className="p-16 sm:p-24 max-w-2xl">
             {loading ? <FuseLoading /> : <FormControls salesTax={salesTax} />}
@@ -112,4 +84,4 @@ const CustomerForm = () => {
   );
 };
 
-export default CustomerForm;
+export default withProtectedRoute(CustomerForm);

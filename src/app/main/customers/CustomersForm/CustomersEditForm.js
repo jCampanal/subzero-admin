@@ -13,35 +13,36 @@ import RemoveDlg from "../../../common/removeDlg";
 import { getAllsalesTax } from "app/api-conn/saleTaxes";
 import { showMessage } from "app/store/fuse/messageSlice";
 import FuseLoading from "@fuse/core/FuseLoading";
-
-const validationRules = yup.object().shape({
-  street: yup.string(),
-  city: yup.string(),
-  state: yup.string(),
-  zipCode: yup.number(),
-  companyName: yup.string(),
-  email: yup
-    .string()
-    .email("Must be a valid email")
-    .max(255)
-    .required("REQUIRED"),
-  lastname: yup.string().required("REQUIRED"),
-  name: yup.string().required("REQUIRED"),
-  phoneNumber: yup.string().required("REQUIRED"),
-  priorityCustomer: yup.boolean(),
-  salesTaxId: yup.string().required("REQUIRED"),
-  username: yup.string().required("REQUIRED"),
-});
+import { intRegex, phoneRegex } from "app/lib/regexs";
+import withProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
 
 const CustomerForm = () => {
-  const {
-    user: { logged },
-  } = useSelector((state) => state);
   const history = useHistory();
   const { id } = useParams();
   const { state } = useLocation();
 
   const { t } = useTranslation("customers-form");
+  const validationRules = yup.object().shape({
+    street: yup.string(),
+    city: yup.string(),
+    state: yup.string(),
+    zipCode: yup.string().matches(intRegex, {
+      message: t("NOT_NUMBER"),
+      excludeEmptyString: true,
+    }),
+    companyName: yup.string(),
+    email: yup.string().email(t("NOT_EMAIL")).max(255).required(t("REQUIRED")),
+    lastname: yup.string().required(t("REQUIRED")),
+    name: yup.string().required(t("REQUIRED")),
+    phoneNumber: yup.string().matches(phoneRegex, {
+      message: t("NOT_PHONE"),
+      excludeEmptyString: true,
+    }),
+    priorityCustomer: yup.boolean(),
+    salesTaxId: yup.string(),
+    username: yup.string().required(t("REQUIRED")),
+  });
+
   const methods = useForm({
     defaultValues: {
       id: state.customer.id,
@@ -49,7 +50,6 @@ const CustomerForm = () => {
       city: "",
       state: "",
       zipCode: "",
-
       companyName: state.customer.company.name,
       email: state.customer.email,
       lastname: state.customer.lastName,
@@ -98,11 +98,6 @@ const CustomerForm = () => {
       })
     );
 
-  useEffect(() => {
-    if (!logged) history.push("/login");
-    return <></>;
-  }, [logged, history]);
-
   return (
     <FormProvider {...methods}>
       <FusePageCarded
@@ -126,4 +121,4 @@ const CustomerForm = () => {
   );
 };
 
-export default CustomerForm;
+export default withProtectedRoute(CustomerForm);
