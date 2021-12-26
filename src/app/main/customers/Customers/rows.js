@@ -20,13 +20,7 @@ const rows = [
     label: "LAST_NAME",
     sort: true,
   },
-  {
-    id: "company",
-    align: "left",
-    disablePadding: false,
-    label: "COMPANY",
-    sort: true,
-  },
+
   {
     id: "phone",
     align: "left",
@@ -39,6 +33,20 @@ const rows = [
     align: "left",
     disablePadding: false,
     label: "EMAIL",
+    sort: true,
+  },
+  {
+    id: "company",
+    align: "left",
+    disablePadding: false,
+    label: "COMPANY",
+    sort: true,
+  },
+  {
+    id: "address",
+    align: "left",
+    disablePadding: false,
+    label: "COMPANY_ADDRESS",
     sort: true,
   },
   {

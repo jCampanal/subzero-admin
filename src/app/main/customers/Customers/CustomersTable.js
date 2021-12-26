@@ -180,15 +180,6 @@ function CustomersTable({
                       scope="row"
                       align="left"
                     >
-                      {customer.company.name}
-                    </TableCell>
-
-                    <TableCell
-                      className="p-4 md:p-16"
-                      component="th"
-                      scope="row"
-                      align="left"
-                    >
                       {customer.phoneNumber}
                     </TableCell>
 
@@ -200,7 +191,26 @@ function CustomersTable({
                     >
                       {customer.email}
                     </TableCell>
-
+                    <TableCell
+                      className="p-4 md:p-16"
+                      component="th"
+                      scope="row"
+                      align="left"
+                    >
+                      {customer.company.name}
+                    </TableCell>
+                    <TableCell
+                      className="p-4 md:p-16"
+                      component="th"
+                      scope="row"
+                      align="left"
+                    >
+                      {customer.company.address.city}
+                      {", "}
+                      {customer.company.address.state}
+                      {", "}
+                      {customer.company.address.street}
+                    </TableCell>
                     <TableCell
                       className="p-4 md:p-16"
                       component="th"

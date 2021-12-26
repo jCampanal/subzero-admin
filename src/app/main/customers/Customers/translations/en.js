@@ -7,6 +7,7 @@ const locale = {
   LAST_NAME: "Last Name",
   NAME: "Name",
   COMPANY: "Company",
+  COMPANY_ADDRESS: "Company Address",
   PHONE: "Phone",
   EMAIL: "Email",
   EDIT: "Edit",
