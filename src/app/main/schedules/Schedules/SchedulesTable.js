@@ -15,10 +15,9 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
 
-function SchedulesTable(props) {
+function SchedulesTable({data, rows, totalItems}) {
   const { t } = useTranslation("schedules");
   const [selected, setSelected] = useState([]);
-  const [data, setData] = useState(props.schedules);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const history = useHistory();
@@ -105,7 +104,7 @@ function SchedulesTable(props) {
         <Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
           <TableHeader
             namespace="schedules"
-            rows={props.rows}
+            rows={rows}
             selectedProductIds={selected}
             order={order}
             onSelectAllClick={handleSelectAllClick}
@@ -213,7 +212,7 @@ function SchedulesTable(props) {
       <TablePagination
         className="flex-shrink-0 border-t-1"
         component="div"
-        count={data.length}
+        count={totalItems}
         labelRowsPerPage={t("ROWS_PER_PAGE")}
         rowsPerPage={rowsPerPage}
         page={page}

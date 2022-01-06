@@ -9,16 +9,16 @@ import { deleteWarehouse, getWarehouses } from "../../../api-conn/warehouses";
 import { closeDialog, openDialog } from "../../../store/fuse/dialogSlice";
 import RemoveDlg from "../../../common/removeDlg";
 import { showMessage } from "../../../store/fuse/messageSlice";
+import withProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
 
 const Header = lazy(() =>
-  import("app/main/products/Products/PageCardedHeader").then((header) => header)
+  import("app/components/HeaderPage/PageCardedHeader").then((header) => header)
 );
 const Table = lazy(() => import("./WarehousesTable").then((table) => table));
 
 function Warehouses() {
-  const {
-    user: { logged },
-  } = useSelector((state) => state);
+
+  const dispatch = useDispatch();
   const history = useHistory();
   const { t } = useTranslation("warehouses");
   const [warehouses, setWarehouses] = useState({ data: [] });
@@ -29,7 +29,6 @@ function Warehouses() {
     setWarehouses(data);
     setLoading(false);
   };
-  const dispatch = useDispatch();
   const onProceed = (id) => {
     const deleteItem = async () => {
       await deleteWarehouse(id);
@@ -59,9 +58,7 @@ function Warehouses() {
       })
     );
 
-  useEffect(() => {
-    if (!logged) history.push("/login");
-  }, [logged, history]);
+  
   useEffect(() => {
     document.title = "Warehouses - Subzero Ice Services";
   }, []);
@@ -104,4 +101,4 @@ function Warehouses() {
   );
 }
 
-export default memo(Warehouses);
+export default memo(withProtectedRoute( Warehouses));
