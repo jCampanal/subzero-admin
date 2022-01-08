@@ -1,6 +1,6 @@
 import TextField from "@material-ui/core/TextField";
 import { Controller, useFormContext } from "react-hook-form";
-import React, { useEffect } from "react";
+import React, { memo, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { orange } from "@material-ui/core/colors";
 import clsx from "clsx";
@@ -217,4 +217,4 @@ function FormControls(props) {
   );
 }
 
-export default FormControls;
+export default memo( FormControls);

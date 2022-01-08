@@ -1,17 +1,15 @@
-import React from "react";
+import React, { memo } from "react";
 import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
 import { useTheme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { useHistory, useParams } from "react-router";
+import { useHistory } from "react-router";
 import { useTranslation } from "react-i18next";
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { postCooler, putCooler } from "app/api-conn/coolers";
 import { showMessage } from "app/store/fuse/messageSlice";
-import { formatDate } from "app/lib/formatDate";
 import { putAdmin } from "app/api-conn/User";
 
 function FormHeader({user}) {
@@ -138,4 +136,4 @@ function FormHeader({user}) {
   );
 }
 
-export default FormHeader;
+export default memo( FormHeader);
