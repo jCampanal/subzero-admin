@@ -11,13 +11,12 @@ import FormHeader from "./FormHeader";
 import { getProvidersAll } from "../../../api-conn/providers";
 import { openDialog } from "../../../store/fuse/dialogSlice";
 import RemoveDlg from "../../../common/removeDlg";
+import withProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
 
 const today = new Date();
 
 const CoolerForm = () => {
-  const {
-    user: { logged },
-  } = useSelector((state) => state);
+
   const history = useHistory();
   const { id } = useParams();
   const { state } = useLocation();
@@ -60,10 +59,6 @@ const CoolerForm = () => {
     );
 
   useEffect(() => {
-    if (!logged) history.push("/login");
-    return <></>;
-  }, [logged, history]);
-  useEffect(() => {
     const fetchAllProviders = async () => {
       const { data } = await getProvidersAll();
       setProviders(data);
@@ -94,4 +89,4 @@ const CoolerForm = () => {
   );
 };
 
-export default CoolerForm;
+export default withProtectedRoute( CoolerForm);

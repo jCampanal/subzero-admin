@@ -12,8 +12,12 @@ export const getAdmins = (pageSize, pageNumber, name = undefined) =>
       params: { name },
     })
     .then((response) => response.data);
+
 export const getAllUsers = () =>
   apiClient.get(userURL + `/getAll`).then((response) => response.data);
+
+export const getLogedUser = () =>
+  apiClient.get(userURL + `/getLoggedIn`).then((response) => response.data);
 
 export const registerAdmin = (data) =>
   apiClient

@@ -9,9 +9,12 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "app/store/user/userSlice";
+import { Lock, Person } from "@material-ui/icons";
+import {useHistory} from 'react-router'
 
 function UserMenu() {
   const [userMenu, setUserMenu] = useState(null);
+  const history = useHistory();
   const dispatch = useDispatch();
 
   const userMenuClick = (event) => {
@@ -25,13 +28,16 @@ function UserMenu() {
   const handleLogOut = () => {
     dispatch(logoutUser());
   };
+  const handleProfile = () => {
+    history.push("/profile")
+  };
   return (
     <>
       <Button
         className="min-h-40 min-w-40 px-0 md:px-16 py-0 md:py-6"
         onClick={userMenuClick}
       >
-        <div className="hidden md:flex flex-col mx-4 items-end">
+        <div className=" md:flex flex-col mx-4 items-end">
           <Avatar
             className="md:mx-4"
             alt="user photo"
@@ -57,9 +63,17 @@ function UserMenu() {
         }}
       >
         <>
+          <MenuItem component={"span"} role="button" onClick={handleProfile}>
+           
+            <ListItemIcon className="min-w-40">
+              <Person />
+            </ListItemIcon>
+            <ListItemText primary="Profile" />
+          
+          </MenuItem>
           <MenuItem component={"span"} role="button" onClick={handleLogOut}>
             <ListItemIcon className="min-w-40">
-              <Icon>lock</Icon>
+              <Lock />
             </ListItemIcon>
             <ListItemText primary="Log out" />
           </MenuItem>
