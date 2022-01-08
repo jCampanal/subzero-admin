@@ -147,7 +147,7 @@ function SchedulesTable({data, rows, totalItems,
                       component="th"
                       scope="row"
                     >
-                      {schedule.reference}
+                      {schedule.order.customer.name}
                     </TableCell>
 
                     <TableCell
@@ -156,7 +156,7 @@ function SchedulesTable({data, rows, totalItems,
                       scope="row"
                       align="left"
                     >
-                      {schedule.customer}
+                      {schedule.order.customer.company.name}
                     </TableCell>
 
                     <TableCell
@@ -174,7 +174,7 @@ function SchedulesTable({data, rows, totalItems,
                       scope="row"
                       align="left"
                     >
-                      {schedule.nextOrder}
+                      {schedule.order.status}
                     </TableCell>
 
                     <TableCell
@@ -197,12 +197,12 @@ function SchedulesTable({data, rows, totalItems,
                           <Icon>visibility</Icon> {t("VIEW")}
                         </Button>
                         <Button color="primary">
-                          {schedule.paused && (
+                          {!schedule.status && (
                             <>
                               <Icon>play_circle_outline</Icon> {t("RESUME")}
                             </>
                           )}
-                          {!schedule.paused && (
+                          {schedule.status && (
                             <>
                               <Icon>pause_circle_outline</Icon> {t("PAUSE")}
                             </>

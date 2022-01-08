@@ -5,14 +5,16 @@ const SchedulesUrl = "/admin/Schedules";
 const getSchedules = (
   pageNumber = 0,
   pageSize = 10,
-  company = undefined,
-  customer = undefined,
+  companyName = undefined,
+  customerName = undefined,
 ) =>
   apiClient
     .get(SchedulesUrl, {
       params: {
         pageSize,
         pageNumber,
+        companyName,
+        customerName
 
       },
     })

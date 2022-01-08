@@ -91,7 +91,7 @@ function Schedules() {
       setPageNumber(value);
     }
   
-    const createCooler = () => history.push("/coolers_create");
+  
     const editCooler = (cooler) =>
       history.push(`/coolers/${cooler.id}/edit`, { cooler });
   
@@ -100,29 +100,23 @@ function Schedules() {
     }, []);
    
     useEffect(() => {
-    //   let _code = new URLSearchParams(location.search).get("code");
-    //   let pickedUpFrom = new URLSearchParams(location.search).get("pickedUpFrom");
-    //   let pickedUpTo = new URLSearchParams(location.search).get("pickedUpTo");
+      let _compnay = new URLSearchParams(location.search).get("company");
+      let _customer = new URLSearchParams(location.search).get("customer");
   
-    //   if (pickedUpFrom !== "" && pickedUpFrom) {
-    //   } else {
-    //     pickedUpFrom = undefined;
-    //   }
-    //   if (pickedUpTo !== "" && pickedUpTo) {
-    //   } else {
-    //     pickedUpTo = undefined;
-    //   }
+      if (_compnay !== "" && _compnay) {
+      } else {
+        _compnay = undefined;
+      }
+      if (_customer !== "" && _customer) {
+      } else {
+        _customer = undefined;
+      }
   
-    //   if (_code !== "" && _code) {
-    //   } else {
-    //     _code = undefined;
-    //   }
   
-    //   setcodigoSearch(_code);
-    //   setDateSearch(pickedUpFrom);
-    //   setDateSearch2(pickedUpTo);
+      // setCompany(_compnay);
+      // setCustomer(_customer);
   
-      loadSchedules(pageNumber, pageSize);
+      loadSchedules(pageNumber, pageSize, _compnay,_customer);
     }, [location, pageSize, pageNumber]);
 
 

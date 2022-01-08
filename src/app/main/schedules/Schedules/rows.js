@@ -17,9 +17,16 @@ const rows = [
       id: "next_order",
       align: "left",
       disablePadding: false,
-      label: "NEXT_ORDER",
+      label: "STATUS",
       sort: true,
     },
+    // {
+    //   id: "next_order",
+    //   align: "left",
+    //   disablePadding: false,
+    //   label: "NEXT_ORDER",
+    //   sort: true,
+    // },
     {
       id: "actions",
       align: "left",
