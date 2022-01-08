@@ -12,6 +12,7 @@ import Widget6 from './widgets/Widget6';
 import Widget7 from './widgets/Widget7';
 import Widget8 from './widgets/Widget8';
 import Widget9 from './widgets/Widget9';
+import withProtectedRoute from 'app/fuse-layouts/ProtectedRoute/ProtectedRoute';
 
 const analyticsDashboardAppDB = {
     widgets: [
@@ -767,4 +768,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default withProtectedRoute( Dashboard);

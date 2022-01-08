@@ -9,17 +9,23 @@ import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import { motion } from "framer-motion";
-import TableHeader from "app/main/products/Products/TableHeader";
+import TableHeader from "app/components/TableHeader/TableHeader";
 import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
 
-function SchedulesTable({data, rows, totalItems}) {
+function SchedulesTable({data, rows, totalItems,  
+  page,
+
+  rowsPerPage,
+  handleChangeRowsPerPage,
+  handleChangePage,
+  editCallback,
+  deleteCallback,}) {
   const { t } = useTranslation("schedules");
   const [selected, setSelected] = useState([]);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  
   const history = useHistory();
   const [order, setOrder] = useState({
     direction: "asc",
@@ -76,13 +82,7 @@ function SchedulesTable({data, rows, totalItems}) {
     setSelected(newSelected);
   }
 
-  function handleChangePage(event, value) {
-    setPage(value);
-  }
 
-  function handleChangeRowsPerPage(event) {
-    setRowsPerPage(event.target.value);
-  }
 
   if (data.length === 0) {
     return (
@@ -111,6 +111,8 @@ function SchedulesTable({data, rows, totalItems}) {
             onRequestSort={handleRequestSort}
             rowCount={data.length}
             onMenuItemClick={handleDeselect}
+          
+            deleteSelectedItemsCallback={() => deleteCallback(selected)}
           />
 
           <TableBody>
@@ -182,6 +184,15 @@ function SchedulesTable({data, rows, totalItems}) {
                       align="right"
                     >
                       <div className="grid grid-cols-3">
+                      <Button
+                        color="primary"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          editCallback(cooler);
+                        }}
+                      >
+                        <Icon>edit</Icon> {t("EDIT")}
+                      </Button>
                         <Button color="primary">
                           <Icon>visibility</Icon> {t("VIEW")}
                         </Button>
