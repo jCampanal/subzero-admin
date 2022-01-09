@@ -1,9 +1,22 @@
+import { formatDate } from "app/lib/formatDate";
 import apiClient from "../index";
 
 const orderURL = "/admin/Order";
 
 const getAllOrders = () =>
   apiClient.get(orderURL + "/getAll").then((response) => response.data);
+const getOrdersByWhareHose = (idWahrehose, secondDate = formatDate(new Date()), companyName=undefined,firstDate=undefined,noOrder=undefined,pageSize=10,pageNumber=0) =>
+  apiClient.get(orderURL + `/getByWarehouse/${idWahrehose}`, {
+    params: {
+      companyName,
+      firstDate,
+      secondDate ,
+      noOrder,
+      pageSize,
+      pageNumber,
+
+    },
+  }).then((response) => response.data);
 
 const getShipment = (id) =>
   apiClient
@@ -40,4 +53,5 @@ export {
   reassignOrder,
   deleteShipment,
   registerShipment,
+  getOrdersByWhareHose,
 };

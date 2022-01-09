@@ -52,10 +52,12 @@ export default function OrdersTab(props) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
+    console.log("newValue",newValue);
     setValue(newValue);
   };
 
   const handleChangeIndex = (index) => {
+    console.log("index",index);
     setValue(index);
   };
 
@@ -77,7 +79,7 @@ export default function OrdersTab(props) {
                 <div>
                   {tabItem.name}
                   <span className="ml-4 rounded-full text-white bg-blue-600 py-1 px-5">
-                    {tabItem.orders.length}
+                    {5}
                   </span>
                 </div>
               }
@@ -91,14 +93,14 @@ export default function OrdersTab(props) {
         index={value}
         onChangeIndex={handleChangeIndex}
       >
-        {props.tabItems.map((tabItem) => (
+        {props.tabItems.map((tabItem, i) => (
           <TabPanel
             key={tabItem.id}
             value={value}
-            index={tabItem.id - 1}
+            index={i}
             dir={theme.direction}
           >
-            <OrdersAdminTable data={tabItem.orders} rows={props.rows} />
+            <OrdersAdminTable wharehoseId={tabItem.id} rows={props.rows} />
           </TabPanel>
         ))}
       </SwipeableViews>
