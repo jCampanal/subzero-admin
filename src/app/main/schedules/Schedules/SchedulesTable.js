@@ -14,6 +14,7 @@ import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
+import { formatDisplayDate } from "app/lib/formatDate";
 
 function SchedulesTable({data, rows, totalItems,  
   page,
@@ -174,7 +175,7 @@ function SchedulesTable({data, rows, totalItems,
                       scope="row"
                       align="left"
                     >
-                      {schedule.order.status}
+                      { formatDisplayDate (schedule.order.nextOrder)}
                     </TableCell>
 
                     <TableCell
