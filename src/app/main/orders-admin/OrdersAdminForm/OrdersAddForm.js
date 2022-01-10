@@ -1,15 +1,12 @@
 import { FormProvider, useForm } from "react-hook-form";
 import FusePageCarded from "@fuse/core/FusePageCarded";
-import { useHistory, useParams } from "react-router";
 import React, { memo, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import FormControls from "./FormAddControls";
 import FormHeader from "./FormHeader";
-import { openDialog } from "../../../store/fuse/dialogSlice";
-import RemoveDlg from "../../../common/removeDlg";
 import FuseLoading from "@fuse/core/FuseLoading";
 import { showMessage } from "app/store/fuse/messageSlice";
 import whithProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
@@ -18,40 +15,38 @@ import { getAllDrivers } from "app/api-conn/drivers";
 import { getAllProducts } from "app/api-conn/products";
 import { intRegex, phoneRegex } from "app/lib/regexs";
 
-
-const fakeCustomer = [
-  {
-    company: {
-      id: "67b6e540-0985-4a-3af8278f6e2e",
-      name: "Company 1",
-    },
-    email: "test@admin.com",
-    id: "5646567b6e540-0985-49e2-8a7a-3af8278f6e2e",
-    imageURL: "url",
-    lastName: "Pérez",
-    name: "Juan",
-    phoneNumber: "test@admin.com",
-    priorityCustomer: false,
-    userName: "Juan",
-  },
-  {
-    company: {
-      id: "6asdsad7bwer6ee540-0985-49e2-8a7a-3af8278f6were2e",
-      name: "Company 2",
-    },
-    email: "test@admin.com",
-    id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-    imageURL: "url",
-    lastName: "Pérez",
-    name: "Ramos",
-    phoneNumber: "test@admin.com",
-    priorityCustomer: false,
-    userName: "Ramos",
-  },
-];
+// const fakeCustomer = [
+//   {
+//     company: {
+//       id: "67b6e540-0985-4a-3af8278f6e2e",
+//       name: "Company 1",
+//     },
+//     email: "test@admin.com",
+//     id: "5646567b6e540-0985-49e2-8a7a-3af8278f6e2e",
+//     imageURL: "url",
+//     lastName: "Pérez",
+//     name: "Juan",
+//     phoneNumber: "test@admin.com",
+//     priorityCustomer: false,
+//     userName: "Juan",
+//   },
+//   {
+//     company: {
+//       id: "6asdsad7bwer6ee540-0985-49e2-8a7a-3af8278f6were2e",
+//       name: "Company 2",
+//     },
+//     email: "test@admin.com",
+//     id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+//     imageURL: "url",
+//     lastName: "Pérez",
+//     name: "Ramos",
+//     phoneNumber: "test@admin.com",
+//     priorityCustomer: false,
+//     userName: "Ramos",
+//   },
+// ];
 
 const OrderAddForm = () => {
-  const history = useHistory();
   const [customerAll, setCustomerAll] = useState([]);
   const [productAll, setProductAll] = useState([]);
   const [driverAll, setDrivertAll] = useState([]);
@@ -67,7 +62,7 @@ const OrderAddForm = () => {
     poNo: yup.string().matches(phoneRegex, {
       message: "not valid phone no",
       excludeEmptyString: true,
-    }), //no required
+    }), // no required
     priority: yup.number().required(t("REQUIRED")),
     products: yup.array().test({
       message: "The error message if length === 1",
@@ -83,7 +78,7 @@ const OrderAddForm = () => {
       excludeEmptyString: true,
     }),
   });
-  
+
   const methods = useForm({
     defaultValues: {
       addressId: "",
@@ -101,69 +96,73 @@ const OrderAddForm = () => {
       tag: "",
       termOrder: "",
       zipCode: "",
+      daysToOrder: [],
+      scheduleStatus: false,
     },
     mode: "all",
     resolver: yupResolver(validationRules),
   });
-  
-  const loadCustomers = () => {
-    setLoading(true);
-    getAllCustomers()
-      .then((response) => {
-        // setCustomerAll(response.data.data); esto va en realidad
-        setCustomerAll(fakeCustomer);
-        setLoading(false);
-      })
-      .catch(() => {
-        dispatch(
-          showMessage({
-            message: "There is something wrong, try to refresh the page",
-            variant: "error",
-          })
-        );
-        setLoading(false);
-      });
-  };
-  const loadProducts = () => {
-    setLoading(true);
-    getAllProducts()
-      .then((response) => {
-        setProductAll(response.data);
-        setLoading(false);
-      })
-      .catch(() => {
-        dispatch(
-          showMessage({
-            message: "There is something wrong, try to refresh the page",
-            variant: "error",
-          })
-        );
-        setLoading(false);
-      });
-  };
-  const loadDrivers = () => {
-    setLoading(true);
-    getAllDrivers()
-      .then((response) => {
-        setDrivertAll(response.data.data);
-        setLoading(false);
-      })
-      .catch(() => {
-        dispatch(
-          showMessage({
-            message: "There is something wrong, try to refresh the page",
-            variant: "error",
-          })
-        );
-        setLoading(false);
-      });
-  };
 
   useEffect(() => {
+    const loadCustomers = () => {
+      setLoading(true);
+      getAllCustomers()
+        .then((res) => {
+          setCustomerAll(res.data);
+          setLoading(false);
+          return null;
+        })
+
+        .catch(() => {
+          dispatch(
+            showMessage({
+              message: "There is something wrong, try to refresh the page",
+              variant: "error",
+            })
+          );
+          setLoading(false);
+        });
+    };
+    const loadProducts = () => {
+      setLoading(true);
+      getAllProducts()
+        .then((response) => {
+          setProductAll(response.data);
+          setLoading(false);
+          return null;
+        })
+        .catch(() => {
+          dispatch(
+            showMessage({
+              message: "There is something wrong, try to refresh the page",
+              variant: "error",
+            })
+          );
+          setLoading(false);
+        });
+    };
+    const loadDrivers = () => {
+      setLoading(true);
+      getAllDrivers()
+        .then((response) => {
+          setDrivertAll(response.data.data);
+          setLoading(false);
+          return null;
+        })
+        .catch(() => {
+          dispatch(
+            showMessage({
+              message: "There is something wrong, try to refresh the page",
+              variant: "error",
+            })
+          );
+          setLoading(false);
+        });
+    };
     loadCustomers();
     loadProducts();
     loadDrivers();
-  }, []);
+  }, [dispatch]);
 
   return (
     <FormProvider {...methods}>
@@ -172,9 +171,7 @@ const OrderAddForm = () => {
           toolbar: "p-0",
           header: "min-h-72 h-72 sm:h-136 sm:min-h-136",
         }}
-        header={
-          <FormHeader customers={customerAll} />
-        }
+        header={<FormHeader customers={customerAll} />}
         contentToolbar={
           <div className="p-16 sm:p-24 max-w-2xl">
             <h1>{t("CREATE_NEW")}</h1>

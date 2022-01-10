@@ -9,9 +9,11 @@ import { useHistory, useParams } from "react-router";
 import { useTranslation } from "react-i18next";
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { registerCustomer, putCustomer } from "../../../api-conn/customers";
+import { putCustomer } from "../../../api-conn/customers";
 import { showMessage } from "../../../store/fuse/messageSlice";
-import { formatDate } from "app/lib/formatDate";
+import { formatDate, getBinaryDays } from "app/lib/formatDate";
+import PropTypes from "prop-types";
+import { postOrder } from "app/api-conn/shipments_order";
 
 function FormHeader({ customers }) {
   const theme = useTheme();
@@ -65,6 +67,7 @@ function FormHeader({ customers }) {
             })
           );
           history.push("/customers");
+          return null;
         })
         .catch((error) =>
           dispatch(
@@ -79,16 +82,18 @@ function FormHeader({ customers }) {
           )
         );
     } else {
+      console.log("getValues", getValues());
       const formData = {
         customerId: getValues().customerId,
         deliveryTime: formatDate(getValues().deliveryTime),
         driverId: getValues().driverId,
         pickUp: getValues().pickUp,
+        scheduleStatus: getValues().scheduleStatus,
         priority: getValues().priority,
         products: getValues().products.map((product) => {
           const formatedProduct = {
             description: product.description,
-            quanty: product.salesUnits.salesUnits.length,
+            quanty: product.salesUnits.length,
             productTypeId: product.id,
           };
 
@@ -98,6 +103,7 @@ function FormHeader({ customers }) {
         tag: getValues().tag,
         termOrder: getValues().termOrder,
       };
+      formData.daysToOrder = getBinaryDays(getValues().daysToOrder);
 
       if (getValues().zipCode !== "") {
         formData.zipCode = getValues().zipCode;
@@ -125,32 +131,33 @@ function FormHeader({ customers }) {
       }
 
       console.log("formData", formData);
-      // registerCustomer(formData)
-      //   .then(() => {
-      //     dispatch(
-      //       showMessage({
-      //         message: "The customer was created successfully",
-      //         variant: "success",
-      //         anchorOrigin: {
-      //           vertical: "top",
-      //           horizontal: "right",
-      //         },
-      //       })
-      //     );
-      //     history.push("/customers");
-      //   })
-      //   .catch((error) =>
-      //     dispatch(
-      //       showMessage({
-      //         message: error.response.data.title,
-      //         variant: "error",
-      //         anchorOrigin: {
-      //           vertical: "top",
-      //           horizontal: "right",
-      //         },
-      //       })
-      //     )
-      //   );
+      postOrder(formData)
+        .then(() => {
+          dispatch(
+            showMessage({
+              message: "The order was created successfully",
+              variant: "success",
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "right",
+              },
+            })
+          );
+          history.push("/orders_admin");
+          return null;
+        })
+        .catch((error) =>
+          dispatch(
+            showMessage({
+              message: error.response.data.title || error.response.data.message,
+              variant: "error",
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "right",
+              },
+            })
+          )
+        );
     }
   };
 
@@ -211,3 +218,9 @@ function FormHeader({ customers }) {
 }
 
 export default FormHeader;
+
+FormHeader.propTypes = {
+  products: PropTypes.array.isRequired,
+  customers: PropTypes.array.isRequired,
+  drivers: PropTypes.array.isRequired,
+};

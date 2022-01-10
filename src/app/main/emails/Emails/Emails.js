@@ -9,6 +9,7 @@ import FuseLoading from "@fuse/core/FuseLoading";
 
 
 
+
 const Header = lazy(() =>
   import("app/components/HeaderPage/PageCardedHeader").then((header) => header)
 );
@@ -16,6 +17,7 @@ const EmailsTable = lazy(() => import("./EmailsTable").then((table) => table));
 
 function Emails() {
   const { t } = useTranslation("emails");
+ 
   const [emails, setEmails] = useState([]);
   const [loading, setLoading] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);

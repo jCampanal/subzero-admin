@@ -10,16 +10,14 @@ import {
   MenuItem,
   Select,
   TextField,
-  Switch,
 } from "@material-ui/core";
-import { useState } from "react";
+import PropTypes from "prop-types";
 
 function FormControls({ salesTax }) {
   const { t } = useTranslation("orders-admin");
   const methods = useFormContext();
   const { control, formState } = methods;
   const { errors } = formState;
- 
 
   return (
     <div className="flex flex-col justify-center sm:justify-start flex-wrap max-w-2xl">
@@ -158,91 +156,84 @@ function FormControls({ salesTax }) {
 
       <div className="grid gap-x-48 grid-cols-1 sm:grid-cols-2">
         <div className="flex flex-col">
-          
-         
-            <Controller
-              name="companyName"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  className="mt-8 mb-16"
-                  error={!!errors.companyName}
-                  helperText={errors?.companyName?.message}
-                  label={t("companyName")}
-                  id="companyName"
-                  variant="outlined"
-                />
-              )}
-            />
-          
+          <Controller
+            name="companyName"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                className="mt-8 mb-16"
+                error={!!errors.companyName}
+                helperText={errors?.companyName?.message}
+                label={t("companyName")}
+                id="companyName"
+                variant="outlined"
+              />
+            )}
+          />
         </div>
 
         <div className="flex flex-col">
-     
-
-        
-              <Controller
-                name="street"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    className="mt-8 mb-16"
-                    error={!!errors.street}
-                    helperText={errors?.street?.message}
-                    label={t("street")}
-                    id="street"
-                    variant="outlined"
-                  />
-                )}
+          <Controller
+            name="street"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                className="mt-8 mb-16"
+                error={!!errors.street}
+                helperText={errors?.street?.message}
+                label={t("street")}
+                id="street"
+                variant="outlined"
               />
-              <Controller
-                name="city"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    className="mt-8 mb-16"
-                    error={!!errors.city}
-                    helperText={errors?.city?.message}
-                    label={t("city")}
-                    id="city"
-                    variant="outlined"
-                  />
-                )}
+            )}
+          />
+          <Controller
+            name="city"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                className="mt-8 mb-16"
+                error={!!errors.city}
+                helperText={errors?.city?.message}
+                label={t("city")}
+                id="city"
+                variant="outlined"
               />
-              <Controller
-                name="state"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    className="mt-8 mb-16"
-                    error={!!errors.state}
-                    helperText={errors?.state?.message}
-                    label={t("state")}
-                    id="state"
-                    variant="outlined"
-                  />
-                )}
+            )}
+          />
+          <Controller
+            name="state"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                className="mt-8 mb-16"
+                error={!!errors.state}
+                helperText={errors?.state?.message}
+                label={t("state")}
+                id="state"
+                variant="outlined"
               />
-              <Controller
-                name="zipCode"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    className="mt-8 mb-16"
-                    error={!!errors.zipCode}
-                    helperText={errors?.zipCode?.message}
-                    label={t("zipCode")}
-                    id="zipCode"
-                    variant="outlined"
-                  />
-                )}
+            )}
+          />
+          <Controller
+            name="zipCode"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                className="mt-8 mb-16"
+                error={!!errors.zipCode}
+                helperText={errors?.zipCode?.message}
+                label={t("zipCode")}
+                id="zipCode"
+                variant="outlined"
               />
-           
+            )}
+          />
         </div>
       </div>
     </div>
@@ -250,3 +241,7 @@ function FormControls({ salesTax }) {
 }
 
 export default FormControls;
+
+FormControls.propTypes = {
+  salesTax: PropTypes.array.isRequired,
+};

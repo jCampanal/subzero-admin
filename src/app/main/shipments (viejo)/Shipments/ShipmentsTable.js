@@ -60,10 +60,6 @@ function ShipmentsTable({
     setSelected([]);
   }
 
-  function handleClick(item) {
-    // history.push(`/apps/e-commerce/products/${item.id}/${item.handle}`);
-  }
-
   function handleCheck(event, id) {
     const selectedIndex = selected.indexOf(id);
     let newSelected = [];
@@ -128,7 +124,6 @@ function ShipmentsTable({
                     tabIndex={-1}
                     key={customer.id}
                     selected={isSelected}
-                    onClick={(event) => handleClick(customer)}
                   >
                     <TableCell
                       className="w-40 md:w-64 text-center"
@@ -254,11 +249,13 @@ function ShipmentsTable({
 export default withRouter(ShipmentsTable);
 
 ShipmentsTable.propTypes = {
-  Shipments: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
   rows: PropTypes.array.isRequired,
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
+  totalItems: PropTypes.number.isRequired,
   handleChangeRowsPerPage: PropTypes.func.isRequired,
   handleChangePage: PropTypes.func.isRequired,
   handleClickEdit: PropTypes.func.isRequired,
+  deleteCallback: PropTypes.func.isRequired,
 };

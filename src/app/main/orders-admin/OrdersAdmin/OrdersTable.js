@@ -19,249 +19,27 @@ import { showMessage } from "app/store/fuse/messageSlice";
 import { useDispatch } from "react-redux";
 
 export const ShipmentStatus = {
-  "Waiting": { name: "SHIPPING", icon: "fa-truck", tColor: "blue-700" },
-  "DELIVERED": { name: "DELIVERED", icon: "fa-handshake", tColor: "green-700" },
-  "CANCELED": { name: "CANCELED", icon: "fa-times", tColor: "red-700" },
+  Waiting: { name: "SHIPPING", icon: "fa-truck", tColor: "blue-700" },
+  DELIVERED: { name: "DELIVERED", icon: "fa-handshake", tColor: "green-700" },
+  CANCELED: { name: "CANCELED", icon: "fa-times", tColor: "red-700" },
 };
 
 // const dummyOrders = [
- 
+
 //           {id: 1, company: 'Ridiculus', arriveTime: new Date(), status: 1},
 //           {id: 2, company: 'MUS', arriveTime: new Date(), status: 2},
 //           {id: 3, company: 'Mauris', arriveTime: new Date(), status: 3},
 //           {id: 4, company: 'Vitae', arriveTime: new Date(), status: 1},
 //           {id: 5, company: 'Ultricies', arriveTime: new Date(), status: 1},
 //           {id: 6, company: 'LEO', arriveTime: new Date(), status: 2},
-      
+
 // ];
 
-const dummyOrders = [
-  {
-    "id": "67b6e540-0985-49e2-8a7a-3af8278fasd6e2e",
-    "no": 0,
-    "tag": "Dry Ice",
-    "status": "Waiting",
-    "arriveTime" : "9/1/2022",
-    "priority": 1,
-    "pickUp": false,
-    "address": {
-      "id": "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-      "street": "Wall Street",
-      "city": "New York",
-      "state": "New York",
-      "zipCode": 10001
-    },
-    "driver": {
-      "email": "test@admin.com",
-      "enabled": true,
-      "id": "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-      "imageURL": "url",
-      "lastName": "Pérez",
-      "name": "Juan",
-      "phoneNumber": "test@admin.com",
-      "userName": "Pedro",
-      "warehouse": {
-        "id": "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-        "name": "FLL Warehouse",
-        "address": {
-          "id": "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-          "street": "Wall Street",
-          "city": "New York",
-          "state": "New York",
-          "zipCode": 10001
-        }
-      }
-    },
-    "customer": {
-      "company": {
-        "id": "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-        "name": "Company 1",
-        "address": {
-          "id": "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-          "street": "Wall Street",
-          "city": "New York",
-          "state": "New York",
-          "zipCode": 10001
-        }
-      },
-      "email": "test@admin.com",
-      "id": "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-      "imageURL": "url",
-      "lastName": "Pérez",
-      "listID": "80000002-1636062834",
-      "name": "Juan",
-      "phoneNumber": "test@admin.com",
-      "priorityCustomer": false,
-      "userName": "Juan"
-    },
-    "products": [
-      {
-        "id": "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-        "pendingQuanty": 200,
-        "completed": true,
-        "description": "Dry Ice 4 kg",
-        "quanty": 1,
-        "name": "Dry Ice",
-        "productTypeId": "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-        "listID": "80000002-1636062834"
-      }
-    ],
-    "listID": "80000002-1636062834"
-  },
-  {
-    "id": "67b6e540-0985-49e2-8a7a-3af8278f6e2asde",
-    "no": 0,
-    "tag": "Dry Ice",
-    "status": "Waiting",
-    "arriveTime" : "9/1/2022",
-    "priority": 1,
-    "pickUp": false,
-    "address": {
-      "id": "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-      "street": "Wall Street",
-      "city": "New York",
-      "state": "New York",
-      "zipCode": 10001
-    },
-    "driver": {
-      "email": "test@admin.com",
-      "enabled": true,
-      "id": "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-      "imageURL": "url",
-      "lastName": "Pérez",
-      "name": "Juan",
-      "phoneNumber": "test@admin.com",
-      "userName": "Pedro",
-      "warehouse": {
-        "id": "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-        "name": "FLL Warehouse",
-        "address": {
-          "id": "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-          "street": "Wall Street",
-          "city": "New York",
-          "state": "New York",
-          "zipCode": 10001
-        }
-      }
-    },
-    "customer": {
-      "company": {
-        "id": "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-        "name": "Company 1",
-        "address": {
-          "id": "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-          "street": "Wall Street",
-          "city": "New York",
-          "state": "New York",
-          "zipCode": 10001
-        }
-      },
-      "email": "test@admin.com",
-      "id": "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-      "imageURL": "url",
-      "lastName": "Pérez",
-      "listID": "80000002-1636062834",
-      "name": "Juan",
-      "phoneNumber": "test@admin.com",
-      "priorityCustomer": false,
-      "userName": "Juan"
-    },
-    "products": [
-      {
-        "id": "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-        "pendingQuanty": 200,
-        "completed": true,
-        "description": "Dry Ice 4 kg",
-        "quanty": 1,
-        "name": "Dry Ice",
-        "productTypeId": "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-        "listID": "80000002-1636062834"
-      }
-    ],
-    "listID": "80000002-1636062834"
-  },
-  {
-    "id": "67b6e540-0985-49e2-8a7a-3af8278f6e2easd",
-    "no": 0,
-    "tag": "Dry Ice",
-    "status": "Waiting",
-    "arriveTime" : "9/1/2022",
-    "priority": 1,
-    "pickUp": false,
-    "address": {
-      "id": "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-      "street": "Wall Street",
-      "city": "New York",
-      "state": "New York",
-      "zipCode": 10001
-    },
-    "driver": {
-      "email": "test@admin.com",
-      "enabled": true,
-      "id": "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-      "imageURL": "url",
-      "lastName": "Pérez",
-      "name": "Juan",
-      "phoneNumber": "test@admin.com",
-      "userName": "Pedro",
-      "warehouse": {
-        "id": "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-        "name": "FLL Warehouse",
-        "address": {
-          "id": "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-          "street": "Wall Street",
-          "city": "New York",
-          "state": "New York",
-          "zipCode": 10001
-        }
-      }
-    },
-    "customer": {
-      "company": {
-        "id": "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-        "name": "Company 1",
-        "address": {
-          "id": "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-          "street": "Wall Street",
-          "city": "New York",
-          "state": "New York",
-          "zipCode": 10001
-        }
-      },
-      "email": "test@admin.com",
-      "id": "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-      "imageURL": "url",
-      "lastName": "Pérez",
-      "listID": "80000002-1636062834",
-      "name": "Juan",
-      "phoneNumber": "test@admin.com",
-      "priorityCustomer": false,
-      "userName": "Juan"
-    },
-    "products": [
-      {
-        "id": "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-        "pendingQuanty": 200,
-        "completed": true,
-        "description": "Dry Ice 4 kg",
-        "quanty": 1,
-        "name": "Dry Ice",
-        "productTypeId": "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-        "listID": "80000002-1636062834"
-      }
-    ],
-    "listID": "80000002-1636062834"
-  },
-      
-];
-
 function OrdersTable({ wharehoseId, rows }) {
-
-  console.log("wharehoseId",wharehoseId);
   const { t } = useTranslation("orders-admin");
   const [selected, setSelected] = useState([]);
   const dispatch = useDispatch();
-  const [data, setData] = useState({data:[], totalItems:0})
+  const [data, setData] = useState({ data: [], totalItems: 0 });
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const history = useHistory();
@@ -328,6 +106,29 @@ function OrdersTable({ wharehoseId, rows }) {
     setRowsPerPage(event.target.value);
   }
 
+  useEffect(() => {
+    getOrdersByWhareHose(wharehoseId)
+      .then((res) => {
+        setData({
+          data: res.data.data,
+          totalItems: res.data.totalItems,
+        });
+        return null;
+      })
+      .catch(() => {
+        dispatch(
+          showMessage({
+            message: t("PROBLEM_FETCHING"),
+            anchorOrigin: {
+              vertical: "top",
+              horizontal: "right",
+            },
+            variant: "error",
+          })
+        );
+      });
+  }, [wharehoseId, t, dispatch]);
+
   if (data.data.length === 0) {
     return (
       <motion.div
@@ -341,28 +142,6 @@ function OrdersTable({ wharehoseId, rows }) {
       </motion.div>
     );
   }
-
-  useEffect(()=>{
-    console.log("Me esjecas");
-    getOrdersByWhareHose(wharehoseId).then((res)=>{
-      setData({
-        data:res.data.data,
-        totalItems:res.data.totalItems
-      })
-    }).catch((err) =>{
-      dispatch(
-        showMessage({
-          message: t("PROBLEM_FETCHING"),
-          anchorOrigin: {
-            vertical: "top",
-            horizontal: "right",
-          },
-          variant: "error",
-        })
-      );
-    })
-  },[wharehoseId])
-
 
   return (
     <div className="w-full flex flex-col">
@@ -393,7 +172,7 @@ function OrdersTable({ wharehoseId, rows }) {
                     tabIndex={-1}
                     key={item.id}
                     selected={isSelected}
-                    onClick={(event) => handleClick(item)}
+                    onClick={() => handleClick(item)}
                   >
                     <TableCell
                       className="w-40 md:w-64 text-center"
@@ -465,7 +244,7 @@ function OrdersTable({ wharehoseId, rows }) {
       <TablePagination
         className="flex-shrink-0 border-t-1"
         component="div"
-        count={totalItems}
+        count={data.totalItems}
         labelRowsPerPage={t("ROWS_PER_PAGE")}
         rowsPerPage={rowsPerPage}
         page={page}

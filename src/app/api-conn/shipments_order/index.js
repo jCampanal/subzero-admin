@@ -5,28 +5,35 @@ const orderURL = "/admin/Order";
 
 const getAllOrders = () =>
   apiClient.get(orderURL + "/getAll").then((response) => response.data);
-const getOrdersByWhareHose = (idWahrehose, secondDate = formatDate(new Date()), companyName=undefined,firstDate=undefined,noOrder=undefined,pageSize=10,pageNumber=0) =>
-  apiClient.get(orderURL + `/getByWarehouse/${idWahrehose}`, {
-    params: {
-      companyName,
-      firstDate,
-      secondDate ,
-      noOrder,
-      pageSize,
-      pageNumber,
-
-    },
-  }).then((response) => response.data);
+const getOrdersByWhareHose = (
+  idWahrehose,
+  secondDate = formatDate(new Date()),
+  companyName = undefined,
+  firstDate = undefined,
+  noOrder = undefined,
+  pageSize = 10,
+  pageNumber = 0
+) =>
+  apiClient
+    .get(orderURL + `/getByWarehouse/${idWahrehose}`, {
+      params: {
+        companyName,
+        firstDate,
+        secondDate,
+        noOrder,
+        pageSize,
+        pageNumber,
+      },
+    })
+    .then((response) => response.data);
 
 const getShipment = (id) =>
   apiClient
     .get(`${orderURL}/getByDriver/${id}`)
     .then((response) => response.data);
 
-const postShipment = (userId, data) =>
-  apiClient
-    .post(`${orderURL}/${userId}`, data)
-    .then((response) => response.data);
+const postOrder = (data) =>
+  apiClient.post(`${orderURL}`, data).then((response) => response.data);
 
 const putShipment = (id, data) =>
   apiClient.put(`${orderURL}/${id}`, data).then((response) => response.data);
@@ -48,7 +55,7 @@ const registerShipment = (data) =>
 export {
   getAllOrders,
   getShipment,
-  postShipment,
+  postOrder,
   putShipment,
   reassignOrder,
   deleteShipment,

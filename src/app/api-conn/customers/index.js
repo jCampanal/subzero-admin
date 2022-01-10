@@ -20,7 +20,7 @@ const verifyCustomer = (
     .then((response) => response);
 
 const getAllCustomers = () =>
-  apiClient.get(customersURL).then((response) => response.data);
+  apiClient.get(customersURL + "/getAll").then((response) => response.data);
 
 const getCustomer = (id) =>
   apiClient.get(`${customersURL}/${id}`).then((response) => response.data);
