@@ -4,7 +4,7 @@ import SwipeableViews from "react-swipeable-views";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab"; 
+import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
 
 const OrdersAdminTable = lazy(() => import("./OrdersTable"));
@@ -52,12 +52,12 @@ export default function OrdersTab(props) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
-    console.log("newValue",newValue);
+    console.log("newValue", newValue);
     setValue(newValue);
   };
 
   const handleChangeIndex = (index) => {
-    console.log("index",index);
+    console.log("index", index);
     setValue(index);
   };
 
@@ -78,9 +78,9 @@ export default function OrdersTab(props) {
               label={
                 <div>
                   {tabItem.name}
-                  <span className="ml-4 rounded-full text-white bg-blue-600 py-1 px-5">
+                  {/* <span className="ml-4 rounded-full text-white bg-blue-600 py-1 px-5">
                     {5}
-                  </span>
+                  </span> */}
                 </div>
               }
               {...a11yProps(tabItem.id - 1)}

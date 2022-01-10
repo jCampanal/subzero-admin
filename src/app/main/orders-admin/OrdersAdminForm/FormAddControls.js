@@ -15,37 +15,7 @@ import {
   Select,
 } from "@material-ui/core";
 import { DateTimePicker } from "@material-ui/pickers";
-
-const optionsStatus = [
-  "Waiting",
-  "Processing",
-  "Shipping",
-  "Delivered",
-  "Canceled",
-];
-const optionsTermOrder = ["Net30", "Net7", "COD", "NET60"];
-const days = [
-  { name: "MON", index: 2 },
-  { name: "TUE", index: 3 },
-  { name: "WEN", index: 4 },
-  { name: "THE", index: 5 },
-  { name: "FRI", index: 6 },
-  { name: "SAT", index: 7 },
-  { name: "SAN", index: 1 },
-];
-
-const MenuProps = {
-  variant: "menu",
-  anchorOrigin: {
-    vertical: "bottom",
-    horizontal: "left",
-  },
-  transformOrigin: {
-    vertical: "top",
-    horizontal: "left",
-  },
-  getContentAnchorEl: null,
-};
+import { days, MenuProps, optionsStatus, optionsTermOrder } from "../helpData";
 
 function FormControls({ products, customers, drivers }) {
   const [isOpen, setOpen] = useState(false);

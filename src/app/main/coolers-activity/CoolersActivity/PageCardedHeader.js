@@ -1,4 +1,4 @@
-import React, { lazy, useEffect, useState } from "react";
+import React, { lazy, useCallback, useEffect, useState } from "react";
 import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
 import Input from "@material-ui/core/Input";
@@ -40,18 +40,11 @@ function PageCardedHeader({ code, handleMoveCoolerActivity }) {
     setFilter({ ...filter, code: searchCode });
   };
 
-  // const submitFilter = () => {
-  //   if (code) {
-  //     history.push(`/coolers_activity?code=${code}&date=${filter.date}`);
-  //   } else {
-  //     history.push(`/coolers_activity?code=${filter.code}&date=${filter.date}`);
-  //   }
-  // };
-  const submitFilter = () => {
+  const submitFilter = useCallback(() => {
     history.push(
       `/coolers_activity?code=${filter.code}&pickedUpFrom=${filter.dateFrom}&pickedUpTo=${filter.dateTo}`
     );
-  };
+  }, [filter, history]);
   const clearFilter = () => {
     if (filter.code !== "" || filter.dateFrom !== "" || filter.dateTo !== "") {
       setFilter({
@@ -61,7 +54,7 @@ function PageCardedHeader({ code, handleMoveCoolerActivity }) {
       });
       setSearchCode("");
     }
-    history.push(`/coolers_activity`);
+    history.push("/coolers_activity");
   };
 
   const handleCHangeSearchCode = (e) => {
@@ -72,7 +65,7 @@ function PageCardedHeader({ code, handleMoveCoolerActivity }) {
     if (filter.code !== "" || filter.dateFrom !== "" || filter.dateTo !== "") {
       submitFilter();
     }
-  }, [filter]);
+  }, [filter, submitFilter]);
 
   return (
     <div className="flex flex-1 items-center justify-between">
@@ -112,7 +105,6 @@ function PageCardedHeader({ code, handleMoveCoolerActivity }) {
                 value={searchCode}
                 disableUnderline
                 fullWidth
-                value={searchCode}
                 inputProps={{
                   "aria-label": "Search",
                 }}

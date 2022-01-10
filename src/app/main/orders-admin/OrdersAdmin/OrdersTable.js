@@ -13,27 +13,11 @@ import TableHeader from "app/main/products/Products/TableHeader";
 import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import { getOrdersByWhareHose } from "app/api-conn/shipments_order";
 import { showMessage } from "app/store/fuse/messageSlice";
 import { useDispatch } from "react-redux";
-
-export const ShipmentStatus = {
-  Waiting: { name: "SHIPPING", icon: "fa-truck", tColor: "blue-700" },
-  DELIVERED: { name: "DELIVERED", icon: "fa-handshake", tColor: "green-700" },
-  CANCELED: { name: "CANCELED", icon: "fa-times", tColor: "red-700" },
-};
-
-// const dummyOrders = [
-
-//           {id: 1, company: 'Ridiculus', arriveTime: new Date(), status: 1},
-//           {id: 2, company: 'MUS', arriveTime: new Date(), status: 2},
-//           {id: 3, company: 'Mauris', arriveTime: new Date(), status: 3},
-//           {id: 4, company: 'Vitae', arriveTime: new Date(), status: 1},
-//           {id: 5, company: 'Ultricies', arriveTime: new Date(), status: 1},
-//           {id: 6, company: 'LEO', arriveTime: new Date(), status: 2},
-
-// ];
+import { ShipmentStatus } from "../helpData";
 
 function OrdersTable({ wharehoseId, rows }) {
   const { t } = useTranslation("orders-admin");
@@ -43,6 +27,7 @@ function OrdersTable({ wharehoseId, rows }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const history = useHistory();
+  const location = useLocation();
   const [order, setOrder] = useState({
     direction: "asc",
     id: null,
@@ -107,7 +92,32 @@ function OrdersTable({ wharehoseId, rows }) {
   }
 
   useEffect(() => {
-    getOrdersByWhareHose(wharehoseId)
+    let _compnay = new URLSearchParams(location.search).get("company");
+    let _noOrder = new URLSearchParams(location.search).get("noOrden");
+    let date1 = new URLSearchParams(location.search).get("pickedUpFrom");
+    let date2 = new URLSearchParams(location.search).get("pickedUpTo");
+
+    if (_compnay === "" || !_compnay) {
+      _compnay = undefined;
+    }
+    if (_noOrder === "" || !_noOrder) {
+      _noOrder = undefined;
+    }
+    if (date1 === "" || !date1) {
+      date1 = undefined;
+    }
+    if (date2 === "" || !date2) {
+      date2 = undefined;
+    }
+    getOrdersByWhareHose(
+      wharehoseId,
+      date2,
+      _compnay,
+      date1,
+      _noOrder,
+      rowsPerPage,
+      page
+    )
       .then((res) => {
         setData({
           data: res.data.data,
@@ -127,7 +137,7 @@ function OrdersTable({ wharehoseId, rows }) {
           })
         );
       });
-  }, [wharehoseId, t, dispatch]);
+  }, [wharehoseId, t, dispatch, location.search, page, rowsPerPage]);
 
   if (data.data.length === 0) {
     return (
