@@ -17,6 +17,20 @@ const OrdersAdminConfig = {
             path: '/orders_admin',
             component: React.lazy(() => import('./OrdersAdmin/OrdersAdmin')),
         },
+        {
+            path: "/orders_create",
+            exact: true,
+            component: React.lazy(() =>
+              import("./OrdersAdminForm/OrdersAddForm").then((form) => form)
+            ),
+          },
+          {
+            path: "/shipments_edit/:id",
+            exact: true,
+            component: React.lazy(() =>
+              import("./OrdersAdminForm/ShipmentsEditForm").then((form) => form)
+            ),
+          },
     ],
 };
 

@@ -421,7 +421,7 @@ function OrdersTable({ wharehoseId, rows }) {
                       scope="row"
                       align="left"
                     >
-                      {item.arriveTime}
+                      {item.deliveryTime}
                     </TableCell>
 
                     <TableCell

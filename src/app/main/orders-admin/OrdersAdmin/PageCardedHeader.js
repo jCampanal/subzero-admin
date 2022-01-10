@@ -12,11 +12,13 @@ import IconButton from '@material-ui/core/IconButton';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import {useTranslation} from 'react-i18next';
+import { useHistory } from 'react-router';
 
 const DateRangePicker = lazy(() => import('../../coolers/Coolers/DateRangePicker'));
 
 function PageCardedHeader() {
     const {t} = useTranslation('orders-admin');
+    const history = useHistory();
     const mainTheme = useSelector(selectMainTheme);
     const [dateRangeDlgIsOpen, openDateRangeDlg] = useState(false);
     const toggleDateRangeDlgIsOpen = () => {
@@ -94,7 +96,7 @@ function PageCardedHeader() {
                     <IconButton className="sm:hidden" onClick={() => null}>
                         <AddCircleIcon />
                     </IconButton>
-                    <Button className="whitespace-nowrap hidden sm:inline-block" variant="contained" color="secondary" onClick={() => null}>
+                    <Button className="whitespace-nowrap hidden sm:inline-block" variant="contained" color="secondary" onClick={() => {history.push("/orders_create")}}>
                         <AddCircleIcon className="mr-5" />
                         {t('NEW_ORDER')}
                     </Button>
