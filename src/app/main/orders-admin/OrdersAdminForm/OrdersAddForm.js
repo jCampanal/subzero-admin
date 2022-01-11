@@ -77,6 +77,8 @@ const OrderAddForm = () => {
       message: t("NOT_NUMBER"),
       excludeEmptyString: true,
     }),
+    daysToOrder: yup.array(),
+    scheduleStatus: yup.boolean(),
   });
 
   const methods = useForm({

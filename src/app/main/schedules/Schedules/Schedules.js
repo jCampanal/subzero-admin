@@ -1,19 +1,347 @@
 import React, { lazy, memo, useCallback, useEffect, useState } from "react";
 import FusePageCarded from "@fuse/core/FusePageCarded/FusePageCarded";
 import { useTranslation } from "react-i18next";
-import { useHistory, useLocation } from "react-router";
+import { useLocation } from "react-router";
 import withProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
 import { useDispatch } from "react-redux";
-import { getSchedules } from "app/api-conn/schedules";
+import { deleteSchedule, getSchedules } from "app/api-conn/schedules";
 import { showMessage } from "app/store/fuse/messageSlice";
 import rows from "./rows";
 import FuseLoading from "@fuse/core/FuseLoading";
+import RemoveDlg from "app/common/removeDlg";
+import { openDialog } from "app/store/fuse/dialogSlice";
 const Header = lazy(() => import("./PageCardedHeader"));
 const SchedulesTable = lazy(() => import("./SchedulesTable"));
+const EditDialog = lazy(() => import("./EditDialog"));
+
+const dummyData = {
+  status: "200",
+  message: "Ok",
+  data: {
+    data: [
+      {
+        id: "67b6e540-asd-49e2-8a7a-3af8278f6e2e",
+        nextOrder: "2022-01-11T02:32:47.683Z",
+        status: false,
+        orderId: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+        order: {
+          id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+          no: 0,
+          deliveryTime: "2021-09-12T05:50:00.0000000",
+          tag: "Dry Ice",
+          status: "Waiting",
+          priority: 1,
+          pickUp: false,
+          address: {
+            id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+            street: "Wall Street",
+            city: "New York",
+            state: "New York",
+            zipCode: 10001,
+          },
+          driver: {
+            email: "test@admin.com",
+            enabled: true,
+            id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+            imageURL: "url",
+            lastName: "Pérez",
+            name: "Juan",
+            phoneNumber: "test@admin.com",
+            userName: "Pedro",
+            warehouse: {
+              id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+              name: "FLL Warehouse",
+              address: {
+                id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+                street: "Wall Street",
+                city: "New York",
+                state: "New York",
+                zipCode: 10001,
+              },
+            },
+          },
+          customer: {
+            company: {
+              id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+              name: "Company 1",
+              address: {
+                id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+                street: "Wall Street",
+                city: "New York",
+                state: "New York",
+                zipCode: 10001,
+              },
+            },
+            email: "test@admin.com",
+            id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+            imageURL: "url",
+            lastName: "Pérez",
+            listID: "80000002-1636062834",
+            name: "Juan",
+            phoneNumber: "test@admin.com",
+            priorityCustomer: false,
+            userName: "Juan",
+          },
+          products: [
+            {
+              id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+              pendingQuanty: 200,
+              completed: true,
+              description: "Dry Ice 4 kg",
+              quanty: 1,
+              name: "Dry Ice",
+              productTypeId: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+              listID: "80000002-1636062834",
+            },
+          ],
+          listID: "80000002-1636062834",
+        },
+      },
+      {
+        id: "67b6easd540-0985-49e2-8a7a-3af8278f6e2e",
+        nextOrder: "2022-01-11T02:32:47.683Z",
+        status: false,
+        orderId: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+        order: {
+          id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+          no: 0,
+          deliveryTime: "2021-09-12T05:50:00.0000000",
+          tag: "Dry Ice",
+          status: "Waiting",
+          priority: 1,
+          pickUp: false,
+          address: {
+            id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+            street: "Wall Street",
+            city: "New York",
+            state: "New York",
+            zipCode: 10001,
+          },
+          driver: {
+            email: "test@admin.com",
+            enabled: true,
+            id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+            imageURL: "url",
+            lastName: "Pérez",
+            name: "Juan",
+            phoneNumber: "test@admin.com",
+            userName: "Pedro",
+            warehouse: {
+              id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+              name: "FLL Warehouse",
+              address: {
+                id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+                street: "Wall Street",
+                city: "New York",
+                state: "New York",
+                zipCode: 10001,
+              },
+            },
+          },
+          customer: {
+            company: {
+              id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+              name: "Company 1",
+              address: {
+                id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+                street: "Wall Street",
+                city: "New York",
+                state: "New York",
+                zipCode: 10001,
+              },
+            },
+            email: "test@admin.com",
+            id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+            imageURL: "url",
+            lastName: "Pérez",
+            listID: "80000002-1636062834",
+            name: "Juan",
+            phoneNumber: "test@admin.com",
+            priorityCustomer: false,
+            userName: "Juan",
+          },
+          products: [
+            {
+              id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+              pendingQuanty: 200,
+              completed: true,
+              description: "Dry Ice 4 kg",
+              quanty: 1,
+              name: "Dry Ice",
+              productTypeId: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+              listID: "80000002-1636062834",
+            },
+          ],
+          listID: "80000002-1636062834",
+        },
+      },
+      {
+        id: "67b6asdase540-0985-49e2-8a7a-3af8278f6e2e",
+        nextOrder: "2022-01-11T02:32:47.683Z",
+        status: false,
+        orderId: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+        order: {
+          id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+          no: 0,
+          deliveryTime: "2021-09-12T05:50:00.0000000",
+          tag: "Dry Ice",
+          status: "Waiting",
+          priority: 1,
+          pickUp: false,
+          address: {
+            id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+            street: "Wall Street",
+            city: "New York",
+            state: "New York",
+            zipCode: 10001,
+          },
+          driver: {
+            email: "test@admin.com",
+            enabled: true,
+            id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+            imageURL: "url",
+            lastName: "Pérez",
+            name: "Juan",
+            phoneNumber: "test@admin.com",
+            userName: "Pedro",
+            warehouse: {
+              id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+              name: "FLL Warehouse",
+              address: {
+                id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+                street: "Wall Street",
+                city: "New York",
+                state: "New York",
+                zipCode: 10001,
+              },
+            },
+          },
+          customer: {
+            company: {
+              id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+              name: "Company 1",
+              address: {
+                id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+                street: "Wall Street",
+                city: "New York",
+                state: "New York",
+                zipCode: 10001,
+              },
+            },
+            email: "test@admin.com",
+            id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+            imageURL: "url",
+            lastName: "Pérez",
+            listID: "80000002-1636062834",
+            name: "Juan",
+            phoneNumber: "test@admin.com",
+            priorityCustomer: false,
+            userName: "Juan",
+          },
+          products: [
+            {
+              id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+              pendingQuanty: 200,
+              completed: true,
+              description: "Dry Ice 4 kg",
+              quanty: 1,
+              name: "Dry Ice",
+              productTypeId: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+              listID: "80000002-1636062834",
+            },
+          ],
+          listID: "80000002-1636062834",
+        },
+      },
+      {
+        id: "67b6e540-0985sdas-49e2-8a7a-3af8278f6e2e",
+        nextOrder: "2022-01-11T02:32:47.683Z",
+        status: false,
+        orderId: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+        order: {
+          id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+          no: 0,
+          deliveryTime: "2021-09-12T05:50:00.0000000",
+          tag: "Dry Ice",
+          status: "Waiting",
+          priority: 1,
+          pickUp: false,
+          address: {
+            id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+            street: "Wall Street",
+            city: "New York",
+            state: "New York",
+            zipCode: 10001,
+          },
+          driver: {
+            email: "test@admin.com",
+            enabled: true,
+            id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+            imageURL: "url",
+            lastName: "Pérez",
+            name: "Juan",
+            phoneNumber: "test@admin.com",
+            userName: "Pedro",
+            warehouse: {
+              id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+              name: "FLL Warehouse",
+              address: {
+                id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+                street: "Wall Street",
+                city: "New York",
+                state: "New York",
+                zipCode: 10001,
+              },
+            },
+          },
+          customer: {
+            company: {
+              id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+              name: "Company 1",
+              address: {
+                id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+                street: "Wall Street",
+                city: "New York",
+                state: "New York",
+                zipCode: 10001,
+              },
+            },
+            email: "test@admin.com",
+            id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+            imageURL: "url",
+            lastName: "Pérez",
+            listID: "80000002-1636062834",
+            name: "Juan",
+            phoneNumber: "test@admin.com",
+            priorityCustomer: false,
+            userName: "Juan",
+          },
+          products: [
+            {
+              id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+              pendingQuanty: 200,
+              completed: true,
+              description: "Dry Ice 4 kg",
+              quanty: 1,
+              name: "Dry Ice",
+              productTypeId: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+              listID: "80000002-1636062834",
+            },
+          ],
+          listID: "80000002-1636062834",
+        },
+      },
+    ],
+    totalPages: 5,
+    currentPage: 1,
+    haveNext: true,
+    havePrevious: true,
+    totalItems: 15,
+  },
+};
 
 function Schedules() {
   const [schedules, setSchedules] = useState({ data: [], totalItems: 0 });
-  const history = useHistory();
   const location = useLocation();
   const { t } = useTranslation("schedules");
   const dispatch = useDispatch();
@@ -24,6 +352,9 @@ function Schedules() {
   const [customerSearch, setcustomerSearch] = useState("");
   const [companySearch, setcompanySearch] = useState("");
 
+  const [openEditDialog, setOpenEditDialog] = React.useState(false);
+  const [schedule, setSchedule] = useState(null);
+
   const loadSchedules = useCallback(
     (
       pageNumber = 0,
@@ -33,8 +364,8 @@ function Schedules() {
     ) => {
       setLoading(true);
       getSchedules(pageNumber, pageSize, company, customer)
-        .then((response) => {
-          console.log("schedules : ", response);
+        .then(() => {
+          const response = dummyData;
           setSchedules({
             data: response.data.data,
             totalItems: response.data.totalItems,
@@ -62,8 +393,50 @@ function Schedules() {
     setPageNumber(value);
   }
 
-  const editCooler = (cooler) =>
-    history.push(`/coolers/${cooler.id}/edit`, { cooler });
+  const editSchedule = (schedule) => {
+    setSchedule(schedule);
+    setOpenEditDialog(true);
+  };
+  const handleCloseEditDialog = () => {
+    setOpenEditDialog(false);
+  };
+
+  const onProceed = (itemIds) => {
+    setLoading(true);
+    deleteSchedule(JSON.stringify(itemIds))
+      .then(() => {
+        dispatch(
+          showMessage({
+            message: "Deletion completed!",
+          })
+        );
+        loadSchedules();
+        return null;
+      })
+      .catch(() => {
+        dispatch(
+          showMessage({
+            message: "Error during deletion. Please try again later",
+            variant: "error",
+          })
+        );
+        setLoading(false);
+      });
+  };
+  const removeCooler = (itemId) => {
+    dispatch(
+      openDialog({
+        children: (
+          <RemoveDlg
+            itemId={itemId}
+            proceedCallback={() => onProceed(itemId)}
+            dlgTitle="Warning, you have requested a risky operation"
+            dlgText="You are attempting to delete a cooler, this operation cannot be undone. Are you sure you want to proceed with the deletion?"
+          />
+        ),
+      })
+    );
+  };
 
   useEffect(() => {
     document.title = "Schedules - Subzero Ice Services";
@@ -120,10 +493,25 @@ function Schedules() {
           {loading ? (
             <FuseLoading />
           ) : (
-            <SchedulesTable
-              data={schedules.data}
-              rows={rows}
-              totalItems={schedules.totalItems}
+            <>
+              <SchedulesTable
+                data={schedules.data}
+                rows={rows}
+                totalItems={schedules.totalItems}
+                page={pageNumber}
+                rowsPerPage={pageNumber}
+                deleteCallback={removeCooler}
+                editCallback={editSchedule}
+                handleChangePage={handleChangePage}
+                handleChangeRowsPerPage={handleChangeRowsPerPage}
+              />
+            </>
+          )}
+          {schedule && (
+            <EditDialog
+              open={openEditDialog}
+              schedule={schedule}
+              handleClose={handleCloseEditDialog}
             />
           )}
         </>

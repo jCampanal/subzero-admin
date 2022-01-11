@@ -16,17 +16,24 @@ import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
 import { formatDisplayDate } from "app/lib/formatDate";
 
-function SchedulesTable({data, rows, totalItems,  
+function SchedulesTable({
+  data,
+  rows,
+  totalItems,
   page,
 
   rowsPerPage,
   handleChangeRowsPerPage,
   handleChangePage,
   editCallback,
-  deleteCallback,}) {
+  deleteCallback,
+}) {
+  console.log("data", data);
+  console.log("rows", rows);
+  console.log("totalItems", totalItems);
   const { t } = useTranslation("schedules");
   const [selected, setSelected] = useState([]);
-  
+
   const history = useHistory();
   const [order, setOrder] = useState({
     direction: "asc",
@@ -83,8 +90,6 @@ function SchedulesTable({data, rows, totalItems,
     setSelected(newSelected);
   }
 
-
-
   if (data.length === 0) {
     return (
       <motion.div
@@ -112,7 +117,6 @@ function SchedulesTable({data, rows, totalItems,
             onRequestSort={handleRequestSort}
             rowCount={data.length}
             onMenuItemClick={handleDeselect}
-          
             deleteSelectedItemsCallback={() => deleteCallback(selected)}
           />
 
@@ -130,7 +134,7 @@ function SchedulesTable({data, rows, totalItems,
                     tabIndex={-1}
                     key={schedule.id}
                     selected={isSelected}
-                    onClick={(event) => handleClick(schedule)}
+                    onClick={() => handleClick(schedule)}
                   >
                     <TableCell
                       className="w-40 md:w-64 text-center"
@@ -175,7 +179,7 @@ function SchedulesTable({data, rows, totalItems,
                       scope="row"
                       align="left"
                     >
-                      { formatDisplayDate (schedule.order.nextOrder)}
+                      {formatDisplayDate(schedule.order.nextOrder)}
                     </TableCell>
 
                     <TableCell
@@ -185,15 +189,15 @@ function SchedulesTable({data, rows, totalItems,
                       align="right"
                     >
                       <div className="grid grid-cols-3">
-                      <Button
-                        color="primary"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          editCallback(cooler);
-                        }}
-                      >
-                        <Icon>edit</Icon> {t("EDIT")}
-                      </Button>
+                        <Button
+                          color="primary"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            editCallback(schedule);
+                          }}
+                        >
+                          <Icon>edit</Icon> {t("EDIT")}
+                        </Button>
                         <Button color="primary">
                           <Icon>visibility</Icon> {t("VIEW")}
                         </Button>
@@ -244,6 +248,15 @@ function SchedulesTable({data, rows, totalItems,
 export default SchedulesTable;
 
 SchedulesTable.propTypes = {
-  schedules: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
   rows: PropTypes.array.isRequired,
+
+  totalItems: PropTypes.number.isRequired,
+  page: PropTypes.number.isRequired,
+
+  rowsPerPage: PropTypes.number.isRequired,
+  handleChangeRowsPerPage: PropTypes.func.isRequired,
+  handleChangePage: PropTypes.func.isRequired,
+  editCallback: PropTypes.func.isRequired,
+  deleteCallback: PropTypes.func.isRequired,
 };

@@ -1,7 +1,7 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import FusePageCarded from "@fuse/core/FusePageCarded";
 import { useHistory, useLocation } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { deleteCooler, getCoolers } from "../../../api-conn/coolers";
 import rows from "./tableRows";
 import { openDialog } from "../../../store/fuse/dialogSlice";
@@ -27,29 +27,33 @@ function Coolers() {
   const [dateSearch, setDateSearch] = useState("");
   const [dateSearch2, setDateSearch2] = useState("");
 
-  const loadCoolers = (
-    pageNumber = 0,
-    pageSize = 10,
-    code = undefined,
-    pickedUpFrom = undefined,
-    pickedUpTo = undefined
-  ) => {
-    setLoading(true);
-    getCoolers(pageNumber, pageSize, code, pickedUpFrom, pickedUpTo)
-      .then((response) => {
-        setCoolers(response.data);
-        setLoading(false);
-      })
-      .catch(() => {
-        dispatch(
-          showMessage({
-            message: "There is something wrong, try to refresh the page",
-            variant: "error",
-          })
-        );
-        setLoading(false);
-      });
-  };
+  const loadCoolers = useCallback(
+    (
+      pageNumber = 0,
+      pageSize = 10,
+      code = undefined,
+      pickedUpFrom = undefined,
+      pickedUpTo = undefined
+    ) => {
+      setLoading(true);
+      getCoolers(pageNumber, pageSize, code, pickedUpFrom, pickedUpTo)
+        .then((response) => {
+          setCoolers(response.data);
+          setLoading(false);
+          return null;
+        })
+        .catch(() => {
+          dispatch(
+            showMessage({
+              message: "There is something wrong, try to refresh the page",
+              variant: "error",
+            })
+          );
+          setLoading(false);
+        });
+    },
+    [dispatch]
+  );
   const onProceed = (itemIds) => {
     setLoading(true);
     deleteCooler(JSON.stringify(itemIds))
@@ -60,6 +64,7 @@ function Coolers() {
           })
         );
         loadCoolers();
+        return null;
       })
       .catch(() => {
         dispatch(
@@ -106,17 +111,14 @@ function Coolers() {
     let pickedUpFrom = new URLSearchParams(location.search).get("pickedUpFrom");
     let pickedUpTo = new URLSearchParams(location.search).get("pickedUpTo");
 
-    if (pickedUpFrom !== "" && pickedUpFrom) {
-    } else {
+    if (pickedUpFrom === "" || !pickedUpFrom) {
       pickedUpFrom = undefined;
     }
-    if (pickedUpTo !== "" && pickedUpTo) {
-    } else {
+    if (pickedUpTo === "" || !pickedUpTo) {
       pickedUpTo = undefined;
     }
 
-    if (_code !== "" && _code) {
-    } else {
+    if (_code === "" || !_code) {
       _code = undefined;
     }
 
@@ -125,7 +127,7 @@ function Coolers() {
     setDateSearch2(pickedUpTo);
 
     loadCoolers(pageNumber, pageSize, _code, pickedUpFrom, pickedUpTo);
-  }, [location, pageSize, pageNumber]);
+  }, [location, pageSize, pageNumber, loadCoolers]);
 
   return (
     <FusePageCarded

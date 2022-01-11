@@ -124,7 +124,7 @@ function FormHeader({ customers }) {
       const customerSelected = customers.find(
         (customer) => customer.id === getValues().customerId
       );
-      const addressId = customerSelected?.company.name;
+      const addressId = customerSelected?.company.id;
       // const addressId = customerSelected?.company.address.id;
       if (addressId) {
         formData.addressId = addressId;

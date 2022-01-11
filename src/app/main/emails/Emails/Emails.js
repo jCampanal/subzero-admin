@@ -1,4 +1,4 @@
-import React, { lazy, memo, useEffect, useState } from "react";
+import React, { lazy, memo, useEffect, useState, useCallback } from "react";
 import FusePageCarded from "@fuse/core/FusePageCarded/FusePageCarded";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
@@ -7,9 +7,6 @@ import { getEmails } from "../../../api-conn/emails";
 import { showMessage } from "../../../store/fuse/messageSlice";
 import FuseLoading from "@fuse/core/FuseLoading";
 
-
-
-
 const Header = lazy(() =>
   import("app/components/HeaderPage/PageCardedHeader").then((header) => header)
 );
@@ -17,7 +14,7 @@ const EmailsTable = lazy(() => import("./EmailsTable").then((table) => table));
 
 function Emails() {
   const { t } = useTranslation("emails");
- 
+
   const [emails, setEmails] = useState([]);
   const [loading, setLoading] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);
@@ -25,29 +22,33 @@ function Emails() {
   const [totalItems, setTotalItems] = useState(0);
   const dispatch = useDispatch();
 
-  const loadEmails = (pageNumber = 0, pageSize = 10) => {
-    setLoading(true);
-    getEmails(pageNumber, pageSize, name)
-      .then((data) => {
-        setEmails(data.data.data);
-        setTotalItems(data.data.totalItems);
+  const loadEmails = useCallback(
+    (pageNumber = 0, pageSize = 10) => {
+      setLoading(true);
+      getEmails(pageNumber, pageSize)
+        .then((data) => {
+          setEmails(data.data.data);
+          setTotalItems(data.data.totalItems);
 
-        setLoading(false);
-      })
-      .catch(() => {
-        dispatch(
-          showMessage({
-            message: t("PROBLEM_FETCHING"),
-            anchorOrigin: {
-              vertical: "top",
-              horizontal: "right",
-            },
-            variant: "error",
-          })
-        );
-        setLoading(false);
-      });
-  };
+          setLoading(false);
+          return null;
+        })
+        .catch(() => {
+          dispatch(
+            showMessage({
+              message: t("PROBLEM_FETCHING"),
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "right",
+              },
+              variant: "error",
+            })
+          );
+          setLoading(false);
+        });
+    },
+    [dispatch, t]
+  );
 
   function handleChangePage(event, value) {
     setPageNumber(value);
@@ -60,7 +61,7 @@ function Emails() {
 
   useEffect(() => {
     loadEmails(pageNumber, pageSize);
-  }, [pageSize, pageNumber]);
+  }, [pageSize, pageNumber, loadEmails]);
 
   return (
     <FusePageCarded
