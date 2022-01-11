@@ -1,20 +1,10 @@
-import {
-  Collapse,
-  IconButton,
-  TableCell,
-  Typography,
-  TableRow,
-  Box,
-  Table,
-  TableHead,
-  TableBody,
-} from "@material-ui/core";
+import { Collapse, IconButton, TableCell, TableRow } from "@material-ui/core";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@material-ui/icons";
 import React from "react";
 import Orders from "./Orders/Orders";
+import PropsTypes from "prop-types";
 
-const CustomTableRow = (props) => {
-  const { row } = props;
+const CustomTableRow = ({ row }) => {
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -49,3 +39,7 @@ const CustomTableRow = (props) => {
 };
 
 export default CustomTableRow;
+
+CustomTableRow.propTypes = {
+  row: PropsTypes.object.isRequired,
+};

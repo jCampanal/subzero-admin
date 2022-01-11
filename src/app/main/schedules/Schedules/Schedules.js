@@ -499,7 +499,7 @@ function Schedules() {
                 rows={rows}
                 totalItems={schedules.totalItems}
                 page={pageNumber}
-                rowsPerPage={pageNumber}
+                rowsPerPage={pageSize}
                 deleteCallback={removeCooler}
                 editCallback={editSchedule}
                 handleChangePage={handleChangePage}

@@ -5,7 +5,7 @@ import { useTheme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { useHistory, useParams } from "react-router";
+import { useHistory } from "react-router";
 import { useTranslation } from "react-i18next";
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
@@ -15,7 +15,6 @@ import { reassignOrder } from "app/api-conn/shipments_order";
 function FormHeader() {
   const theme = useTheme();
   const history = useHistory();
-  const { id } = useParams();
   const { t } = useTranslation("shipments");
   const methods = useFormContext();
   const {
@@ -38,6 +37,7 @@ function FormHeader() {
           })
         );
         history.push("/shipments");
+        return null;
       })
       .catch((error) =>
         dispatch(

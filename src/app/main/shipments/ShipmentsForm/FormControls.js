@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import FormControl from "@material-ui/core/FormControl";
 import { InputLabel, MenuItem, Select } from "@material-ui/core";
-
+import PropTypes from "prop-types";
 function FormControls({ orders, drivers }) {
   const methods = useFormContext();
   const { control, formState } = methods;
@@ -81,3 +81,8 @@ function FormControls({ orders, drivers }) {
 }
 
 export default FormControls;
+
+FormControls.propTypes = {
+  orders: PropTypes.array.isRequired,
+  drivers: PropTypes.array.isRequired,
+};

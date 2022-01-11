@@ -1,19 +1,15 @@
 import React, { useState } from "react";
 import FuseScrollbars from "@fuse/core/FuseScrollbars";
-import Checkbox from "@material-ui/core/Checkbox";
-import Icon from "@material-ui/core/Icon";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
 import TablePagination from "@material-ui/core/TablePagination";
-import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import { motion } from "framer-motion";
 import TableHeader from "app/components/TableHeader/TableHeader";
-import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
+import { Button, Checkbox, Icon, TableCell, TableRow } from "@material-ui/core";
 import { formatDisplayDate } from "app/lib/formatDate";
 
 function SchedulesTable({
@@ -28,9 +24,6 @@ function SchedulesTable({
   editCallback,
   deleteCallback,
 }) {
-  console.log("data", data);
-  console.log("rows", rows);
-  console.log("totalItems", totalItems);
   const { t } = useTranslation("schedules");
   const [selected, setSelected] = useState([]);
 
@@ -170,16 +163,7 @@ function SchedulesTable({
                       scope="row"
                       align="left"
                     >
-                      {schedule.company}
-                    </TableCell>
-
-                    <TableCell
-                      className="p-4 md:p-16"
-                      component="th"
-                      scope="row"
-                      align="left"
-                    >
-                      {formatDisplayDate(schedule.order.nextOrder)}
+                      {formatDisplayDate(new Date(schedule.nextOrder))}
                     </TableCell>
 
                     <TableCell
@@ -201,18 +185,7 @@ function SchedulesTable({
                         <Button color="primary">
                           <Icon>visibility</Icon> {t("VIEW")}
                         </Button>
-                        <Button color="primary">
-                          {!schedule.status && (
-                            <>
-                              <Icon>play_circle_outline</Icon> {t("RESUME")}
-                            </>
-                          )}
-                          {schedule.status && (
-                            <>
-                              <Icon>pause_circle_outline</Icon> {t("PAUSE")}
-                            </>
-                          )}
-                        </Button>
+
                         <Button color="primary">
                           <Icon>delete</Icon> {t("DELETE")}
                         </Button>
@@ -250,10 +223,8 @@ export default SchedulesTable;
 SchedulesTable.propTypes = {
   data: PropTypes.array.isRequired,
   rows: PropTypes.array.isRequired,
-
   totalItems: PropTypes.number.isRequired,
   page: PropTypes.number.isRequired,
-
   rowsPerPage: PropTypes.number.isRequired,
   handleChangeRowsPerPage: PropTypes.func.isRequired,
   handleChangePage: PropTypes.func.isRequired,
