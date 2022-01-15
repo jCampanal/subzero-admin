@@ -64,7 +64,6 @@ function SchedulesTable({
   function handleClick(item) {
     setViewSchedule(item);
     setIsViewModal(true);
-    history.push(`/apps/e-commerce/products/${item.id}/${item.handle}`);
   }
 
   function handleCheck(event, id) {
@@ -221,11 +220,13 @@ function SchedulesTable({
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-      <ViewModal
-        schedule={viewSchedule}
-        setIsModal={setIsViewModal}
-        isModal={isViewModal}
-      />
+      {viewSchedule && (
+        <ViewModal
+          schedule={viewSchedule}
+          setIsModal={setIsViewModal}
+          isModal={isViewModal}
+        />
+      )}
     </div>
   );
 }

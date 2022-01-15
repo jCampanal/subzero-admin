@@ -4,6 +4,11 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
   Toolbar,
   Typography,
 } from "@material-ui/core";
@@ -11,6 +16,7 @@ import {
 import { formatDisplayDate } from "app/lib/formatDate";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import PropType from "prop-types";
 
 const ViewModal = ({ schedule, isModal, setIsModal }) => {
   const { t } = useTranslation("schedules");
@@ -25,31 +31,41 @@ const ViewModal = ({ schedule, isModal, setIsModal }) => {
       <AppBar position="static" elevation={0}>
         <Toolbar className="flex w-full">
           <Typography variant="subtitle1" color="inherit">
-            {t("PROOF")}
+            {schedule.order.status}
           </Typography>
         </Toolbar>
       </AppBar>
       <DialogContent classes={{ root: "p-0" }}>
         <div className="px-16 sm:px-24">
           <div className="-mx-4 my-5 pt-5">
-            <h3>Code {schedule.code}</h3>
-            <br />
-
             <h3>
-              Delivered to {schedule.receiverName} {schedule.recierverLastName}
+              This is scheduled for{" "}
+              {formatDisplayDate(new Date(schedule.nextOrder))}
             </h3>
-            <span className="small">
-              {formatDisplayDate(new Date(schedule.deliveredTime))}
-            </span>
-          </div>
-          <div className="p-5 sm:px-24 full-width mt-20">
-            <img
-              className="w-full"
-              src={schedule.imageURL}
-              alt={schedule.receiverName}
-            />
+            <span className="small"></span>
           </div>
         </div>
+        <br />
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>product</TableCell>
+              <TableCell>description</TableCell>
+              <TableCell>quanty</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {schedule.order.products.map((product) => {
+              return (
+                <TableRow key={product.id}>
+                  <TableCell>{product.name}</TableCell>
+                  <TableCell>{product.description}</TableCell>
+                  <TableCell>{product.quantity}</TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
       </DialogContent>
       <DialogActions className="px-8 py-16 justify-end">
         <div className="px-16">
@@ -68,3 +84,9 @@ const ViewModal = ({ schedule, isModal, setIsModal }) => {
 };
 
 export default ViewModal;
+
+ViewModal.propTypes = {
+  schedule: PropType.object.isRequired,
+  isModal: PropType.bool.isRequired,
+  setIsModal: PropType.func.isRequired,
+};

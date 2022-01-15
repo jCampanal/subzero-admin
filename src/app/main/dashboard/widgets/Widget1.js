@@ -1,16 +1,16 @@
-import _ from '@lodash';
-import Divider from '@material-ui/core/Divider';
-import { alpha } from '@material-ui/core/styles/colorManipulator';
-import { makeStyles, ThemeProvider, useTheme } from '@material-ui/core/styles';
-import Tab from '@material-ui/core/Tab';
-import Tabs from '@material-ui/core/Tabs';
-import Typography from '@material-ui/core/Typography';
-import clsx from 'clsx';
-import { motion } from 'framer-motion';
-import { memo, useState } from 'react';
-import ReactApexChart from 'react-apexcharts';
-import { useSelector } from 'react-redux';
-import { selectContrastMainTheme } from 'app/store/fuse/settingsSlice';
+import _ from "@lodash";
+import Divider from "@material-ui/core/Divider";
+import { alpha } from "@material-ui/core/styles/colorManipulator";
+import { makeStyles, ThemeProvider, useTheme } from "@material-ui/core/styles";
+import Tab from "@material-ui/core/Tab";
+import Tabs from "@material-ui/core/Tabs";
+import Typography from "@material-ui/core/Typography";
+import clsx from "clsx";
+import { motion } from "framer-motion";
+import { memo, useState } from "react";
+import ReactApexChart from "react-apexcharts";
+import { useSelector } from "react-redux";
+import { selectContrastMainTheme } from "app/store/fuse/settingsSlice";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,17 +22,27 @@ const useStyles = makeStyles((theme) => ({
 function Widget1(props) {
   const classes = useStyles(props);
   const theme = useTheme();
-  const contrastTheme = useSelector(selectContrastMainTheme(theme.palette.primary.main));
+  const contrastTheme = useSelector(
+    selectContrastMainTheme(theme.palette.primary.main)
+  );
   const data = _.merge({}, props.data);
 
   const [tabValue, setTabValue] = useState(2);
   const series = data.series[Object.keys(data.series)[tabValue]];
 
-  _.setWith(data, 'options.fill.colors', [theme.palette.secondary.main]);
-  _.setWith(data, 'options.markers.colors', [theme.palette.secondary.main]);
-  _.setWith(data, 'options.stroke.colors', [theme.palette.primary.contrastText]);
-  _.setWith(data, 'options.markers.strokeColors', [theme.palette.primary.contrastText]);
-  _.setWith(data, 'options.grid.borderColor', alpha(theme.palette.primary.contrastText, 0.3));
+  _.setWith(data, "options.fill.colors", [theme.palette.secondary.main]);
+  _.setWith(data, "options.markers.colors", [theme.palette.secondary.main]);
+  _.setWith(data, "options.stroke.colors", [
+    theme.palette.primary.contrastText,
+  ]);
+  _.setWith(data, "options.markers.strokeColors", [
+    theme.palette.primary.contrastText,
+  ]);
+  _.setWith(
+    data,
+    "options.grid.borderColor",
+    alpha(theme.palette.primary.contrastText, 0.3)
+  );
 
   return (
     <ThemeProvider theme={contrastTheme}>
@@ -58,9 +68,13 @@ function Widget1(props) {
               variant="scrollable"
               scrollButtons="off"
               className="w-full -mx-4 min-h-40"
-              classes={{ indicator: 'flex justify-center bg-transparent w-full h-full' }}
+              classes={{
+                indicator: "flex justify-center bg-transparent w-full h-full",
+              }}
               TabIndicatorProps={{
-                children: <Divider className="w-full h-full rounded-full opacity-50" />,
+                children: (
+                  <Divider className="w-full h-full rounded-full opacity-50" />
+                ),
               }}
             >
               {Object.keys(data.series).map((key) => (
