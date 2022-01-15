@@ -127,7 +127,6 @@ function SchedulesTable({
                     tabIndex={-1}
                     key={schedule.id}
                     selected={isSelected}
-                    onClick={() => handleClick(schedule)}
                   >
                     <TableCell
                       className="w-40 md:w-64 text-center"
@@ -180,14 +179,17 @@ function SchedulesTable({
                             editCallback(schedule);
                           }}
                         >
-                          <Icon>edit</Icon> {t("EDIT")}
+                          <Icon className="mr-5">edit</Icon> {t("EDIT")}
                         </Button>
                         <Button color="primary">
-                          <Icon>visibility</Icon> {t("VIEW")}
+                          <Icon className="mr-5">visibility</Icon> {t("VIEW")}
                         </Button>
 
-                        <Button color="primary">
-                          <Icon>delete</Icon> {t("DELETE")}
+                        <Button
+                          color="primary"
+                          onClick={() => deleteCallback([schedule.id])}
+                        >
+                          <Icon className="mr-5">delete</Icon> {t("DELETE")}
                         </Button>
                       </div>
                     </TableCell>

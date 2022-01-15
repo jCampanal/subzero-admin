@@ -11,7 +11,6 @@ import { motion } from "framer-motion";
 import TableHeader from "app/components/TableHeader/TableHeader";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router";
 import { Pageview } from "@material-ui/icons";
 import ViewModal from "./ViewModal";
 import { formatDisplayDate } from "app/lib/formatDate";
@@ -24,7 +23,6 @@ function CoolersActivityTable({
   handleChangePage,
   handleChangeRowsPerPage,
 }) {
-  const history = useHistory();
   const { t } = useTranslation("coolers-activity");
   const [selected, setSelected] = useState([]);
   const [data] = useState(coolersActivity);
@@ -239,4 +237,8 @@ export default CoolersActivityTable;
 CoolersActivityTable.propTypes = {
   coolersActivity: PropTypes.array.isRequired,
   rows: PropTypes.array.isRequired,
+  page: PropTypes.number.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
+  handleChangePage: PropTypes.func.isRequired,
+  handleChangeRowsPerPage: PropTypes.func.isRequired,
 };

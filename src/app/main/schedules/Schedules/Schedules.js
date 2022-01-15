@@ -474,13 +474,13 @@ function Schedules() {
               {customerSearch && (
                 <span className="mr-10">
                   {" "}
-                  <b> {t("CODE")}:</b> {customerSearch}
+                  <b> {t("CUSTOMER")}:</b> {customerSearch}
                 </span>
               )}
               {companySearch && (
                 <span className="mr-10">
                   {" "}
-                  <b>{t("DATE_1")}:</b> {companySearch}
+                  <b>{t("COMPANY")}:</b> {companySearch}
                 </span>
               )}
               )

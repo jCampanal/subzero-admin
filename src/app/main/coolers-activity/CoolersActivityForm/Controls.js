@@ -73,8 +73,9 @@ const Controls = () => {
     setLoading(true);
     getAllCustomers()
       .then((response) => {
-        setCustomers(response.data.data);
+        setCustomers(response.data);
         setLoading(false);
+        return null;
       })
       .catch(() => {
         dispatch(
@@ -92,6 +93,7 @@ const Controls = () => {
       .then((response) => {
         setDrivers(response.data.data);
         setLoading(false);
+        return null;
       })
       .catch(() => {
         dispatch(
