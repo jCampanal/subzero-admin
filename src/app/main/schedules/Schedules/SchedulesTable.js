@@ -11,13 +11,13 @@ import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
 import { Button, Checkbox, Icon, TableCell, TableRow } from "@material-ui/core";
 import { formatDisplayDate } from "app/lib/formatDate";
+import ViewModal from "./ViewModal";
 
 function SchedulesTable({
   data,
   rows,
   totalItems,
   page,
-
   rowsPerPage,
   handleChangeRowsPerPage,
   handleChangePage,
@@ -26,6 +26,8 @@ function SchedulesTable({
 }) {
   const { t } = useTranslation("schedules");
   const [selected, setSelected] = useState([]);
+  const [isViewModal, setIsViewModal] = useState(false);
+  const [viewSchedule, setViewSchedule] = useState();
 
   const history = useHistory();
   const [order, setOrder] = useState({
@@ -60,6 +62,8 @@ function SchedulesTable({
   }
 
   function handleClick(item) {
+    setViewSchedule(item);
+    setIsViewModal(true);
     history.push(`/apps/e-commerce/products/${item.id}/${item.handle}`);
   }
 
@@ -127,6 +131,7 @@ function SchedulesTable({
                     tabIndex={-1}
                     key={schedule.id}
                     selected={isSelected}
+                    onClick={() => handleClick(schedule)}
                   >
                     <TableCell
                       className="w-40 md:w-64 text-center"
@@ -215,6 +220,11 @@ function SchedulesTable({
         }}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+      <ViewModal
+        schedule={viewSchedule}
+        setIsModal={setIsViewModal}
+        isModal={isViewModal}
       />
     </div>
   );
