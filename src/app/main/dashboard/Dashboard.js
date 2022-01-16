@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Widget1 from "./widgets/Widget1";
 import Widget2 from "./widgets/Widget2";
-import Widget3 from "./widgets/Widget3";
 import Widget4 from "./widgets/Widget4";
 import Widget5 from "./widgets/Widget5";
 import Widget7 from "./widgets/Widget7";
@@ -802,26 +801,7 @@ const Dashboard = () => {
               variants={item}
               className="widget flex w-full sm:w-1/3 p-16"
             >
-              <Widget2
-                data={
-                  analyticsDashboardAppDB.widgets.filter(
-                    (widget) => widget.id === "widget2"
-                  )[0]
-                }
-              />
-            </motion.div>
-
-            <motion.div
-              variants={item}
-              className="widget flex w-full sm:w-1/3 p-16"
-            >
-              <Widget3
-                data={
-                  analyticsDashboardAppDB.widgets.filter(
-                    (widget) => widget.id === "widget3"
-                  )[0]
-                }
-              />
+              <Widget2 dataArray={data.confirmedOrdersLastWeek} />
             </motion.div>
 
             <motion.div variants={item} className="widget w-full sm:w-1/3 p-16">

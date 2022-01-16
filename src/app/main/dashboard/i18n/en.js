@@ -14,6 +14,8 @@ const locale = {
   ORDERS: "Orders",
   POCESSED: "Processed orders by month",
   THIS_YEAR: "This year",
+
+  CONFIRM:"Confirm orders"
 };
 
 export default locale;
