@@ -1,16 +1,18 @@
 import Typography from "@material-ui/core/Typography";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Widget1 from "./widgets/Widget1";
 import Widget2 from "./widgets/Widget2";
 import Widget3 from "./widgets/Widget3";
 import Widget4 from "./widgets/Widget4";
 import Widget5 from "./widgets/Widget5";
-import Widget6 from "./widgets/Widget6";
 import Widget7 from "./widgets/Widget7";
 import Widget8 from "./widgets/Widget8";
 import Widget9 from "./widgets/Widget9";
 import withProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
+import { getDashboardData } from "app/api-conn/dashboard";
+import { useDispatch } from "react-redux";
+import { showMessage } from "app/store/fuse/messageSlice";
 
 const analyticsDashboardAppDB = {
   widgets: [
@@ -19,21 +21,21 @@ const analyticsDashboardAppDB = {
       series: {
         2019: [
           {
-            name: "Sales",
+            name: "ORDERS",
             data: [1.9, 3, 3.4, 2.2, 2.9, 3.9, 2.5, 3.8, 4.1, 3.8, 3.2, 2.9],
             fill: "start",
           },
         ],
         2020: [
           {
-            name: "Sales",
+            name: "ORDERS",
             data: [2.2, 2.9, 3.9, 2.5, 3.8, 3.2, 2.9, 1.9, 3, 3.4, 4.1, 3.8],
             fill: "start",
           },
         ],
-        2021: [
+        THIS_YEAR: [
           {
-            name: "Sales",
+            name: "ORDERS",
             data: [3.9, 2.5, 3.8, 4.1, 1.9, 3, 3.8, 3.2, 2.9, 3.4, 2.2, 2.9],
             fill: "start",
           },
@@ -746,15 +748,38 @@ const Dashboard = () => {
     show: { opacity: 1, y: 0 },
   };
 
+  const dispatch = useDispatch();
+
+  const [data, setData] = useState({
+    processedOrdersThisYear: [],
+    confirmedOrdersLastWeek: [],
+    cancelOrdersLastWeek: [],
+    customersAdresses: [],
+  });
+
+  useEffect(() => {
+    const getData = () => {
+      getDashboardData()
+        .then((res) => {
+          setData(res.data);
+          return null;
+        })
+        .catch(() => {
+          dispatch(
+            showMessage({
+              message: "There is something wrong, try to refresh the page",
+              variant: "error",
+            })
+          );
+          // setLoading(false);
+        });
+    };
+
+    getData();
+  }, [dispatch]);
   return (
     <div className="w-full">
-      <Widget1
-        data={
-          analyticsDashboardAppDB.widgets.filter(
-            (widget) => widget.id === "widget1"
-          )[0]
-        }
-      />
+      <Widget1 dataArray={data.processedOrdersThisYear} />
 
       <motion.div
         className="flex flex-col md:flex-row sm:p-8 container"
@@ -838,7 +863,7 @@ const Dashboard = () => {
             Where are your users?
           </Typography>
 
-          <motion.div variants={item} className="widget w-full p-16 pb-32">
+          {/* <motion.div variants={item} className="widget w-full p-16 pb-32">
             <Widget6
               data={
                 analyticsDashboardAppDB.widgets.filter(
@@ -846,7 +871,7 @@ const Dashboard = () => {
                 )[0]
               }
             />
-          </motion.div>
+          </motion.div> */}
         </div>
 
         <div className="flex flex-wrap w-full md:w-320 pt-16">
