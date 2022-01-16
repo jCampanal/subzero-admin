@@ -94,8 +94,12 @@ function FormHeader({ customers }) {
           const formatedProduct = {
             description: product.description,
             quanty: product.salesUnits.length,
-            productTypeId: product.id,
+            salesUnitId: product.salesUnits.saleUnitId,
           };
+
+          console.log("product", product);
+          console.log("product.salesUnits.saleUnitId", product.salesUnits);
+          console.log("formatedProduct", formatedProduct);
 
           return formatedProduct;
         }),
@@ -208,7 +212,7 @@ function FormHeader({ customers }) {
           color="secondary"
           onClick={() => saveData()}
           startIcon={<Icon className="hidden sm:flex">save</Icon>}
-          disabled={dirtyFields === {} || !isValid}
+          // disabled={dirtyFields === {} || !isValid}
         >
           {t("SAVE")}
         </Button>
