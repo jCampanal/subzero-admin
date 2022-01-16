@@ -464,7 +464,7 @@ const Dashboard = () => {
             className="px-16 pb-8 text-18 font-normal"
             color="textSecondary"
           >
-            Where are your customers?
+            {t("WHERE_CUSTOMER")}
           </Typography>
 
           <motion.div variants={item} className="widget w-full p-16 pb-32">

@@ -11,9 +11,15 @@ const locale = {
   Oct: "Oct",
   Nov: "Nov",
   Dec: "Dic",
-  ORDERS: "Ordenes",
-  POCESSED: "Ordenes procesadas por meses",
+  ORDERS: "órdenes",
+  POCESSED: "órdenes procesadas por meses",
   THIS_YEAR: "Este año",
+
+  CONFIRM: "órdenes confirmadas",
+  CANCEL: "órdenes canceladas",
+
+  TRENDING: "¿Cómo esta el rendimiendo de sus órdenes en el tiempo?",
+  WHERE_CUSTOMER: "¿Dónde estan sus clientes?",
 };
 
 export default locale;

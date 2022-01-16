@@ -19,6 +19,7 @@ const locale = {
   CANCEL: "Cancel orders",
 
   TRENDING: "How are your orders trending over time?",
+  WHERE_CUSTOMER: "Where are your customers?",
 };
 
 export default locale;

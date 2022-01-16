@@ -410,7 +410,6 @@ function OrdersTable({ wharehoseId, rows }) {
                     tabIndex={-1}
                     key={item.id}
                     selected={isSelected}
-                    onClick={() => handleClick(item)}
                   >
                     <TableCell
                       className="w-40 md:w-64 text-center"
@@ -465,15 +464,12 @@ function OrdersTable({ wharehoseId, rows }) {
                       scope="row"
                       align="right"
                     >
-                      <Button color="primary">
+                      <Button color="primary" onClick={() => handleClick(item)}>
                         <Visibility className="mr-5" />
                         {t("VIEW")}
                       </Button>
                       <Button color="primary">
                         <Icon className="mr-5">edit</Icon> {t("EDIT")}
-                      </Button>
-                      <Button color="primary">
-                        <Icon className="mr-5">delete</Icon> {t("DELETE")}
                       </Button>
                     </TableCell>
                   </TableRow>
