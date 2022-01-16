@@ -18,6 +18,233 @@ import { getOrdersByWhareHose } from "app/api-conn/shipments_order";
 import { showMessage } from "app/store/fuse/messageSlice";
 import { useDispatch } from "react-redux";
 import { ShipmentStatus } from "../helpData";
+import { Visibility } from "@material-ui/icons";
+import { formatDisplayDate } from "../../../lib/formatDate";
+const response = {
+  data: [
+    {
+      id: "67b6e5fsdsd40-0985-49e2-8a7a-3af8278f6e2e",
+      no: 0,
+      deliveryTime: "2021-09-12T05:50:00.0000000",
+      tag: "Dry Ice",
+      status: "Waiting",
+      priority: 1,
+      pickUp: false,
+      address: {
+        id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+        street: "Wall Street",
+        city: "New York",
+        state: "New York",
+        zipCode: 10001,
+      },
+      driver: {
+        email: "test@admin.com",
+        enabled: true,
+        id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+        imageURL: "url",
+        lastName: "Pérez",
+        name: "Juan",
+        phoneNumber: "test@admin.com",
+        userName: "Pedro",
+        warehouse: {
+          id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+          name: "FLL Warehouse",
+          address: {
+            id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+            street: "Wall Street",
+            city: "New York",
+            state: "New York",
+            zipCode: 10001,
+          },
+        },
+      },
+      customer: {
+        company: {
+          id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+          name: "Company 1",
+          address: {
+            id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+            street: "Wall Street",
+            city: "New York",
+            state: "New York",
+            zipCode: 10001,
+          },
+        },
+        email: "test@admin.com",
+        id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+        imageURL: "url",
+        lastName: "Pérez",
+        listID: "80000002-1636062834",
+        name: "Juan",
+        phoneNumber: "test@admin.com",
+        priorityCustomer: false,
+        userName: "Juan",
+      },
+      products: [
+        {
+          id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+          pendingQuanty: 200,
+          completed: true,
+          description: "Dry Ice 4 kg",
+          quanty: 1,
+          name: "Dry Ice",
+          productTypeId: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+          listID: "80000002-1636062834",
+        },
+      ],
+      listID: "80000002-1636062834",
+    },
+    {
+      id: "67b6e5fsdsd40-0985-49e2-8a7a-3aasdf8278f6e2e",
+      no: 0,
+      deliveryTime: "2021-09-12T05:50:00.0000000",
+      tag: "Dry Ice",
+      status: "Waiting",
+      priority: 1,
+      pickUp: false,
+      address: {
+        id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+        street: "Wall Street",
+        city: "New York",
+        state: "New York",
+        zipCode: 10001,
+      },
+      driver: {
+        email: "test@admin.com",
+        enabled: true,
+        id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+        imageURL: "url",
+        lastName: "Pérez",
+        name: "Juan",
+        phoneNumber: "test@admin.com",
+        userName: "Pedro",
+        warehouse: {
+          id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+          name: "FLL Warehouse",
+          address: {
+            id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+            street: "Wall Street",
+            city: "New York",
+            state: "New York",
+            zipCode: 10001,
+          },
+        },
+      },
+      customer: {
+        company: {
+          id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+          name: "Company 1",
+          address: {
+            id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+            street: "Wall Street",
+            city: "New York",
+            state: "New York",
+            zipCode: 10001,
+          },
+        },
+        email: "test@admin.com",
+        id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+        imageURL: "url",
+        lastName: "Pérez",
+        listID: "80000002-1636062834",
+        name: "Juan",
+        phoneNumber: "test@admin.com",
+        priorityCustomer: false,
+        userName: "Juan",
+      },
+      products: [
+        {
+          id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+          pendingQuanty: 200,
+          completed: true,
+          description: "Dry Ice 4 kg",
+          quanty: 1,
+          name: "Dry Ice",
+          productTypeId: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+          listID: "80000002-1636062834",
+        },
+      ],
+      listID: "80000002-1636062834",
+    },
+    {
+      id: "67b6e5fsdsadsd40-0985-49e2-8a7a-3aasdf8278f6e2e",
+      no: 0,
+      deliveryTime: "2021-09-12T05:50:00.0000000",
+      tag: "Dry Ice",
+      status: "Waiting",
+      priority: 1,
+      pickUp: false,
+      address: {
+        id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+        street: "Wall Street",
+        city: "New York",
+        state: "New York",
+        zipCode: 10001,
+      },
+      driver: {
+        email: "test@admin.com",
+        enabled: true,
+        id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+        imageURL: "url",
+        lastName: "Pérez",
+        name: "Juan",
+        phoneNumber: "test@admin.com",
+        userName: "Pedro",
+        warehouse: {
+          id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+          name: "FLL Warehouse",
+          address: {
+            id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+            street: "Wall Street",
+            city: "New York",
+            state: "New York",
+            zipCode: 10001,
+          },
+        },
+      },
+      customer: {
+        company: {
+          id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+          name: "Company 1",
+          address: {
+            id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+            street: "Wall Street",
+            city: "New York",
+            state: "New York",
+            zipCode: 10001,
+          },
+        },
+        email: "test@admin.com",
+        id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+        imageURL: "url",
+        lastName: "Pérez",
+        listID: "80000002-1636062834",
+        name: "Juan",
+        phoneNumber: "test@admin.com",
+        priorityCustomer: false,
+        userName: "Juan",
+      },
+      products: [
+        {
+          id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+          pendingQuanty: 200,
+          completed: true,
+          description: "Dry Ice 4 kg",
+          quanty: 1,
+          name: "Dry Ice",
+          productTypeId: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
+          listID: "80000002-1636062834",
+        },
+      ],
+      listID: "80000002-1636062834",
+    },
+  ],
+  totalPages: 5,
+  currentPage: 1,
+  haveNext: true,
+  havePrevious: true,
+  totalItems: 15,
+};
 
 function OrdersTable({ wharehoseId, rows }) {
   const { t } = useTranslation("orders-admin");
@@ -118,10 +345,11 @@ function OrdersTable({ wharehoseId, rows }) {
       rowsPerPage,
       page
     )
-      .then((res) => {
+      .then(() => {
+        const res = response;
         setData({
-          data: res.data.data,
-          totalItems: res.data.totalItems,
+          data: res.data,
+          totalItems: res.totalItems,
         });
         return null;
       })
@@ -210,7 +438,7 @@ function OrdersTable({ wharehoseId, rows }) {
                       scope="row"
                       align="left"
                     >
-                      {item.deliveryTime}
+                      {formatDisplayDate(new Date(item.deliveryTime))}
                     </TableCell>
 
                     <TableCell
@@ -238,10 +466,14 @@ function OrdersTable({ wharehoseId, rows }) {
                       align="right"
                     >
                       <Button color="primary">
-                        <Icon>edit</Icon> {t("EDIT")}
+                        <Visibility className="mr-5" />
+                        {t("VIEW")}
                       </Button>
                       <Button color="primary">
-                        <Icon>delete</Icon> {t("DELETE")}
+                        <Icon className="mr-5">edit</Icon> {t("EDIT")}
+                      </Button>
+                      <Button color="primary">
+                        <Icon className="mr-5">delete</Icon> {t("DELETE")}
                       </Button>
                     </TableCell>
                   </TableRow>

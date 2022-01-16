@@ -1,15 +1,17 @@
 export const formatDate = (date) => {
-  const formattedDate =
-    date.getMonth() +
-    1 +
-    "/" +
-    date.getDate() +
-    "/" +
-    date.getFullYear() +
-    " " +
-    date.getHours() +
-    ":" +
-    date.getMinutes();
+  const formattedDate = date.toISOString();
+  // console.log("date", formattedDate);
+  // const formattedDate =
+  //   date.getMonth() +
+  //   1 +
+  //   "/" +
+  //   date.getDate() +
+  //   "/" +
+  //   date.getFullYear() +
+  //   " " +
+  //   date.getHours() +
+  //   ":" +
+  //   date.getMinutes();
   return formattedDate;
 };
 export const formatDisplayDate = (date) => {
@@ -57,11 +59,16 @@ export const formatDisplayDate = (date) => {
 };
 
 export const getBinaryDays = (indexDays) => {
-  let days = [0, 0, 0, 0, 0, 0, 0];
+  const days = [false, false, false, false, false, false, false];
   indexDays.forEach((day) => {
-    days[day.index - 1] = 1;
+    days[day.index - 1] = true;
   });
-  days = days.join("");
-  days = parseInt(days);
+
+  // let days = [0, 0, 0, 0, 0, 0, 0];
+  // indexDays.forEach((day) => {
+  //   days[day.index - 1] = 1;
+  // });
+  // days = days.join("");
+  // days = parseInt(days);
   return days;
 };

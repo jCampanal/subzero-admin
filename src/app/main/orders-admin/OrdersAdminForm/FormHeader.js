@@ -89,7 +89,7 @@ function FormHeader({ customers }) {
         driverId: getValues().driverId,
         pickUp: getValues().pickUp,
         scheduleStatus: getValues().scheduleStatus,
-        priority: getValues().priority,
+        priority: parseInt(getValues().priority),
         products: getValues().products.map((product) => {
           const formatedProduct = {
             description: product.description,

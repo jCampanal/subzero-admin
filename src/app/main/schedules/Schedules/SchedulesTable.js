@@ -8,7 +8,6 @@ import { motion } from "framer-motion";
 import TableHeader from "app/components/TableHeader/TableHeader";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router";
 import { Button, Checkbox, Icon, TableCell, TableRow } from "@material-ui/core";
 import { formatDisplayDate } from "app/lib/formatDate";
 import ViewModal from "./ViewModal";
@@ -29,7 +28,6 @@ function SchedulesTable({
   const [isViewModal, setIsViewModal] = useState(false);
   const [viewSchedule, setViewSchedule] = useState();
 
-  const history = useHistory();
   const [order, setOrder] = useState({
     direction: "asc",
     id: null,
