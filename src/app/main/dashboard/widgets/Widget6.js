@@ -27,58 +27,14 @@ function Widget6({ dataArray }) {
   };
   const options = {
     id: "widget6",
-    markers: [
-      {
-        lat: 52,
-        lng: -73,
-        label: "120",
-      },
-      {
-        lat: 37,
-        lng: -104,
-        label: "498",
-      },
-      {
-        lat: 21,
-        lng: -7,
-        label: "443",
-      },
-      {
-        lat: 55,
-        lng: 75,
-        label: "332",
-      },
-      {
-        lat: 51,
-        lng: 7,
-        label: "50",
-      },
-      {
-        lat: 31,
-        lng: 12,
-        label: "221",
-      },
-      {
-        lat: 45,
-        lng: 44,
-        label: "455",
-      },
-      {
-        lat: -26,
-        lng: 134,
-        label: "231",
-      },
-      {
-        lat: -9,
-        lng: -60,
-        label: "67",
-      },
-      {
-        lat: 33,
-        lng: 104,
-        label: "665",
-      },
-    ],
+    markers: dataArray.map((customerLocation) => {
+      const customer = {
+        lat: customerLocation.latitud,
+        lng: customerLocation.longitud,
+        label: customerLocation.companyName,
+      };
+      return customer;
+    }),
     styles: [
       {
         featureType: "administrative",

@@ -468,13 +468,7 @@ const Dashboard = () => {
           </Typography>
 
           <motion.div variants={item} className="widget w-full p-16 pb-32">
-            <Widget6
-              dataArray={
-                analyticsDashboardAppDB.widgets.filter(
-                  (widget) => widget.id === "widget6"
-                )[0]
-              }
-            />
+            <Widget6 dataArray={data.customersAdresses} />
           </motion.div>
         </div>
       </motion.div>

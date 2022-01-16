@@ -15,8 +15,8 @@ const locale = {
   POCESSED: "órdenes procesadas por meses",
   THIS_YEAR: "Este año",
 
-  CONFIRM: "órdenes confirmadas",
-  CANCEL: "órdenes canceladas",
+  CONFIRM: "Órdenes confirmadas",
+  CANCEL: "Órdenes canceladas",
 
   TRENDING: "¿Cómo esta el rendimiendo de sus órdenes en el tiempo?",
   WHERE_CUSTOMER: "¿Dónde estan sus clientes?",
