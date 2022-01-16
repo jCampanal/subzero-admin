@@ -4,17 +4,68 @@ import Typography from "@material-ui/core/Typography";
 import { memo } from "react";
 import ReactApexChart from "react-apexcharts";
 import _ from "@lodash";
+import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 
-function Widget3(props) {
+function Widget3({ dataArray }) {
+  const { t } = useTranslation("dashboard");
   const theme = useTheme();
-  const data = _.merge({}, props.data);
+  const options = {
+    id: "widget2",
+    conversion: {
+      value: 492,
+      ofTarget: 13,
+    },
+    series: [
+      {
+        name: "Conversion",
+        data: dataArray,
+      },
+    ],
+    options: {
+      chart: {
+        type: "area",
+        height: "100%",
+        sparkline: {
+          enabled: true,
+        },
+      },
+      fill: {
+        type: "solid",
+        opacity: 0.7,
+      },
+      xaxis: {
+        categories: [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday",
+        ],
+      },
+      tooltip: {
+        followCursor: true,
+        theme: "dark",
+        fixed: {
+          enabled: false,
+          position: "topRight",
+          offsetX: 0,
+          offsetY: 0,
+        },
+      },
+    },
+  };
+
+  const data = _.merge({}, options);
 
   _.setWith(data, "options.colors", [theme.palette.secondary.main]);
 
   return (
     <Card className="w-full rounded-20 shadow">
       <div className="p-20 pb-0">
-        <Typography className="h3 font-medium">Impressions</Typography>
+        <Typography className="h3 font-medium">{t("CANCEL")}</Typography>
 
         {/* <div className="flex flex-row flex-wrap items-center mt-12">
           <Typography className="text-48 font-semibold leading-none tracking-tighter">
@@ -55,3 +106,7 @@ function Widget3(props) {
 }
 
 export default memo(Widget3);
+
+Widget3.propTypes = {
+  dataArray: PropTypes.array.isRequired,
+};

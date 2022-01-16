@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Widget1 from "./widgets/Widget1";
 import Widget2 from "./widgets/Widget2";
-import Widget4 from "./widgets/Widget4";
 import Widget5 from "./widgets/Widget5";
 import Widget7 from "./widgets/Widget7";
 import Widget8 from "./widgets/Widget8";
@@ -12,6 +11,8 @@ import withProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
 import { getDashboardData } from "app/api-conn/dashboard";
 import { useDispatch } from "react-redux";
 import { showMessage } from "app/store/fuse/messageSlice";
+import Widget3 from "./widgets/Widget3";
+import { useTranslation } from "react-i18next";
 
 const analyticsDashboardAppDB = {
   widgets: [
@@ -734,6 +735,7 @@ const analyticsDashboardAppDB = {
 };
 
 const Dashboard = () => {
+  const { t } = useTranslation("dashboard");
   const container = {
     show: {
       transition: {
@@ -793,7 +795,7 @@ const Dashboard = () => {
             className="px-16 pb-8 text-18 font-normal"
             color="textSecondary"
           >
-            How are your active users trending over time?
+            {t("TRENDING")}
           </Typography>
 
           <div className="flex flex-col sm:flex sm:flex-row pb-32">
@@ -803,15 +805,11 @@ const Dashboard = () => {
             >
               <Widget2 dataArray={data.confirmedOrdersLastWeek} />
             </motion.div>
-
-            <motion.div variants={item} className="widget w-full sm:w-1/3 p-16">
-              <Widget4
-                data={
-                  analyticsDashboardAppDB.widgets.filter(
-                    (widget) => widget.id === "widget4"
-                  )[0]
-                }
-              />
+            <motion.div
+              variants={item}
+              className="widget flex w-full sm:w-1/3 p-16"
+            >
+              <Widget3 dataArray={data.cancelOrdersLastWeek} />
             </motion.div>
           </div>
 
