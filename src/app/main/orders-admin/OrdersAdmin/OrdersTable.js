@@ -1,25 +1,18 @@
 import React, { useEffect, useState } from "react";
 import FuseScrollbars from "@fuse/core/FuseScrollbars";
-import Checkbox from "@material-ui/core/Checkbox";
-import Icon from "@material-ui/core/Icon";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
 import TablePagination from "@material-ui/core/TablePagination";
-import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import { motion } from "framer-motion";
 import TableHeader from "app/main/products/Products/TableHeader";
-import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { useHistory, useLocation } from "react-router";
 import { getOrdersByWhareHose } from "app/api-conn/shipments_order";
 import { showMessage } from "app/store/fuse/messageSlice";
 import { useDispatch } from "react-redux";
-import { ShipmentStatus } from "../helpData";
-import { Visibility } from "@material-ui/icons";
-import { formatDisplayDate } from "../../../lib/formatDate";
+import CustomTableRow from "./CustomTableRow";
 const response = {
   data: [
     {
@@ -402,77 +395,13 @@ function OrdersTable({ wharehoseId, rows }) {
               .map((item) => {
                 const isSelected = selected.indexOf(item.id) !== -1;
                 return (
-                  <TableRow
-                    className="h-72 cursor-pointer"
-                    hover
-                    role="checkbox"
-                    aria-checked={isSelected}
-                    tabIndex={-1}
+                  <CustomTableRow
                     key={item.id}
-                    selected={isSelected}
-                  >
-                    <TableCell
-                      className="w-40 md:w-64 text-center"
-                      padding="none"
-                    >
-                      <Checkbox
-                        checked={isSelected}
-                        onClick={(event) => event.stopPropagation()}
-                        onChange={(event) => handleCheck(event, item.id)}
-                      />
-                    </TableCell>
-
-                    <TableCell
-                      className="p-4 md:p-16"
-                      component="th"
-                      scope="row"
-                      align="left"
-                    >
-                      {item.customer.company.name}
-                    </TableCell>
-
-                    <TableCell
-                      className="p-4 md:p-16"
-                      component="th"
-                      scope="row"
-                      align="left"
-                    >
-                      {formatDisplayDate(new Date(item.deliveryTime))}
-                    </TableCell>
-
-                    <TableCell
-                      className="p-4 md:p-16"
-                      component="th"
-                      scope="row"
-                      align="left"
-                    >
-                      <span
-                        className={`text-${ShipmentStatus[item.status].tColor}`}
-                      >
-                        <i
-                          className={`fa ${
-                            ShipmentStatus[item.status].icon
-                          } mr-2`}
-                        />
-                        {t(ShipmentStatus[item.status].name)}
-                      </span>
-                    </TableCell>
-
-                    <TableCell
-                      className="p-4 md:p-16"
-                      component="th"
-                      scope="row"
-                      align="right"
-                    >
-                      <Button color="primary" onClick={() => handleClick(item)}>
-                        <Visibility className="mr-5" />
-                        {t("VIEW")}
-                      </Button>
-                      <Button color="primary">
-                        <Icon className="mr-5">edit</Icon> {t("EDIT")}
-                      </Button>
-                    </TableCell>
-                  </TableRow>
+                    item={item}
+                    isSelected={isSelected}
+                    handleCheck={handleCheck}
+                    handleClick={handleClick}
+                  />
                 );
               })}
           </TableBody>

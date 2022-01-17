@@ -37,6 +37,10 @@ const postOrder = (data) =>
 
 const putShipment = (id, data) =>
   apiClient.put(`${orderURL}/${id}`, data).then((response) => response.data);
+const changeStatus = (data) =>
+  apiClient
+    .put(`${orderURL}/changeStatus`, data)
+    .then((response) => response.data);
 const reassignOrder = (idOrder, idDriver) =>
   apiClient
     .put(`${orderURL}/toggleToDriver`, {
@@ -61,4 +65,5 @@ export {
   deleteShipment,
   registerShipment,
   getOrdersByWhareHose,
+  changeStatus,
 };
