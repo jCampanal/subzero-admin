@@ -29,8 +29,8 @@ function Widget6({ dataArray }) {
     id: "widget6",
     markers: dataArray.map((customerLocation) => {
       const customer = {
-        lat: customerLocation.latitud,
-        lng: customerLocation.longitud,
+        lat: customerLocation.latitude,
+        lng: customerLocation.longitude,
         label: customerLocation.companyName,
       };
       return customer;

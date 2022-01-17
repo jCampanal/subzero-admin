@@ -31,7 +31,7 @@ function OrdersAdmin() {
         );
         setLoading(false);
       });
-  }, []);
+  }, [dispatch]);
   return (
     <FusePageCarded
       classes={{

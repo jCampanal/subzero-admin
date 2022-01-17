@@ -32,7 +32,7 @@ const Dashboard = () => {
     processedOrdersThisYear: [],
     confirmedOrdersLastWeek: [],
     cancelOrdersLastWeek: [],
-    customersAdresses: [],
+    customerLocations: [],
   });
 
   useEffect(() => {
@@ -100,7 +100,7 @@ const Dashboard = () => {
           </Typography>
 
           <motion.div variants={item} className="widget w-full p-16 pb-32">
-            <Widget6 dataArray={data.customersAdresses} />
+            <Widget6 dataArray={data.customerLocations} />
           </motion.div>
         </div>
       </motion.div>
