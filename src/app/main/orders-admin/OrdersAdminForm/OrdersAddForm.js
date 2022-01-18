@@ -57,7 +57,7 @@ const OrderAddForm = () => {
     city: yup.string(),
     customerId: yup.string().required(t("REQUIRED")),
     deliveryTime: yup.string().required(t("REQUIRED")),
-    driverId: yup.string().required(t("REQUIRED")),
+    driverId: yup.string(),
     pickUp: yup.boolean(),
     poNo: yup.string().matches(phoneRegex, {
       message: "not valid phone no",
@@ -88,7 +88,6 @@ const OrderAddForm = () => {
       priority: "",
       products: [],
       state: "",
-      status: "",
       street: "",
       tag: "",
       termOrder: "",

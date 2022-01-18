@@ -2,19 +2,9 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 
-import {
-  Box,
-  Button,
-  Divider,
-  Icon,
-  Step,
-  StepLabel,
-  Stepper,
-  Typography,
-} from "@material-ui/core";
+import { Box, Button, Divider, Icon } from "@material-ui/core";
 import Step1 from "./Steps/Step1";
 import Step2 from "./Steps/Step2";
-import Step3 from "./Steps/Step3";
 import { useFormContext } from "react-hook-form";
 import { putCustomer } from "../../../api-conn/customers";
 import { showMessage } from "../../../store/fuse/messageSlice";
@@ -200,75 +190,43 @@ function FormControls({ products, customers, drivers }) {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Stepper activeStep={activeStep}>
-        {steps.map((label, index) => {
-          const stepProps = {};
-          const labelProps = {};
-          if (isStepOptional(index)) {
-            labelProps.optional = (
-              <Typography variant="caption">Optional</Typography>
-            );
-          }
-          if (isStepSkipped(index)) {
-            stepProps.completed = false;
-          }
-          return (
-            <Step key={label} {...stepProps}>
-              <StepLabel {...labelProps}>{label}</StepLabel>
-            </Step>
-          );
-        })}
-      </Stepper>
-      {activeStep === steps.length ? (
-        <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>
-            All steps completed - you&apos;re finished
-          </Typography>
-        </React.Fragment>
-      ) : (
-        <React.Fragment>
-          <div className="flex flex-col justify-center sm:justify-start flex-wrap max-w-2xl">
-            {activeStep === 0 && <Step1 products={products} />}
+      <React.Fragment>
+        <div className="flex flex-col justify-center sm:justify-start flex-wrap max-w-2xl">
+          <Step2 customers={customers} drivers={drivers} />
 
-            {activeStep === 1 && (
-              <Step2 customers={customers} drivers={drivers} />
-            )}
+          {/* <Step3 handleNext={saveData} /> */}
+          <Step1 products={products} />
 
-            {activeStep === 2 && <Step3 handleNext={saveData} />}
+          <Divider className="my-24" />
+        </div>
+      </React.Fragment>
 
-            <Divider className="my-24" />
-          </div>
-        </React.Fragment>
-      )}
+      <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+        <Button
+          color="inherit"
+          disabled={activeStep === 0}
+          onClick={handleBack}
+          sx={{ mr: 1 }}
+        >
+          Back
+        </Button>
+        <Box sx={{ flex: "1 1 auto" }} />
 
-      {activeStep < steps.length && (
-        <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+        {activeStep === steps.length - 1 ? (
           <Button
-            color="inherit"
-            disabled={activeStep === 0}
-            onClick={handleBack}
-            sx={{ mr: 1 }}
+            className="whitespace-nowrap mx-4"
+            variant="contained"
+            color="secondary"
+            onClick={() => saveData()}
+            startIcon={<Icon className="hidden sm:flex">save</Icon>}
+            disabled={dirtyFields === {} || !isValid}
           >
-            Back
+            {t("SAVE")}
           </Button>
-          <Box sx={{ flex: "1 1 auto" }} />
-
-          {activeStep === steps.length - 1 ? (
-            <Button
-              className="whitespace-nowrap mx-4"
-              variant="contained"
-              color="secondary"
-              onClick={() => saveData()}
-              startIcon={<Icon className="hidden sm:flex">save</Icon>}
-              // disabled={dirtyFields === {} || !isValid}
-            >
-              {t("SAVE")}
-            </Button>
-          ) : (
-            <Button onClick={handleNext}>Next</Button>
-          )}
-        </Box>
-      )}
+        ) : (
+          <Button onClick={handleNext}>Next</Button>
+        )}
+      </Box>
     </Box>
   );
 }

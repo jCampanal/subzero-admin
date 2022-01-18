@@ -48,6 +48,7 @@ const Step1 = ({ products }) => {
       listID: yup.string().nullable(),
     }),
     quantity: yup.number().required(t("REQUIRED")),
+    description: yup.string().required(t("REQUIRED")),
     saleUnit: yup.object().shape({
       productSaleUnitId: yup.string(),
       saleUnitId: yup.string(),
@@ -90,6 +91,7 @@ const Step1 = ({ products }) => {
         saleUnitValue: "",
         decimals: true,
       },
+      description: "",
       quantity: 0,
     },
     mode: "all",
@@ -131,7 +133,7 @@ const Step1 = ({ products }) => {
         id: data.product.id,
         saleUnitName: data.saleUnit.saleUnitName,
         productToSend: {
-          description: data.product.description,
+          description: data.description,
           quanty: data.quantity,
           productSaleUnitId: data.saleUnit.productSaleUnitId,
         },
@@ -253,6 +255,21 @@ const Step1 = ({ products }) => {
             />
           </Grid>
         </Grid>
+        <Controller
+          name="description"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              className="mt-8 mb-16 w-full"
+              error={!!errors.description}
+              helperText={errors?.description?.message}
+              label={t("description")}
+              id="description"
+              variant="outlined"
+            />
+          )}
+        />
 
         <div className="flex justify-end">
           <Button
