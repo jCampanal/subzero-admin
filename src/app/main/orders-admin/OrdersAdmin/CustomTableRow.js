@@ -1,17 +1,6 @@
-import {
-  Button,
-  Checkbox,
-  FormControl,
-  Icon,
-  InputLabel,
-  MenuItem,
-  Select,
-  TableCell,
-  TableRow,
-} from "@material-ui/core";
+import { Button, Checkbox, Icon, TableCell, TableRow } from "@material-ui/core";
 import { formatDisplayDate } from "app/lib/formatDate";
 import React, { useState } from "react";
-import { optionsStatus } from "../helpData";
 import PropTypes from "prop-types";
 import { Visibility } from "@material-ui/icons";
 import { useTranslation } from "react-i18next";
@@ -20,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { showMessage } from "app/store/fuse/messageSlice";
 import { openDialog } from "app/store/fuse/dialogSlice";
 import RemoveDlg from "app/common/removeDlg";
+import { ShipmentStatus } from "../helpData";
 
 const CustomTableRow = ({ item, isSelected, handleCheck, handleClick }) => {
   const { t } = useTranslation("orders-admin");
@@ -107,39 +97,10 @@ const CustomTableRow = ({ item, isSelected, handleCheck, handleClick }) => {
         scope="row"
         align="left"
       >
-        {/* <span
-            className={`text-${ShipmentStatus[item.status].tColor}`}
-          >
-            <i
-              className={`fa ${
-                ShipmentStatus[item.status].icon
-              } mr-2`}
-            />
-            {t(ShipmentStatus[item.status].name)}
-          </span> */}
-        <FormControl className="mt-8 mb-16 w-128">
-          <InputLabel id="status-select-label" className="pl-20 -mt-9">
-            {t("STATUS")}
-          </InputLabel>
-          <Select
-            labelId="status-select-label"
-            id="demo-simple-select"
-            required
-            label={t("STATUS")}
-            inputProps={{ "aria-label": "Without label" }}
-            variant="outlined"
-            value={status}
-            onChange={(e) => handleChangeState(e, item)}
-          >
-            {optionsStatus.map((status) => {
-              return (
-                <MenuItem key={status} value={status}>
-                  {status}
-                </MenuItem>
-              );
-            })}
-          </Select>
-        </FormControl>
+        <span className={`text-${ShipmentStatus[item.status].tColor}`}>
+          <i className={`fa ${ShipmentStatus[item.status].icon} mr-2`} />
+          {t(ShipmentStatus[item.status].name)}
+        </span>
       </TableCell>
 
       <TableCell
