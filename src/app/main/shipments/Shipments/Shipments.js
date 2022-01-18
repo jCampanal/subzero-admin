@@ -2,12 +2,11 @@ import React, { lazy, memo, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import FusePageCarded from "@fuse/core/FusePageCarded/FusePageCarded";
 import rows from "./rows";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
 import { showMessage } from "app/store/fuse/messageSlice";
 import whitProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
 import FuseLoading from "@fuse/core/FuseLoading";
-import { getShipments } from "app/api-conn/shipments_order";
 import { getDrivers } from "app/api-conn/drivers";
 const Header = lazy(() => import("app/components/HeaderPage/PageCardedHeader"));
 const ShipmentsTab = lazy(() => import("./ShipmentsTable"));
@@ -15,7 +14,6 @@ const ShipmentsTab = lazy(() => import("./ShipmentsTable"));
 function Shipments() {
   const { t } = useTranslation("shipments");
   const dispatch = useDispatch();
-  const location = useLocation();
   const history = useHistory();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -30,6 +28,7 @@ function Shipments() {
         setData(response.data.data);
         setTotalItems(response.data.totalItems);
         setLoading(false);
+        return null;
       })
       .catch(() => {
         dispatch(
@@ -53,7 +52,7 @@ function Shipments() {
   // }
 
   function handleReassign() {
-    history.push(`/shipments_reassign`);
+    history.push("/shipments_reassign");
   }
 
   // const onProceed = (itemIds) => {

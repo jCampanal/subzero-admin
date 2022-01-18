@@ -25,6 +25,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 const Step1 = ({ products }) => {
   const { t } = useTranslation("orders-admin");
+  const [changer, setChanger] = useState(true);
 
   const methods = useFormContext();
   const getBigFormValues = methods.getValues;
@@ -121,26 +122,33 @@ const Step1 = ({ products }) => {
     }
   }, [selectedProduct]);
 
+  useEffect(() => {}, [changer]);
+
   const handleSubmitForm = (data) => {
     const oldProducts = getBigFormValues().products;
-    const newProduct = {
-      id: data.product.id,
-      saleUnitName: data.saleUnit.saleUnitName,
-      productToSend: {
-        description: data.product.description,
-        quanty: data.quantity,
-        productSaleUnitId: data.saleUnit.productSaleUnitId,
-      },
-    };
-    console.log("data", data);
-    console.log("oldProducts", oldProducts);
-    setBigFormValues("products", [...oldProducts, newProduct]);
+    if (oldProducts.findIndex((p) => p.id === data.product.id) < 0) {
+      const newProduct = {
+        id: data.product.id,
+        saleUnitName: data.saleUnit.saleUnitName,
+        productToSend: {
+          description: data.product.description,
+          quanty: data.quantity,
+          productSaleUnitId: data.saleUnit.productSaleUnitId,
+        },
+      };
+      console.log("data", data);
+      console.log("oldProducts", oldProducts);
+      setBigFormValues("products", [...oldProducts, newProduct]);
+    } else {
+      alert("You can not add the same product twice");
+    }
   };
   const handleRemoveProduct = (product) => {
     const oldProducts = getBigFormValues().products;
     const newProducts = oldProducts.filter((p) => p.id !== product.id);
 
     setBigFormValues("products", newProducts);
+    setChanger(!changer);
   };
 
   console.log("products", products);
