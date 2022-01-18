@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import FuseScrollbars from "@fuse/core/FuseScrollbars";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import { Button, Checkbox, Icon, TableCell, TableRow } from "@material-ui/core";
 import { formatDisplayDate } from "app/lib/formatDate";
 import ViewModal from "./ViewModal";
+import { PlayArrowRounded } from "@material-ui/icons";
 
 function SchedulesTable({
   data,
@@ -22,6 +23,7 @@ function SchedulesTable({
   handleChangePage,
   editCallback,
   deleteCallback,
+  handleSetOnGoing,
 }) {
   const { t } = useTranslation("schedules");
   const [selected, setSelected] = useState([]);
@@ -128,7 +130,6 @@ function SchedulesTable({
                     tabIndex={-1}
                     key={schedule.id}
                     selected={isSelected}
-                    onClick={() => handleClick(schedule)}
                   >
                     <TableCell
                       className="w-40 md:w-64 text-center"
@@ -173,7 +174,7 @@ function SchedulesTable({
                       scope="row"
                       align="right"
                     >
-                      <div className="grid grid-cols-3">
+                      <div className="grid grid-cols-4">
                         <Button
                           color="primary"
                           onClick={(e) => {
@@ -183,7 +184,10 @@ function SchedulesTable({
                         >
                           <Icon className="mr-5">edit</Icon> {t("EDIT")}
                         </Button>
-                        <Button color="primary">
+                        <Button
+                          color="primary"
+                          onClick={() => handleClick(schedule)}
+                        >
                           <Icon className="mr-5">visibility</Icon> {t("VIEW")}
                         </Button>
 
@@ -192,6 +196,20 @@ function SchedulesTable({
                           onClick={() => deleteCallback([schedule.id])}
                         >
                           <Icon className="mr-5">delete</Icon> {t("DELETE")}
+                        </Button>
+                        <Button
+                          color="primary"
+                          onClick={() => handleSetOnGoing(schedule.id)}
+                        >
+                          {schedule.status ? (
+                            <Fragment>
+                              <Icon className="mr-5">pause</Icon> {t("PAUSE")}
+                            </Fragment>
+                          ) : (
+                            <Fragment>
+                              <PlayArrowRounded /> {t("PLAY")}
+                            </Fragment>
+                          )}
                         </Button>
                       </div>
                     </TableCell>
@@ -241,4 +259,5 @@ SchedulesTable.propTypes = {
   handleChangePage: PropTypes.func.isRequired,
   editCallback: PropTypes.func.isRequired,
   deleteCallback: PropTypes.func.isRequired,
+  handleSetOnGoing: PropTypes.func.isRequired,
 };

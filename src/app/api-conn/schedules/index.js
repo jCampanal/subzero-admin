@@ -27,9 +27,20 @@ const putSchedule = (id, data) =>
     .put(`${SchedulesUrl}/${id}`, data)
     .then((response) => response.data);
 
+const toggleStatus = (id) =>
+  apiClient
+    .put(`${SchedulesUrl}/toggle/${id}`)
+    .then((response) => response.data);
+
 const deleteSchedule = (ids) =>
   apiClient
     .delete(SchedulesUrl, { data: ids })
     .then((response) => response.data);
 
-export { getSchedules, postSchedule, putSchedule, deleteSchedule };
+export {
+  getSchedules,
+  postSchedule,
+  putSchedule,
+  deleteSchedule,
+  toggleStatus,
+};

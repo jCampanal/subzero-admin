@@ -4,7 +4,11 @@ import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router";
 import withProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
 import { useDispatch } from "react-redux";
-import { deleteSchedule, getSchedules } from "app/api-conn/schedules";
+import {
+  deleteSchedule,
+  getSchedules,
+  toggleStatus,
+} from "app/api-conn/schedules";
 import { showMessage } from "app/store/fuse/messageSlice";
 import rows from "./rows";
 import FuseLoading from "@fuse/core/FuseLoading";
@@ -110,6 +114,23 @@ function Schedules() {
       })
     );
   };
+  const handleSetOnGoing = (id) => {
+    toggleStatus(id)
+      .then((res) => {
+        if (res.status == 200) {
+          loadSchedules(pageNumber, pageSize);
+        }
+        return null;
+      })
+      .catch(() => {
+        dispatch(
+          showMessage({
+            message: "There is something wrong, try to refresh the page",
+            variant: "error",
+          })
+        );
+      });
+  };
 
   useEffect(() => {
     document.title = "Schedules - Subzero Ice Services";
@@ -177,6 +198,7 @@ function Schedules() {
                 editCallback={editSchedule}
                 handleChangePage={handleChangePage}
                 handleChangeRowsPerPage={handleChangeRowsPerPage}
+                handleSetOnGoing={handleSetOnGoing}
               />
             </>
           )}
