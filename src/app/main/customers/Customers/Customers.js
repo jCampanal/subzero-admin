@@ -36,6 +36,7 @@ function Customers() {
         setCustomers(response.data.data);
         setTotalItems(response.data.totalItems);
         setLoading(false);
+        return null;
       })
       .catch(() => {
         dispatch(
@@ -61,7 +62,7 @@ function Customers() {
     history.push(`/customers?name=${searchPattern}`);
   };
   function handleAddCustomer() {
-    history.push(`/customers_create`);
+    history.push("/customers_create");
   }
 
   const onProceed = (itemIds) => {
@@ -75,6 +76,7 @@ function Customers() {
           })
         );
         loadCustomers();
+        return null;
       })
       .catch(() => {
         dispatch(

@@ -37,9 +37,11 @@ const postOrder = (data) =>
 
 const putShipment = (id, data) =>
   apiClient.put(`${orderURL}/${id}`, data).then((response) => response.data);
-const changeStatus = (data) =>
+const changeStatus = (orderId, statusOrder) =>
   apiClient
-    .put(`${orderURL}/changeStatus`, data)
+    .put(
+      `${orderURL}/changeStatus?orderId=${orderId}&statusOrder=${statusOrder}`
+    )
     .then((response) => response.data);
 const reassignOrder = (idOrder, idDriver) =>
   apiClient

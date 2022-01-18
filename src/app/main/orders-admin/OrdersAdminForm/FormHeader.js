@@ -86,37 +86,38 @@ function FormHeader({ customers }) {
       const formData = {
         customerId: getValues().customerId,
         deliveryTime: formatDate(getValues().deliveryTime),
-        driverId: getValues().driverId,
+
         pickUp: getValues().pickUp,
         scheduleStatus: getValues().scheduleStatus,
         priority: parseInt(getValues().priority),
         products: getValues().products.map((product) => {
           const formatedProduct = {
             description: product.description,
-            quanty: product.salesUnits.length,
-            salesUnitId: product.salesUnits.saleUnitId,
+            quanty: getValues().quantity,
+            productSaleUnitId: getValues().salesUnitId.find((saleUnit) => {
+              return saleUnit.productId === product.id;
+            }).productSaleUnitId,
           };
-
-          console.log("product", product);
-          console.log("product.salesUnits.saleUnitId", product.salesUnits);
-          console.log("formatedProduct", formatedProduct);
 
           return formatedProduct;
         }),
-        status: getValues().status,
         tag: getValues().tag,
         termOrder: getValues().termOrder,
       };
       formData.daysToOrder = getBinaryDays(getValues().daysToOrder);
 
-      if (getValues().zipCode !== "") {
-        formData.zipCode = getValues().zipCode;
-      }
-      if (getValues().street !== "") {
-        formData.street = getValues().street;
-      }
-      if (getValues().state !== "") {
-        formData.state = getValues().state;
+      // if (getValues().zipCode !== "") {
+      //   formData.zipCode = getValues().zipCode;
+      // }
+      // if (getValues().street !== "") {
+      //   formData.street = getValues().street;
+      // }
+      // if (getValues().state !== "") {
+      //   formData.state = getValues().state;
+      // }
+      if (getValues().driverId !== "") {
+        const driverId = getValues().driverId;
+        formData.driverId = driverId;
       }
       if (getValues().poNo !== "") {
         const intPhoNo = parseInt(getValues().poNo);
@@ -128,7 +129,7 @@ function FormHeader({ customers }) {
       const customerSelected = customers.find(
         (customer) => customer.id === getValues().customerId
       );
-      const addressId = customerSelected?.company.id;
+      const addressId = customerSelected?.company.address.id;
       // const addressId = customerSelected?.company.address.id;
       if (addressId) {
         formData.addressId = addressId;

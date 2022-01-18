@@ -57,7 +57,7 @@ const OrderAddForm = () => {
     city: yup.string(),
     customerId: yup.string().required(t("REQUIRED")),
     deliveryTime: yup.string().required(t("REQUIRED")),
-    driverId: yup.string().required(t("REQUIRED")),
+    driverId: yup.string(),
     pickUp: yup.boolean(),
     poNo: yup.string().matches(phoneRegex, {
       message: "not valid phone no",
@@ -69,7 +69,7 @@ const OrderAddForm = () => {
       test: (arr) => arr.length > 0,
     }),
     state: yup.string(),
-    status: yup.string().required(t("REQUIRED")),
+
     street: yup.string(),
     tag: yup.string().required(t("REQUIRED")),
     termOrder: yup.string().required(t("REQUIRED")),
@@ -79,6 +79,21 @@ const OrderAddForm = () => {
     }),
     daysToOrder: yup.array(),
     scheduleStatus: yup.boolean(),
+    quantity: yup.number().required(t("REQUIRED")),
+
+    salesUnitId: yup.array().test({
+      message: "Please just one sale unit per product",
+      test: (arr) => {
+        let valid = true;
+        arr.forEach((saleUnit) => {
+          const array = arr.filter((el) => el.productId === saleUnit.productId);
+          if (array.length > 1) {
+            valid = false;
+          }
+        });
+        return valid;
+      },
+    }),
   });
 
   const methods = useForm({
@@ -93,13 +108,15 @@ const OrderAddForm = () => {
       priority: "",
       products: [],
       state: "",
-      status: "",
+
       street: "",
       tag: "",
       termOrder: "",
       zipCode: "",
       daysToOrder: [],
       scheduleStatus: false,
+      salesUnitId: [],
+      quantity: 0,
     },
     mode: "all",
     resolver: yupResolver(validationRules),

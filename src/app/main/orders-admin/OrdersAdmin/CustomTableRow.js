@@ -27,11 +27,7 @@ const CustomTableRow = ({ item, isSelected, handleCheck, handleClick }) => {
   const [status, setStatus] = useState(item.status);
 
   const onProceed = (status, id) => {
-    const data = {
-      orderId: id,
-      statusOrder: status,
-    };
-    changeStatus(data)
+    changeStatus(id, status)
       .then(() => {
         setStatus(status);
         dispatch(

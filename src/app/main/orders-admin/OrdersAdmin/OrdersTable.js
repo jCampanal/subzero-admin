@@ -338,11 +338,10 @@ function OrdersTable({ wharehoseId, rows }) {
       rowsPerPage,
       page
     )
-      .then(() => {
-        const res = response;
+      .then((res) => {
         setData({
-          data: res.data,
-          totalItems: res.totalItems,
+          data: res.data.data,
+          totalItems: res.data.totalItems,
         });
         return null;
       })

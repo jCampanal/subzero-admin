@@ -27,6 +27,7 @@ import { putSchedule } from "app/api-conn/schedules";
 import { getBinaryDays } from "app/lib/formatDate";
 
 export default function EditDialog({ open, schedule, handleClose }) {
+  console.log("schedule", schedule);
   const [orders, setOrders] = useState([]);
   const { t } = useTranslation("schedules");
   const [isOpenMulti2, setOpenMulti2] = useState(false);
