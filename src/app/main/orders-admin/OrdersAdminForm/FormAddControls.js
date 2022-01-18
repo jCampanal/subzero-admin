@@ -6,6 +6,7 @@ import {
   Box,
   Button,
   Divider,
+  Icon,
   Step,
   StepLabel,
   Stepper,
@@ -14,6 +15,13 @@ import {
 import Step1 from "./Steps/Step1";
 import Step2 from "./Steps/Step2";
 import Step3 from "./Steps/Step3";
+import { useFormContext } from "react-hook-form";
+import { putCustomer } from "../../../api-conn/customers";
+import { showMessage } from "../../../store/fuse/messageSlice";
+import { formatDate, getBinaryDays } from "app/lib/formatDate";
+import { postOrder } from "app/api-conn/shipments_order";
+import { useHistory, useParams } from "react-router";
+import { useDispatch } from "react-redux";
 
 const steps = [
   "Select the products",
@@ -22,11 +30,17 @@ const steps = [
 ];
 
 function FormControls({ products, customers, drivers }) {
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(2);
   const [skipped, setSkipped] = React.useState(new Set());
-
+  const methods = useFormContext();
+  const {
+    getValues,
+    formState: { dirtyFields, isValid },
+  } = methods;
   const { t } = useTranslation("orders-admin");
-
+  const { id } = useParams();
+  const history = useHistory();
+  const dispatch = useDispatch();
   /* Stepper methods */
   const isStepOptional = (step) => {
     return step === 1;
@@ -34,10 +48,6 @@ function FormControls({ products, customers, drivers }) {
 
   const isStepSkipped = (step) => {
     return skipped.has(step);
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
   };
 
   const handleNext = () => {
@@ -55,19 +65,137 @@ function FormControls({ products, customers, drivers }) {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleSkip = () => {
-    if (!isStepOptional(activeStep)) {
-      // You probably want to guard against something like this,
-      // it should never occur unless someone's actively trying to break something.
-      throw new Error("You can't skip a step that isn't optional.");
-    }
+  const saveData = () => {
+    if (id) {
+      const formData = {
+        companyName: getValues().companyName,
+        email: getValues().email,
+        lastname: getValues().lastname,
+        name: getValues().name,
+        phoneNumber: getValues().phoneNumber,
+        priorityCustomer: getValues().priorityCustomer,
+        salesTaxId: getValues().salesTaxId,
+        username: getValues().username,
+      };
 
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped((prevSkipped) => {
-      const newSkipped = new Set(prevSkipped.values());
-      newSkipped.add(activeStep);
-      return newSkipped;
-    });
+      if (getValues().street !== "") {
+        formData.street = getValues().street;
+      }
+      if (getValues().city !== "") {
+        formData.city = getValues().city;
+      }
+      if (getValues().state !== "") {
+        formData.state = getValues().state;
+      }
+      if (getValues().zipCode !== "") {
+        formData.zipCode = parseInt(getValues().zipCode);
+      }
+
+      console.log("formData", formData);
+      putCustomer(id, formData)
+        .then(() => {
+          dispatch(
+            showMessage({
+              message: "The customer was updated successfully",
+              variant: "success",
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "right",
+              },
+            })
+          );
+          history.push("/customers");
+          return null;
+        })
+        .catch((error) =>
+          dispatch(
+            showMessage({
+              message: error.response.data.title,
+              variant: "error",
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "right",
+              },
+            })
+          )
+        );
+    } else {
+      console.log("getValues", getValues());
+      const formData = {
+        customerId: getValues().customerId,
+        deliveryTime: formatDate(getValues().deliveryTime),
+
+        pickUp: getValues().pickUp,
+        scheduleStatus: getValues().scheduleStatus,
+        priority: parseInt(getValues().priority),
+        products: getValues().products.map((product) => {
+          const formatedProduct = product.productToSend;
+
+          return formatedProduct;
+        }),
+        tag: getValues().tag,
+        termOrder: getValues().termOrder,
+      };
+      formData.daysToOrder = getBinaryDays(getValues().daysToOrder);
+
+      if (getValues().zipCode !== "" && getValues().addresSelection === "new") {
+        formData.zipCode = getValues().zipCode;
+      }
+      if (getValues().street !== "" && getValues().addresSelection === "new") {
+        formData.street = getValues().street;
+      }
+      if (getValues().state !== "" && getValues().addresSelection === "new") {
+        formData.state = getValues().state;
+      }
+      if (getValues().driverId !== "") {
+        const driverId = getValues().driverId;
+        formData.driverId = driverId;
+      }
+      if (getValues().poNo !== "") {
+        const intPhoNo = parseInt(getValues().poNo);
+        formData.poNo = intPhoNo;
+      }
+      if (getValues().city !== "" && getValues().addresSelection === "new") {
+        formData.city = getValues().city;
+      }
+      const customerSelected = customers.find(
+        (customer) => customer.id === getValues().customerId
+      );
+      const addressId = customerSelected?.company.address.id;
+      // const addressId = customerSelected?.company.address.id;
+      if (addressId && getValues().addresSelection === "customer") {
+        formData.addressId = addressId;
+      }
+
+      console.log("formData", formData);
+      postOrder(formData)
+        .then(() => {
+          dispatch(
+            showMessage({
+              message: "The order was created successfully",
+              variant: "success",
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "right",
+              },
+            })
+          );
+          history.push("/orders_admin");
+          return null;
+        })
+        .catch((error) =>
+          dispatch(
+            showMessage({
+              message: error.response.data.title || error.response.data.message,
+              variant: "error",
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "right",
+              },
+            })
+          )
+        );
+    }
   };
 
   return (
@@ -96,10 +224,6 @@ function FormControls({ products, customers, drivers }) {
           <Typography sx={{ mt: 2, mb: 1 }}>
             All steps completed - you&apos;re finished
           </Typography>
-          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-            <Box sx={{ flex: "1 1 auto" }} />
-            <Button onClick={handleReset}>Reset</Button>
-          </Box>
         </React.Fragment>
       ) : (
         <React.Fragment>
@@ -110,32 +234,41 @@ function FormControls({ products, customers, drivers }) {
               <Step2 customers={customers} drivers={drivers} />
             )}
 
-            {activeStep === 2 && <Step3 />}
+            {activeStep === 2 && <Step3 handleNext={saveData} />}
 
             <Divider className="my-24" />
           </div>
         </React.Fragment>
       )}
-      <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-        <Button
-          color="inherit"
-          disabled={activeStep === 0}
-          onClick={handleBack}
-          sx={{ mr: 1 }}
-        >
-          Back
-        </Button>
-        <Box sx={{ flex: "1 1 auto" }} />
-        {isStepOptional(activeStep) && (
-          <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
-            Skip
-          </Button>
-        )}
 
-        <Button onClick={handleNext}>
-          {activeStep === steps.length - 1 ? "Finish" : "Next"}
-        </Button>
-      </Box>
+      {activeStep < steps.length && (
+        <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+          <Button
+            color="inherit"
+            disabled={activeStep === 0}
+            onClick={handleBack}
+            sx={{ mr: 1 }}
+          >
+            Back
+          </Button>
+          <Box sx={{ flex: "1 1 auto" }} />
+
+          {activeStep === steps.length - 1 ? (
+            <Button
+              className="whitespace-nowrap mx-4"
+              variant="contained"
+              color="secondary"
+              onClick={() => saveData()}
+              startIcon={<Icon className="hidden sm:flex">save</Icon>}
+              // disabled={dirtyFields === {} || !isValid}
+            >
+              {t("SAVE")}
+            </Button>
+          ) : (
+            <Button onClick={handleNext}>Next</Button>
+          )}
+        </Box>
+      )}
     </Box>
   );
 }

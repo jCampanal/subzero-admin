@@ -1,170 +1,17 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
 import { useTheme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { useHistory, useParams } from "react-router";
+import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
-import { useFormContext } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { putCustomer } from "../../../api-conn/customers";
-import { showMessage } from "../../../store/fuse/messageSlice";
-import { formatDate, getBinaryDays } from "app/lib/formatDate";
-import PropTypes from "prop-types";
-import { postOrder } from "app/api-conn/shipments_order";
 
-function FormHeader({ customers }) {
+function FormHeader() {
   const theme = useTheme();
-  const history = useHistory();
+
   const { id } = useParams();
   const { t } = useTranslation("customer-form");
-  const methods = useFormContext();
-  const {
-    getValues,
-    formState: { dirtyFields, isValid },
-  } = methods;
-  const dispatch = useDispatch();
-
-  const saveData = () => {
-    if (id) {
-      const formData = {
-        companyName: getValues().companyName,
-        email: getValues().email,
-        lastname: getValues().lastname,
-        name: getValues().name,
-        phoneNumber: getValues().phoneNumber,
-        priorityCustomer: getValues().priorityCustomer,
-        salesTaxId: getValues().salesTaxId,
-        username: getValues().username,
-      };
-
-      if (getValues().street !== "") {
-        formData.street = getValues().street;
-      }
-      if (getValues().city !== "") {
-        formData.city = getValues().city;
-      }
-      if (getValues().state !== "") {
-        formData.state = getValues().state;
-      }
-      if (getValues().zipCode !== "") {
-        formData.zipCode = parseInt(getValues().zipCode);
-      }
-
-      console.log("formData", formData);
-      putCustomer(id, formData)
-        .then(() => {
-          dispatch(
-            showMessage({
-              message: "The customer was updated successfully",
-              variant: "success",
-              anchorOrigin: {
-                vertical: "top",
-                horizontal: "right",
-              },
-            })
-          );
-          history.push("/customers");
-          return null;
-        })
-        .catch((error) =>
-          dispatch(
-            showMessage({
-              message: error.response.data.title,
-              variant: "error",
-              anchorOrigin: {
-                vertical: "top",
-                horizontal: "right",
-              },
-            })
-          )
-        );
-    } else {
-      console.log("getValues", getValues());
-      const formData = {
-        customerId: getValues().customerId,
-        deliveryTime: formatDate(getValues().deliveryTime),
-
-        pickUp: getValues().pickUp,
-        scheduleStatus: getValues().scheduleStatus,
-        priority: parseInt(getValues().priority),
-        products: getValues().products.map((product) => {
-          const formatedProduct = {
-            description: product.description,
-            quanty: getValues().quantity,
-            productSaleUnitId: getValues().salesUnitId.find((saleUnit) => {
-              return saleUnit.productId === product.id;
-            }).productSaleUnitId,
-          };
-
-          return formatedProduct;
-        }),
-        tag: getValues().tag,
-        termOrder: getValues().termOrder,
-      };
-      formData.daysToOrder = getBinaryDays(getValues().daysToOrder);
-
-      // if (getValues().zipCode !== "") {
-      //   formData.zipCode = getValues().zipCode;
-      // }
-      // if (getValues().street !== "") {
-      //   formData.street = getValues().street;
-      // }
-      // if (getValues().state !== "") {
-      //   formData.state = getValues().state;
-      // }
-      if (getValues().driverId !== "") {
-        const driverId = getValues().driverId;
-        formData.driverId = driverId;
-      }
-      if (getValues().poNo !== "") {
-        const intPhoNo = parseInt(getValues().poNo);
-        formData.poNo = intPhoNo;
-      }
-      if (getValues().city !== "") {
-        formData.city = getValues().city;
-      }
-      const customerSelected = customers.find(
-        (customer) => customer.id === getValues().customerId
-      );
-      const addressId = customerSelected?.company.address.id;
-      // const addressId = customerSelected?.company.address.id;
-      if (addressId) {
-        formData.addressId = addressId;
-      }
-
-      console.log("formData", formData);
-      postOrder(formData)
-        .then(() => {
-          dispatch(
-            showMessage({
-              message: "The order was created successfully",
-              variant: "success",
-              anchorOrigin: {
-                vertical: "top",
-                horizontal: "right",
-              },
-            })
-          );
-          history.push("/orders_admin");
-          return null;
-        })
-        .catch((error) =>
-          dispatch(
-            showMessage({
-              message: error.response.data.title || error.response.data.message,
-              variant: "error",
-              anchorOrigin: {
-                vertical: "top",
-                horizontal: "right",
-              },
-            })
-          )
-        );
-    }
-  };
 
   return (
     <div className="flex flex-1 w-full items-center justify-between">
@@ -206,26 +53,9 @@ function FormHeader({ customers }) {
         className="flex"
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
-      >
-        <Button
-          className="whitespace-nowrap mx-4"
-          variant="contained"
-          color="secondary"
-          onClick={() => saveData()}
-          startIcon={<Icon className="hidden sm:flex">save</Icon>}
-          // disabled={dirtyFields === {} || !isValid}
-        >
-          {t("SAVE")}
-        </Button>
-      </motion.div>
+      ></motion.div>
     </div>
   );
 }
 
 export default FormHeader;
-
-FormHeader.propTypes = {
-  products: PropTypes.array.isRequired,
-  customers: PropTypes.array.isRequired,
-  drivers: PropTypes.array.isRequired,
-};

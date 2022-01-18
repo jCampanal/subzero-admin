@@ -94,6 +94,7 @@ const OrderAddForm = () => {
       termOrder: "",
       zipCode: "",
       daysToOrder: [],
+      addresSelection: "customer",
     },
     mode: "all",
     resolver: yupResolver(validationRules),
