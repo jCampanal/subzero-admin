@@ -3,7 +3,6 @@ import {
   FormControl,
   Grid,
   InputLabel,
-  ListItemText,
   MenuItem,
   Paper,
   Select,
@@ -48,7 +47,7 @@ const Step1 = ({ products }) => {
       listID: yup.string().nullable(),
     }),
     quantity: yup.number().required(t("REQUIRED")),
-    description: yup.string().required(t("REQUIRED")),
+    description: yup.string(),
     saleUnit: yup.object().shape({
       productSaleUnitId: yup.string(),
       saleUnitId: yup.string(),
@@ -186,7 +185,7 @@ const Step1 = ({ products }) => {
                 >
                   {products.map((product) => (
                     <MenuItem key={product.id} value={product}>
-                      <ListItemText primary={product.name} />
+                      {product.name}
                     </MenuItem>
                   ))}
                 </Select>
@@ -223,10 +222,7 @@ const Step1 = ({ products }) => {
                       {salesUnits.map((salesUnit) => {
                         return (
                           <MenuItem key={salesUnit.id} value={salesUnit}>
-                            <ListItemText
-                              // primary={`${salesUnit.saleUnit.name}`}
-                              primary={`${salesUnit.saleUnitName}`}
-                            />
+                            {salesUnit.saleUnitName}
                           </MenuItem>
                         );
                       })}

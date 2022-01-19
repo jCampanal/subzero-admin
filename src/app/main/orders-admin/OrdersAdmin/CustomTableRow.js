@@ -129,7 +129,7 @@ const CustomTableRow = ({
 
 export default CustomTableRow;
 CustomTableRow.propTypes = {
-  item: PropTypes.number.isRequired,
+  item: PropTypes.object.isRequired,
   isSelected: PropTypes.bool.isRequired,
   handleCheck: PropTypes.func.isRequired,
   handleClick: PropTypes.func.isRequired,

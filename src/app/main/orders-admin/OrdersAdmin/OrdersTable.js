@@ -448,6 +448,6 @@ function OrdersTable({ wharehoseId, rows }) {
 export default OrdersTable;
 
 OrdersTable.propTypes = {
-  wharehoseId: PropTypes.number,
+  wharehoseId: PropTypes.string,
   rows: PropTypes.array.isRequired,
 };
