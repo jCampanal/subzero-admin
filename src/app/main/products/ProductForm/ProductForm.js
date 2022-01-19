@@ -4,7 +4,7 @@ import FusePageCarded from "@fuse/core/FusePageCarded";
 import FuseLoading from "@fuse/core/FuseLoading";
 import { useHistory, useLocation, useParams } from "react-router";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { showMessage } from "../../../store/fuse/messageSlice";
@@ -17,6 +17,7 @@ import {
 } from "../../../api-conn/products";
 import FormHeader from "./FormHeader";
 import FormControls from "./FormControls";
+import withProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
 
 const ProductForm = () => {
   const history = useHistory();
@@ -42,9 +43,7 @@ const ProductForm = () => {
 
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-  const {
-    user: { logged },
-  } = useSelector((state) => state);
+
   const product = id
     ? location.state.product
     : {
@@ -185,9 +184,6 @@ const ProductForm = () => {
     );
 
   useEffect(() => {
-    if (!logged) history.push("/login");
-  }, [logged, history]);
-  useEffect(() => {
     document.title = id ? t("EDITING") : t("CREATING");
   }, [id, t]);
 
@@ -215,4 +211,4 @@ const ProductForm = () => {
   );
 };
 
-export default ProductForm;
+export default withProtectedRoute(ProductForm);

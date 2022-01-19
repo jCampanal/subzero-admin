@@ -11,7 +11,13 @@ import { openDialog } from "app/store/fuse/dialogSlice";
 import RemoveDlg from "app/common/removeDlg";
 import { ShipmentStatus } from "../helpData";
 
-const CustomTableRow = ({ item, isSelected, handleCheck, handleClick }) => {
+const CustomTableRow = ({
+  item,
+  isSelected,
+  handleCheck,
+  handleClick,
+  handleEdit,
+}) => {
   const { t } = useTranslation("orders-admin");
   const dispatch = useDispatch();
   const [status, setStatus] = useState(item.status);
@@ -113,7 +119,7 @@ const CustomTableRow = ({ item, isSelected, handleCheck, handleClick }) => {
           <Visibility className="mr-5" />
           {t("VIEW")}
         </Button>
-        <Button color="primary">
+        <Button color="primary" onClick={() => handleEdit(item)}>
           <Icon className="mr-5">edit</Icon> {t("EDIT")}
         </Button>
       </TableCell>
@@ -127,4 +133,5 @@ CustomTableRow.propTypes = {
   isSelected: PropTypes.bool.isRequired,
   handleCheck: PropTypes.func.isRequired,
   handleClick: PropTypes.func.isRequired,
+  handleEdit: PropTypes.func.isRequired,
 };

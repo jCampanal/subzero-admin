@@ -227,12 +227,6 @@ function PageCardedHeader() {
             {t("NEW_ORDER")}
           </Button>
         </motion.div>
-        <Button
-          className="whitespace-nowrap inline-block uppercase"
-          onClick={() => null}
-        >
-          {t("DRIVERS_CLEANUP")}
-        </Button>
       </div>
     </div>
   );

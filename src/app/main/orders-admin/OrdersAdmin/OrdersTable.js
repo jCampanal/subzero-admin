@@ -13,6 +13,7 @@ import { getOrdersByWhareHose } from "app/api-conn/shipments_order";
 import { showMessage } from "app/store/fuse/messageSlice";
 import { useDispatch } from "react-redux";
 import CustomTableRow from "./CustomTableRow";
+import ViewModal from "./ViewModal";
 const response = {
   data: [
     {
@@ -248,6 +249,10 @@ function OrdersTable({ wharehoseId, rows }) {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const history = useHistory();
   const location = useLocation();
+
+  const [isViewModal, setIsViewModal] = useState(false);
+  const [viewOrder, setViewOrder] = useState();
+
   const [order, setOrder] = useState({
     direction: "asc",
     id: null,
@@ -279,8 +284,12 @@ function OrdersTable({ wharehoseId, rows }) {
     setSelected([]);
   }
 
-  function handleClick(item) {
-    history.push(`/apps/e-commerce/products/${item.id}/${item.handle}`);
+  function handleClick(order) {
+    setViewOrder(order);
+    setIsViewModal(true);
+  }
+  function handleEdit(order) {
+    history.push(`/orders_edit/${order.id}`, { order });
   }
 
   function handleCheck(event, id) {
@@ -400,6 +409,7 @@ function OrdersTable({ wharehoseId, rows }) {
                     isSelected={isSelected}
                     handleCheck={handleCheck}
                     handleClick={handleClick}
+                    handleEdit={handleEdit}
                   />
                 );
               })}
@@ -423,6 +433,14 @@ function OrdersTable({ wharehoseId, rows }) {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
+
+      {viewOrder && (
+        <ViewModal
+          data={viewOrder}
+          setIsModal={setIsViewModal}
+          isModal={isViewModal}
+        />
+      )}
     </div>
   );
 }

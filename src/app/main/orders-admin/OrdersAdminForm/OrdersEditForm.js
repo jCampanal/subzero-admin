@@ -14,43 +14,14 @@ import { getAllCustomers } from "app/api-conn/customers";
 import { getAllDrivers } from "app/api-conn/drivers";
 import { getAllProducts } from "app/api-conn/products";
 import { intRegex, phoneRegex } from "app/lib/regexs";
+import { useLocation } from "react-router";
 
-// const fakeCustomer = [
-//   {
-//     company: {
-//       id: "67b6e540-0985-4a-3af8278f6e2e",
-//       name: "Company 1",
-//     },
-//     email: "test@admin.com",
-//     id: "5646567b6e540-0985-49e2-8a7a-3af8278f6e2e",
-//     imageURL: "url",
-//     lastName: "Pérez",
-//     name: "Juan",
-//     phoneNumber: "test@admin.com",
-//     priorityCustomer: false,
-//     userName: "Juan",
-//   },
-//   {
-//     company: {
-//       id: "6asdsad7bwer6ee540-0985-49e2-8a7a-3af8278f6were2e",
-//       name: "Company 2",
-//     },
-//     email: "test@admin.com",
-//     id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-//     imageURL: "url",
-//     lastName: "Pérez",
-//     name: "Ramos",
-//     phoneNumber: "test@admin.com",
-//     priorityCustomer: false,
-//     userName: "Ramos",
-//   },
-// ];
-
-const OrderAddForm = () => {
+const OrderEditForm = () => {
   const [customerAll, setCustomerAll] = useState([]);
   const [productAll, setProductAll] = useState([]);
   const [driverAll, setDrivertAll] = useState([]);
   const [loading, setLoading] = useState(false);
+  const location = useLocation();
   const { t } = useTranslation("Orders");
   const dispatch = useDispatch();
   const validationRules = yup.object().shape({
@@ -76,22 +47,23 @@ const OrderAddForm = () => {
     daysToOrder: yup.array(),
   });
 
+  const order = location.state.order;
   const methods = useForm({
     defaultValues: {
       addressId: "",
-      city: "",
-      customerId: "",
-      deliveryTime: new Date(),
-      driverId: "",
-      pickUp: false,
+      city: order.address.city,
+      customerId: order.customer.id,
+      deliveryTime: new Date(order.deliveryTime),
+      driverId: order.driver.id,
+      pickUp: order.pickUp,
       poNo: "",
-      priority: "",
+      priority: order.priority,
       products: [],
-      state: "",
-      street: "",
-      tag: "",
+      state: order.address.state,
+      street: order.address.street,
+      tag: order.tag,
       termOrder: "",
-      zipCode: "",
+      zipCode: order.address.zipCode,
       daysToOrder: [],
       addresSelection: "customer",
     },
@@ -191,4 +163,4 @@ const OrderAddForm = () => {
   );
 };
 
-export default memo(whithProtectedRoute(OrderAddForm));
+export default memo(whithProtectedRoute(OrderEditForm));

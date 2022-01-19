@@ -25,10 +25,10 @@ const OrdersAdminConfig = {
       ),
     },
     {
-      path: "/shipments_edit/:id",
+      path: "/orders_edit/:id",
       exact: true,
       component: React.lazy(() =>
-        import("./OrdersAdminForm/ShipmentsEditForm").then((form) => form)
+        import("./OrdersAdminForm/OrdersEditForm").then((form) => form)
       ),
     },
   ],
