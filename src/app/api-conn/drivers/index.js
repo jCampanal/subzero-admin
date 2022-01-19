@@ -8,7 +8,7 @@ const getDrivers = (pageNumber = 0, pageSize = 10, name = undefined) =>
     .then((response) => response.data);
 
 const getAllDrivers = () =>
-  apiClient.get(driversURL).then((response) => response.data);
+  apiClient.get(driversURL + "/getAll").then((response) => response.data);
 
 const getDriver = (id) =>
   apiClient.get(`${driversURL}/${id}`).then((response) => response.data);

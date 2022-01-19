@@ -1,6 +1,3 @@
-import FuseScrollbars from "@fuse/core/FuseScrollbars";
-import Checkbox from "@material-ui/core/Checkbox";
-import Icon from "@material-ui/core/Icon";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -9,12 +6,12 @@ import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import { motion } from "framer-motion";
 import React, { useState } from "react";
-import { withRouter } from "react-router-dom";
-import TableHeader from "app/main/products/Products/TableHeader";
 import Button from "@material-ui/core/Button";
-import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { Box, TableHead } from "@material-ui/core";
+import { ImportExport, NextWeek } from "@material-ui/icons";
+import ViewModal from "./ViewModal";
+import PropType from "prop-types";
 
 function ShipmentsTable({
   data,
@@ -24,66 +21,12 @@ function ShipmentsTable({
   totalItems,
   handleChangeRowsPerPage,
   handleChangePage,
-  handleClickEdit,
-  deleteCallback,
+  handleToogleOrder,
+  loadOrders,
 }) {
   const { t } = useTranslation("shipments");
-  const [selected, setSelected] = useState([]);
-
-  const [order, setOrder] = useState({
-    direction: "asc",
-    id: null,
-  });
-
-  function handleRequestSort(event, property) {
-    const id = property;
-    let direction = "desc";
-
-    if (order.id === property && order.direction === "desc") {
-      direction = "asc";
-    }
-
-    setOrder({
-      direction,
-      id,
-    });
-  }
-
-  function handleSelectAllClick(event) {
-    if (event.target.checked) {
-      setSelected(data.map((n) => n.id));
-      return;
-    }
-    setSelected([]);
-  }
-
-  function handleDeselect() {
-    setSelected([]);
-  }
-
-  function handleClick(item) {
-    // history.push(`/apps/e-commerce/products/${item.id}/${item.handle}`);
-  }
-
-  function handleCheck(event, id) {
-    const selectedIndex = selected.indexOf(id);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelected(newSelected);
-  }
+  const [order, setOrder] = useState();
+  const [isViewModal, setIsViewModal] = useState(false);
 
   if (data.length === 0) {
     return (
@@ -99,6 +42,10 @@ function ShipmentsTable({
     );
   }
 
+  const handleSetOrderModal = (order) => {
+    setOrder(order);
+    setIsViewModal(true);
+  };
   return (
     <div className="w-full flex flex-col">
       <Box sx={{ margin: 1 }} className="pb-10">
@@ -169,6 +116,30 @@ function ShipmentsTable({
                   >
                     {order.status}
                   </TableCell>
+                  <TableCell
+                    className="p-4 md:p-16"
+                    component="th"
+                    scope="row"
+                    align="right"
+                  >
+                    <div className="grid grid-cols-2">
+                      <Button
+                        color="primary"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleSetOrderModal(order);
+                        }}
+                      >
+                        <ImportExport className="mr-12" /> {t("REASIGNAR")}
+                      </Button>
+                      <Button
+                        color="primary"
+                        onClick={() => handleToogleOrder(order)}
+                      >
+                        <NextWeek className="mr-12" /> {t("CHANGE STATUS")}
+                      </Button>
+                    </div>
+                  </TableCell>
                 </TableRow>
               );
             })}
@@ -195,8 +166,29 @@ function ShipmentsTable({
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
+
+      {isViewModal && (
+        <ViewModal
+          data={order}
+          setIsModal={setIsViewModal}
+          loadOrders={loadOrders}
+          isModal={isViewModal}
+        />
+      )}
     </div>
   );
 }
 
 export default ShipmentsTable;
+
+ShipmentsTable.propTypes = {
+  data: PropType.array.isRequired,
+  rows: PropType.array.isRequired,
+  page: PropType.number.isRequired,
+  rowsPerPage: PropType.number.isRequired,
+  totalItems: PropType.number.isRequired,
+  handleChangeRowsPerPage: PropType.func.isRequired,
+  handleChangePage: PropType.func.isRequired,
+  handleToogleOrder: PropType.func.isRequired,
+  loadOrders: PropType.func.isRequired,
+};

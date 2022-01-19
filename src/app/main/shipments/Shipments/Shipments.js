@@ -107,8 +107,6 @@ function Shipments() {
         <Header
           title={t("SHIPMENTS")}
           iconText="fa-truck-loading"
-          addButtonLabel={t("REASSIGN_ORDER")}
-          addButtonCallback={handleReassign}
           disableSearch
         />
       }

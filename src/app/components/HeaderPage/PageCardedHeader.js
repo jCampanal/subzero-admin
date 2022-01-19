@@ -35,37 +35,41 @@ function PageCardedHeader({
 
   return (
     <div className="flex flex-1 w-full items-center justify-between">
-      <div className="flex items-center">
-        {iconText.slice(0, 3) !== "fa-" && (
-          <Icon
-            component={motion.span}
-            initial={{ scale: 0 }}
-            animate={{ scale: 1, transition: { delay: 0.2 } }}
-            className="text-24 md:text-32"
-          >
-            {iconText}
-          </Icon>
-        )}
-        {iconText.slice(0, 3) === "fa-" && (
-          <Icon
-            component={motion.span}
-            initial={{ scale: 0 }}
-            animate={{ scale: 1, transition: { delay: 0.2 } }}
-            className="text-24 md:text-32"
-          >
-            <i className={`fa ${iconText}`} />
-          </Icon>
-        )}
-        <Typography
-          component={motion.span}
-          initial={{ x: -20 }}
-          animate={{ x: 0, transition: { delay: 0.2 } }}
-          delay={300}
-          className="hidden sm:flex text-16 md:text-24 mx-12 font-semibold"
-        >
-          {title}
-        </Typography>
-      </div>
+      {iconText && (
+        <div className="flex items-center">
+          {iconText.slice(0, 3) !== "fa-" && (
+            <Icon
+              component={motion.span}
+              initial={{ scale: 0 }}
+              animate={{ scale: 1, transition: { delay: 0.2 } }}
+              className="text-24 md:text-32"
+            >
+              {iconText}
+            </Icon>
+          )}
+          {iconText.slice(0, 3) === "fa-" && (
+            <Icon
+              component={motion.span}
+              initial={{ scale: 0 }}
+              animate={{ scale: 1, transition: { delay: 0.2 } }}
+              className="text-24 md:text-32"
+            >
+              <i className={`fa ${iconText}`} />
+            </Icon>
+          )}
+          {title && (
+            <Typography
+              component={motion.span}
+              initial={{ x: -20 }}
+              animate={{ x: 0, transition: { delay: 0.2 } }}
+              delay={300}
+              className="hidden sm:flex text-16 md:text-24 mx-12 font-semibold"
+            >
+              {title}
+            </Typography>
+          )}
+        </div>
+      )}
 
       {!disableSearch && (
         <div className="flex flex-1 items-center justify-center px-12">
@@ -100,25 +104,27 @@ function PageCardedHeader({
           </ThemeProvider>
         </div>
       )}
-      {addButtonLabel !== "" && addButtonLabel !== undefined && (
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
-        >
-          <IconButton className="sm:hidden" onClick={addButtonCallback}>
-            <AddCircleIcon />
-          </IconButton>
-          <Button
-            className="whitespace-nowrap hidden sm:inline-block"
-            variant="contained"
-            color="secondary"
-            onClick={addButtonCallback}
+      {addButtonLabel !== "" &&
+        addButtonLabel !== undefined &&
+        addButtonCallback !== undefined && (
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
           >
-            <AddCircleIcon className="mr-5" />
-            {addButtonLabel}
-          </Button>
-        </motion.div>
-      )}
+            <IconButton className="sm:hidden" onClick={addButtonCallback}>
+              <AddCircleIcon />
+            </IconButton>
+            <Button
+              className="whitespace-nowrap hidden sm:inline-block"
+              variant="contained"
+              color="secondary"
+              onClick={addButtonCallback}
+            >
+              <AddCircleIcon className="mr-5" />
+              {addButtonLabel}
+            </Button>
+          </motion.div>
+        )}
     </div>
   );
 }
@@ -133,4 +139,5 @@ PageCardedHeader.propTypes = {
   addButtonCallback: PropTypes.func,
   urlSearchCallBack: PropTypes.string,
   searchHint: PropTypes.string,
+  disableSearch: PropTypes.bool,
 };

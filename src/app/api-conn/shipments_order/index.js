@@ -45,9 +45,7 @@ const changeStatus = (orderId, statusOrder) =>
     .then((response) => response.data);
 const reassignOrder = (idOrder, idDriver) =>
   apiClient
-    .put(`${orderURL}/toggleToDriver`, {
-      params: { orderId: idOrder, driverId: idDriver },
-    })
+    .put(`${orderURL}/toggleToDriver?orderId=${idOrder}&driverId=${idDriver}`)
     .then((response) => response.data);
 
 const deleteShipment = (ids) =>
