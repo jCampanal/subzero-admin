@@ -1,100 +1,60 @@
-import React, { lazy, memo, useEffect, useState } from "react";
+import React, { lazy, memo, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import FusePageCarded from "@fuse/core/FusePageCarded/FusePageCarded";
 import rows from "./rows";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router";
 import { showMessage } from "app/store/fuse/messageSlice";
 import whitProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
 import FuseLoading from "@fuse/core/FuseLoading";
 import { getDrivers } from "app/api-conn/drivers";
+import { KeyboardArrowDown, KeyboardArrowUp } from "@material-ui/icons";
 const Header = lazy(() => import("app/components/HeaderPage/PageCardedHeader"));
 const ShipmentsTab = lazy(() => import("./ShipmentsTable"));
 
 function Shipments() {
   const { t } = useTranslation("shipments");
   const dispatch = useDispatch();
-  const history = useHistory();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [totalItems, setTotalItems] = useState(0);
 
-  const loadData = async (pageNumber, pageSize) => {
-    setLoading(true);
-    getDrivers(pageNumber, pageSize)
-      .then((response) => {
-        setData(response.data.data);
-        setTotalItems(response.data.totalItems);
-        setLoading(false);
-        return null;
-      })
-      .catch(() => {
-        dispatch(
-          showMessage({
-            message: "There is something wrong, try to refresh the page",
-            variant: "error",
-          })
-        );
-        setLoading(false);
-      });
-    setLoading(true);
-  };
+  const loadData = useCallback(
+    async (pageNumber, pageSize) => {
+      setLoading(true);
+      getDrivers(pageNumber, pageSize)
+        .then((response) => {
+          setData(response.data.data);
+          setTotalItems(response.data.totalItems);
+          setLoading(false);
+          return null;
+        })
+        .catch(() => {
+          dispatch(
+            showMessage({
+              message: "There is something wrong, try to refresh the page",
+              variant: "error",
+            })
+          );
+          setLoading(false);
+        });
+      setLoading(true);
+    },
+    [dispatch]
+  );
   const handleChangePage = (event) => {
     setPageSize(event.target.value);
   };
   function handlePageNumber(event, value) {
     setPageNumber(value);
   }
-  // function handleEditShipment(shipment) {
-  //   history.push(`/shipments_edit/${Shipment.id}/`, { shipment });
-  // }
-
-  function handleReassign() {
-    history.push("/shipments_reassign");
-  }
-
-  // const onProceed = (itemIds) => {
-  //   setLoading(true);
-
-  //   deleteShipments(JSON.stringify(itemIds))
-  //     .then(() => {
-  //       dispatch(
-  //         showMessage({
-  //           message: "Deletion completed!",
-  //         })
-  //       );
-  //       loadData();
-  //     })
-  //     .catch(() => {
-  //       dispatch(
-  //         showMessage({
-  //           message: "Error during deletion. Please try again later",
-  //           variant: "error",
-  //         })
-  //       );
-  //       setLoading(false);
-  //     });
-  // };
-  // const removeShipment = (itemId) => {
-  //   dispatch(
-  //     openDialog({
-  //       children: (
-  //         <RemoveDlg
-  //           itemId={itemId}
-  //           proceedCallback={() => onProceed(itemId)}
-  //           dlgTitle="Warning, you have requested a risky operation"
-  //           dlgText="You are attempting to delete a Shipment, this operation cannot be undone. Are you sure you want to proceed with the deletion?"
-  //         />
-  //       ),
-  //     })
-  //   );
-  // };
 
   useEffect(() => {
     loadData(pageNumber, pageSize);
-  }, [pageSize, pageNumber]);
+  }, [pageSize, pageNumber, loadData]);
+
+  const [collapseAll, setCollapseAll] = useState(false);
 
   return (
     <FusePageCarded
@@ -108,6 +68,9 @@ function Shipments() {
           title={t("SHIPMENTS")}
           iconText="fa-truck-loading"
           disableSearch
+          addButtonLabel={collapseAll ? "Close all" : "Open All"}
+          addButtonCallback={() => setCollapseAll(!collapseAll)}
+          addIcon={collapseAll ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
         />
       }
       content={
@@ -119,11 +82,10 @@ function Shipments() {
             rows={rows}
             page={pageNumber}
             rowsPerPage={pageSize}
+            totalItems={totalItems}
+            collapseAll={collapseAll}
             handleChangeRowsPerPage={handleChangePage}
             handleChangePage={handlePageNumber}
-            // handleClickEdit={handleEditShipment}
-            // deleteCallback={removeShipment}
-            totalItems={totalItems}
           />
         )
       }

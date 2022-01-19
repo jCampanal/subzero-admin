@@ -1,12 +1,14 @@
 import { Collapse, IconButton, TableCell, TableRow } from "@material-ui/core";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@material-ui/icons";
-import React from "react";
+import React, { useEffect } from "react";
 import Orders from "./Orders/Orders";
 import PropsTypes from "prop-types";
 
-const CustomTableRow = ({ row }) => {
+const CustomTableRow = ({ row, isOpen }) => {
   const [open, setOpen] = React.useState(false);
-
+  useEffect(() => {
+    setOpen(isOpen);
+  }, [isOpen]);
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -42,4 +44,5 @@ export default CustomTableRow;
 
 CustomTableRow.propTypes = {
   row: PropsTypes.object.isRequired,
+  isOpen: PropsTypes.bool.isRequired,
 };

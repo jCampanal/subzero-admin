@@ -21,6 +21,7 @@ const locale = {
   REASSIGN: "Reasignar",
   REASSIGN_ORDER: "Reasignar orden",
   SAVE: "Guardar",
+  No_Shipments: "No hay ningún envío para mostrar",
 };
 
 export default locale;

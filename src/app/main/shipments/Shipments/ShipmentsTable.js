@@ -19,8 +19,7 @@ function ShipmentsTable({
   totalItems,
   handleChangeRowsPerPage,
   handleChangePage,
-  handleClickEdit,
-  deleteCallback,
+  collapseAll,
 }) {
   const { t } = useTranslation("shipments");
   const [selected, setSelected] = useState([]);
@@ -88,7 +87,7 @@ function ShipmentsTable({
         className="flex flex-1 items-center justify-center h-full"
       >
         <Typography color="textSecondary" variant="h5">
-          {t("NO_Shipments")}
+          {t("No_Shipments")}
         </Typography>
       </motion.div>
     );
@@ -112,13 +111,14 @@ function ShipmentsTable({
             onRequestSort={handleRequestSort}
             rowCount={data.length}
             onMenuItemClick={handleDeselect}
-            deleteSelectedItemsCallback={() => deleteCallback(selected)}
             disableCheck
           />
 
           <TableBody>
             {data.map((row) => {
-              return <CustomTableRow key={row.name} row={row} />;
+              return (
+                <CustomTableRow key={row.name} row={row} isOpen={collapseAll} />
+              );
             })}
           </TableBody>
         </Table>
@@ -150,6 +150,7 @@ ShipmentsTable.propTypes = {
   data: PropTypes.array.isRequired,
   rows: PropTypes.array.isRequired,
   page: PropTypes.number.isRequired,
+  collapseAll: PropTypes.bool.isRequired,
   totalItems: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   handleChangeRowsPerPage: PropTypes.func.isRequired,

@@ -33,10 +33,10 @@ function ShipmentsTable({
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, transition: { delay: 0.1 } }}
-        className="flex flex-1 items-center justify-center h-full"
+        className="flex flex-1 items-center justify-center h-full py-56"
       >
         <Typography color="textSecondary" variant="h5">
-          {t("NO_Shipments")}
+          {t("No_Shipments")}
         </Typography>
       </motion.div>
     );

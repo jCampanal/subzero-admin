@@ -21,6 +21,7 @@ function PageCardedHeader({
   searchHint,
   disableSearch,
   urlSearchCallBack,
+  addIcon,
 }) {
   const mainTheme = useSelector(selectMainTheme);
   const history = useHistory();
@@ -112,7 +113,7 @@ function PageCardedHeader({
             animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
           >
             <IconButton className="sm:hidden" onClick={addButtonCallback}>
-              <AddCircleIcon />
+              {addIcon || <AddCircleIcon />}
             </IconButton>
             <Button
               className="whitespace-nowrap hidden sm:inline-block"
@@ -120,7 +121,7 @@ function PageCardedHeader({
               color="secondary"
               onClick={addButtonCallback}
             >
-              <AddCircleIcon className="mr-5" />
+              {addIcon || <AddCircleIcon className="mr-5" />}
               {addButtonLabel}
             </Button>
           </motion.div>
@@ -140,4 +141,5 @@ PageCardedHeader.propTypes = {
   urlSearchCallBack: PropTypes.string,
   searchHint: PropTypes.string,
   disableSearch: PropTypes.bool,
+  addIcon: PropTypes.object,
 };
