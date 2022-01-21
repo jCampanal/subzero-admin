@@ -38,7 +38,18 @@ function PageCardedHeader() {
   };
 
   const searchByDate = (dateFrom, dateTo) => {
-    setFilter({ ...filter, dateFrom: dateFrom, dateTo: dateTo });
+    if (dateFrom || dateTo) {
+      if (dateFrom && dateTo) {
+        setFilter({ ...filter, dateFrom: dateFrom, dateTo: dateTo });
+      } else {
+        if (dateFrom) {
+          setFilter({ ...filter, dateFrom: "", dateTo: dateFrom });
+        }
+        if (dateTo) {
+          setFilter({ ...filter, dateFrom: "", dateTo: dateTo });
+        }
+      }
+    }
   };
   const searchByNoOrden = () => {
     setFilter({ ...filter, noOrden: noOrden });
@@ -205,6 +216,8 @@ function PageCardedHeader() {
           namespace="orders-admin"
           searchByDate={searchByDate}
           toggleDateRangeDlgIsOpen={toggleDateRangeDlgIsOpen}
+          notValidate
+          defaultNull
         />
       </div>
       <div className="flex text-right">

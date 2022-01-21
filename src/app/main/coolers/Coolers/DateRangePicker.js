@@ -28,29 +28,59 @@ function DateRangePicker({
   isOpen,
   namespace,
   searchByDate,
+  notValidate,
+  defaultNull,
 }) {
   const { t } = useTranslation(namespace);
-  const [dateFrom, setDateFrom] = useState(new Date());
-  const [dateTo, setDateTo] = useState(new Date());
+
+  const [dateFrom, setDateFrom] = useState(defaultNull ? null : new Date());
+  const [dateTo, setDateTo] = useState(defaultNull ? null : new Date());
   const dispatch = useDispatch();
 
   const toggleDialog = () => {
     toggleDateRangeDlgIsOpen();
   };
   const search = () => {
-    if (dateFrom && validateDate(dateFrom) && dateTo && validateDate(dateTo)) {
-      const formatedDateFrom = formatDate(dateFrom);
-      const formatedDateTo = formatDate(dateTo);
+    if (notValidate) {
+      let formatedDateFrom = dateFrom;
+      let formatedDateTo = dateTo;
+
+      if (dateFrom) {
+        formatedDateFrom = formatDate(dateFrom);
+      }
+      if (dateTo) {
+        formatedDateTo = formatDate(dateTo);
+      }
 
       searchByDate(formatedDateFrom, formatedDateTo);
       toggleDateRangeDlgIsOpen();
     } else {
-      dispatch(
-        showMessage({
-          message: "Try a past date",
-          variant: "error",
-        })
-      );
+      if (
+        dateFrom &&
+        validateDate(dateFrom) &&
+        dateTo &&
+        validateDate(dateTo)
+      ) {
+        let formatedDateFrom = dateFrom;
+        let formatedDateTo = dateTo;
+
+        if (dateFrom) {
+          formatedDateFrom = formatDate(dateFrom);
+        }
+        if (dateTo) {
+          formatedDateTo = formatDate(dateTo);
+        }
+
+        searchByDate(formatedDateFrom, formatedDateTo);
+        toggleDateRangeDlgIsOpen();
+      } else {
+        dispatch(
+          showMessage({
+            message: "Try a past date",
+            variant: "error",
+          })
+        );
+      }
     }
   };
 
@@ -123,9 +153,11 @@ export default DateRangePicker;
 
 DateRangePicker.propTypes = {
   isOpen: PropTypes.bool.isRequired,
+  notValidate: PropTypes.bool,
   namespace: PropTypes.string.isRequired,
   searchByDate: PropTypes.func.isRequired,
   toggleDateRangeDlgIsOpen: PropTypes.func.isRequired,
+  defaultNull: PropTypes.bool,
 };
 
 const ButtonDatePickerS = styled.span`

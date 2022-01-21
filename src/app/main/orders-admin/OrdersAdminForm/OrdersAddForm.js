@@ -7,7 +7,6 @@ import * as yup from "yup";
 import { showMessage } from "app/store/fuse/messageSlice";
 import whithProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
 import { getAllCustomers } from "app/api-conn/customers";
-import { intRegex } from "app/lib/regexs";
 import { optionsTermOrder } from "../helpData";
 import { getAllWarehouses } from "app/api-conn/warehouses";
 import FuseLoading from "@fuse/core/FuseLoading";
@@ -52,10 +51,7 @@ const OrderAddForm = () => {
   const validationRules = yup.object().shape({
     deliveryTime: yup.string().required(t("REQUIRED")),
     pickUp: yup.boolean(),
-    poNo: yup.string().matches(intRegex, {
-      message: "This is a not valid number",
-      excludeEmptyString: true,
-    }), // no required
+    poNo: yup.string(),
     products: yup.array().required(),
     priority: yup.number().required(t("REQUIRED")),
     termOrder: yup.mixed().oneOf(optionsTermOrder),

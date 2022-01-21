@@ -33,7 +33,7 @@ const ViewModal = ({ data, isModal, setIsModal }) => {
           <Typography variant="subtitle1" color="inherit">
             <h1>
               {" "}
-              <b>@ {data.customer.company.name} </b>
+              <b>@ {data.poNo} </b>
             </h1>
             <h3>{data.no}</h3>
           </Typography>
