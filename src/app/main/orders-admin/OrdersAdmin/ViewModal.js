@@ -26,17 +26,21 @@ const ViewModal = ({ data, isModal, setIsModal }) => {
       open={isModal}
       onClose={() => setIsModal(false)}
       fullWidth
-      maxWidth="xs"
+      maxWidth="sm"
     >
       <AppBar position="static" elevation={0}>
-        <Toolbar className="flex w-full">
+        <Toolbar className="flex w-full py-28 ">
           <Typography variant="subtitle1" color="inherit">
-            {data.tag}
+            <h1>
+              {" "}
+              <b>@ {data.customer.company.name} </b>
+            </h1>
+            <h3>{data.no}</h3>
           </Typography>
         </Toolbar>
       </AppBar>
       <DialogContent classes={{ root: "p-0" }}>
-        <div className="px-16 sm:px-24">
+        <div className="px-16 sm:px-24 pt-20">
           <div className="-mx-4 my-5 pt-5">
             <h2 className="mb-12">
               For <b> {data.customer.company.name}</b>
@@ -45,7 +49,7 @@ const ViewModal = ({ data, isModal, setIsModal }) => {
               Customer : {data.customer.name} {data.customer.lastName}
             </h4>
             <h6 className="mb-12">
-              Deliver Time : {formatDisplayDate(new Date(data.deliveryTime))}
+              {formatDisplayDate(new Date(data.deliveryTime))}
             </h6>
             <h2 className="mb-12">
               <b>to</b> {data.address.street}, {data.address.city},{" "}
