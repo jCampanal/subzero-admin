@@ -20,13 +20,6 @@ const rows = [
     label: "NEXT_ORDER",
     sort: true,
   },
-  // {
-  //   id: "next_order",
-  //   align: "left",
-  //   disablePadding: false,
-  //   label: "NEXT_ORDER",
-  //   sort: true,
-  // },
   {
     id: "actions",
     align: "left",

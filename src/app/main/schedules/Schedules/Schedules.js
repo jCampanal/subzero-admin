@@ -105,7 +105,7 @@ function Schedules() {
   const handleSetOnGoing = (id) => {
     toggleStatus(id)
       .then((res) => {
-        if (res.status == 200) {
+        if (res.status === 200) {
           loadSchedules(pageNumber, pageSize);
         }
         return null;
