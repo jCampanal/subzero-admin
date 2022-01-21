@@ -24,13 +24,6 @@ const OrdersAdminConfig = {
         import("./OrdersAdminForm/OrdersAddForm").then((form) => form)
       ),
     },
-    {
-      path: "/orders_edit/:id",
-      exact: true,
-      component: React.lazy(() =>
-        import("./OrdersAdminForm/OrdersEditForm").then((form) => form)
-      ),
-    },
   ],
 };
 
