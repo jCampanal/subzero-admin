@@ -409,7 +409,6 @@ function OrdersTable({ wharehoseId, rows }) {
                     isSelected={isSelected}
                     handleCheck={handleCheck}
                     handleClick={handleClick}
-                    handleEdit={handleEdit}
                   />
                 );
               })}

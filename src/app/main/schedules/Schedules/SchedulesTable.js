@@ -21,7 +21,6 @@ function SchedulesTable({
   rowsPerPage,
   handleChangeRowsPerPage,
   handleChangePage,
-  editCallback,
   deleteCallback,
   handleSetOnGoing,
 }) {
@@ -175,15 +174,6 @@ function SchedulesTable({
                       align="right"
                     >
                       <div className="grid grid-cols-4">
-                        <Button
-                          color="primary"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            editCallback(schedule);
-                          }}
-                        >
-                          <Icon className="mr-5">edit</Icon> {t("EDIT")}
-                        </Button>
                         <Button
                           color="primary"
                           onClick={() => handleClick(schedule)}

@@ -16,7 +16,6 @@ import RemoveDlg from "app/common/removeDlg";
 import { openDialog } from "app/store/fuse/dialogSlice";
 const Header = lazy(() => import("./PageCardedHeader"));
 const SchedulesTable = lazy(() => import("./SchedulesTable"));
-const EditDialog = lazy(() => import("./EditDialog"));
 
 function Schedules() {
   const [schedules, setSchedules] = useState({ data: [], totalItems: 0 });
@@ -29,9 +28,6 @@ function Schedules() {
 
   const [customerSearch, setcustomerSearch] = useState("");
   const [companySearch, setcompanySearch] = useState("");
-
-  const [openEditDialog, setOpenEditDialog] = React.useState(false);
-  const [schedule, setSchedule] = useState(null);
 
   const loadSchedules = useCallback(
     (
@@ -69,14 +65,6 @@ function Schedules() {
   function handleChangePage(event, value) {
     setPageNumber(value);
   }
-
-  const editSchedule = (schedule) => {
-    setSchedule(schedule);
-    setOpenEditDialog(true);
-  };
-  const handleCloseEditDialog = () => {
-    setOpenEditDialog(false);
-  };
 
   const onProceed = (itemIds) => {
     setLoading(true);
@@ -195,19 +183,11 @@ function Schedules() {
                 page={pageNumber}
                 rowsPerPage={pageSize}
                 deleteCallback={removeCooler}
-                editCallback={editSchedule}
                 handleChangePage={handleChangePage}
                 handleChangeRowsPerPage={handleChangeRowsPerPage}
                 handleSetOnGoing={handleSetOnGoing}
               />
             </>
-          )}
-          {schedule && (
-            <EditDialog
-              open={openEditDialog}
-              schedule={schedule}
-              handleClose={handleCloseEditDialog}
-            />
           )}
         </>
       }
