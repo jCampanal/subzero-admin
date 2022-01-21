@@ -68,8 +68,8 @@ function Drivers() {
       .then((res) => {
         setDrivers(res.data.data);
         setTotalItems(res.data.totalItems);
-
         setLoading(false);
+        return null;
       })
       .catch(() => {
         dispatch(
@@ -87,6 +87,7 @@ function Drivers() {
   };
   function handleChangeRowsPerPage(event) {
     setPageSize(event.target.value);
+    setPageNumber(0);
   }
   function handleChangePage(event, value) {
     setPageNumber(value);
@@ -107,6 +108,7 @@ function Drivers() {
           })
         );
         loadDrivers();
+        return null;
       })
       .catch(() => {
         dispatch(

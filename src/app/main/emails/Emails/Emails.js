@@ -52,11 +52,11 @@ function Emails() {
 
   function handleChangePage(event, value) {
     setPageNumber(value);
-    console.log("page", value);
   }
 
   function handleChangeRowsPerPage(event) {
     setPageSize(event.target.value);
+    setPageNumber(0);
   }
 
   useEffect(() => {

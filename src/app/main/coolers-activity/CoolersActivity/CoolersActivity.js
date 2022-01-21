@@ -1,8 +1,8 @@
 import React, { lazy, memo, useEffect, useState } from "react";
 import FusePageCarded from "@fuse/core/FusePageCarded/FusePageCarded";
-import { useHistory, useLocation, useParams } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import { getCoolersActivity } from "app/api-conn/coolers";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { showMessage } from "app/store/fuse/messageSlice";
 import FuseLoading from "@fuse/core/FuseLoading";
 import whithProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
@@ -132,7 +132,7 @@ function CoolersActivity() {
   }, [location, pageSize, pageNumber]);
 
   const handleMoveCoolerActivity = () => {
-    history.push(`/coolers_activity_move/`, {
+    history.push("/coolers_activity_move/", {
       cooler: coolerData,
     });
   };
@@ -143,6 +143,7 @@ function CoolersActivity() {
 
   function handleChangeRowsPerPage(event) {
     setPageSize(event.target.value);
+    setPageNumber(0);
   }
 
   return (

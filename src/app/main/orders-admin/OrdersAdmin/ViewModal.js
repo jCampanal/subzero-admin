@@ -70,7 +70,7 @@ const ViewModal = ({ data, isModal, setIsModal }) => {
                 <TableRow key={product.id}>
                   <TableCell>{product.name}</TableCell>
                   <TableCell>{product.description}</TableCell>
-                  <TableCell>{product.quantity}</TableCell>
+                  <TableCell>{product.quanty}</TableCell>
                 </TableRow>
               );
             })}

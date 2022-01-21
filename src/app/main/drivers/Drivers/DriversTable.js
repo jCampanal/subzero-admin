@@ -20,9 +20,9 @@ function DriversTable({
   handleChangePage,
   page,
   rowsPerPage,
-  deleteCallback,
   data,
   rows,
+  deleteCallback,
   editCallback,
   totalItems,
 }) {
@@ -238,7 +238,10 @@ DriversTable.propTypes = {
   data: PropTypes.array.isRequired,
   rows: PropTypes.array.isRequired,
   page: PropTypes.number.isRequired,
+  totalItems: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   handleChangeRowsPerPage: PropTypes.func.isRequired,
   handleChangePage: PropTypes.func.isRequired,
+  deleteCallback: PropTypes.func.isRequired,
+  editCallback: PropTypes.func.isRequired,
 };

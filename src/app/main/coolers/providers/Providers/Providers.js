@@ -110,6 +110,7 @@ const Providers = () => {
 
   function handleChangeRowsPerPage(event) {
     setPageSize(event.target.value);
+    setPageNumber(0);
   }
   function handleChangePage(event, value) {
     setPageNumber(value);

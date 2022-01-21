@@ -338,6 +338,9 @@ function OrdersTable({ wharehoseId, rows }) {
     if (date2 === "" || !date2) {
       date2 = undefined;
     }
+
+    console.log("page", page);
+    console.log("rowsPerPage", rowsPerPage);
     getOrdersByWhareHose(
       wharehoseId,
       date2,
