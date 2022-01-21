@@ -61,7 +61,7 @@ export const formatDisplayDate = (date) => {
 export const getBinaryDays = (indexDays) => {
   const days = [false, false, false, false, false, false, false];
   indexDays.forEach((day) => {
-    days[day.index - 1] = true;
+    days[day - 1] = true;
   });
 
   // let days = [0, 0, 0, 0, 0, 0, 0];

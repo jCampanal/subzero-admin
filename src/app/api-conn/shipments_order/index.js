@@ -32,8 +32,8 @@ const getShipment = (id) =>
     .get(`${orderURL}/getByDriver/${id}`)
     .then((response) => response.data);
 
-const postOrder = (data) =>
-  apiClient.post(`${orderURL}`, data).then((response) => response.data);
+const postOrder = (data, url) =>
+  apiClient.post(`${url}`, data).then((response) => response.data);
 
 const putShipment = (id, data) =>
   apiClient.put(`${orderURL}/${id}`, data).then((response) => response.data);

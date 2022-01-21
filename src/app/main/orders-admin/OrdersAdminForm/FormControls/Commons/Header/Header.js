@@ -2,9 +2,13 @@ import { ButtonGroup } from "@material-ui/core";
 import React from "react";
 import { ButtonS, HeaderS } from "./Header.style";
 import PropTypes from "prop-types";
+import { useFormContext } from "react-hook-form";
 
 const Header = ({ tabSelected, setTabSelected }) => {
+  const methods = useFormContext();
+  const { setValue } = methods;
   const handleChangeTab = (tab) => {
+    setValue("profile", tab);
     setTabSelected(tab);
   };
   return (

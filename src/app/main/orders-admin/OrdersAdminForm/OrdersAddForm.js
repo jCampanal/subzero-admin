@@ -1,17 +1,17 @@
 import { FormProvider, useForm } from "react-hook-form";
-import React, { memo, useEffect, useState } from "react";
+import React, { lazy, memo, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import FormControls from "./FormControls/FormControls";
 import { showMessage } from "app/store/fuse/messageSlice";
 import whithProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
 import { getAllCustomers } from "app/api-conn/customers";
-import { getAllDrivers } from "app/api-conn/drivers";
-import { getAllProducts } from "app/api-conn/products";
-import { intRegex, phoneRegex } from "app/lib/regexs";
-
+import { intRegex } from "app/lib/regexs";
+import { optionsTermOrder } from "../helpData";
+import { getAllWarehouses } from "app/api-conn/warehouses";
+import FuseLoading from "@fuse/core/FuseLoading";
+const FormControls = lazy(() => import("./FormControls/FormControls"));
 // const fakeCustomer = [
 //   {
 //     company: {
@@ -45,51 +45,44 @@ import { intRegex, phoneRegex } from "app/lib/regexs";
 
 const OrderAddForm = () => {
   const [customerAll, setCustomerAll] = useState([]);
-  const [productAll, setProductAll] = useState([]);
-  const [driverAll, setDrivertAll] = useState([]);
+  const [warehoseAll, setWarehoseAll] = useState([]);
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation("Orders");
   const dispatch = useDispatch();
   const validationRules = yup.object().shape({
-    city: yup.string(),
-    customerId: yup.string().required(t("REQUIRED")),
     deliveryTime: yup.string().required(t("REQUIRED")),
     pickUp: yup.boolean(),
-    poNo: yup.string().matches(phoneRegex, {
-      message: "not valid phone no",
+    poNo: yup.string().matches(intRegex, {
+      message: "This is a not valid number",
       excludeEmptyString: true,
     }), // no required
+    products: yup.array().required(),
     priority: yup.number().required(t("REQUIRED")),
-    products: yup.array(),
-    state: yup.string(),
-    street: yup.string(),
-    tag: yup.string().required(t("REQUIRED")),
-    termOrder: yup.string().required(t("REQUIRED")),
-    zipCode: yup.string().matches(intRegex, {
-      message: t("NOT_NUMBER"),
-      excludeEmptyString: true,
-    }),
+    termOrder: yup.mixed().oneOf(optionsTermOrder),
     daysToOrder: yup.array(),
   });
 
   const methods = useForm({
     defaultValues: {
       addressId: "",
-      city: "",
       customerId: "",
-      deliveryTime: new Date(),
 
+      deliveryTime: new Date(),
       pickUp: false,
       poNo: "",
-      priority: "",
       products: [],
+      termOrder: "Nothing selected",
+      daysToOrder: [],
+
+      city: "",
       state: "",
       street: "",
-      tag: "",
-      termOrder: "",
       zipCode: "",
-      daysToOrder: [],
-      addresSelection: "customer",
+      wrehouseId: "",
+      companyName: "",
+      email: "",
+
+      profile: "customer",
     },
     mode: "all",
     resolver: yupResolver(validationRules),
@@ -115,11 +108,11 @@ const OrderAddForm = () => {
           setLoading(false);
         });
     };
-    const loadProducts = () => {
+    const loaWarehouses = () => {
       setLoading(true);
-      getAllProducts()
+      getAllWarehouses()
         .then((response) => {
-          setProductAll(response.data);
+          setWarehoseAll(response.data);
           setLoading(false);
           return null;
         })
@@ -133,63 +126,20 @@ const OrderAddForm = () => {
           setLoading(false);
         });
     };
-    const loadDrivers = () => {
-      setLoading(true);
-      getAllDrivers()
-        .then((response) => {
-          setDrivertAll(response.data);
-          setLoading(false);
-          return null;
-        })
-        .catch(() => {
-          dispatch(
-            showMessage({
-              message: "There is something wrong, try to refresh the page",
-              variant: "error",
-            })
-          );
-          setLoading(false);
-        });
-    };
+
     loadCustomers();
-    loadProducts();
-    loadDrivers();
+    loaWarehouses();
   }, [dispatch]);
 
   return (
     <FormProvider {...methods}>
-      <FormControls customers={customerAll} />
+      {loading ? (
+        <FuseLoading />
+      ) : (
+        <FormControls customers={customerAll} warehouses={warehoseAll} />
+      )}
     </FormProvider>
   );
-  // return (
-  //   <FormProvider {...methods}>
-  //     <FusePageCarded
-  //       classes={{
-  //         toolbar: "p-0",
-  //         header: "min-h-72 h-72 sm:h-136 sm:min-h-136",
-  //       }}
-  //       header={<FormHeader customers={customerAll} />}
-  //       contentToolbar={
-  //         <div className="p-16 sm:p-24 max-w-2xl">
-  //           <h1>{t("CREATE_NEW")}</h1>
-  //         </div>
-  //       }
-  //       content={
-  //         <div className="p-16 sm:p-24 max-w-2xl">
-  //           {loading ? (
-  //             <FuseLoading />
-  //           ) : (
-  //             <FormControls
-  //               customers={customerAll}
-  //               drivers={driverAll}
-  //               products={productAll}
-  //             />
-  //           )}
-  //         </div>
-  //       }
-  //     />
-  //   </FormProvider>
-  // );
 };
 
 export default memo(whithProtectedRoute(OrderAddForm));

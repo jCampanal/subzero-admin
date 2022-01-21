@@ -25,6 +25,9 @@ import { showMessage } from "app/store/fuse/messageSlice";
 import { Divider, MenuItem } from "@material-ui/core";
 import { Delete, Telegram } from "@material-ui/icons";
 import { getAllProducts } from "app/api-conn/products";
+import { formatDate, getBinaryDays } from "app/lib/formatDate";
+import { useHistory } from "react-router";
+import { postOrder } from "app/api-conn/shipments_order";
 
 const ProductForm = () => {
   const [changer, setChanger] = useState(true);
@@ -35,95 +38,73 @@ const ProductForm = () => {
   const [selectedCategory, setSelectedCategory] = useState();
 
   const { t } = useTranslation("orders-admin");
+  const history = useHistory();
   const dispatch = useDispatch();
   const methods = useFormContext();
   const getBigFormValues = methods.getValues;
   const setBigFormValues = methods.setValue;
 
   const validationRules = yup.object().shape({
-    product: yup.object().shape({
-      id: yup.string(),
-      name: yup.string(),
-      description: yup.string(),
-      visible: yup.boolean(),
-      imageURL: yup.string(),
-      category: yup.object().shape({
+    product: yup
+      .object()
+      .shape({
+        id: yup.string(),
+        name: yup.string(),
+        description: yup.string(),
+        visible: yup.boolean(),
+        imageURL: yup.string(),
+        category: yup.object().shape({
+          id: yup.string(),
+          name: yup.string(),
+          link: yup.string(),
+          imageURL: yup.string(),
+        }),
+        salesUnits: yup.array(),
+        listID: yup.string().nullable(),
+      })
+      .typeError("Select a valid product"),
+    quantity: yup
+      .number()
+      .required(t("REQUIRED"))
+      .typeError("Select a valid number"),
+    description: yup.string(),
+    saleUnit: yup
+      .object()
+      .shape({
+        productSaleUnitId: yup.string(),
+        saleUnitId: yup.string(),
+        saleUnitName: yup.string(),
+        productId: yup.string(),
+        saleUnitValue: yup.string(),
+        decimals: yup.boolean(),
+      })
+      .typeError("Select a valid sale unit"),
+    category: yup
+      .object()
+      .shape({
         id: yup.string(),
         name: yup.string(),
         link: yup.string(),
         imageURL: yup.string(),
-      }),
-      salesUnits: yup.array(),
-      listID: yup.string().nullable(),
-    }),
-    quantity: yup.number().required(t("REQUIRED")),
-    description: yup.string(),
-    saleUnit: yup.object().shape({
-      productSaleUnitId: yup.string(),
-      saleUnitId: yup.string(),
-      saleUnitName: yup.string(),
-      productId: yup.string(),
-      saleUnitValue: yup.string(),
-      decimals: yup.boolean(),
-    }),
-    category: yup.object().shape({
-      id: yup.string(),
-      name: yup.string(),
-      link: yup.string(),
-      imageURL: yup.string(),
-    }),
+      })
+      .typeError("Select a valid category"),
   });
 
   const {
     handleSubmit,
     control,
-    formState: { dirtyFields, isValid },
-    getValues,
+    formState: { dirtyFields, isValid, errors },
   } = useForm({
     defaultValues: {
-      product: {
-        id: "",
-        name: "",
-        description: "",
-        visible: false,
-        imageURL: "",
-        category: {
-          id: "",
-          name: "",
-          link: "",
-          imageURL: "",
-        },
-        salesUnits: [
-          {
-            saleUnitId: "",
-            saleUnitName: "",
-            saleUnitValue: "",
-            decimals: true,
-          },
-        ],
-        listID: "",
-      },
-      category: {
-        id: "",
-        name: "",
-        link: "",
-        imageURL: "",
-      },
-      saleUnit: {
-        productSaleUnitId: "",
-        saleUnitId: "",
-        saleUnitName: "",
-        productId: "",
-        saleUnitValue: "",
-        decimals: true,
-      },
+      product: "",
+      category: "",
+      saleUnit: "",
       description: "",
       quantity: 0,
     },
     mode: "all",
     resolver: yupResolver(validationRules),
   });
-  const category = getValues().category;
 
   const handleChangeProduct = (product) => {
     setSelectedProduct(product);
@@ -158,6 +139,82 @@ const ProductForm = () => {
 
     setBigFormValues("products", newProducts);
     setChanger(!changer);
+  };
+  const saveData = () => {
+    console.log("getValues", getBigFormValues());
+
+    let postURL = "/admin/Order";
+    const formData = {
+      deliveryTime: formatDate(getBigFormValues().deliveryTime),
+
+      pickUp: getBigFormValues().pickUp,
+      products: getBigFormValues().products.map((product) => {
+        const formatedProduct = product.productToSend;
+
+        return formatedProduct;
+      }),
+      termOrder: getBigFormValues().termOrder,
+      daysToOrder: getBinaryDays(getBigFormValues().daysToOrder),
+      scheduleStatus: getBigFormValues().daysToOrder.length > 0,
+    };
+
+    if (getBigFormValues().poNo !== "") {
+      const intPhoNo = parseInt(getBigFormValues().poNo);
+      formData.poNo = intPhoNo;
+    }
+
+    if (getBigFormValues().profile === "customer") {
+      postURL = "/admin/Order";
+      if (getBigFormValues().addressId !== "") {
+        formData.addressId = getBigFormValues().addressId;
+      }
+      formData.customerId = getBigFormValues().customerId;
+    } else {
+      postURL = "/admin/Order/createOrderFromInvited";
+      if (getBigFormValues().city !== "") {
+        formData.city = getBigFormValues().city;
+      }
+      if (getBigFormValues().state !== "") {
+        formData.state = getBigFormValues().state;
+      }
+      if (getBigFormValues().street !== "") {
+        formData.street = getBigFormValues().street;
+      }
+      if (getBigFormValues().zipCode !== "") {
+        formData.zipCode = parseInt(getBigFormValues().zipCode);
+      }
+      formData.wrehouseId = getBigFormValues().wrehouseId;
+      formData.companyName = getBigFormValues().companyName;
+      formData.email = getBigFormValues().email;
+    }
+    console.log("formData", formData);
+    postOrder(formData, postURL)
+      .then(() => {
+        dispatch(
+          showMessage({
+            message: "The order was created successfully",
+            variant: "success",
+            anchorOrigin: {
+              vertical: "top",
+              horizontal: "right",
+            },
+          })
+        );
+        history.push("/orders_admin");
+        return null;
+      })
+      .catch((error) =>
+        dispatch(
+          showMessage({
+            message: error.response.data.title || error.response.data.message,
+            variant: "error",
+            anchorOrigin: {
+              vertical: "top",
+              horizontal: "right",
+            },
+          })
+        )
+      );
   };
 
   useEffect(() => {
@@ -220,6 +277,7 @@ const ProductForm = () => {
       loadProducts();
     }
   }, [selectedCategory, dispatch]);
+
   return (
     <ProductFormS>
       <div className="grid gap-x-48 grid-cols-1 sm:grid-cols-2">
@@ -232,6 +290,8 @@ const ProductForm = () => {
               id="category"
               isRequired
               control={control}
+              error={!!errors.category}
+              helperText={errors?.category?.message}
               onChange={(cate) => {
                 handleChangeCategory(cate);
               }}
@@ -250,6 +310,8 @@ const ProductForm = () => {
               labelText="Product"
               isRequired
               control={control}
+              error={!!errors.product}
+              helperText={errors?.product?.message}
               onChange={(product) => {
                 handleChangeProduct(product);
               }}
@@ -325,9 +387,8 @@ const ProductForm = () => {
 
           <OrderFooterS>
             <Divider className="mb-20" />
-            <div className="flex justify-between">
-              <ButtonS danger>Cancel</ButtonS>
-              <ButtonS primary>
+            <div className="flex justify-end">
+              <ButtonS primary onClick={saveData}>
                 <Telegram className="mr-5" /> Craete Order
               </ButtonS>
             </div>

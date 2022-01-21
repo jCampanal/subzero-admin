@@ -1,6 +1,8 @@
 import {
+  FormHelperText,
   IconButton,
   InputAdornment,
+  MenuItem,
   Select,
   TextField,
 } from "@material-ui/core";
@@ -20,6 +22,8 @@ const Field = ({
   control,
   name,
   onChange,
+  noValue,
+  helperText,
   ...props
 }) => {
   let field;
@@ -36,7 +40,7 @@ const Field = ({
                   <Select
                     {...field}
                     {...props}
-                    labelId={id}
+                    id={id}
                     variant="outlined"
                     required={isRequired}
                     onChange={(e) => {
@@ -46,6 +50,11 @@ const Field = ({
                       field.onChange(e);
                     }}
                   >
+                    {noValue && (
+                      <MenuItem key="null" value={noValue}>
+                        {noValue === "" ? "Nothing to select" : noValue}
+                      </MenuItem>
+                    )}
                     {options}
                   </Select>
                 );
@@ -55,11 +64,16 @@ const Field = ({
             <Select
               {...props}
               name={name}
-              labelId={id}
+              id={id}
               variant="outlined"
               onChange={(e) => onChange(e.target.value)}
               required={isRequired}
             >
+              {noValue && (
+                <MenuItem key="null" value="">
+                  {noValue}
+                </MenuItem>
+              )}
               {options}
             </Select>
           )}
@@ -77,7 +91,8 @@ const Field = ({
                 <TextField
                   {...field}
                   {...props}
-                  labelId={id}
+                  id={id}
+                  helperText={helperText}
                   variant="outlined"
                   required={isRequired}
                   onChange={(e) => {
@@ -92,7 +107,7 @@ const Field = ({
           ) : (
             <TextField
               {...props}
-              labelId={id}
+              id={id}
               variant="outlined"
               required={isRequired}
               onChange={(e) => {
@@ -116,8 +131,9 @@ const Field = ({
                 <DateTimePicker
                   {...field}
                   {...props}
-                  labelId={id}
+                  id={id}
                   required={isRequired}
+                  helperText={helperText}
                   rightArrowIcon={<CalendarToday />}
                   inputVariant="outlined"
                   onChange={(e) => {
@@ -141,7 +157,7 @@ const Field = ({
           ) : (
             <DateTimePicker
               {...props}
-              labelId={id}
+              id={id}
               inputVariant="outlined"
               required={isRequired}
               onChange={(e) => {
@@ -176,7 +192,8 @@ const Field = ({
                   {...field}
                   {...props}
                   type="number"
-                  labelId={id}
+                  helperText={helperText}
+                  id={id}
                   variant="outlined"
                   required={isRequired}
                   onChange={(e) => {
@@ -191,7 +208,7 @@ const Field = ({
           ) : (
             <TextField
               {...props}
-              labelId={id}
+              id={id}
               type="number"
               variant="outlined"
               required={isRequired}
@@ -217,7 +234,8 @@ const Field = ({
                 <TextField
                   {...field}
                   {...props}
-                  labelId={id}
+                  id={id}
+                  helperText={helperText}
                   variant="outlined"
                   required={isRequired}
                   onChange={(e) => {
@@ -232,7 +250,7 @@ const Field = ({
           ) : (
             <TextField
               {...props}
-              labelId={id}
+              id={id}
               variant="outlined"
               required={isRequired}
               onChange={(e) => {
@@ -254,6 +272,9 @@ const Field = ({
       </LabelS>
 
       {field}
+      {helperText && type === "select" && (
+        <FormHelperText error={props.error}>{helperText}</FormHelperText>
+      )}
     </FieldS>
   );
 };
@@ -261,9 +282,12 @@ const Field = ({
 export default Field;
 
 Field.propTypes = {
-  type: PropTypes.string.isRequired,
+  type: PropTypes.string,
   id: PropTypes.string.isRequired,
   labelText: PropTypes.string.isRequired,
+  noValue: PropTypes.string,
+  error: PropTypes.bool,
+  helperText: PropTypes.string,
   name: PropTypes.string.isRequired,
   isRequired: PropTypes.bool,
   options: PropTypes.array,

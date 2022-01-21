@@ -9,7 +9,7 @@ import FormDate from "./Commons/FormDate/FormDate";
 import ProductForm from "./Commons/ProductForm/ProductForm";
 import InvitedForm from "./Commons/InvitedForm/InvitedForm";
 
-const FormControls = ({ customers }) => {
+const FormControls = ({ customers, warehouses }) => {
   const [tabSelected, setTabSelected] = useState("customer");
   return (
     <FormControlsS>
@@ -20,7 +20,7 @@ const FormControls = ({ customers }) => {
         {tabSelected === "customer" ? (
           <CustomerForm customers={customers} />
         ) : (
-          <InvitedForm />
+          <InvitedForm warehouses={warehouses} />
         )}
       </UserSectionS>
       <TimeSection />
@@ -34,4 +34,5 @@ export default FormControls;
 
 FormControls.propTypes = {
   customers: PropTypes.array.isRequired,
+  warehouses: PropTypes.array.isRequired,
 };

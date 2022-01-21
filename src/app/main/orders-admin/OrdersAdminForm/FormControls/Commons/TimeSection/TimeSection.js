@@ -16,14 +16,17 @@ import {
   Collapse,
   Divider,
   FormControlLabel,
+  MenuItem,
 } from "@material-ui/core";
 import { Controller, useFormContext } from "react-hook-form";
 import Field from "../Field/Field";
+import { optionsTermOrder } from "app/main/orders-admin/helpData";
 const TimeSection = () => {
-  const [showDays, setShowDays] = useState(true);
+  const [showDays, setShowDays] = useState(false);
   const [days, setDays] = useState([]);
   const methods = useFormContext();
-  const { control, setValue } = methods;
+  const { control, setValue, formState } = methods;
+  const { errors } = formState;
   const orderRepeted = days.length > 0;
   const toggleDays = () => {
     setShowDays(!showDays);
@@ -189,7 +192,28 @@ const TimeSection = () => {
         type="text"
         control={control}
         name="poNo"
+        id="poNo"
         labelText="Reference #"
+        error={!!errors.poNo}
+        helperText={errors?.poNo?.message}
+      />
+      <Field
+        type="select"
+        control={control}
+        name="termOrder"
+        id="termOrder"
+        labelText="Term order"
+        isRequired
+        error={!!errors.termOrder}
+        helperText={errors?.termOrder?.message}
+        noValue="Nothing selected"
+        options={optionsTermOrder.map((termOrder) => {
+          return (
+            <MenuItem key={termOrder} value={termOrder}>
+              {termOrder}
+            </MenuItem>
+          );
+        })}
       />
     </TimeSectionS>
   );
