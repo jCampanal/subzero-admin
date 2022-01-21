@@ -6,8 +6,10 @@ const getProducts = (pageSize = 10, pageNumber = 0, name = "") =>
   apiClient
     .get(productsBase, { params: { pageSize, pageNumber, name } })
     .then((response) => response.data);
-const getAllProducts = () =>
-  apiClient.get(productsBase + "/getAll").then((response) => response.data);
+const getAllProducts = (categoryId) =>
+  apiClient
+    .get(productsBase + "/getAll", { params: { categoryId: categoryId } })
+    .then((response) => response.data);
 
 const getProduct = (id) =>
   apiClient.get(`${productsBase}/${id}`).then((response) => response.data);

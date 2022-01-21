@@ -32,6 +32,7 @@ const ProductForm = () => {
   const [listProducts, setListProducts] = useState([]);
   const [salesUnits, setSalesUnits] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState();
+  const [selectedCategory, setSelectedCategory] = useState();
 
   const { t } = useTranslation("orders-admin");
   const dispatch = useDispatch();
@@ -127,6 +128,9 @@ const ProductForm = () => {
   const handleChangeProduct = (product) => {
     setSelectedProduct(product);
   };
+  const handleChangeCategory = (category) => {
+    setSelectedCategory(category);
+  };
 
   const handleSubmitForm = (data) => {
     const oldProducts = getBigFormValues().products;
@@ -198,7 +202,7 @@ const ProductForm = () => {
 
   useEffect(() => {
     const loadProducts = () => {
-      getAllProducts()
+      getAllProducts(selectedCategory.id)
         .then((res) => {
           setListProducts(res.data);
           return null;
@@ -212,8 +216,10 @@ const ProductForm = () => {
           );
         });
     };
-    loadProducts();
-  }, [category, dispatch]);
+    if (selectedCategory) {
+      loadProducts();
+    }
+  }, [selectedCategory, dispatch]);
   return (
     <ProductFormS>
       <div className="grid gap-x-48 grid-cols-1 sm:grid-cols-2">
@@ -226,6 +232,9 @@ const ProductForm = () => {
               id="category"
               isRequired
               control={control}
+              onChange={(cate) => {
+                handleChangeCategory(cate);
+              }}
               options={listCategories.map((cat) => {
                 return (
                   <MenuItem key={cat.id} value={cat}>
