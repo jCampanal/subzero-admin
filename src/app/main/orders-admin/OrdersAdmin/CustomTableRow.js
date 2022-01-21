@@ -1,65 +1,13 @@
-import { Button, Checkbox, Icon, TableCell, TableRow } from "@material-ui/core";
+import { Button, Checkbox, TableCell, TableRow } from "@material-ui/core";
 import { formatDisplayDate } from "app/lib/formatDate";
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Visibility } from "@material-ui/icons";
 import { useTranslation } from "react-i18next";
-import { changeStatus } from "app/api-conn/shipments_order";
-import { useDispatch } from "react-redux";
-import { showMessage } from "app/store/fuse/messageSlice";
-import { openDialog } from "app/store/fuse/dialogSlice";
-import RemoveDlg from "app/common/removeDlg";
 import { ShipmentStatus } from "../helpData";
 
-const CustomTableRow = ({
-  item,
-  isSelected,
-  handleCheck,
-  handleClick,
-  handleEdit,
-}) => {
+const CustomTableRow = ({ item, isSelected, handleCheck, handleClick }) => {
   const { t } = useTranslation("orders-admin");
-  const dispatch = useDispatch();
-  const [status, setStatus] = useState(item.status);
-
-  const onProceed = (status, id) => {
-    changeStatus(id, status)
-      .then(() => {
-        setStatus(status);
-        dispatch(
-          showMessage({
-            message: "Status changed!",
-          })
-        );
-
-        return null;
-      })
-      .catch(() => {
-        dispatch(
-          showMessage({
-            message:
-              "Error during the update of the status. Please try again later",
-            variant: "error",
-          })
-        );
-      });
-  };
-  function handleChangeState(e, order) {
-    const status = e.target.value;
-
-    dispatch(
-      openDialog({
-        children: (
-          <RemoveDlg
-            itemId={status}
-            proceedCallback={() => onProceed(status, order.id)}
-            dlgTitle="Warning"
-            dlgText="You are you sure of update the status?"
-          />
-        ),
-      })
-    );
-  }
 
   return (
     <TableRow
@@ -118,9 +66,6 @@ const CustomTableRow = ({
         <Button color="primary" onClick={() => handleClick(item)}>
           <Visibility className="mr-5" />
           {t("VIEW")}
-        </Button>
-        <Button color="primary" onClick={() => handleEdit(item)}>
-          <Icon className="mr-5">edit</Icon> {t("EDIT")}
         </Button>
       </TableCell>
     </TableRow>
