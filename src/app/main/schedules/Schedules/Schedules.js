@@ -105,10 +105,9 @@ function Schedules() {
   };
   const handleSetOnGoing = (id) => {
     toggleStatus(id)
-      .then((res) => {
-        if (res.status === 200) {
-          loadSchedules(pageNumber, pageSize);
-        }
+      .then(() => {
+        loadSchedules(pageNumber, pageSize);
+
         return null;
       })
       .catch(() => {

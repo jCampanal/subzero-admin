@@ -181,14 +181,14 @@ function DriversTable({
                         color="primary"
                         onClick={() => toggleDriver(driver.id)}
                       >
-                        <Icon>remove_circle_outline</Icon> {t("DISABLE")}
+                        <Icon>check_circle_outline</Icon> {t("ENABLE")}
                       </Button>
                     ) : (
                       <Button
                         color="primary"
                         onClick={() => toggleDriver(driver.id)}
                       >
-                        <Icon>check_circle_outline</Icon> {t("ENABLE")}
+                        <Icon>remove_circle_outline</Icon> {t("DISABLE")}
                       </Button>
                     )}
                     <Button
