@@ -1,7 +1,7 @@
 import React, { lazy, memo, useEffect, useState } from "react";
 import FusePageCarded from "@fuse/core/FusePageCarded";
 import { useTranslation } from "react-i18next";
-import { deleteDriver, getDrivers } from "app/api-conn/drivers";
+import { deleteDriver, getDrivers, toggleDriver } from "app/api-conn/drivers";
 import { useHistory, useLocation } from "react-router";
 import { useDispatch } from "react-redux";
 import FuseLoading from "@fuse/core/FuseLoading";
@@ -120,6 +120,28 @@ function Drivers() {
         setLoading(false);
       });
   };
+  const handleToggleDriver = (id) => {
+    setLoading(true);
+    toggleDriver(id)
+      .then(() => {
+        dispatch(
+          showMessage({
+            message: "Driver update completed!",
+          })
+        );
+        loadDrivers();
+        return null;
+      })
+      .catch(() => {
+        dispatch(
+          showMessage({
+            message: "Error during deletion. Please try again later",
+            variant: "error",
+          })
+        );
+        setLoading(false);
+      });
+  };
   const removeDriver = (itemIds) =>
     dispatch(
       openDialog({
@@ -173,6 +195,7 @@ function Drivers() {
             deleteCallback={removeDriver}
             editCallback={handleClickEdit}
             totalItems={totalItems}
+            toggleDriver={handleToggleDriver}
           />
         )
       }

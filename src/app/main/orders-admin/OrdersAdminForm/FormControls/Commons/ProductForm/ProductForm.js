@@ -153,13 +153,15 @@ const ProductForm = () => {
 
         return formatedProduct;
       }),
-      termOrder: getBigFormValues().termOrder,
+      // termOrder: getBigFormValues().termOrder,
+      termOrder: 2,
+
       daysToOrder: getBinaryDays(getBigFormValues().daysToOrder),
       scheduleStatus: getBigFormValues().daysToOrder.length > 0,
     };
 
     if (getBigFormValues().poNo !== "") {
-      const intPhoNo = parseInt(getBigFormValues().poNo);
+      const intPhoNo = getBigFormValues().poNo;
       formData.poNo = intPhoNo;
     }
 

@@ -77,6 +77,7 @@ function BlacklistTable(props) {
 
   function handleChangeRowsPerPage(event) {
     setRowsPerPage(event.target.value);
+    setPage(0);
   }
 
   if (data.data.length === 0) {

@@ -83,6 +83,7 @@ function ShipmentsTable(props) {
 
   function handleChangeRowsPerPage(event) {
     setRowsPerPage(event.target.value);
+    setPage(0);
   }
 
   if (data.length === 0) {

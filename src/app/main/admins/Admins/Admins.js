@@ -94,6 +94,7 @@ function Admins() {
 
   const handleChangePage = (event) => {
     setPageSize(event.target.value);
+    setPageNumber(0);
   };
   function handlePageNumber(event, value) {
     setPageNumber(value);
@@ -102,7 +103,7 @@ function Admins() {
     history.push(`/admins_edit/${admin.id}`, { admin });
   }
   function handleAddAdmin() {
-    history.push(`/admins_create`);
+    history.push("/admins_create");
   }
 
   const onProceed = (itemIds) => {

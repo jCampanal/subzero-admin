@@ -45,6 +45,7 @@ function Shipments() {
   );
   const handleChangePage = (event) => {
     setPageSize(event.target.value);
+    setPageNumber(0);
   };
   function handlePageNumber(event, value) {
     setPageNumber(value);

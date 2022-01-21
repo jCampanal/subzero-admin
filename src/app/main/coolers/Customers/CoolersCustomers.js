@@ -31,6 +31,7 @@ function CoolersCustomers() {
           setCoolersCustomers(response.data?.data[0]?.cooler);
         }
         setLoading(false);
+        return null;
       })
       .catch(() => {
         dispatch(

@@ -9,7 +9,7 @@ import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import { motion } from "framer-motion";
-import { useHistory, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import TableHeader from "app/main/products/Products/TableHeader";
 import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
@@ -25,9 +25,9 @@ function DriversTable({
   deleteCallback,
   editCallback,
   totalItems,
+  toggleDriver,
 }) {
   const { t } = useTranslation("drivers");
-  const history = useHistory();
   const [selected, setSelected] = useState([]);
 
   const [order, setOrder] = useState({
@@ -59,10 +59,6 @@ function DriversTable({
 
   function handleDeselect() {
     setSelected([]);
-  }
-
-  function handleClick(item) {
-    history.push(`/apps/e-commerce/products/${item.id}/${item.handle}`);
   }
 
   function handleCheck(event, id) {
@@ -181,11 +177,17 @@ function DriversTable({
                     align="right"
                   >
                     {!driver.enabled ? (
-                      <Button color="primary">
+                      <Button
+                        color="primary"
+                        onClick={() => toggleDriver(driver.id)}
+                      >
                         <Icon>remove_circle_outline</Icon> {t("DISABLE")}
                       </Button>
                     ) : (
-                      <Button color="primary">
+                      <Button
+                        color="primary"
+                        onClick={() => toggleDriver(driver.id)}
+                      >
                         <Icon>check_circle_outline</Icon> {t("ENABLE")}
                       </Button>
                     )}
@@ -244,4 +246,5 @@ DriversTable.propTypes = {
   handleChangePage: PropTypes.func.isRequired,
   deleteCallback: PropTypes.func.isRequired,
   editCallback: PropTypes.func.isRequired,
+  toggleDriver: PropTypes.func.isRequired,
 };

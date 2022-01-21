@@ -20,6 +20,8 @@ const postDriver = (userId, data) =>
 
 const putDriver = (id, data) =>
   apiClient.put(`${driversURL}/${id}`, data).then((response) => response.data);
+const toggleDriver = (id) =>
+  apiClient.put(`${driversURL}/toggle/${id}`).then((response) => response.data);
 
 const deleteDriver = (ids) =>
   apiClient.delete(driversURL, { data: ids }).then((response) => response.data);
@@ -37,4 +39,5 @@ export {
   putDriver,
   deleteDriver,
   registerDriver,
+  toggleDriver,
 };
