@@ -32,6 +32,7 @@ function FormHeader() {
         name: getValues().name,
         priorityCustomer: getValues().priorityCustomer,
         username: getValues().username,
+        warehouseId: getValues().warehouseId,
       };
 
       if (getValues().companyName !== "") {
@@ -56,7 +57,6 @@ function FormHeader() {
         formData.zipCode = parseInt(getValues().zipCode);
       }
 
-      console.log("formData", formData);
       putCustomer(id, formData)
         .then(() => {
           dispatch(
@@ -70,6 +70,7 @@ function FormHeader() {
             })
           );
           history.push("/customers");
+          return null;
         })
         .catch((error) =>
           dispatch(
@@ -106,6 +107,7 @@ function FormHeader() {
             })
           );
           history.push("/customers");
+          return null;
         })
         .catch((error) =>
           dispatch(
@@ -163,17 +165,6 @@ function FormHeader() {
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
       >
-        {/* {id && (
-          <Button
-            className="whitespace-nowrap mx-4"
-            variant="contained"
-            color="secondary"
-            onClick={() => props.removeCallback(id)}
-            startIcon={<Icon className="hidden sm:flex">delete</Icon>}
-          >
-            {t("REMOVE")}
-          </Button>
-        )} */}
         <Button
           className="whitespace-nowrap mx-4"
           variant="contained"

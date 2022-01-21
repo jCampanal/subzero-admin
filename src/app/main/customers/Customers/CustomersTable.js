@@ -217,14 +217,10 @@ function CustomersTable({
                       scope="row"
                       align="right"
                     >
-                      <Button
-                        color="primary"
-                        onClick={() => handleClickEdit(customer)}
-                      >
+                      <Button onClick={() => handleClickEdit(customer)}>
                         <Icon>edit</Icon> {t("EDIT")}
                       </Button>
                       <Button
-                        color="primary "
                         onClick={(event) => {
                           event.stopPropagation();
                           deleteCallback([customer.id]);

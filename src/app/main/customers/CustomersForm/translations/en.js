@@ -13,10 +13,8 @@ const locale = {
   USERNAME: "Username",
   NAME: "Name",
   LASTNAME: "Lastname",
-  EMAIL: "Email",
   PHONO: "Phone number",
-  SALE_TAX: "Sales tax",
-  PRIORYTI: "Prioryti",
+
   Modify_Company_Name: "Modify company name",
   COMPANYNAME: "Company name",
   Modify_Company_Adress: "Modify company adress",
@@ -38,6 +36,7 @@ const locale = {
   NOT_PASS_NUMBER: "Must contain at least one number",
   NOT_SPECIAL_CHARATER: "Must contain at least one special character",
   VERIFY: "Sorry, we could not verify it",
+  WARE: "Warehose",
 };
 
 export default locale;

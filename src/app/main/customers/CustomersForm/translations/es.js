@@ -4,7 +4,6 @@ const locale = {
   EMAIL: "Email",
   COMPANY_NAME: "Compañía",
   CALLBACKURL: "Callback url",
-  SALE_TAX: "Sale tax",
   PRIORYTI: "Prioridad",
   REQUIRED: "Este campo es requerido",
   NOT_NUMBER: "Esto no es un numbero",
@@ -13,11 +12,10 @@ const locale = {
   USERNAME: "Usuario",
   NAME: "Nombre",
   LASTNAME: "Apellidos",
-  EMAIL: "Email",
   PHONO: "Número de teéfono",
 
   SALE_TAX: "Impuesto sobre las ventas",
-  PRIORYTI: "Prioridad",
+
   Modify_Company_Name: "Modificar nombre de la compañía",
   COMPANYNAME: "Nombre de compañía",
   Modify_Company_Adress: "Modificar dirección de la compañía",
@@ -39,6 +37,7 @@ const locale = {
   NOT_PASS_NUMBER: "Must contain at least one number",
   NOT_SPECIAL_CHARATER: "Must contain at least one special character",
   VERIFY: "Lo sentimos no pudimos verificarlo",
+  WARE: "Almacén",
 };
 
 export default locale;

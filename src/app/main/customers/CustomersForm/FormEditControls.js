@@ -10,24 +10,14 @@ import {
   MenuItem,
   Select,
   TextField,
-  Switch,
 } from "@material-ui/core";
-import { useState } from "react";
+import PropTypes from "prop-types";
 
-function FormControls({ salesTax }) {
+function FormControls({ salesTax, warehouses }) {
   const { t } = useTranslation("customers-form");
   const methods = useFormContext();
   const { control, formState } = methods;
   const { errors } = formState;
-  const [showCompanyName, setShowCompanyName] = useState(false);
-  const [showCompanyAddress, setShowCompanyAddress] = useState(false);
-
-  const handleChangeShowCompanyName = (event) => {
-    setShowCompanyName(event.target.checked);
-  };
-  const handleChangeShowCompanyAddress = (event) => {
-    setShowCompanyAddress(event.target.checked);
-  };
 
   return (
     <div className="flex flex-col justify-center sm:justify-start flex-wrap max-w-2xl">
@@ -114,6 +104,35 @@ function FormControls({ salesTax }) {
         )}
       />
 
+      <Controller
+        name="warehouseId"
+        control={control}
+        render={({ field }) => (
+          <FormControl className="mt-8 mb-16">
+            <InputLabel id="warehouseId-select-label" className="pl-20 -mt-9">
+              {t("WARE")}
+            </InputLabel>
+            <Select
+              {...field}
+              error={!!errors.warehouseId}
+              labelId="warehouseId-select-label"
+              id="warehouseId-simple-select"
+              required
+              label={t("WARE")}
+              inputProps={{ "aria-label": "Without label" }}
+              variant="outlined"
+            >
+              {warehouses.map((ware) => {
+                return (
+                  <MenuItem key={ware.id} value={ware.id}>
+                    {ware.name}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+        )}
+      />
       <Controller
         name="salesTaxId"
         control={control}
@@ -251,3 +270,8 @@ function FormControls({ salesTax }) {
 }
 
 export default FormControls;
+
+FormControls.propTypes = {
+  salesTax: PropTypes.array.isRequired,
+  warehouses: PropTypes.array.isRequired,
+};

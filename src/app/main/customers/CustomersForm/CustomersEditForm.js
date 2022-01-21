@@ -1,9 +1,9 @@
 import { FormProvider, useForm } from "react-hook-form";
 import FusePageCarded from "@fuse/core/FusePageCarded";
-import { useHistory, useLocation, useParams } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import FormControls from "./FormEditControls";
@@ -15,6 +15,7 @@ import { showMessage } from "app/store/fuse/messageSlice";
 import FuseLoading from "@fuse/core/FuseLoading";
 import { intRegex, phoneRegex } from "app/lib/regexs";
 import withProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
+import { getAllWarehouses } from "app/api-conn/warehouses";
 
 const CustomerForm = () => {
   const history = useHistory();
@@ -40,6 +41,7 @@ const CustomerForm = () => {
     priorityCustomer: yup.boolean(),
     salesTaxId: yup.string(),
     username: yup.string().required(t("REQUIRED")),
+    warehouseId: yup.string().required(t("REQUIRED")),
   });
 
   const methods = useForm({
@@ -57,12 +59,14 @@ const CustomerForm = () => {
       priorityCustomer: true,
       username: state.customer.userName,
       salesTaxId: "",
+      warehouseId: "",
     },
     mode: "all",
     resolver: yupResolver(validationRules),
   });
   const dispatch = useDispatch();
   const [salesTax, setsalesTax] = useState([]);
+  const [warehouses, setWarehouses] = useState([]);
   const [loading, setLoading] = useState(false);
   const loadSalesTax = () => {
     setLoading(true);
@@ -70,6 +74,25 @@ const CustomerForm = () => {
       .then((response) => {
         setsalesTax(response.data);
         setLoading(false);
+        return null;
+      })
+      .catch(() => {
+        dispatch(
+          showMessage({
+            message: "There is something wrong, try to refresh the page",
+            variant: "error",
+          })
+        );
+        setLoading(false);
+      });
+  };
+  const loadWareHuses = () => {
+    setLoading(true);
+    getAllWarehouses()
+      .then((response) => {
+        setWarehouses(response.data);
+        setLoading(false);
+        return null;
       })
       .catch(() => {
         dispatch(
@@ -84,6 +107,7 @@ const CustomerForm = () => {
 
   useEffect(() => {
     loadSalesTax();
+    loadWareHuses();
   }, []);
   const removecustomer = (itemId) =>
     dispatch(
@@ -112,7 +136,11 @@ const CustomerForm = () => {
         }
         content={
           <div className="p-16 sm:p-24 max-w-2xl">
-            {loading ? <FuseLoading /> : <FormControls salesTax={salesTax} />}
+            {loading ? (
+              <FuseLoading />
+            ) : (
+              <FormControls salesTax={salesTax} warehouses={warehouses} />
+            )}
           </div>
         }
       />
