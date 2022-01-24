@@ -1,24 +1,16 @@
-import { getShipment, reassignOrder } from "app/api-conn/shipments_order";
-import OrdersTable from "./OrdersTable";
-import React, { Fragment, useCallback, useEffect, useState } from "react";
-import rows from "./rows";
+/* eslint-disable react/prop-types */
+/* eslint-disable react-hooks/rules-of-hooks */
+import { getShipment } from "app/api-conn/shipments_order";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { showMessage } from "app/store/fuse/messageSlice";
 import PropTypes from "prop-types";
-import FuseLoading from "@fuse/core/FuseLoading";
 
-const Orders = ({ driverId }) => {
-  const [orders, setOrders] = useState({ data: [], totalItems: 20 });
+// eslint-disable-next-line react/display-name
+const WithOrders = (WrappedComponent) => (props) => {
+  // curry
+  const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(0);
-  const [rowPerPage, setRowPerPage] = useState(10);
-
-  const handleChangePage = (event) => {
-    setRowPerPage(event.target.value);
-  };
-  function handleChangeRowsPerPage(event, value) {
-    setPage(value);
-  }
 
   const dispatch = useDispatch();
   const loadOrders = useCallback(
@@ -27,12 +19,7 @@ const Orders = ({ driverId }) => {
       // eslint-disable-next-line promise/catch-or-return
       getShipment(id)
         .then((response) => {
-          setOrders({
-            data: response.data.data,
-            totalItems: response.data.totalItems,
-          });
-
-          // setTotalItems(response.data.totalItems);
+          setOrders(response.data.data);
           return null;
         })
         .catch(() => {
@@ -51,59 +38,22 @@ const Orders = ({ driverId }) => {
     [dispatch]
   );
 
-  const handleToogleOrder = (order) => {
-    reassignOrder(order.id, order.driver.id)
-      .then(() => {
-        dispatch(
-          showMessage({
-            message: "The reassigment was done successfully",
-            variant: "success",
-            anchorOrigin: {
-              vertical: "top",
-              horizontal: "right",
-            },
-          })
-        );
-        loadOrders();
-        return null;
-      })
-      .catch(() => {
-        dispatch(
-          showMessage({
-            message: "There is something wrong, try to refresh the page",
-            variant: "error",
-          })
-        );
-      });
-  };
-
   useEffect(() => {
-    loadOrders(driverId);
-  }, [driverId, loadOrders]);
+    loadOrders(props.driver.id);
+  }, [props.driver.id, loadOrders]);
 
   return (
-    <Fragment>
-      {loading ? (
-        <FuseLoading />
-      ) : (
-        <OrdersTable
-          data={orders.data}
-          rows={rows}
-          page={page}
-          rowsPerPage={rowPerPage}
-          totalItems={orders.totalItems}
-          handleChangePage={handleChangePage}
-          handleChangeRowsPerPage={handleChangeRowsPerPage}
-          handleToogleOrder={handleToogleOrder}
-          loadOrders={loadOrders}
-        />
-      )}
-    </Fragment>
+    <WrappedComponent
+      {...props}
+      orders={orders}
+      loading={loading}
+      loadOrders={loadOrders}
+    />
   );
 };
 
-export default Orders;
+export default WithOrders;
 
-Orders.propTypes = {
-  driverId: PropTypes.string.isRequired,
+WithOrders.propTypes = {
+  driver: PropTypes.object.isRequired,
 };

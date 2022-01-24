@@ -1,7 +1,8 @@
 import React from "react";
 import { OrderItemS, ButtonsSectionS, TextS, ButtonS } from "./OrderItem.style";
+import PropTypes from "prop-types";
 
-const OrderItem = () => {
+const OrderItem = ({ order, handleSelectOrder, handleToogleOrder }) => {
   return (
     <OrderItemS>
       <div>
@@ -10,10 +11,10 @@ const OrderItem = () => {
       </div>
 
       <ButtonsSectionS>
-        <ButtonS>
+        <ButtonS onClick={() => handleSelectOrder(/* order.id */)}>
           <i className="fa fa-reply-all"></i>
         </ButtonS>
-        <ButtonS>
+        <ButtonS onClick={() => handleToogleOrder(/* order */)}>
           <i className="fa fa-business-time"></i>
         </ButtonS>
       </ButtonsSectionS>
@@ -22,3 +23,8 @@ const OrderItem = () => {
 };
 
 export default OrderItem;
+OrderItem.propTypes = {
+  order: PropTypes.object.isRequired,
+  handleSelectOrder: PropTypes.func.isRequired,
+  handleToogleOrder: PropTypes.func.isRequired,
+};

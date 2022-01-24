@@ -8,8 +8,9 @@ import {
   IconTitleS,
   TextTitle,
 } from "./ListShipmets.style";
+import PropTypes from "prop-types";
 
-const ListShipmets = () => {
+const ListShipmets = ({ drivers }) => {
   return (
     <ListShipmetsWrapperS>
       <ListShipmetsS>
@@ -24,18 +25,9 @@ const ListShipmets = () => {
         </TitleS>
         <Divider />
         <Grid container spacing={4} className="mt-7">
-          <Grid item md={4} sm={6} xs={12}>
-            <ShimpmentCard />
-          </Grid>
-          <Grid item md={4} sm={6} xs={12}>
-            <ShimpmentCard />
-          </Grid>
-          <Grid item md={4} sm={6} xs={12}>
-            <ShimpmentCard />
-          </Grid>
-          <Grid item md={4} sm={6} xs={12}>
-            <ShimpmentCard />
-          </Grid>
+          {drivers.map((driver) => {
+            return <ShimpmentCard key={driver.id} driver={driver} />;
+          })}
         </Grid>
       </ListShipmetsS>
     </ListShipmetsWrapperS>
@@ -43,3 +35,7 @@ const ListShipmets = () => {
 };
 
 export default ListShipmets;
+
+ListShipmets.propTypes = {
+  drivers: PropTypes.array.isRequired,
+};

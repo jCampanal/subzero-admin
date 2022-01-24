@@ -1,60 +1,48 @@
-import React, { lazy, memo, useCallback, useEffect, useState } from "react";
+import React, { Fragment, memo, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { showMessage } from "app/store/fuse/messageSlice";
 import whitProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
-import { getDrivers } from "app/api-conn/drivers";
+import { getAllDrivers } from "app/api-conn/drivers";
 import ListShipmets from "./NewShimpmets/ListShipmets";
-const Header = lazy(() => import("app/components/HeaderPage/PageCardedHeader"));
-const ShipmentsTab = lazy(() => import("./ShipmentsTable"));
+import FuseLoading from "@fuse/core/FuseLoading";
 
 function Shipments() {
   const { t } = useTranslation("shipments");
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [pageNumber, setPageNumber] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
-  const [totalItems, setTotalItems] = useState(0);
 
-  const loadData = useCallback(
-    async (pageNumber, pageSize) => {
-      setLoading(true);
-      getDrivers(pageNumber, pageSize)
-        .then((response) => {
-          setData(response.data.data);
-          setTotalItems(response.data.totalItems);
-          setLoading(false);
-          return null;
-        })
-        .catch(() => {
-          dispatch(
-            showMessage({
-              message: "There is something wrong, try to refresh the page",
-              variant: "error",
-            })
-          );
-          setLoading(false);
-        });
-      setLoading(true);
-    },
-    [dispatch]
-  );
-  const handleChangePage = (event) => {
-    setPageSize(event.target.value);
-    setPageNumber(0);
-  };
-  function handlePageNumber(event, value) {
-    setPageNumber(value);
-  }
+  const loadData = useCallback(async () => {
+    setLoading(true);
+    getAllDrivers()
+      .then((response) => {
+        setData(response.data);
+
+        setLoading(false);
+        return null;
+      })
+      .catch(() => {
+        dispatch(
+          showMessage({
+            message: "There is something wrong, try to refresh the page",
+            variant: "error",
+          })
+        );
+        setLoading(false);
+      });
+    setLoading(true);
+  }, [dispatch]);
 
   useEffect(() => {
-    loadData(pageNumber, pageSize);
-  }, [pageSize, pageNumber, loadData]);
+    loadData();
+  }, [loadData]);
 
-  const [collapseAll, setCollapseAll] = useState(false);
-
-  return <ListShipmets />;
+  return (
+    <Fragment>
+      {loading ? <FuseLoading /> : <ListShipmets drivers={data} />}
+    </Fragment>
+  );
 
   /* return (
     <FusePageCarded

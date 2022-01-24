@@ -4,6 +4,7 @@ import { useHistory } from "react-router";
 
 const withProtectedRoute =
   (Component) =>
+  // eslint-disable-next-line react/display-name
   ({ ...props }) => {
     const {
       user: { logged },
@@ -13,11 +14,7 @@ const withProtectedRoute =
     useEffect(() => {
       if (!logged) history.push("/login");
     }, [logged, history]);
-    return (
-      <>
-        <Component {...props} />
-      </>
-    );
+    return <Component {...props} />;
   };
 
 export default withProtectedRoute;

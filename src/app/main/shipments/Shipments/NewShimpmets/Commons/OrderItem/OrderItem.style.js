@@ -11,7 +11,7 @@ export const OrderItemS = styled.div`
   border-top: 0;
 `;
 export const TextS = styled.p`
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 `;
 
 export const ButtonsSectionS = styled.div`
