@@ -1,13 +1,10 @@
 import React, { lazy, memo, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import FusePageCarded from "@fuse/core/FusePageCarded/FusePageCarded";
-import rows from "./rows";
 import { useDispatch } from "react-redux";
 import { showMessage } from "app/store/fuse/messageSlice";
 import whitProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
-import FuseLoading from "@fuse/core/FuseLoading";
 import { getDrivers } from "app/api-conn/drivers";
-import { KeyboardArrowDown, KeyboardArrowUp } from "@material-ui/icons";
+import ListShipmets from "./NewShimpmets/ListShipmets";
 const Header = lazy(() => import("app/components/HeaderPage/PageCardedHeader"));
 const ShipmentsTab = lazy(() => import("./ShipmentsTable"));
 
@@ -57,7 +54,9 @@ function Shipments() {
 
   const [collapseAll, setCollapseAll] = useState(false);
 
-  return (
+  return <ListShipmets />;
+
+  /* return (
     <FusePageCarded
       classes={{
         content: "flex",
@@ -91,8 +90,7 @@ function Shipments() {
         )
       }
       innerScroll
-    />
-  );
+    /> */
 }
 
 export default memo(whitProtectedRoute(Shipments));
