@@ -5,253 +5,32 @@ import TableBody from "@material-ui/core/TableBody";
 import TablePagination from "@material-ui/core/TablePagination";
 import Typography from "@material-ui/core/Typography";
 import { motion } from "framer-motion";
-import TableHeader from "app/main/products/Products/TableHeader";
+import TableHeader from "app/components/TableHeader/TableHeader";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import { useHistory, useLocation } from "react-router";
-import { getOrdersByWhareHose } from "app/api-conn/shipments_order";
+import { useLocation } from "react-router";
+import {
+  cancelOrder,
+  getOrdersByWhareHose,
+} from "app/api-conn/shipments_order";
 import { showMessage } from "app/store/fuse/messageSlice";
 import { useDispatch } from "react-redux";
 import CustomTableRow from "./CustomTableRow";
 import ViewModal from "./ViewModal";
-const response = {
-  data: [
-    {
-      id: "67b6e5fsdsd40-0985-49e2-8a7a-3af8278f6e2e",
-      no: 0,
-      deliveryTime: "2021-09-12T05:50:00.0000000",
-      tag: "Dry Ice",
-      status: "Waiting",
-      priority: 1,
-      pickUp: false,
-      address: {
-        id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-        street: "Wall Street",
-        city: "New York",
-        state: "New York",
-        zipCode: 10001,
-      },
-      driver: {
-        email: "test@admin.com",
-        enabled: true,
-        id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-        imageURL: "url",
-        lastName: "Pérez",
-        name: "Juan",
-        phoneNumber: "test@admin.com",
-        userName: "Pedro",
-        warehouse: {
-          id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-          name: "FLL Warehouse",
-          address: {
-            id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-            street: "Wall Street",
-            city: "New York",
-            state: "New York",
-            zipCode: 10001,
-          },
-        },
-      },
-      customer: {
-        company: {
-          id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-          name: "Company 1",
-          address: {
-            id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-            street: "Wall Street",
-            city: "New York",
-            state: "New York",
-            zipCode: 10001,
-          },
-        },
-        email: "test@admin.com",
-        id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-        imageURL: "url",
-        lastName: "Pérez",
-        listID: "80000002-1636062834",
-        name: "Juan",
-        phoneNumber: "test@admin.com",
-        priorityCustomer: false,
-        userName: "Juan",
-      },
-      products: [
-        {
-          id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-          pendingQuanty: 200,
-          completed: true,
-          description: "Dry Ice 4 kg",
-          quanty: 1,
-          name: "Dry Ice",
-          productTypeId: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-          listID: "80000002-1636062834",
-        },
-      ],
-      listID: "80000002-1636062834",
-    },
-    {
-      id: "67b6e5fsdsd40-0985-49e2-8a7a-3aasdf8278f6e2e",
-      no: 0,
-      deliveryTime: "2021-09-12T05:50:00.0000000",
-      tag: "Dry Ice",
-      status: "Waiting",
-      priority: 1,
-      pickUp: false,
-      address: {
-        id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-        street: "Wall Street",
-        city: "New York",
-        state: "New York",
-        zipCode: 10001,
-      },
-      driver: {
-        email: "test@admin.com",
-        enabled: true,
-        id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-        imageURL: "url",
-        lastName: "Pérez",
-        name: "Juan",
-        phoneNumber: "test@admin.com",
-        userName: "Pedro",
-        warehouse: {
-          id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-          name: "FLL Warehouse",
-          address: {
-            id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-            street: "Wall Street",
-            city: "New York",
-            state: "New York",
-            zipCode: 10001,
-          },
-        },
-      },
-      customer: {
-        company: {
-          id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-          name: "Company 1",
-          address: {
-            id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-            street: "Wall Street",
-            city: "New York",
-            state: "New York",
-            zipCode: 10001,
-          },
-        },
-        email: "test@admin.com",
-        id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-        imageURL: "url",
-        lastName: "Pérez",
-        listID: "80000002-1636062834",
-        name: "Juan",
-        phoneNumber: "test@admin.com",
-        priorityCustomer: false,
-        userName: "Juan",
-      },
-      products: [
-        {
-          id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-          pendingQuanty: 200,
-          completed: true,
-          description: "Dry Ice 4 kg",
-          quanty: 1,
-          name: "Dry Ice",
-          productTypeId: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-          listID: "80000002-1636062834",
-        },
-      ],
-      listID: "80000002-1636062834",
-    },
-    {
-      id: "67b6e5fsdsadsd40-0985-49e2-8a7a-3aasdf8278f6e2e",
-      no: 0,
-      deliveryTime: "2021-09-12T05:50:00.0000000",
-      tag: "Dry Ice",
-      status: "Waiting",
-      priority: 1,
-      pickUp: false,
-      address: {
-        id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-        street: "Wall Street",
-        city: "New York",
-        state: "New York",
-        zipCode: 10001,
-      },
-      driver: {
-        email: "test@admin.com",
-        enabled: true,
-        id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-        imageURL: "url",
-        lastName: "Pérez",
-        name: "Juan",
-        phoneNumber: "test@admin.com",
-        userName: "Pedro",
-        warehouse: {
-          id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-          name: "FLL Warehouse",
-          address: {
-            id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-            street: "Wall Street",
-            city: "New York",
-            state: "New York",
-            zipCode: 10001,
-          },
-        },
-      },
-      customer: {
-        company: {
-          id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-          name: "Company 1",
-          address: {
-            id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-            street: "Wall Street",
-            city: "New York",
-            state: "New York",
-            zipCode: 10001,
-          },
-        },
-        email: "test@admin.com",
-        id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-        imageURL: "url",
-        lastName: "Pérez",
-        listID: "80000002-1636062834",
-        name: "Juan",
-        phoneNumber: "test@admin.com",
-        priorityCustomer: false,
-        userName: "Juan",
-      },
-      products: [
-        {
-          id: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-          pendingQuanty: 200,
-          completed: true,
-          description: "Dry Ice 4 kg",
-          quanty: 1,
-          name: "Dry Ice",
-          productTypeId: "67b6e540-0985-49e2-8a7a-3af8278f6e2e",
-          listID: "80000002-1636062834",
-        },
-      ],
-      listID: "80000002-1636062834",
-    },
-  ],
-  totalPages: 5,
-  currentPage: 1,
-  haveNext: true,
-  havePrevious: true,
-  totalItems: 15,
-};
+import RemoveDlg from "app/common/removeDlg";
+import { openDialog } from "app/store/fuse/dialogSlice";
 
 function OrdersTable({ wharehoseId, rows }) {
   const { t } = useTranslation("orders-admin");
-  const [selected, setSelected] = useState([]);
   const dispatch = useDispatch();
   const [data, setData] = useState({ data: [], totalItems: 0 });
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const history = useHistory();
   const location = useLocation();
 
   const [isViewModal, setIsViewModal] = useState(false);
   const [viewOrder, setViewOrder] = useState();
+  const [isLoad, setIsLoad] = useState(false);
 
   const [order, setOrder] = useState({
     direction: "asc",
@@ -272,44 +51,9 @@ function OrdersTable({ wharehoseId, rows }) {
     });
   }
 
-  function handleSelectAllClick(event) {
-    if (event.target.checked) {
-      setSelected(data.data.map((n) => n.id));
-      return;
-    }
-    setSelected([]);
-  }
-
-  function handleDeselect() {
-    setSelected([]);
-  }
-
   function handleClick(order) {
     setViewOrder(order);
     setIsViewModal(true);
-  }
-  function handleEdit(order) {
-    history.push(`/orders_edit/${order.id}`, { order });
-  }
-
-  function handleCheck(event, id) {
-    const selectedIndex = selected.indexOf(id);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelected(newSelected);
   }
 
   function handleChangePage(event, value) {
@@ -339,8 +83,6 @@ function OrdersTable({ wharehoseId, rows }) {
       date2 = undefined;
     }
 
-    console.log("page", page);
-    console.log("rowsPerPage", rowsPerPage);
     getOrdersByWhareHose(
       wharehoseId,
       date2,
@@ -369,7 +111,41 @@ function OrdersTable({ wharehoseId, rows }) {
           })
         );
       });
-  }, [wharehoseId, t, dispatch, location.search, page, rowsPerPage]);
+  }, [wharehoseId, t, dispatch, location.search, page, rowsPerPage, isLoad]);
+
+  const acceptCancelOrder = (id) => {
+    cancelOrder(id)
+      .then(() => {
+        setIsLoad(!isLoad);
+        return null;
+      })
+      .catch((error) => {
+        dispatch(
+          showMessage({
+            message: error.response.data.title ?? error.response.data.message,
+            variant: "error",
+            anchorOrigin: {
+              vertical: "top",
+              horizontal: "right",
+            },
+          })
+        );
+      });
+  };
+  const cancelOder = (order) => {
+    dispatch(
+      openDialog({
+        children: (
+          <RemoveDlg
+            itemId={order.id}
+            proceedCallback={() => acceptCancelOrder(order.id)}
+            dlgTitle={t("DELETE_WARNING_TITLE")}
+            dlgText={t("DELETE_WARNING_TEXT")}
+          />
+        ),
+      })
+    );
+  };
 
   if (data.data.length === 0) {
     return (
@@ -392,26 +168,22 @@ function OrdersTable({ wharehoseId, rows }) {
           <TableHeader
             namespace="orders-admin"
             rows={rows}
-            selectedProductIds={selected}
             order={order}
-            onSelectAllClick={handleSelectAllClick}
             onRequestSort={handleRequestSort}
             rowCount={data.data.length}
-            onMenuItemClick={handleDeselect}
+            disableCheck
           />
 
           <TableBody>
             {data.data
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((item) => {
-                const isSelected = selected.indexOf(item.id) !== -1;
                 return (
                   <CustomTableRow
                     key={item.id}
                     item={item}
-                    isSelected={isSelected}
-                    handleCheck={handleCheck}
                     handleClick={handleClick}
+                    handleCancelOrder={cancelOder}
                   />
                 );
               })}

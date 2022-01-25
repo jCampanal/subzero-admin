@@ -33,7 +33,7 @@ const ViewModal = ({ data, isModal, setIsModal }) => {
           <Typography variant="subtitle1" color="inherit">
             <h1>
               {" "}
-              <b>@ {data.poNo} </b>
+              <b>{data.poNo} </b>
             </h1>
             <h3>{data.no}</h3>
           </Typography>
@@ -64,8 +64,8 @@ const ViewModal = ({ data, isModal, setIsModal }) => {
           <TableHead>
             <TableRow>
               <TableCell>product</TableCell>
-              <TableCell>description</TableCell>
               <TableCell>quanty</TableCell>
+              <TableCell>description</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -73,8 +73,8 @@ const ViewModal = ({ data, isModal, setIsModal }) => {
               return (
                 <TableRow key={product.id}>
                   <TableCell>{product.name}</TableCell>
-                  <TableCell>{product.description}</TableCell>
                   <TableCell>{product.quanty}</TableCell>
+                  <TableCell>{product.description}</TableCell>
                 </TableRow>
               );
             })}

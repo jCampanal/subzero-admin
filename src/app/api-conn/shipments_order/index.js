@@ -37,6 +37,12 @@ const postOrder = (data, url) =>
 
 const putShipment = (id, data) =>
   apiClient.put(`${orderURL}/${id}`, data).then((response) => response.data);
+
+const cancelOrder = (id) =>
+  apiClient
+    .put(`${orderURL}/cancelOrder?orderId=${id}`)
+    .then((response) => response.data);
+
 const changeStatus = (orderId, statusOrder) =>
   apiClient
     .put(
@@ -66,4 +72,5 @@ export {
   registerShipment,
   getOrdersByWhareHose,
   changeStatus,
+  cancelOrder,
 };

@@ -390,6 +390,9 @@ const ProductForm = () => {
           <OrderFooterS>
             <Divider className="mb-20" />
             <div className="flex justify-end">
+              <ButtonS danger onClick={() => history.push("/orders_admin")}>
+                Cancel
+              </ButtonS>
               <ButtonS primary onClick={saveData}>
                 <Telegram className="mr-5" /> Craete Order
               </ButtonS>
