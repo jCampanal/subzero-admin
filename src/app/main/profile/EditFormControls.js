@@ -1,6 +1,6 @@
 import TextField from "@material-ui/core/TextField";
 import { Controller, useFormContext } from "react-hook-form";
-import React, { memo, useEffect } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { orange } from "@material-ui/core/colors";
 import clsx from "clsx";
@@ -8,7 +8,15 @@ import { useTranslation } from "react-i18next";
 import { useParams } from "react-router";
 
 import Icon from "@material-ui/core/Icon";
-import { useState } from "react";
+import {
+  FormControl,
+  FormHelperText,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@material-ui/core";
+import { optionsTermOrder } from "../orders-admin/helpData";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles((theme) => ({
   productImageFeaturedStar: {
@@ -54,9 +62,9 @@ function FormControls(props) {
   const classes = useStyles(props);
   const [image, setImage] = useState(props.imageURL);
 
-  useEffect(()=>{
-    setImage(props.imageURL)
-  },[props.imageURL])
+  useEffect(() => {
+    setImage(props.imageURL);
+  }, [props.imageURL]);
 
   return (
     <div className="flex flex-col justify-center sm:justify-start flex-wrap max-w-2xl">
@@ -177,6 +185,41 @@ function FormControls(props) {
         )}
       />
 
+      <Controller
+        name="termOrder"
+        control={control}
+        render={({ field }) => (
+          <FormControl className="mt-8 mb-16">
+            <InputLabel id="termOrder-select-label" className="pl-20 -mt-9">
+              {t("Term order")}
+            </InputLabel>
+            <Select
+              {...field}
+              labelId="termOrder-select-label"
+              id="demo-simple-select"
+              required
+              displayEmpty
+              label={t("Term order")}
+              inputProps={{ "aria-label": "Without label" }}
+              variant="outlined"
+            >
+              {optionsTermOrder.map((termOrder) => {
+                return (
+                  <MenuItem key={termOrder} value={termOrder}>
+                    {termOrder}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+        )}
+      />
+      {errors.termOrder && (
+        <FormHelperText error={errors.termOrder}>
+          {errors?.termOrder?.message}
+        </FormHelperText>
+      )}
+
       <div className="flex flex-col sm:flex-row sm:gap-7">
         <Controller
           name="image"
@@ -217,4 +260,8 @@ function FormControls(props) {
   );
 }
 
-export default memo( FormControls);
+export default memo(FormControls);
+
+FormControls.propTypes = {
+  imageURL: PropTypes.string,
+};

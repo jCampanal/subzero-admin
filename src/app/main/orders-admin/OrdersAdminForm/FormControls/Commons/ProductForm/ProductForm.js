@@ -189,7 +189,6 @@ const ProductForm = () => {
       formData.companyName = getBigFormValues().companyName;
       formData.email = getBigFormValues().email;
     }
-    console.log("formData", formData);
     postOrder(formData, postURL)
       .then(() => {
         dispatch(

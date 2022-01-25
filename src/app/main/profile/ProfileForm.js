@@ -6,20 +6,19 @@ import { phoneRegex } from "app/lib/regexs";
 import React, { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
-import { useHistory } from "react-router";
 import * as yup from "yup";
+import { optionsTermOrder } from "../orders-admin/helpData";
 import FormControls from "./EditFormControls";
 import FormHeader from "./FormHeader";
 
 const ProfileForm = () => {
-  const history = useHistory();
   const { t } = useTranslation("profile");
   const validationRules = yup.object().shape({
     username: yup.string().required(t("REQUIRED")),
     name: yup.string().required(t("REQUIRED")),
     lastname: yup.string().required(t("REQUIRED")),
     email: yup.string().email(t("NOT_EMAIL")).max(255).required(t("REQUIRED")),
+    termOrder: yup.mixed().oneOf(optionsTermOrder),
     password: yup
       .string()
       .max(255)
@@ -39,7 +38,6 @@ const ProfileForm = () => {
     image: yup.mixed(),
   });
 
-  const dispatch = useDispatch();
   const [user, setUser] = useState({
     id: "",
     username: "",
@@ -49,6 +47,7 @@ const ProfileForm = () => {
     password: "",
     confirmPassword: "",
     phoneNumber: "",
+    termOrder: "",
     image: null,
   });
   const methods = useForm({
@@ -70,6 +69,7 @@ const ProfileForm = () => {
         lastname: data.lastName,
         email: data.email,
         phoneNumber: data.phoneNumber,
+        termOrder: data.termOrder,
         image: data.imageURL,
       });
     };

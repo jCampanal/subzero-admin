@@ -7,7 +7,6 @@ import * as yup from "yup";
 import { showMessage } from "app/store/fuse/messageSlice";
 import whithProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
 import { getAllCustomers } from "app/api-conn/customers";
-import { optionsTermOrder } from "../helpData";
 import { getAllWarehouses } from "app/api-conn/warehouses";
 import FuseLoading from "@fuse/core/FuseLoading";
 const FormControls = lazy(() => import("./FormControls/FormControls"));
@@ -54,7 +53,6 @@ const OrderAddForm = () => {
     poNo: yup.string(),
     products: yup.array().required(),
     priority: yup.number().required(t("REQUIRED")),
-    termOrder: yup.mixed().oneOf(optionsTermOrder),
     daysToOrder: yup.array(),
   });
 
@@ -67,7 +65,6 @@ const OrderAddForm = () => {
       pickUp: false,
       poNo: "",
       products: [],
-      termOrder: "Nothing selected",
       daysToOrder: [],
 
       city: "",
