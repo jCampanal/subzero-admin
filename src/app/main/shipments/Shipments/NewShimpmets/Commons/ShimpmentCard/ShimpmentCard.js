@@ -8,28 +8,24 @@ import {
   CountS,
 } from "./ShimpmentCard.style";
 import PropTypes from "prop-types";
-import WithOrders from "../../../Orders/Orders";
+import WithOrders from "../../../WithOrders/WithOrders";
 import { Grid } from "@material-ui/core";
-import ViewModal from "../../../Orders/ViewModal";
+import ViewModal from "../../../ViewModal";
 import { useDispatch } from "react-redux";
 import { reassignOrder } from "app/api-conn/shipments_order";
 import { showMessage } from "app/store/fuse/messageSlice";
 
-const ShimpmentCard = ({ driver, loading, orders, loadOrders }) => {
+const ShimpmentCard = ({ driver, orders, loadOrders }) => {
   const [order, setOrder] = useState();
   const [isViewModal, setIsViewModal] = useState(false);
 
   const dispatch = useDispatch();
 
-  const handleSelectOrder = (/* id */) => {
-    const id = "123asdsa"; /* Eliminar */
-    setOrder(id);
+  const handleSelectOrder = (order) => {
+    setOrder(order);
+    setIsViewModal(true);
   };
-  const handleToogleOrder = (/* order */) => {
-    const order = {
-      /* Eliminar */ id: "asdasdasdsa",
-      driver: "asdasds",
-    };
+  const handleToogleOrder = (order) => {
     reassignOrder(order.id, order.driver.id)
       .then(() => {
         dispatch(
@@ -76,16 +72,6 @@ const ShimpmentCard = ({ driver, loading, orders, loadOrders }) => {
               />
             );
           })}
-          <OrderItem
-            order={order}
-            handleSelectOrder={handleSelectOrder}
-            handleToogleOrder={handleToogleOrder}
-          />
-          <OrderItem
-            order={order}
-            handleSelectOrder={handleSelectOrder}
-            handleToogleOrder={handleToogleOrder}
-          />
         </BodyS>
       </ShimpmentCardS>
       {isViewModal && order && (

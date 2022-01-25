@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 const CustomerForm = ({ customers }) => {
   const methods = useFormContext();
   const setBigFormValues = methods.setValue;
+  const getBigFormValues = methods.getValues;
   const { t } = useTranslation("orders-admin");
   const validationRules = yup.object().shape({
     customerId: yup
@@ -42,6 +43,10 @@ const CustomerForm = ({ customers }) => {
   const handleChangeAddress = (addressID) => {
     setBigFormValues("addressId", addressID);
   };
+
+  const isWarehose = getBigFormValues().pickUp;
+
+  console.log("isWarehose", isWarehose);
   return (
     <CustomerFormS>
       <div className="grid gap-x-48 grid-cols-1 sm:grid-cols-2">
@@ -64,33 +69,63 @@ const CustomerForm = ({ customers }) => {
             );
           })}
         />
-        <Field
-          type="select"
-          id="addressId"
-          labelText="Shipping address"
-          isRequired
-          name="addressId"
-          control={control}
-          onChange={handleChangeAddress}
-          error={!!errors.addressId}
-          helperText={errors?.addressId?.message}
-          noValue=""
-          options={
-            selectedCustomer
-              ? [
-                  <MenuItem
-                    value={selectedCustomer.company.address.id}
-                    key={selectedCustomer.company.id}
-                  >
-                    {selectedCustomer.company.address.street},{" "}
-                    {selectedCustomer.company.address.city},{" "}
-                    {selectedCustomer.company.address.state},{" "}
-                    {selectedCustomer.company.address.zipCode}
-                  </MenuItem>,
-                ]
-              : []
-          }
-        />
+        {isWarehose ? (
+          <Field
+            type="select"
+            id="wrehouseId"
+            labelText="Wharehouse"
+            isRequired
+            name="wrehouseId"
+            control={control}
+            onChange={handleChangeAddress}
+            error={!!errors.wrehouseId}
+            helperText={errors?.wrehouseId?.message}
+            noValue=""
+            options={
+              selectedCustomer
+                ? [
+                    <MenuItem
+                      value={selectedCustomer.company.address.id}
+                      key={selectedCustomer.company.id}
+                    >
+                      {selectedCustomer.company.address.street},{" "}
+                      {selectedCustomer.company.address.city},{" "}
+                      {selectedCustomer.company.address.state},{" "}
+                      {selectedCustomer.company.address.zipCode}
+                    </MenuItem>,
+                  ]
+                : []
+            }
+          />
+        ) : (
+          <Field
+            type="select"
+            id="addressId"
+            labelText="Shipping address"
+            isRequired
+            name="addressId"
+            control={control}
+            onChange={handleChangeAddress}
+            error={!!errors.addressId}
+            helperText={errors?.addressId?.message}
+            noValue=""
+            options={
+              selectedCustomer
+                ? [
+                    <MenuItem
+                      value={selectedCustomer.company.address.id}
+                      key={selectedCustomer.company.id}
+                    >
+                      {selectedCustomer.company.address.street},{" "}
+                      {selectedCustomer.company.address.city},{" "}
+                      {selectedCustomer.company.address.state},{" "}
+                      {selectedCustomer.company.address.zipCode}
+                    </MenuItem>,
+                  ]
+                : []
+            }
+          />
+        )}
       </div>
     </CustomerFormS>
   );

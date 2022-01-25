@@ -86,7 +86,7 @@ const ViewModal = ({ data, isModal, setIsModal, loadOrders }) => {
         <AppBar position="static" elevation={0}>
           <Toolbar className="flex w-full">
             <Typography variant="subtitle1" color="inherit">
-              {data.tag}
+              Transfer order #{data.no}
             </Typography>
           </Toolbar>
         </AppBar>

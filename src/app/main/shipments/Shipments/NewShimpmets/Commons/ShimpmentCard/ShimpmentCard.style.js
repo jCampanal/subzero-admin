@@ -20,6 +20,7 @@ export const TitleS = styled.h2`
 export const BodyS = styled.div`
   width: 100%;
   max-height: 30vh;
+  overflow: auto;
 `;
 export const CountS = styled.span`
   padding: 2px 8px;

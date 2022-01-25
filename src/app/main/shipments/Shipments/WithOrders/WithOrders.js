@@ -43,12 +43,7 @@ const WithOrders = (WrappedComponent) => (props) => {
   }, [props.driver.id, loadOrders]);
 
   return (
-    <WrappedComponent
-      {...props}
-      orders={orders}
-      loading={loading}
-      loadOrders={loadOrders}
-    />
+    <WrappedComponent {...props} orders={orders} loadOrders={loadOrders} />
   );
 };
 

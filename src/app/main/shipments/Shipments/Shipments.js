@@ -1,5 +1,4 @@
 import React, { Fragment, memo, useCallback, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { showMessage } from "app/store/fuse/messageSlice";
 import whitProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
@@ -8,7 +7,6 @@ import ListShipmets from "./NewShimpmets/ListShipmets";
 import FuseLoading from "@fuse/core/FuseLoading";
 
 function Shipments() {
-  const { t } = useTranslation("shipments");
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);

@@ -6,15 +6,15 @@ const OrderItem = ({ order, handleSelectOrder, handleToogleOrder }) => {
   return (
     <OrderItemS>
       <div>
-        <TextS>THE FARMERS DOG</TextS>
-        <p>30995</p>
+        <TextS>{order.customer.company.name}</TextS>
+        <p>{order?.no}</p>
       </div>
 
       <ButtonsSectionS>
-        <ButtonS onClick={() => handleSelectOrder(/* order.id */)}>
+        <ButtonS onClick={() => handleSelectOrder(order)}>
           <i className="fa fa-reply-all"></i>
         </ButtonS>
-        <ButtonS onClick={() => handleToogleOrder(/* order */)}>
+        <ButtonS onClick={() => handleToogleOrder(order)}>
           <i className="fa fa-business-time"></i>
         </ButtonS>
       </ButtonsSectionS>
