@@ -62,10 +62,12 @@ const ShimpmentCard = ({ driver, orders, loadOrders }) => {
           <CountS>{orders.length}</CountS>
         </HeaderS>
         <BodyS>
-          {orders.map((order) => {
+          {orders.map((order, i) => {
+            const isLast = order.length === i;
             return (
               <OrderItem
                 key={order.id}
+                isLast={isLast}
                 order={order}
                 handleSelectOrder={handleSelectOrder}
                 handleToogleOrder={handleToogleOrder}

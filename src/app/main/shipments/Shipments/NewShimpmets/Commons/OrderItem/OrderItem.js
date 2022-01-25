@@ -2,9 +2,9 @@ import React from "react";
 import { OrderItemS, ButtonsSectionS, TextS, ButtonS } from "./OrderItem.style";
 import PropTypes from "prop-types";
 
-const OrderItem = ({ order, handleSelectOrder, handleToogleOrder }) => {
+const OrderItem = ({ order, handleSelectOrder, handleToogleOrder, isLast }) => {
   return (
-    <OrderItemS>
+    <OrderItemS last={isLast}>
       <div>
         <TextS>{order.customer.company.name}</TextS>
         <p>{order?.no}</p>
@@ -27,4 +27,5 @@ OrderItem.propTypes = {
   order: PropTypes.object.isRequired,
   handleSelectOrder: PropTypes.func.isRequired,
   handleToogleOrder: PropTypes.func.isRequired,
+  isLast: PropTypes.bool,
 };
