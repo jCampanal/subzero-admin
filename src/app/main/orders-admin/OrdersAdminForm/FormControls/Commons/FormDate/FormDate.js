@@ -55,6 +55,9 @@ const FormDate = () => {
                 name="deliveryTime"
                 id="deliveryTime"
                 type="dateTime"
+                minDate={new Date()}
+                animateYearScrolling
+                minutesStep={30}
                 control={control}
               />
             </div>

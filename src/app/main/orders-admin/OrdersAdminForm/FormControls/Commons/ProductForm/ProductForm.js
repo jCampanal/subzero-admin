@@ -100,7 +100,7 @@ const ProductForm = () => {
       category: "",
       saleUnit: "",
       description: "",
-      quantity: 0,
+      quantity: "",
     },
     mode: "all",
     resolver: yupResolver(validationRules),
@@ -327,7 +327,7 @@ const ProductForm = () => {
             />
             <div className="grid gap-x-48 grid-cols-1 sm:grid-cols-2">
               <Field
-                type="number"
+                type="text"
                 name="quantity"
                 id="quantity"
                 labelText="Quantity"
@@ -389,11 +389,11 @@ const ProductForm = () => {
 
           <OrderFooterS>
             <Divider className="mb-20" />
-            <div className="flex justify-end">
+            <div className="flex justify-between">
               <ButtonS danger onClick={() => history.push("/orders_admin")}>
                 Cancel
               </ButtonS>
-              <ButtonS primary onClick={saveData}>
+              <ButtonS primary onClick={saveData} className="flex justify-end">
                 <Telegram className="mr-5" /> Craete Order
               </ButtonS>
             </div>

@@ -26,7 +26,7 @@ const ViewModal = ({ data, isModal, setIsModal }) => {
       open={isModal}
       onClose={() => setIsModal(false)}
       fullWidth
-      maxWidth="sm"
+      maxWidth="xs"
     >
       <AppBar position="static" elevation={0}>
         <Toolbar className="flex w-full py-28 ">

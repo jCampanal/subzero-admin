@@ -26,8 +26,12 @@ export const ButtonS = styled.button`
   ${(props) =>
     props.danger &&
     css`
-      background-color: #c82333;
-      border-color: #bd2130;
+      background-color: #dc3545;
+      border-color: #dc3545;
+      :hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+      }
     `}
   ${(props) =>
     props.primary &&
