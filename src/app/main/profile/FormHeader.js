@@ -11,8 +11,9 @@ import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { showMessage } from "app/store/fuse/messageSlice";
 import { putAdmin } from "app/api-conn/User";
+import PropTypes from "prop-types";
 
-function FormHeader({user}) {
+function FormHeader({ user }) {
   const theme = useTheme();
   const history = useHistory();
   const { t } = useTranslation("profile");
@@ -32,41 +33,44 @@ function FormHeader({user}) {
     formData.append("LastName", getValues().lastname);
     formData.append("PhoneNumber", getValues().phoneNumber);
     formData.append("UserName", getValues().username);
-    if (getValues().password !== "") formData.append("Password", getValues().password);
-    if (getValues().confirmPassword !== "") formData.append("ConfirmPassword", getValues().confirmPassword);
+    formData.append("TermOrder", getValues().termOrder);
+    if (getValues().password !== "")
+      formData.append("Password", getValues().password);
+    if (getValues().confirmPassword !== "")
+      formData.append("ConfirmPassword", getValues().confirmPassword);
     if (getValues().image !== null) formData.append("Image", getValues().image);
-    
-      putAdmin(user.id, formData)
-        .then(() => {
-          dispatch(
-            showMessage({
-              message: "The User was updated successfully",
-              variant: "success",
-              anchorOrigin: {
-                vertical: "top",
-                horizontal: "right",
-              },
-            })
-          );
-          history.push("/profile");
-        })
-        .catch((error) =>
-          dispatch(
-            showMessage({
-              message: error.response.data.title,
-              variant: "error",
-              anchorOrigin: {
-                vertical: "top",
-                horizontal: "right",
-              },
-            })
-          )
+
+    putAdmin(user.id, formData)
+      .then(() => {
+        dispatch(
+          showMessage({
+            message: "The User was updated successfully",
+            variant: "success",
+            anchorOrigin: {
+              vertical: "top",
+              horizontal: "right",
+            },
+          })
         );
-    
+        history.push("/profile");
+        return null;
+      })
+      .catch((error) =>
+        dispatch(
+          showMessage({
+            message: error.response.data.title || error.response.data.message,
+            variant: "error",
+            anchorOrigin: {
+              vertical: "top",
+              horizontal: "right",
+            },
+          })
+        )
+      );
   };
-  const cancel = ()=>{
-    reset(user)
-  }
+  const cancel = () => {
+    reset(user);
+  };
 
   return (
     <div className="flex flex-1 w-full items-center justify-between">
@@ -98,19 +102,18 @@ function FormHeader({user}) {
               animate={{ x: 0, transition: { delay: 0.3 } }}
             >
               <Typography className="text-16 sm:text-20 truncate font-semibold">
-                {t( "EDIT" )}
+                {t("EDIT")}
               </Typography>
             </motion.div>
           </div>
         </div>
       </div>
-     
+
       <motion.div
         className="flex"
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
       >
-       
         <Button
           className="whitespace-nowrap mx-4"
           variant="contained"
@@ -127,7 +130,6 @@ function FormHeader({user}) {
           color="default"
           onClick={() => cancel()}
           startIcon={<Icon className="hidden sm:flex">cancel</Icon>}
-         
         >
           {t("CANCEL")}
         </Button>
@@ -136,4 +138,8 @@ function FormHeader({user}) {
   );
 }
 
-export default memo( FormHeader);
+export default memo(FormHeader);
+
+FormHeader.propTypes = {
+  user: PropTypes.object.isRequired,
+};
