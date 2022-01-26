@@ -1,10 +1,16 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const FieldS = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   margin-bottom: 16px;
+
+  ${(props) =>
+    props.hidden &&
+    css`
+      display: none;
+    `}
 `;
 export const LabelS = styled.label`
   font-size: 16px;

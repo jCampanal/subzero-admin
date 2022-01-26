@@ -24,6 +24,7 @@ const Field = ({
   onChange,
   noValue,
   helperText,
+  hidden,
   ...props
 }) => {
   let field;
@@ -266,7 +267,7 @@ const Field = ({
   }
 
   return (
-    <FieldS>
+    <FieldS hidden={hidden}>
       <LabelS htmlFor={id}>
         {labelText} {isRequired && <span>(Required)</span>}
       </LabelS>
@@ -287,6 +288,7 @@ Field.propTypes = {
   labelText: PropTypes.string.isRequired,
   noValue: PropTypes.string,
   error: PropTypes.bool,
+  hidden: PropTypes.bool,
   helperText: PropTypes.string,
   name: PropTypes.string.isRequired,
   isRequired: PropTypes.bool,

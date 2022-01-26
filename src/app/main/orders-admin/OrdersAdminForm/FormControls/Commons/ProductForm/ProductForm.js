@@ -25,9 +25,9 @@ import { showMessage } from "app/store/fuse/messageSlice";
 import { Divider, MenuItem } from "@material-ui/core";
 import { Delete, Telegram } from "@material-ui/icons";
 import { getAllProducts } from "app/api-conn/products";
-import { formatDate, getBinaryDays } from "app/lib/formatDate";
 import { useHistory } from "react-router";
 import { postOrder } from "app/api-conn/shipments_order";
+import { formatDate, getBinaryDays } from "app/lib/formatDate";
 
 const ProductForm = () => {
   const [changer, setChanger] = useState(true);
@@ -158,6 +158,7 @@ const ProductForm = () => {
 
       daysToOrder: getBinaryDays(getBigFormValues().daysToOrder),
       scheduleStatus: getBigFormValues().daysToOrder.length > 0,
+      wrehouseId: getBigFormValues().wrehouseId,
     };
 
     if (getBigFormValues().poNo !== "") {
@@ -185,7 +186,7 @@ const ProductForm = () => {
       if (getBigFormValues().zipCode !== "") {
         formData.zipCode = parseInt(getBigFormValues().zipCode);
       }
-      formData.wrehouseId = getBigFormValues().wrehouseId;
+
       formData.companyName = getBigFormValues().companyName;
       formData.email = getBigFormValues().email;
     }

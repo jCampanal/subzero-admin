@@ -20,7 +20,7 @@ import ViewModal from "./ViewModal";
 import RemoveDlg from "app/common/removeDlg";
 import { openDialog } from "app/store/fuse/dialogSlice";
 
-function OrdersTable({ wharehoseId, rows }) {
+function OrdersTable({ wharehoseId, rows, handleCountOrders }) {
   const { t } = useTranslation("orders-admin");
   const dispatch = useDispatch();
   const [data, setData] = useState({ data: [], totalItems: 0 });
@@ -112,6 +112,10 @@ function OrdersTable({ wharehoseId, rows }) {
         );
       });
   }, [wharehoseId, t, dispatch, location.search, page, rowsPerPage, isLoad]);
+
+  // useEffect(() => {
+  //   handleCountOrders(data.length);
+  // }, [data]);
 
   const acceptCancelOrder = (id) => {
     cancelOrder(id)
@@ -224,4 +228,5 @@ export default OrdersTable;
 OrdersTable.propTypes = {
   wharehoseId: PropTypes.string,
   rows: PropTypes.array.isRequired,
+  handleCountOrders: PropTypes.func.isRequired,
 };

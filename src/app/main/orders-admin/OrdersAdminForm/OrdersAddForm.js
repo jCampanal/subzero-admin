@@ -66,12 +66,12 @@ const OrderAddForm = () => {
       poNo: "",
       products: [],
       daysToOrder: [],
+      wrehouseId: "",
 
       city: "",
       state: "",
       street: "",
       zipCode: "",
-      wrehouseId: "",
       companyName: "",
       email: "",
 
