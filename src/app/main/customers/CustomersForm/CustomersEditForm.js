@@ -16,6 +16,7 @@ import FuseLoading from "@fuse/core/FuseLoading";
 import { intRegex, phoneRegex } from "app/lib/regexs";
 import withProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
 import { getAllWarehouses } from "app/api-conn/warehouses";
+import { optionsTermOrder } from "app/main/orders-admin/helpData";
 
 const CustomerForm = () => {
   const history = useHistory();
@@ -42,6 +43,7 @@ const CustomerForm = () => {
     salesTaxId: yup.string(),
     username: yup.string().required(t("REQUIRED")),
     warehouseId: yup.string().required(t("REQUIRED")),
+    termOrder: yup.mixed().oneOf(optionsTermOrder),
   });
 
   const methods = useForm({
@@ -60,6 +62,7 @@ const CustomerForm = () => {
       username: state.customer.userName,
       salesTaxId: "",
       warehouseId: "",
+      termOrder: "",
     },
     mode: "all",
     resolver: yupResolver(validationRules),
