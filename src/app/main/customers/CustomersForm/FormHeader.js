@@ -33,6 +33,7 @@ function FormHeader() {
         priorityCustomer: getValues().priorityCustomer,
         username: getValues().username,
         warehouseId: getValues().warehouseId,
+        termOrder: getValues().termOrder,
       };
 
       if (getValues().companyName !== "") {

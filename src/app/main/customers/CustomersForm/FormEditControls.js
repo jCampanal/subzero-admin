@@ -6,12 +6,14 @@ import FormControl from "@material-ui/core/FormControl";
 import {
   Checkbox,
   FormControlLabel,
+  FormHelperText,
   InputLabel,
   MenuItem,
   Select,
   TextField,
 } from "@material-ui/core";
 import PropTypes from "prop-types";
+import { optionsTermOrder } from "app/main/orders-admin/helpData";
 
 function FormControls({ salesTax, warehouses }) {
   const { t } = useTranslation("customers-form");
@@ -133,6 +135,41 @@ function FormControls({ salesTax, warehouses }) {
           </FormControl>
         )}
       />
+      <Controller
+        name="termOrder"
+        control={control}
+        render={({ field }) => (
+          <FormControl className="mt-8 mb-16">
+            <InputLabel id="termOrder-select-label" className="pl-20 -mt-9">
+              {t("Term order")}
+            </InputLabel>
+            <Select
+              {...field}
+              labelId="termOrder-select-label"
+              id="demo-simple-select"
+              required
+              displayEmpty
+              label={t("Term order")}
+              inputProps={{ "aria-label": "Without label" }}
+              variant="outlined"
+            >
+              {optionsTermOrder.map((termOrder) => {
+                return (
+                  <MenuItem key={termOrder} value={termOrder}>
+                    {termOrder}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+        )}
+      />
+      {errors.termOrder && (
+        <FormHelperText error={errors.termOrder}>
+          {errors?.termOrder?.message}
+        </FormHelperText>
+      )}
+
       <Controller
         name="salesTaxId"
         control={control}
