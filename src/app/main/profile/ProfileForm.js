@@ -7,7 +7,6 @@ import React, { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import * as yup from "yup";
-import { optionsTermOrder } from "../orders-admin/helpData";
 import FormControls from "./EditFormControls";
 import FormHeader from "./FormHeader";
 
@@ -18,7 +17,6 @@ const ProfileForm = () => {
     name: yup.string().required(t("REQUIRED")),
     lastname: yup.string().required(t("REQUIRED")),
     email: yup.string().email(t("NOT_EMAIL")).max(255).required(t("REQUIRED")),
-    termOrder: yup.mixed().oneOf(optionsTermOrder),
     password: yup
       .string()
       .max(255)
@@ -47,7 +45,7 @@ const ProfileForm = () => {
     password: "",
     confirmPassword: "",
     phoneNumber: "",
-    termOrder: "",
+
     image: null,
   });
   const methods = useForm({
@@ -69,7 +67,6 @@ const ProfileForm = () => {
         lastname: data.lastName,
         email: data.email,
         phoneNumber: data.phoneNumber,
-        termOrder: data.termOrder,
         image: data.imageURL,
       });
     };

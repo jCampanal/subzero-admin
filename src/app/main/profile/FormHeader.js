@@ -33,7 +33,6 @@ function FormHeader({ user }) {
     formData.append("LastName", getValues().lastname);
     formData.append("PhoneNumber", getValues().phoneNumber);
     formData.append("UserName", getValues().username);
-    formData.append("TermOrder", getValues().termOrder);
     if (getValues().password !== "")
       formData.append("Password", getValues().password);
     if (getValues().confirmPassword !== "")
