@@ -51,9 +51,9 @@ const ShimpmentCard = ({ driver, orders, loadOrders }) => {
       });
   };
 
-  //   if (orders.length === 0) {
-  //     return null;
-  //   }
+  if (orders.length === 0) {
+    return null;
+  }
   return (
     <Grid item md={4} sm={6} xs={12}>
       <ShimpmentCardS>

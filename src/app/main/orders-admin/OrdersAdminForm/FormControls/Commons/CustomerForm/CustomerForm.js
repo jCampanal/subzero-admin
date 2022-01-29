@@ -44,8 +44,8 @@ const CustomerForm = ({ customers }) => {
     const slectedCustomer = customers.find((c) => c.id === customerID);
     setSelectedCustomer(slectedCustomer);
     setBigFormValues("customerId", customerID);
-    setBigFormValues("wrehouseId", slectedCustomer.warehouse.id);
-    setValue("wrehouseId", slectedCustomer.warehouse.id);
+    setBigFormValues("wrehouseId", slectedCustomer.warehouse?.id);
+    setValue("wrehouseId", slectedCustomer.warehouse?.id);
   };
   const handleChangeAddress = (addressID) => {
     setBigFormValues("addressId", addressID);

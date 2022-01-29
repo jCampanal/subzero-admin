@@ -29,18 +29,18 @@ const ViewModal = ({ data, isModal, setIsModal }) => {
       maxWidth="xs"
     >
       <AppBar position="static" elevation={0}>
-        <Toolbar className="flex w-full py-28 ">
-          <Typography variant="subtitle1" color="inherit">
-            <h1>
-              {" "}
-              <b>{data.poNo} </b>
-            </h1>
+        <Toolbar className="block w-full py-12 ">
+          <Typography variant="h4" color="inherit" component="div">
+            {data.poNo}
+          </Typography>
+
+          <Typography variant="h6" color="inherit" component="div">
             <h3>{data.no}</h3>
           </Typography>
         </Toolbar>
       </AppBar>
       <DialogContent classes={{ root: "p-0" }}>
-        <div className="px-16 sm:px-24 pt-20">
+        <div className="px-16 sm:px-20 pt-20">
           <div className="-mx-4 my-5 pt-5">
             <h2 className="mb-12">
               For <b> {data.customer.company.name}</b>
@@ -63,9 +63,9 @@ const ViewModal = ({ data, isModal, setIsModal }) => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>product</TableCell>
-              <TableCell>quanty</TableCell>
-              <TableCell>description</TableCell>
+              <TableCell className="font-bold">Product</TableCell>
+              <TableCell className="font-bold">Quanty</TableCell>
+              <TableCell className="font-bold">Description</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
