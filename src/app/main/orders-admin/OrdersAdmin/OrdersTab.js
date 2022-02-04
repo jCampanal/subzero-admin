@@ -95,7 +95,7 @@ export default function OrdersTab(props) {
                 indicatorColor="primary"
                 textColor="primary"
                 variant="fullWidth"
-                aria-label="full width tabs example"
+                aria-label="full width tabs"
               >
                 {orders.map((tabItem, index) => (
                   <Draggable
@@ -103,7 +103,6 @@ export default function OrdersTab(props) {
                     draggableId={`id-${tabItem.wharehouse.id}`} // must be a string
                     index={index}
                     disableInteractiveElementBlocking={true}
-                    css={{ flexGrow: "1" }}
                   >
                     {(props) => (
                       <Tab
@@ -112,7 +111,12 @@ export default function OrdersTab(props) {
                         {...props.dragHandleProps}
                         onClick={() => setValue(index)} // Set active tab like this
                         key={tabItem.wharehouse.id}
-                        style={{ flexGrow: "1" }}
+                        // style={{
+                        //   flexGrow: "1",
+                        //   maxWidth: "none",
+                        //   flexBasis: "0",
+                        //   flexShrink: "1",
+                        // }}
                         label={
                           <div>
                             {tabItem.wharehouse.name}
@@ -126,6 +130,7 @@ export default function OrdersTab(props) {
                     )}
                   </Draggable>
                 ))}
+                {props.placeholder}
               </Tabs>
             )}
           </Droppable>

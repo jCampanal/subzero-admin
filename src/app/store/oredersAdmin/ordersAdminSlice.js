@@ -12,7 +12,6 @@ export const fetchOrders = createAsyncThunk(
     rowsPerPage,
     page,
   }) => {
-    console.log("wharehose", wharehose);
     const response = await getOrdersByWhareHose(
       wharehose.id,
       date2,
