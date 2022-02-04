@@ -145,23 +145,6 @@ function CoolersTable({
                     </TableCell>
 
                     <TableCell
-                      className="w-52 px-4 md:px-0"
-                      component="th"
-                      scope="row"
-                      padding="none"
-                    >
-                      <img
-                        className="w-full block rounded"
-                        src={
-                          cooler.imageURL
-                            ? cooler.imageURL
-                            : `${process.env.PUBLIC_URL}/assets/images/ecommerce/product-image-placeholder.png`
-                        }
-                        alt={cooler.code}
-                      />
-                    </TableCell>
-
-                    <TableCell
                       className="p-4 md:p-16"
                       component="th"
                       scope="row"

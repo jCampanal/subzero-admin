@@ -1,12 +1,5 @@
 const rows = [
   {
-    id: "image",
-    align: "left",
-    disablePadding: true,
-    label: "",
-    sort: false,
-  },
-  {
     id: "code",
     align: "left",
     disablePadding: false,
