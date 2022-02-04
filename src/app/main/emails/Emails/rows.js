@@ -34,6 +34,13 @@ const rows = [
     label: "SUBJECT",
     sort: true,
   },
+  {
+    id: "status",
+    align: "left",
+    disablePadding: false,
+    label: "STATUS",
+    sort: true,
+  },
 ];
 
 export default rows;

@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import FuseScrollbars from "@fuse/core/FuseScrollbars";
-import Checkbox from "@material-ui/core/Checkbox";
-import Icon from "@material-ui/core/Icon";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -116,15 +114,13 @@ function EmailsTable({
           <TableBody>
             {data
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((email) => {
+              .map((email, i) => {
                 return (
                   <TableRow
                     className="h-72 cursor-pointer"
                     hover
-                    role="checkbox"
-                    tabIndex={-1}
-                    key={email.emailId}
-                    onClick={(event) => handleClick(email)}
+                    /*  key={email.emailId} */
+                    key={i}
                   >
                     {/* <TableCell
                       className="w-52 px-4 md:px-0"
@@ -166,6 +162,14 @@ function EmailsTable({
                       align="left"
                     >
                       {email.subject.slice(0, 49)}
+                    </TableCell>
+                    <TableCell
+                      className="p-4 md:p-16"
+                      component="th"
+                      scope="row"
+                      align="left"
+                    >
+                      Sent
                     </TableCell>
                   </TableRow>
                 );
