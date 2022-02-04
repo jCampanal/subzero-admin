@@ -5,7 +5,7 @@ const STORAGE_KEY = "subzero";
 const middlewares = [];
 
 if (process.env.NODE_ENV === "development") {
-  const { createLogger } = require(`redux-logger`);
+  const { createLogger } = require("redux-logger");
   const logger = createLogger({
     collapsed: (getState, action, logEntry) => !logEntry.error,
   });
@@ -51,7 +51,7 @@ const saveState = (state) => {
 };
 
 store.subscribe(() => {
-  saveState(store.getState());
+  // saveState(store.getState());
 });
 
 export default store;

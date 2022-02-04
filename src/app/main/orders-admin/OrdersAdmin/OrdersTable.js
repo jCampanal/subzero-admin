@@ -20,7 +20,7 @@ import ViewModal from "./ViewModal";
 import RemoveDlg from "app/common/removeDlg";
 import { openDialog } from "app/store/fuse/dialogSlice";
 
-function OrdersTable({ wharehoseId, rows, handleCountOrders }) {
+function OrdersTable({ wharehoseId, rows }) {
   const { t } = useTranslation("orders-admin");
   const dispatch = useDispatch();
   const [data, setData] = useState({ data: [], totalItems: 0 });
@@ -228,5 +228,4 @@ export default OrdersTable;
 OrdersTable.propTypes = {
   wharehoseId: PropTypes.string,
   rows: PropTypes.array.isRequired,
-  handleCountOrders: PropTypes.func.isRequired,
 };

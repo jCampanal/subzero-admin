@@ -6,6 +6,8 @@ import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
+import { useSelector } from "react-redux";
+import { selectAllOrders } from "app/store/oredersAdmin/ordersAdminSlice";
 
 const OrdersAdminTable = lazy(() => import("./OrdersTable"));
 
@@ -50,6 +52,7 @@ export default function OrdersTab(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
+  const orders = useSelector(selectAllOrders);
 
   const handleChange = (event, newValue) => {
     console.log("newValue", newValue);
@@ -72,15 +75,15 @@ export default function OrdersTab(props) {
           variant="fullWidth"
           aria-label="full width tabs example"
         >
-          {props.tabItems.map((tabItem) => (
+          {orders.map((tabItem) => (
             <Tab
-              key={tabItem.id}
+              key={tabItem.wharehouse.id}
               label={
                 <div>
-                  {tabItem.name}
-                  {/* <span className="ml-4 rounded-full text-white bg-blue-600 py-1 px-5">
-                    {5}
-                  </span> */}
+                  {tabItem.wharehouse.name}
+                  <span className="ml-4 rounded-full text-white bg-blue-600 py-1 px-5">
+                    {tabItem.data.data.length}
+                  </span>
                 </div>
               }
               {...a11yProps(tabItem.id - 1)}
@@ -93,14 +96,17 @@ export default function OrdersTab(props) {
         index={value}
         onChangeIndex={handleChangeIndex}
       >
-        {props.tabItems.map((tabItem, i) => (
+        {orders.map((tabItem, i) => (
           <TabPanel
-            key={tabItem.id}
+            key={tabItem.wharehouse.id}
             value={value}
             index={i}
             dir={theme.direction}
           >
-            <OrdersAdminTable wharehoseId={tabItem.id} rows={props.rows} />
+            <OrdersAdminTable
+              wharehoseId={tabItem.wharehouse.id}
+              rows={props.rows}
+            />
           </TabPanel>
         ))}
       </SwipeableViews>
@@ -111,4 +117,5 @@ export default function OrdersTab(props) {
 OrdersTab.propTypes = {
   tabItems: PropTypes.array.isRequired,
   rows: PropTypes.array.isRequired,
+  totalOrders: PropTypes.number.isRequired,
 };

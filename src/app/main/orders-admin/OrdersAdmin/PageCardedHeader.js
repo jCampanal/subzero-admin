@@ -14,12 +14,13 @@ import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
 import { CancelRounded } from "@material-ui/icons";
+import PropTypes from "prop-types";
 
 const DateRangePicker = lazy(() =>
   import("../../coolers/Coolers/DateRangePicker")
 );
 
-function PageCardedHeader() {
+function PageCardedHeader({ totalOrders }) {
   const { t } = useTranslation("orders-admin");
   const history = useHistory();
   const mainTheme = useSelector(selectMainTheme);
@@ -121,7 +122,10 @@ function PageCardedHeader() {
             delay={300}
             className="hidden sm:flex text-16 md:text-24 mx-12 font-semibold"
           >
-            {t("ORDERS_ADMIN")}
+            {t("ORDERS_ADMIN")}{" "}
+            <span className="ml-4 rounded-full text-white bg-blue-600 py-1 px-5">
+              {totalOrders}
+            </span>
           </Typography>
         </div>
 
@@ -246,3 +250,6 @@ function PageCardedHeader() {
 }
 
 export default PageCardedHeader;
+PageCardedHeader.propTypes = {
+  totalOrders: PropTypes.number.isRequired,
+};
