@@ -394,7 +394,7 @@ const ProductForm = () => {
                 Cancel
               </ButtonS>
               <ButtonS primary onClick={saveData} className="flex justify-end">
-                <Telegram className="mr-5" /> Craete Order
+                <Telegram className="mr-5" fontSize="large" /> Craete Order
               </ButtonS>
             </div>
           </OrderFooterS>

@@ -9,6 +9,7 @@ const darkTheme = createTheme({
     mode: "light",
   },
 });
+
 const AddModal = ({ isModal, setIsModal }) => {
   return (
     <ThemeProvider theme={darkTheme}>
@@ -30,10 +31,7 @@ const AddModal = ({ isModal, setIsModal }) => {
 export default AddModal;
 
 const ModalS = styled.div`
-  background-color: red;
-  .dialog {
-    background-color: red;
-  }
+  font-size: 25px;
 `;
 
 AddModal.propTypes = {
