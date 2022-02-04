@@ -4,7 +4,7 @@ export const FieldS = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-bottom: 16px;
+  margin-bottom: 7px;
 
   ${(props) =>
     props.hidden &&

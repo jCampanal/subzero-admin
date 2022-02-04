@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const FormDateS = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 5px;
 `;
 export const ButtonGroupWrapperS = styled.div`
   display: flex;
