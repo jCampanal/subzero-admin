@@ -13,7 +13,7 @@ import { cancelOrder } from "app/api-conn/shipments_order";
 import { showMessage } from "app/store/fuse/messageSlice";
 import { useDispatch } from "react-redux";
 import CustomTableRow from "./CustomTableRow";
-import ViewModal from "./ViewModal";
+import ViewModal from "./modals/ViewModal";
 import RemoveDlg from "app/common/removeDlg";
 import { openDialog } from "app/store/fuse/dialogSlice";
 import { fetchOrders } from "app/store/oredersAdmin/ordersAdminSlice";

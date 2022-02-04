@@ -2,7 +2,6 @@ import styled, { css } from "styled-components";
 
 export const TimeSectionS = styled.div`
   width: 100%;
-  padding: 10px 0;
 `;
 
 export const LabelS = styled.div`
@@ -23,7 +22,7 @@ export const WeeklyButtonS = styled.div`
   cursor: pointer;
   border-radius: 4px;
   width: fit-content;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
   display: flex;
   align-items: center;
   :hover {

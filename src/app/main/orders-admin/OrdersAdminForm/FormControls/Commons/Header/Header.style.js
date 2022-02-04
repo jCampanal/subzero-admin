@@ -4,7 +4,7 @@ export const HeaderS = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  padding-bottom: 16px;
+  padding-bottom: 8px;
 `;
 
 export const ButtonS = styled.div`

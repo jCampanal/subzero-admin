@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const FormDateS = styled.div`
-  padding: 20px 0;
   display: flex;
   flex-direction: column;
   margin-bottom: 5px;

@@ -15,6 +15,7 @@ import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
 import { CancelRounded } from "@material-ui/icons";
 import PropTypes from "prop-types";
+import AddModal from "./modals/AddModal";
 
 const DateRangePicker = lazy(() =>
   import("../../coolers/Coolers/DateRangePicker")
@@ -31,6 +32,7 @@ function PageCardedHeader({ totalOrders }) {
     dateFrom: "",
     dateTo: "",
   });
+  const [isAddModal, setIsAddModal] = useState(true);
   const [noOrden, setNoOrden] = useState("");
   const [companySearch, setCompanySearch] = useState("");
 
@@ -91,8 +93,11 @@ function PageCardedHeader({ totalOrders }) {
     setCompanySearch(e.target.value);
   };
 
+  const handleOpenAddModal = () => {
+    setIsAddModal(true);
+  };
+
   useEffect(() => {
-    console.log("filter");
     if (
       filter.noOrden !== "" ||
       filter.company !== "" ||
@@ -236,15 +241,14 @@ function PageCardedHeader({ totalOrders }) {
             className="whitespace-nowrap hidden sm:inline-block"
             variant="contained"
             color="secondary"
-            onClick={() => {
-              history.push("/orders_create");
-            }}
+            onClick={handleOpenAddModal}
           >
             <AddCircleIcon className="mr-5" />
             {t("NEW_ORDER")}
           </Button>
         </motion.div>
       </div>
+      <AddModal setIsModal={setIsAddModal} isModal={isAddModal} />
     </div>
   );
 }
