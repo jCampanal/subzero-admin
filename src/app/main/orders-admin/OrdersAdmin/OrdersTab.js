@@ -6,8 +6,12 @@ import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
-import { useSelector } from "react-redux";
-import { selectAllOrders } from "app/store/oredersAdmin/ordersAdminSlice";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  selectAllOrders,
+  setOrdersAdmin,
+} from "app/store/oredersAdmin/ordersAdminSlice";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 const OrdersAdminTable = lazy(() => import("./OrdersTable"));
 
@@ -55,7 +59,7 @@ export default function OrdersTab(props) {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
   const orders = useSelector(selectAllOrders);
-
+  const dispatch = useDispatch();
   const handleChange = (event, newValue) => {
     console.log("newValue", newValue);
     setValue(newValue);
@@ -66,10 +70,65 @@ export default function OrdersTab(props) {
     setValue(index);
   };
 
+  const onDragEnd = (result) => {
+    if (!result.destination) return;
+    if (result.destination.index === result.source.index) return;
+
+    const newTabs = Array.from(orders);
+    const [removed] = newTabs.splice(result.source.index, 1);
+    newTabs.splice(result.destination.index, 0, removed);
+    dispatch(setOrdersAdmin(newTabs));
+  };
+
   return (
     <div className={classes.root}>
       <AppBar position="static" color="default">
-        <Tabs
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="tabs">
+            {(props) => (
+              <Tabs
+                ref={props.innerRef}
+                {...props.droppableProps}
+                value={value}
+                // onChange={handleTabChange} Not used
+                onChange={handleChange}
+                indicatorColor="primary"
+                textColor="primary"
+                variant="fullWidth"
+                aria-label="full width tabs example"
+              >
+                {orders.map((tabItem, index) => (
+                  <Draggable
+                    key={tabItem.wharehouse.id}
+                    draggableId={`id-${tabItem.wharehouse.id}`} // must be a string
+                    index={index}
+                    disableInteractiveElementBlocking={true}
+                  >
+                    {(props) => (
+                      <Tab
+                        ref={props.innerRef}
+                        {...props.draggableProps}
+                        {...props.dragHandleProps}
+                        onClick={() => setValue(index)} // Set active tab like this
+                        key={tabItem.wharehouse.id}
+                        label={
+                          <div>
+                            {tabItem.wharehouse.name}
+                            <span className="ml-4 rounded-full text-white bg-blue-600 py-1 px-5">
+                              {tabItem.data.data.length}
+                            </span>
+                          </div>
+                        }
+                        {...a11yProps(tabItem.id - 1)}
+                      />
+                    )}
+                  </Draggable>
+                ))}
+              </Tabs>
+            )}
+          </Droppable>
+        </DragDropContext>
+        {/* <Tabs
           value={value}
           onChange={handleChange}
           indicatorColor="primary"
@@ -91,7 +150,7 @@ export default function OrdersTab(props) {
               {...a11yProps(tabItem.id - 1)}
             />
           ))}
-        </Tabs>
+        </Tabs> */}
       </AppBar>
       <SwipeableViews
         axis={theme.direction === "rtl" ? "x-reverse" : "x"}

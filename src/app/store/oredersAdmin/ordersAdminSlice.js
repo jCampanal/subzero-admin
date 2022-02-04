@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getOrdersByWhareHose } from "../../api-conn/shipments_order";
+
 export const fetchOrders = createAsyncThunk(
   "ordersAdmin/fetchOrders",
   async ({
@@ -24,7 +25,7 @@ export const fetchOrders = createAsyncThunk(
     return { wharehouse: wharehose, data: response.data };
   }
 );
-const userSlice = createSlice({
+const ordersAdminSlice = createSlice({
   name: "ordersAdmin",
   initialState: {
     status: "idle",
@@ -32,8 +33,8 @@ const userSlice = createSlice({
     total: 0,
   },
   reducers: {
-    logUser: (state) => {
-      state.logged = true;
+    setOrdersAdmin: (state, action) => {
+      state.adminOrders = action.payload;
     },
   },
   extraReducers(builder) {
@@ -68,9 +69,9 @@ const userSlice = createSlice({
   },
 });
 
-export const { logUser, logoutUser } = userSlice.actions;
+export const { setOrdersAdmin } = ordersAdminSlice.actions;
 
 export const selectAllOrders = (state) => state.ordersAdmin.adminOrders;
 export const selectTotal = (state) => state.ordersAdmin.total;
 
-export default userSlice.reducer;
+export default ordersAdminSlice.reducer;

@@ -61,7 +61,7 @@ const OrderAddForm = () => {
       addressId: "",
       customerId: "",
 
-      deliveryTime: new Date(),
+      deliveryTime: new Date().setMinutes(0, 0, 0),
       pickUp: false,
       poNo: "",
       products: [],

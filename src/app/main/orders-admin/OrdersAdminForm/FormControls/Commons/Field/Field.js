@@ -2,7 +2,6 @@ import {
   FormHelperText,
   IconButton,
   InputAdornment,
-  makeStyles,
   MenuItem,
   Select,
   TextField,
@@ -13,11 +12,6 @@ import { FieldS, LabelS } from "./Field.style";
 import PropTypes from "prop-types";
 import { DateTimePicker } from "@material-ui/pickers";
 import { CalendarToday } from "@material-ui/icons";
-const useStyles = makeStyles(() => ({
-  root: {
-    fontSize: "13px",
-  },
-}));
 
 const Field = ({
   type = "text",
@@ -33,7 +27,6 @@ const Field = ({
   hidden,
   ...props
 }) => {
-  const classes = useStyles();
   let field;
   switch (type) {
     case "select":
@@ -50,7 +43,6 @@ const Field = ({
                     {...props}
                     id={id}
                     variant="outlined"
-                    className={classes.root}
                     required={isRequired}
                     onChange={(e) => {
                       if (onChange) {
@@ -75,7 +67,6 @@ const Field = ({
               name={name}
               id={id}
               variant="outlined"
-              className={classes.root}
               onChange={(e) => onChange(e.target.value)}
               required={isRequired}
             >
@@ -104,10 +95,6 @@ const Field = ({
                   id={id}
                   helperText={helperText}
                   variant="outlined"
-                  className={classes.root}
-                  inputProps={{
-                    style: { fontSize: 13 },
-                  }}
                   required={isRequired}
                   onChange={(e) => {
                     if (onChange) {
@@ -123,11 +110,7 @@ const Field = ({
               {...props}
               id={id}
               variant="outlined"
-              className={classes.root}
               required={isRequired}
-              inputProps={{
-                style: { fontSize: 13 },
-              }}
               onChange={(e) => {
                 if (onChange) {
                   onChange(e.target.value);
@@ -154,7 +137,6 @@ const Field = ({
                   helperText={helperText}
                   rightArrowIcon={<CalendarToday />}
                   inputVariant="outlined"
-                  className={classes.root}
                   onChange={(e) => {
                     if (onChange) {
                       onChange(e);
@@ -178,7 +160,6 @@ const Field = ({
               {...props}
               id={id}
               inputVariant="outlined"
-              className={classes.root}
               required={isRequired}
               onChange={(e) => {
                 if (onChange) {
@@ -215,7 +196,6 @@ const Field = ({
                   helperText={helperText}
                   id={id}
                   variant="outlined"
-                  className={classes.root}
                   required={isRequired}
                   onChange={(e) => {
                     if (onChange) {
@@ -232,7 +212,6 @@ const Field = ({
               id={id}
               type="number"
               variant="outlined"
-              className={classes.root}
               required={isRequired}
               onChange={(e) => {
                 if (onChange) {
@@ -259,7 +238,6 @@ const Field = ({
                   id={id}
                   helperText={helperText}
                   variant="outlined"
-                  className={classes.root}
                   required={isRequired}
                   onChange={(e) => {
                     if (onChange) {
@@ -275,7 +253,6 @@ const Field = ({
               {...props}
               id={id}
               variant="outlined"
-              className={classes.root}
               required={isRequired}
               onChange={(e) => {
                 if (onChange) {

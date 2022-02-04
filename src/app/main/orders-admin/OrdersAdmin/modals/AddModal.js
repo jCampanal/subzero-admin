@@ -4,10 +4,12 @@ import React from "react";
 import PropType from "prop-types";
 import styled from "styled-components";
 import OrdersAddForm from "../../OrdersAdminForm/OrdersAddForm";
+import { mustHaveThemeOptions } from "@fuse/default-settings";
 const darkTheme = createTheme({
   palette: {
     mode: "light",
   },
+  ...mustHaveThemeOptions,
 });
 
 const AddModal = ({ isModal, setIsModal }) => {
