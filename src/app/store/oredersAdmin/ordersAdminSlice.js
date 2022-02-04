@@ -44,13 +44,21 @@ const userSlice = createSlice({
       .addCase(fetchOrders.fulfilled, (state, action) => {
         state.status = "succeeded";
         // Add any fetched posts to the array
-        console.log("action", action);
+
         const newOrder = {
           wharehouse: action.payload.wharehouse,
           data: action.payload.data,
         };
-        state.adminOrders = state.adminOrders.concat(newOrder);
-        state.total = state.total + action.payload.data.data.length;
+
+        const orderIndex = state.adminOrders.findIndex(
+          (o) => o.wharehouse.id === newOrder.wharehouse.id
+        );
+        if (orderIndex >= 0) {
+          state.adminOrders[orderIndex] = newOrder;
+        } else {
+          state.adminOrders = state.adminOrders.concat(newOrder);
+          state.total = state.total + action.payload.data.data.length;
+        }
         // state.adminOrders = [];
       })
       .addCase(fetchOrders.rejected, (state, action) => {

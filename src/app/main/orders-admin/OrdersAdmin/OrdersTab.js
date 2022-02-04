@@ -104,8 +104,12 @@ export default function OrdersTab(props) {
             dir={theme.direction}
           >
             <OrdersAdminTable
-              wharehoseId={tabItem.wharehouse.id}
+              wharehose={tabItem.wharehouse}
               rows={props.rows}
+              data={{
+                data: tabItem.data.data,
+                totalItems: tabItem.data.totalItems,
+              }}
             />
           </TabPanel>
         ))}

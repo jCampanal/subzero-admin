@@ -9,21 +9,18 @@ import TableHeader from "app/components/TableHeader/TableHeader";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router";
-import {
-  cancelOrder,
-  getOrdersByWhareHose,
-} from "app/api-conn/shipments_order";
+import { cancelOrder } from "app/api-conn/shipments_order";
 import { showMessage } from "app/store/fuse/messageSlice";
 import { useDispatch } from "react-redux";
 import CustomTableRow from "./CustomTableRow";
 import ViewModal from "./ViewModal";
 import RemoveDlg from "app/common/removeDlg";
 import { openDialog } from "app/store/fuse/dialogSlice";
+import { fetchOrders } from "app/store/oredersAdmin/ordersAdminSlice";
 
-function OrdersTable({ wharehoseId, rows }) {
+function OrdersTable({ wharehose, rows, data }) {
   const { t } = useTranslation("orders-admin");
   const dispatch = useDispatch();
-  const [data, setData] = useState({ data: [], totalItems: 0 });
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const location = useLocation();
@@ -82,36 +79,31 @@ function OrdersTable({ wharehoseId, rows }) {
     if (date2 === "" || !date2) {
       date2 = undefined;
     }
-
-    getOrdersByWhareHose(
-      wharehoseId,
-      date2,
-      _compnay,
-      date1,
-      _noOrder,
-      rowsPerPage,
-      page
-    )
-      .then((res) => {
-        setData({
-          data: res.data.data,
-          totalItems: res.data.totalItems,
-        });
-        return null;
+    dispatch(
+      fetchOrders({
+        wharehose: wharehose,
+        date2,
+        _compnay,
+        date1,
+        _noOrder,
+        rowsPerPage,
+        page,
       })
-      .catch(() => {
-        dispatch(
-          showMessage({
-            message: t("PROBLEM_FETCHING"),
-            anchorOrigin: {
-              vertical: "top",
-              horizontal: "right",
-            },
-            variant: "error",
-          })
-        );
-      });
-  }, [wharehoseId, t, dispatch, location.search, page, rowsPerPage, isLoad]);
+    );
+
+    // .catch(() => {
+    //   dispatch(
+    //     showMessage({
+    //       message: t("PROBLEM_FETCHING"),
+    //       anchorOrigin: {
+    //         vertical: "top",
+    //         horizontal: "right",
+    //       },
+    //       variant: "error",
+    //     })
+    //   );
+    // });
+  }, [wharehose, t, dispatch, location.search, page, rowsPerPage, isLoad]);
 
   // useEffect(() => {
   //   handleCountOrders(data.length);
@@ -226,6 +218,7 @@ function OrdersTable({ wharehoseId, rows }) {
 export default OrdersTable;
 
 OrdersTable.propTypes = {
-  wharehoseId: PropTypes.string,
+  wharehose: PropTypes.object.isRequired,
   rows: PropTypes.array.isRequired,
+  data: PropTypes.object.isRequired,
 };
