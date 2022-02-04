@@ -20,6 +20,7 @@ const locale = {
   SHIPPING: "Cargando",
   DELIVERED: "Entregado",
   CANCELED: "Cancelado",
+  CLEAR_SEARCH: "limpiar búsqueda",
 };
 
 export default locale;
