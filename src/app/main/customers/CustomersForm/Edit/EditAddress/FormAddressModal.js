@@ -13,7 +13,7 @@ import PropType from "prop-types";
 import { Controller } from "react-hook-form";
 
 const FormAddressModal = ({ data, isModal, setIsModal }) => {
-  const { t } = useTranslation("schedules");
+  const { t } = useTranslation("customers-form");
 
   return (
     <Dialog

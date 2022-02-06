@@ -27,7 +27,7 @@ const locale = {
   SUCCESS_UPDATE: "The customer was updated successfully",
   SUCCESS_CREATE: "The customer was created successfully",
 
-  WAREHOUSEID: "Warehouse",
+  WAREHOUSE: "Warehouse",
   PASSWORD: "Password",
   CONFIRMPASSWORD: "Confirm password",
   MATCH_PASS: "Passwods must match",

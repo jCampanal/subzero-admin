@@ -28,7 +28,7 @@ const AddresItem = ({ address, listWhareHouses, onDelete, onEdit }) => {
       <AddressOptionS>
         <FormControl className=" min-w-160">
           <InputLabel id="salesTaxId-select-label" className="pl-20 -mt-9">
-            {t("WHAREHOUSE")}
+            {t("WAREHOUSE")}
           </InputLabel>
           <Select
             labelId="warehouse-select-label"

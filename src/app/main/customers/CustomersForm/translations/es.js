@@ -28,7 +28,7 @@ const locale = {
   SUCCESS_UPDATE: "El cliente ha sido actualizado con éxito",
   SUCCESS_CREATE: "El cliente ha sido creado con éxito",
 
-  WAREHOUSEID: "Warehouse",
+  WAREHOUSE: "Warehouse",
   PASSWORD: "Password",
   CONFIRMPASSWORD: "Confirm password",
   MATCH_PASS: "Los passwods deben coincidir",

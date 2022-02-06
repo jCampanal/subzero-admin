@@ -27,7 +27,7 @@ const AddressFake = [
 
 const EditAddress = ({ warehouses }) => {
   const [address, setAddress] = useState();
-  const [isModal, setIsModal] = useState(true);
+  const [isModal, setIsModal] = useState(false);
 
   const handleAddModal = () => {
     setAddress(null);
@@ -39,7 +39,7 @@ const EditAddress = ({ warehouses }) => {
   };
   return (
     <EditAddressS>
-      <h3>Addres</h3>
+      <h3>Address</h3>
       <Divider />
       {AddressFake.map((address) => {
         return (
