@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import FormControl from "@material-ui/core/FormControl";
 import { InputLabel, MenuItem, Select } from "@material-ui/core";
+import PropTypes from "prop-types";
 
 function FormControls({ salesTax }) {
   const { t } = useTranslation("customers-form");
@@ -85,3 +86,7 @@ function FormControls({ salesTax }) {
 }
 
 export default FormControls;
+
+FormControls.propTypes = {
+  salesTax: PropTypes.array.isRequired,
+};

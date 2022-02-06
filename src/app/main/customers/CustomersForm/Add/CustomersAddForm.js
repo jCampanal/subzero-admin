@@ -1,15 +1,12 @@
 import { FormProvider, useForm } from "react-hook-form";
 import FusePageCarded from "@fuse/core/FusePageCarded";
-import { useHistory, useParams } from "react-router";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import FormControls from "./FormAddControls";
-import FormHeader from "./FormHeader";
-import { openDialog } from "../../../store/fuse/dialogSlice";
-import RemoveDlg from "../../../common/removeDlg";
+import FormHeader from "../FormHeader";
 import FuseLoading from "@fuse/core/FuseLoading";
 import { getAllsalesTax } from "app/api-conn/saleTaxes";
 import { showMessage } from "app/store/fuse/messageSlice";
@@ -50,6 +47,7 @@ const CustomerForm = () => {
       .then((response) => {
         setsalesTax(response.data);
         setLoading(false);
+        return null;
       })
       .catch(() => {
         dispatch(

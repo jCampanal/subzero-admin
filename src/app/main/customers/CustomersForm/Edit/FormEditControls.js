@@ -14,6 +14,7 @@ import {
 } from "@material-ui/core";
 import PropTypes from "prop-types";
 import { optionsTermOrder } from "app/main/orders-admin/helpData";
+import EditAddress from "./EditAddress/EditAddress";
 
 function FormControls({ salesTax, warehouses }) {
   const { t } = useTranslation("customers-form");
@@ -23,6 +24,21 @@ function FormControls({ salesTax, warehouses }) {
 
   return (
     <div className="flex flex-col justify-center sm:justify-start flex-wrap max-w-2xl">
+      <Controller
+        name="companyName"
+        control={control}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            className="mt-8 mb-16"
+            error={!!errors.companyName}
+            helperText={errors?.companyName?.message}
+            label={t("COMPANYNAME")}
+            id="companyName"
+            variant="outlined"
+          />
+        )}
+      />
       <div className="grid gap-x-48 grid-cols-1 sm:grid-cols-2">
         <Controller
           className=""
@@ -220,24 +236,8 @@ function FormControls({ salesTax, warehouses }) {
         )}
       />
 
-      <div className="grid gap-x-48 grid-cols-1 sm:grid-cols-2">
-        <div className="flex flex-col">
-          <Controller
-            name="companyName"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                className="mt-8 mb-16"
-                error={!!errors.companyName}
-                helperText={errors?.companyName?.message}
-                label={t("COMPANYNAME")}
-                id="companyName"
-                variant="outlined"
-              />
-            )}
-          />
-        </div>
+      {/* <div className="grid gap-x-48 grid-cols-1 sm:grid-cols-2">
+        <div className="flex flex-col"></div>
 
         <div className="flex flex-col">
           <Controller
@@ -301,7 +301,9 @@ function FormControls({ salesTax, warehouses }) {
             )}
           />
         </div>
-      </div>
+      </div> */}
+
+      <EditAddress warehouses={warehouses} />
     </div>
   );
 }

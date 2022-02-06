@@ -84,7 +84,6 @@ const ViewModal = ({ data, isModal, setIsModal }) => {
       <DialogActions className="px-8 py-16 justify-end">
         <div className="px-16">
           <Button
-            type="submit"
             variant="contained"
             color="secondary"
             onClick={() => setIsModal(false)}

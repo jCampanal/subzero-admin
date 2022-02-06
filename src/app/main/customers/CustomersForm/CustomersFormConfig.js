@@ -17,14 +17,14 @@ const CustomersFormPageConfig = {
       path: "/customers_create",
       exact: true,
       component: React.lazy(() =>
-        import("./CustomersAddForm").then((form) => form)
+        import("./Add/CustomersAddForm").then((form) => form)
       ),
     },
     {
       path: "/customers/:id/edit",
       exact: true,
       component: React.lazy(() =>
-        import("./CustomersEditForm").then((form) => form)
+        import("./Edit/CustomersEditForm").then((form) => form)
       ),
     },
   ],
