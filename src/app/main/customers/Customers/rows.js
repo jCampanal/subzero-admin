@@ -1,10 +1,10 @@
 const rows = [
   {
-    id: "image",
+    id: "email",
     align: "left",
-    disablePadding: true,
-    label: "",
-    sort: false,
+    disablePadding: false,
+    label: "EMAIL",
+    sort: true,
   },
   {
     id: "name",
@@ -29,26 +29,13 @@ const rows = [
     sort: true,
   },
   {
-    id: "email",
-    align: "left",
-    disablePadding: false,
-    label: "EMAIL",
-    sort: true,
-  },
-  {
     id: "company",
     align: "left",
     disablePadding: false,
     label: "COMPANY",
     sort: true,
   },
-  {
-    id: "address",
-    align: "left",
-    disablePadding: false,
-    label: "COMPANY_ADDRESS",
-    sort: true,
-  },
+
   {
     id: "actions",
     align: "right",

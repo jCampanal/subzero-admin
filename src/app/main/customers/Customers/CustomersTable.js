@@ -136,21 +136,13 @@ function CustomersTable({
                         onChange={(event) => handleCheck(event, customer.id)}
                       />
                     </TableCell>
-
                     <TableCell
-                      className="w-52 px-4 md:px-0"
+                      className="p-4 md:p-16"
                       component="th"
                       scope="row"
-                      padding="none"
+                      align="left"
                     >
-                      <img
-                        className="w-full block rounded"
-                        src={
-                          customer.imageURL ??
-                          `${process.env.PUBLIC_URL}/assets/images/ecommerce/product-image-placeholder.png`
-                        }
-                        alt={customer.name}
-                      />
+                      {customer.email}
                     </TableCell>
 
                     <TableCell
@@ -184,28 +176,9 @@ function CustomersTable({
                       scope="row"
                       align="left"
                     >
-                      {customer.email}
-                    </TableCell>
-                    <TableCell
-                      className="p-4 md:p-16"
-                      component="th"
-                      scope="row"
-                      align="left"
-                    >
                       {customer.company.name}
                     </TableCell>
-                    <TableCell
-                      className="p-4 md:p-16"
-                      component="th"
-                      scope="row"
-                      align="left"
-                    >
-                      {customer.company.address.city}
-                      {", "}
-                      {customer.company.address.state}
-                      {", "}
-                      {customer.company.address.street}
-                    </TableCell>
+
                     <TableCell
                       className="p-4 md:p-16"
                       component="th"
