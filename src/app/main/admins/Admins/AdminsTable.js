@@ -142,7 +142,7 @@ function AdminsTable({
                       />
                     </TableCell>
 
-                    <TableCell
+                    {/* <TableCell
                       className="w-52 px-4 md:px-0"
                       component="th"
                       scope="row"
@@ -156,7 +156,7 @@ function AdminsTable({
                         }
                         alt={admin.name}
                       />
-                    </TableCell>
+                    </TableCell> */}
 
                     <TableCell
                       className="p-4 md:p-16"

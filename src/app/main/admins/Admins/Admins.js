@@ -15,13 +15,6 @@ const AdminsTable = lazy(() => import("./AdminsTable"));
 
 const rows = [
   {
-    id: "image",
-    align: "left",
-    disablePadding: true,
-    label: "",
-    sort: false,
-  },
-  {
     id: "email",
     align: "left",
     disablePadding: false,

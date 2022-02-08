@@ -10,7 +10,6 @@ import { motion } from "framer-motion";
 import TableHeader from "app/components/TableHeader/TableHeader";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import { Checkbox } from "@material-ui/core";
 
 function CoolersTable({
   data,
@@ -121,7 +120,7 @@ function CoolersTable({
                     selected={isSelected}
                     // onClick={() => showCoolersList(cooler)}
                   >
-                    <TableCell
+                    {/* <TableCell
                       className="w-52 px-4 md:px-0"
                       component="th"
                       scope="row"
@@ -136,7 +135,7 @@ function CoolersTable({
                         }
                         alt={cooler.code}
                       />
-                    </TableCell>
+                    </TableCell> */}
 
                     <TableCell
                       className="p-4 md:p-16"
