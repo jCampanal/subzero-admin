@@ -1,4 +1,5 @@
 import {
+  FormControl,
   FormHelperText,
   IconButton,
   InputAdornment,
@@ -38,45 +39,49 @@ const Field = ({
               control={control}
               render={({ field }) => {
                 return (
-                  <Select
-                    {...field}
-                    {...props}
-                    id={id}
-                    variant="outlined"
-                    required={isRequired}
-                    onChange={(e) => {
-                      if (onChange) {
-                        onChange(e.target.value);
-                      }
-                      field.onChange(e);
-                    }}
-                  >
-                    {noValue && (
-                      <MenuItem key="null" value={noValue}>
-                        {noValue === "" ? "Nothing to select" : noValue}
-                      </MenuItem>
-                    )}
-                    {options}
-                  </Select>
+                  <FormControl>
+                    <Select
+                      {...field}
+                      {...props}
+                      id={id}
+                      variant="outlined"
+                      required={isRequired}
+                      onChange={(e) => {
+                        if (onChange) {
+                          onChange(e.target.value);
+                        }
+                        field.onChange(e);
+                      }}
+                    >
+                      {noValue && (
+                        <MenuItem key="null" value={noValue}>
+                          {noValue === "" ? "Nothing to select" : noValue}
+                        </MenuItem>
+                      )}
+                      {options}
+                    </Select>
+                  </FormControl>
                 );
               }}
             />
           ) : (
-            <Select
-              {...props}
-              name={name}
-              id={id}
-              variant="outlined"
-              onChange={(e) => onChange(e.target.value)}
-              required={isRequired}
-            >
-              {noValue && (
-                <MenuItem key="null" value="">
-                  {noValue}
-                </MenuItem>
-              )}
-              {options}
-            </Select>
+            <FormControl>
+              <Select
+                {...props}
+                name={name}
+                id={id}
+                variant="outlined"
+                onChange={(e) => onChange(e.target.value)}
+                required={isRequired}
+              >
+                {noValue && (
+                  <MenuItem key="null" value="">
+                    {noValue}
+                  </MenuItem>
+                )}
+                {options}
+              </Select>
+            </FormControl>
           )}
         </Fragment>
       );

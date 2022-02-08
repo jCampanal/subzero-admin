@@ -1,6 +1,6 @@
 import TextField from "@material-ui/core/TextField";
 import { Controller, useFormContext } from "react-hook-form";
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { orange } from "@material-ui/core/colors";
 import clsx from "clsx";
@@ -9,11 +9,6 @@ import { useParams } from "react-router";
 import FormControl from "@material-ui/core/FormControl";
 import { InputLabel, MenuItem, Select } from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
-import { useState } from "react";
-import { useEffect } from "react";
-import { getAllWarehouses } from "app/api-conn/warehouses";
-import { useDispatch } from "react-redux";
-import { showMessage } from "app/store/fuse/messageSlice";
 
 const useStyles = makeStyles((theme) => ({
   productImageFeaturedStar: {

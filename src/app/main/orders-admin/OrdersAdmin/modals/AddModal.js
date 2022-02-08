@@ -1,20 +1,15 @@
-import { Dialog, ThemeProvider, createTheme } from "@material-ui/core";
+import { Dialog } from "@material-ui/core";
 
 import React from "react";
 import PropType from "prop-types";
 import styled from "styled-components";
 import OrdersAddForm from "../../OrdersAdminForm/OrdersAddForm";
-import { mustHaveThemeOptions } from "@fuse/default-settings";
-const darkTheme = createTheme({
-  palette: {
-    mode: "light",
-  },
-  ...mustHaveThemeOptions,
-});
+
+import FuseTheme from "@fuse/core/FuseTheme";
 
 const AddModal = ({ isModal, setIsModal }) => {
   return (
-    <ThemeProvider theme={darkTheme}>
+    <FuseTheme>
       <ModalS>
         <Dialog
           open={isModal}
@@ -26,7 +21,7 @@ const AddModal = ({ isModal, setIsModal }) => {
           <OrdersAddForm />
         </Dialog>
       </ModalS>
-    </ThemeProvider>
+    </FuseTheme>
   );
 };
 
