@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "100%",
     minWidth: 0,
     minHeight: 0,
+    maxHeight: "90vh",
     [theme.breakpoints.down("sm")]: {
       padding: "0",
     },
@@ -72,7 +73,6 @@ const useStyles = makeStyles((theme) => ({
       "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)",
     minHeight: 0,
     borderRadius: "20px 20px 0 0",
-    maxHeight: "70vh",
   },
   toolbar: {
     height: toolbarHeight,
@@ -141,6 +141,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// eslint-disable-next-line react/display-name
 const FusePageCarded = forwardRef((props, ref) => {
   const leftSidebarRef = useRef(null);
   const rightSidebarRef = useRef(null);

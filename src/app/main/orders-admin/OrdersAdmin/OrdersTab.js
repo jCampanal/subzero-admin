@@ -11,7 +11,6 @@ import {
   selectAllOrders,
   setOrdersAdmin,
 } from "app/store/oredersAdmin/ordersAdminSlice";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 const OrdersAdminTable = lazy(() => import("./OrdersTable"));
 
@@ -49,8 +48,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
     width: "100%",
-    maxHeight: "70vh",
-    overflowY: "auto",
   },
 }));
 
@@ -83,7 +80,7 @@ export default function OrdersTab(props) {
   return (
     <div className={classes.root}>
       <AppBar position="static" color="default">
-        <DragDropContext onDragEnd={onDragEnd}>
+        {/* <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="tabs">
             {(props) => (
               <Tabs
@@ -134,8 +131,8 @@ export default function OrdersTab(props) {
               </Tabs>
             )}
           </Droppable>
-        </DragDropContext>
-        {/* <Tabs
+        </DragDropContext> */}
+        <Tabs
           value={value}
           onChange={handleChange}
           indicatorColor="primary"
@@ -157,8 +154,9 @@ export default function OrdersTab(props) {
               {...a11yProps(tabItem.id - 1)}
             />
           ))}
-        </Tabs> */}
+        </Tabs>
       </AppBar>
+
       <SwipeableViews
         axis={theme.direction === "rtl" ? "x-reverse" : "x"}
         index={value}
