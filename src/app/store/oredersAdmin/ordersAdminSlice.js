@@ -30,10 +30,14 @@ const ordersAdminSlice = createSlice({
     status: "idle",
     adminOrders: [],
     total: 0,
+    cancelForm: false,
   },
   reducers: {
     setOrdersAdmin: (state, action) => {
       state.adminOrders = action.payload;
+    },
+    cancelAddOrderAdmin: (state, action) => {
+      state.cancelForm = action.payload;
     },
   },
   extraReducers(builder) {
@@ -68,9 +72,10 @@ const ordersAdminSlice = createSlice({
   },
 });
 
-export const { setOrdersAdmin } = ordersAdminSlice.actions;
+export const { setOrdersAdmin, cancelAddOrderAdmin } = ordersAdminSlice.actions;
 
 export const selectAllOrders = (state) => state.ordersAdmin.adminOrders;
 export const selectTotal = (state) => state.ordersAdmin.total;
+export const selectCancelStatus = (state) => state.ordersAdmin.cancelForm;
 
 export default ordersAdminSlice.reducer;

@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from "react-hook-form";
 import React, { lazy, memo, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { showMessage } from "app/store/fuse/messageSlice";
@@ -9,6 +9,10 @@ import whithProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute"
 import { getAllCustomers } from "app/api-conn/customers";
 import { getAllWarehouses } from "app/api-conn/warehouses";
 import FuseLoading from "@fuse/core/FuseLoading";
+import {
+  cancelAddOrderAdmin,
+  selectCancelStatus,
+} from "app/store/oredersAdmin/ordersAdminSlice";
 const FormControls = lazy(() => import("./FormControls/FormControls"));
 // const fakeCustomer = [
 //   {
@@ -47,6 +51,8 @@ const OrderAddForm = () => {
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation("Orders");
   const dispatch = useDispatch();
+  const cancelForm = useSelector(selectCancelStatus);
+
   const validationRules = yup.object().shape({
     deliveryTime: yup.string().required(t("REQUIRED")),
     pickUp: yup.boolean(),
@@ -123,6 +129,12 @@ const OrderAddForm = () => {
     loadCustomers();
     loaWarehouses();
   }, [dispatch]);
+
+  useEffect(() => {
+    if (cancelForm) {
+      dispatch(cancelAddOrderAdmin(false));
+    }
+  }, [cancelForm, dispatch]);
 
   return (
     <FormProvider {...methods}>

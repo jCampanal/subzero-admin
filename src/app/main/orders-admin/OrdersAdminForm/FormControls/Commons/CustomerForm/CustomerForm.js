@@ -7,12 +7,22 @@ import PropTypes from "prop-types";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslation } from "react-i18next";
+import { useSelector, useDispatch } from "react-redux";
+import { selectCancelStatus } from "app/store/oredersAdmin/ordersAdminSlice";
+
+const defaulFormValues = {
+  customerId: "Nothing selected",
+  addressId: "",
+  wrehouseId: "",
+};
 
 const CustomerForm = ({ customers }) => {
   const methods = useFormContext();
   const setBigFormValues = methods.setValue;
   const getBigFormValues = methods.getValues;
   const { t } = useTranslation("orders-admin");
+  const dispatch = useDispatch();
+  const cancelForm = useSelector(selectCancelStatus);
   const validationRules = yup.object().shape({
     customerId: yup
       .string()
@@ -26,12 +36,9 @@ const CustomerForm = ({ customers }) => {
     control,
     formState: { errors },
     setValue,
+    reset,
   } = useForm({
-    defaultValues: {
-      customerId: "Nothing selected",
-      addressId: "",
-      wrehouseId: "",
-    },
+    defaultValues: defaulFormValues,
     mode: "all",
     resolver: yupResolver(validationRules),
   });
@@ -60,6 +67,11 @@ const CustomerForm = ({ customers }) => {
     }
   }, [isWarehose, setValue, setBigFormValues]);
 
+  useEffect(() => {
+    if (cancelForm) {
+      reset(defaulFormValues);
+    }
+  }, [cancelForm]);
   return (
     <CustomerFormS>
       <div className="grid gap-x-48 grid-cols-1 sm:grid-cols-2">

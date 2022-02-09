@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import Field from "../Field/Field";
@@ -8,11 +8,26 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { MenuItem } from "@material-ui/core";
 import PropTypes from "prop-types";
 import { intRegex } from "app/lib/regexs";
+import { useSelector } from "react-redux";
+import { selectCancelStatus } from "app/store/oredersAdmin/ordersAdminSlice";
+
+const defaulFormValues = {
+  city: "",
+  state: "",
+  street: "",
+  zipCode: "",
+  wrehouseId: "None",
+  companyName: "",
+  email: "",
+};
 
 const InvitedForm = ({ warehouses }) => {
   const methods = useFormContext();
   const setBigFormValues = methods.setValue;
   const { t } = useTranslation("orders-admin");
+
+  const cancelForm = useSelector(selectCancelStatus);
+
   const validationRules = yup.object().shape({
     city: yup.string(),
     state: yup.string(),
@@ -28,17 +43,10 @@ const InvitedForm = ({ warehouses }) => {
 
   const {
     control,
+    reset,
     formState: { errors },
   } = useForm({
-    defaultValues: {
-      city: "",
-      state: "",
-      street: "",
-      zipCode: "",
-      wrehouseId: "None",
-      companyName: "",
-      email: "",
-    },
+    defaultValues: defaulFormValues,
     mode: "all",
     resolver: yupResolver(validationRules),
   });
@@ -46,6 +54,12 @@ const InvitedForm = ({ warehouses }) => {
   const handleChange = (name, data) => {
     setBigFormValues(name, data);
   };
+
+  useEffect(() => {
+    if (cancelForm) {
+      reset(defaulFormValues);
+    }
+  }, [cancelForm]);
   return (
     <InvitedFormS>
       <Field

@@ -19,12 +19,17 @@ import {
 } from "@material-ui/core";
 import { Controller, useFormContext } from "react-hook-form";
 import Field from "../Field/Field";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCancelStatus } from "app/store/oredersAdmin/ordersAdminSlice";
 const TimeSection = () => {
   const [showDays, setShowDays] = useState(false);
   const [days, setDays] = useState([]);
   const methods = useFormContext();
   const { control, setValue, formState } = methods;
   const { errors } = formState;
+  const dispatch = useDispatch();
+  const cancelForm = useSelector(selectCancelStatus);
+
   const orderRepeted = days.length > 0;
   const toggleDays = () => {
     setShowDays(!showDays);
@@ -50,6 +55,11 @@ const TimeSection = () => {
     setValue("daysToOrder", days);
   }, [days, setValue]);
 
+  useEffect(() => {
+    if (cancelForm) {
+      setDays([]);
+    }
+  }, [cancelForm]);
   return (
     <TimeSectionS>
       <LabelS>

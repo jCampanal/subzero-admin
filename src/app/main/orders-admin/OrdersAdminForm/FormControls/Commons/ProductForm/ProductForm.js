@@ -28,6 +28,7 @@ import { getAllProducts } from "app/api-conn/products";
 import { useHistory } from "react-router";
 import { postOrder } from "app/api-conn/shipments_order";
 import { formatDate, getBinaryDays } from "app/lib/formatDate";
+import { cancelAddOrderAdmin } from "app/store/oredersAdmin/ordersAdminSlice";
 
 const ProductForm = () => {
   const [changer, setChanger] = useState(true);
@@ -43,6 +44,7 @@ const ProductForm = () => {
   const methods = useFormContext();
   const getBigFormValues = methods.getValues;
   const setBigFormValues = methods.setValue;
+  const resetBigFormValues = methods.reset;
 
   const validationRules = yup.object().shape({
     product: yup
@@ -95,6 +97,7 @@ const ProductForm = () => {
     handleSubmit,
     control,
     reset,
+    setValue,
     formState: { dirtyFields, isValid, errors },
   } = useForm({
     defaultValues: {
@@ -114,12 +117,12 @@ const ProductForm = () => {
   const handleChangeCategory = (category) => {
     reset({
       product: "",
-      category: category,
+      category: "",
       saleUnit: "",
       description: "",
       quantity: "",
     });
-    setSelectedCategory(category);
+    setValue("category", category);
   };
 
   const handleSubmitForm = (data) => {
@@ -222,6 +225,13 @@ const ProductForm = () => {
           })
         )
       );
+  };
+  const handleCancel = () => {
+    reset();
+    setSelectedCategory("");
+    setSelectedProduct("");
+    resetBigFormValues();
+    dispatch(cancelAddOrderAdmin(true));
   };
 
   useEffect(() => {
@@ -402,7 +412,9 @@ const ProductForm = () => {
           <OrderFooterS>
             <Divider className="mb-20" />
             <div className="flex justify-between">
-              <ButtonS danger>Cancel</ButtonS>
+              <ButtonS danger onClick={handleCancel}>
+                Cancel
+              </ButtonS>
               <ButtonS primary onClick={saveData} className="flex justify-end">
                 <Telegram className="mr-5" fontSize="large" /> Craete Order
               </ButtonS>
