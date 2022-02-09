@@ -16,6 +16,7 @@ import { useHistory } from "react-router";
 import { CancelRounded } from "@material-ui/icons";
 import PropTypes from "prop-types";
 import AddModal from "./modals/AddModal";
+import { Badge } from "@material-ui/core";
 
 const DateRangePicker = lazy(() =>
   import("../../coolers/Coolers/DateRangePicker")
@@ -127,10 +128,9 @@ function PageCardedHeader({ totalOrders }) {
             delay={300}
             className="hidden sm:flex text-16 md:text-24 mx-12 font-semibold"
           >
-            {t("ORDERS_ADMIN")}{" "}
-            <span className="ml-4 rounded-full text-white bg-blue-600 py-1 px-5">
-              {totalOrders}
-            </span>
+            <Badge color="secondary" badgeContent={totalOrders}>
+              {t("ORDERS_ADMIN")}
+            </Badge>{" "}
           </Typography>
         </div>
 
