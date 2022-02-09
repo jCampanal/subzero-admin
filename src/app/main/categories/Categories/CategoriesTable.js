@@ -14,6 +14,7 @@ import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
+import _ from "lodash";
 
 function CategoriesTable(props) {
   const history = useHistory();
@@ -113,7 +114,25 @@ function CategoriesTable(props) {
           />
 
           <TableBody>
-            {data.data
+            {_.orderBy(
+              data.data,
+              [
+                (o) => {
+                  switch (order.id) {
+                    case "name": {
+                      return o.name;
+                    }
+                    case "link": {
+                      return o.link;
+                    }
+                    default: {
+                      return o[order.id];
+                    }
+                  }
+                },
+              ],
+              [order.direction]
+            )
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((category) => {
                 const isSelected = selected.indexOf(category.id) !== -1;

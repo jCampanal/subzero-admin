@@ -12,6 +12,7 @@ import { Button, Checkbox, Icon, TableCell, TableRow } from "@material-ui/core";
 import { formatDisplayDate } from "app/lib/formatDate";
 import ViewModal from "./ViewModal";
 import { PlayArrowRounded } from "@material-ui/icons";
+import _ from "lodash";
 
 function SchedulesTable({
   data,
@@ -116,7 +117,28 @@ function SchedulesTable({
           />
 
           <TableBody>
-            {data
+            {_.orderBy(
+              data,
+              [
+                (o) => {
+                  switch (order.id) {
+                    case "customer": {
+                      return o.order.customer.name;
+                    }
+                    case "company": {
+                      return o.order.customer.company.name;
+                    }
+                    case "next_order": {
+                      return o.nextOrder;
+                    }
+                    default: {
+                      return o[order.id];
+                    }
+                  }
+                },
+              ],
+              [order.direction]
+            )
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((schedule) => {
                 const isSelected = selected.indexOf(schedule.id) !== -1;

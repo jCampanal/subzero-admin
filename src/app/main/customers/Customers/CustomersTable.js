@@ -10,10 +10,11 @@ import Typography from "@material-ui/core/Typography";
 import { motion } from "framer-motion";
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
-import TableHeader from "app/main/products/Products/TableHeader";
+import TableHeader from "app/components/TableHeader/TableHeader";
 import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
+import _ from "lodash";
 
 function CustomersTable({
   customers,
@@ -112,7 +113,22 @@ function CustomersTable({
           />
 
           <TableBody>
-            {data
+            {_.orderBy(
+              data,
+              [
+                (o) => {
+                  switch (order.id) {
+                    case "categories": {
+                      return o.categories[0];
+                    }
+                    default: {
+                      return o[order.id];
+                    }
+                  }
+                },
+              ],
+              [order.direction]
+            )
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((customer) => {
                 const isSelected = selected.indexOf(customer.id) !== -1;

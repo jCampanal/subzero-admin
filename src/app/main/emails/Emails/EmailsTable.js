@@ -7,10 +7,11 @@ import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import { motion } from "framer-motion";
-import { useHistory, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import TableHeader from "app/components/TableHeader/TableHeader";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
+import _ from "lodash";
 
 function EmailsTable({
   data,
@@ -22,7 +23,6 @@ function EmailsTable({
   handleChangePage,
 }) {
   const { t } = useTranslation("emails");
-  const history = useHistory();
   const [order, setOrder] = useState({
     direction: "asc",
     id: null,
@@ -40,42 +40,6 @@ function EmailsTable({
       direction,
       id,
     });
-  }
-
-  function handleSelectAllClick(event) {
-    if (event.target.checked) {
-      setSelected(data.map((n) => n.id));
-      return;
-    }
-    setSelected([]);
-  }
-
-  function handleDeselect() {
-    setSelected([]);
-  }
-
-  function handleClick(item) {
-    history.push(`/apps/e-commerce/products/${item.id}/${item.handle}`);
-  }
-
-  function handleCheck(event, id) {
-    const selectedIndex = selected.indexOf(id);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelected(newSelected);
   }
 
   if (data.length === 0) {
@@ -104,15 +68,37 @@ function EmailsTable({
             namespace="emails"
             rows={rows}
             order={order}
-            onSelectAllClick={handleSelectAllClick}
             onRequestSort={handleRequestSort}
             rowCount={data.length}
-            onMenuItemClick={handleDeselect}
             disableCheck
           />
 
           <TableBody>
-            {data
+            {_.orderBy(
+              data,
+              [
+                (o) => {
+                  switch (order.id) {
+                    case "to": {
+                      return o.toEmail;
+                    }
+                    case "subtitle": {
+                      return o.subtitle;
+                    }
+                    case "subject": {
+                      return o.subject;
+                    }
+                    case "status": {
+                      return "Sent";
+                    }
+                    default: {
+                      return o[order.id];
+                    }
+                  }
+                },
+              ],
+              [order.direction]
+            )
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((email, i) => {
                 return (

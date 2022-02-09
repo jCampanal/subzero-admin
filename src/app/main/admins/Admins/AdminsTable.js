@@ -14,6 +14,7 @@ import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
+import _ from "lodash";
 
 function AdminsTable({
   handleChangeRowsPerPage,
@@ -116,7 +117,31 @@ function AdminsTable({
           />
 
           <TableBody>
-            {data
+            {_.orderBy(
+              data,
+              [
+                (o) => {
+                  switch (order.id) {
+                    case "email": {
+                      return o.email;
+                    }
+                    case "first-name": {
+                      return o.name;
+                    }
+                    case "last-name": {
+                      return o.lastName;
+                    }
+                    case "phone": {
+                      return o.phoneNumber;
+                    }
+                    default: {
+                      return o[order.id];
+                    }
+                  }
+                },
+              ],
+              [order.direction]
+            )
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((admin) => {
                 const isSelected = selected.indexOf(admin.id) !== -1;

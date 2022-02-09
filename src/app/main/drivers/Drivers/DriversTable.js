@@ -10,10 +10,11 @@ import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import { motion } from "framer-motion";
 import { withRouter } from "react-router-dom";
-import TableHeader from "app/main/products/Products/TableHeader";
+import TableHeader from "app/components/TableHeader/TableHeader";
 import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
+import _ from "lodash";
 
 function DriversTable({
   handleChangeRowsPerPage,
@@ -42,6 +43,8 @@ function DriversTable({
     if (order.id === property && order.direction === "desc") {
       direction = "asc";
     }
+    console.log("direction", direction);
+    console.log("id", id);
 
     setOrder({
       direction,
@@ -112,7 +115,28 @@ function DriversTable({
           />
 
           <TableBody>
-            {data.map((driver) => {
+            {_.orderBy(
+              data,
+              [
+                (o) => {
+                  switch (order.id) {
+                    case "username": {
+                      return o.userName;
+                    }
+                    case "name": {
+                      return o.name;
+                    }
+                    case "warehouse": {
+                      return o.warehouse.name;
+                    }
+                    default: {
+                      return o[order.id];
+                    }
+                  }
+                },
+              ],
+              [order.direction]
+            ).map((driver) => {
               const isSelected = selected.indexOf(driver.id) !== -1;
               return (
                 <TableRow

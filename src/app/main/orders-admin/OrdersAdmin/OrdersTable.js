@@ -17,6 +17,7 @@ import ViewModal from "./modals/ViewModal";
 import RemoveDlg from "app/common/removeDlg";
 import { openDialog } from "app/store/fuse/dialogSlice";
 import { fetchOrders } from "app/store/oredersAdmin/ordersAdminSlice";
+import _ from "lodash";
 
 function OrdersTable({ wharehose, rows, data }) {
   const { t } = useTranslation("orders-admin");
@@ -171,7 +172,28 @@ function OrdersTable({ wharehose, rows, data }) {
           />
 
           <TableBody>
-            {data.data
+            {_.orderBy(
+              data.data,
+              [
+                (o) => {
+                  switch (order.id) {
+                    case "company": {
+                      return o.customer.company.name;
+                    }
+                    case "arrive-time": {
+                      return o.deliveryTime;
+                    }
+                    case "status": {
+                      return o.status;
+                    }
+                    default: {
+                      return o[order.id];
+                    }
+                  }
+                },
+              ],
+              [order.direction]
+            )
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((item) => {
                 return (

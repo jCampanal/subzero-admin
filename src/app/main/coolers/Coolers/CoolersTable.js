@@ -15,6 +15,7 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
 import { formatDisplayDate } from "app/lib/formatDate";
+import _ from "lodash";
 
 function CoolersTable({
   coolers,
@@ -113,7 +114,31 @@ function CoolersTable({
           />
 
           <TableBody>
-            {data.data
+            {_.orderBy(
+              data.data,
+              [
+                (o) => {
+                  switch (order.id) {
+                    case "code": {
+                      return o.code;
+                    }
+                    case "provider": {
+                      return o.providerName;
+                    }
+                    case "status": {
+                      return o.coolerStatus;
+                    }
+                    case "pickup-date": {
+                      return o.pickedUp;
+                    }
+                    default: {
+                      return o[order.id];
+                    }
+                  }
+                },
+              ],
+              [order.direction]
+            )
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((cooler) => {
                 const isSelected = selected.indexOf(cooler.id) !== -1;

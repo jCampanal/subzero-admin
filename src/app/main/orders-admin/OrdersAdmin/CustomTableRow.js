@@ -2,9 +2,10 @@ import { Button, TableCell, TableRow } from "@material-ui/core";
 import { formatDisplayDate } from "app/lib/formatDate";
 import React from "react";
 import PropTypes from "prop-types";
-import { Cancel, Visibility } from "@material-ui/icons";
 import { useTranslation } from "react-i18next";
 import { ShipmentStatus } from "../helpData";
+import { VisibilityOutlined } from "@material-ui/icons";
+import CancelOutlined from "@material-ui/icons/CancelOutlined";
 
 const CustomTableRow = ({ item, handleClick, handleCancelOrder }) => {
   const { t } = useTranslation("orders-admin");
@@ -61,19 +62,15 @@ const CustomTableRow = ({ item, handleClick, handleCancelOrder }) => {
         scope="row"
         align="right"
       >
-        <Button
-          color="primary"
-          onClick={() => handleClick(item)}
-          className="mr-8"
-        >
-          <Visibility className="mr-5" />
+        <Button color="primary" onClick={() => handleClick(item)}>
+          <VisibilityOutlined className="mr-5" /> View
         </Button>
         <Button
           color="primary"
           onClick={() => handleCancelOrder(item)}
           disabled={item.status === "Delivered"}
         >
-          <Cancel className="mr-5" />
+          <CancelOutlined className="mr-5" /> Cancel
         </Button>
       </TableCell>
     </TableRow>
@@ -86,4 +83,5 @@ CustomTableRow.propTypes = {
   isSelected: PropTypes.bool.isRequired,
   handleCheck: PropTypes.func.isRequired,
   handleClick: PropTypes.func.isRequired,
+  handleCancelOrder: PropTypes.func.isRequired,
 };

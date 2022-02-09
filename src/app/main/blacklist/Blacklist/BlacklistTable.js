@@ -13,6 +13,7 @@ import TableHeader from "app/main/products/Products/TableHeader";
 import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
+import _ from "lodash";
 
 function BlacklistTable(props) {
   const { t } = useTranslation("blacklist");
@@ -110,7 +111,26 @@ function BlacklistTable(props) {
           />
 
           <TableBody>
-            {data.data
+            {_.orderBy(
+              data.data,
+              [
+                (o) => {
+                  switch (order.id) {
+                    case "company-name": {
+                      return o.companyName;
+                    }
+                    case "banned-workers": {
+                      return o.bannedWorkers;
+                    }
+
+                    default: {
+                      return o[order.id];
+                    }
+                  }
+                },
+              ],
+              [order.direction]
+            )
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((item) => {
                 const isSelected = selected.indexOf(item.id) !== -1;
