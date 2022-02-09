@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const moveTo = ["OnSubzero", "OutSubzero", "OnClient"];
+export const moveTo = ["OnSubzero", "OutSubzero", "OnClient"];
 
 const Controls = () => {
   const methods = useFormContext();
@@ -137,7 +137,8 @@ const Controls = () => {
                   <Select
                     {...field}
                     onChange={(e) => {
-                      setMoveToState(e.target.value), field.onChange(e);
+                      setMoveToState(e.target.value);
+                      field.onChange(e);
                     }}
                     labelId="moveTo-select-label"
                     id="demo-simple-select"

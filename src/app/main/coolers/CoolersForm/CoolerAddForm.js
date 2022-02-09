@@ -3,10 +3,10 @@ import FusePageCarded from "@fuse/core/FusePageCarded";
 import { useHistory, useLocation, useParams } from "react-router";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import FormControls from "./FormControls";
+import FormControls from "./FormAddControls";
 import FormHeader from "./FormHeader";
 import { getProvidersAll } from "../../../api-conn/providers";
 import { openDialog } from "../../../store/fuse/dialogSlice";
@@ -16,7 +16,6 @@ import withProtectedRoute from "app/fuse-layouts/ProtectedRoute/ProtectedRoute";
 const today = new Date();
 
 const CoolerForm = () => {
-
   const history = useHistory();
   const { id } = useParams();
   const { state } = useLocation();
@@ -63,7 +62,7 @@ const CoolerForm = () => {
       const { data } = await getProvidersAll();
       setProviders(data);
     };
-    fetchAllProviders().finally();
+    fetchAllProviders();
   }, []);
 
   return (
@@ -89,4 +88,4 @@ const CoolerForm = () => {
   );
 };
 
-export default withProtectedRoute( CoolerForm);
+export default withProtectedRoute(CoolerForm);

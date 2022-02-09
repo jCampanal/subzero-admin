@@ -1,6 +1,6 @@
 import TextField from "@material-ui/core/TextField";
 import { Controller, useFormContext } from "react-hook-form";
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { orange } from "@material-ui/core/colors";
 import clsx from "clsx";
@@ -9,8 +9,7 @@ import { useParams } from "react-router";
 import FormControl from "@material-ui/core/FormControl";
 import { InputLabel, MenuItem, Select } from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
-import { DatePicker, DateTimePicker } from "@material-ui/pickers";
-import { useState } from "react";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles((theme) => ({
   productImageFeaturedStar: {
@@ -47,14 +46,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function FormControls(props) {
+function FormControls({ providers, imageURL }) {
   const { id } = useParams();
-  const { t } = useTranslation("category-form");
+  const { t } = useTranslation("coolers-form");
   const methods = useFormContext();
   const { control, formState } = methods;
   const { errors } = formState;
-  const classes = useStyles(props);
-  const [image, setImage] = useState(props.imageURL);
+  const classes = useStyles();
+  const [image, setImage] = useState(imageURL);
 
   return (
     <div className="flex flex-col justify-center sm:justify-start flex-wrap max-w-2xl">
@@ -69,7 +68,6 @@ function FormControls(props) {
             required
             helperText={errors?.code?.message}
             label={t("CODE")}
-            autoFocus
             id="code"
             variant="outlined"
             fullWidth
@@ -96,7 +94,7 @@ function FormControls(props) {
               variant="outlined"
             >
               <MenuItem>{t("PROVIDER")}</MenuItem>
-              {props.providers.map((provider) => (
+              {providers.map((provider) => (
                 <MenuItem key={provider.id} value={provider.id}>
                   {provider.name}
                 </MenuItem>
@@ -105,7 +103,7 @@ function FormControls(props) {
           </FormControl>
         )}
       />
-      <Controller
+      {/* <Controller
         name="pickup"
         control={control}
         render={({ field }) => (
@@ -124,7 +122,7 @@ function FormControls(props) {
             />
           </FormControl>
         )}
-      />
+      /> */}
       <div className="flex flex-col sm:flex-row sm:gap-7">
         <Controller
           name="file"
@@ -166,3 +164,8 @@ function FormControls(props) {
 }
 
 export default FormControls;
+
+FormControls.propTypes = {
+  providers: PropTypes.array.isRequired,
+  imageURL: PropTypes.string,
+};

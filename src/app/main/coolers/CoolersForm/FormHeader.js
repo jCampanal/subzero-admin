@@ -27,7 +27,6 @@ function FormHeader() {
 
   const saveData = () => {
     const formData = new FormData();
-    console.log("getValues().pickup", getValues().pickup);
     formData.append("Code", getValues().code);
     formData.append("PickedUp", formatDate(getValues().pickup));
     formData.append("ProviderId", getValues().providerId);
@@ -46,6 +45,7 @@ function FormHeader() {
             })
           );
           history.push("/coolers");
+          return null;
         })
         .catch((error) =>
           dispatch(
@@ -73,6 +73,7 @@ function FormHeader() {
             })
           );
           history.push("/coolers");
+          return null;
         })
         .catch((error) =>
           dispatch(

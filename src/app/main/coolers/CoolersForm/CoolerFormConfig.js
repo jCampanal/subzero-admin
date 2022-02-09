@@ -16,12 +16,16 @@ const CoolersPageConfig = {
     {
       path: "/coolers_create",
       exact: true,
-      component: React.lazy(() => import("./CoolerForm").then((form) => form)),
+      component: React.lazy(() =>
+        import("./CoolerAddForm").then((form) => form)
+      ),
     },
     {
       path: "/coolers/:id/edit",
       exact: true,
-      component: React.lazy(() => import("./CoolerForm").then((form) => form)),
+      component: React.lazy(() =>
+        import("./CoolerEditForm").then((form) => form)
+      ),
     },
   ],
 };
