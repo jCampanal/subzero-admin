@@ -77,7 +77,7 @@ const CustomerForm = ({ customers }) => {
           options={customers.map((customer) => {
             return (
               <MenuItem key={customer.id} value={customer.id}>
-                {customer.name}
+                {customer.company.name}
               </MenuItem>
             );
           })}

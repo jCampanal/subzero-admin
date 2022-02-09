@@ -402,9 +402,7 @@ const ProductForm = () => {
           <OrderFooterS>
             <Divider className="mb-20" />
             <div className="flex justify-between">
-              <ButtonS danger onClick={() => history.push("/orders_admin")}>
-                Cancel
-              </ButtonS>
+              <ButtonS danger>Cancel</ButtonS>
               <ButtonS primary onClick={saveData} className="flex justify-end">
                 <Telegram className="mr-5" fontSize="large" /> Craete Order
               </ButtonS>
