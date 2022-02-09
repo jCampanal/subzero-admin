@@ -119,7 +119,7 @@ function CategoriesTable(props) {
                 const isSelected = selected.indexOf(category.id) !== -1;
                 return (
                   <TableRow
-                    className="h-72 cursor-pointer"
+                    className="h-56 cursor-pointer"
                     hover
                     role="checkbox"
                     aria-checked={isSelected}
@@ -155,7 +155,7 @@ function CategoriesTable(props) {
                     </TableCell>
 
                     <TableCell
-                      className="p-4 md:p-16"
+                      className="p-4 md:p-10"
                       component="th"
                       scope="row"
                     >
@@ -163,7 +163,7 @@ function CategoriesTable(props) {
                     </TableCell>
 
                     <TableCell
-                      className="p-4 md:p-16"
+                      className="p-4 md:p-10"
                       component="th"
                       scope="row"
                       align="left"
@@ -177,7 +177,7 @@ function CategoriesTable(props) {
                     </TableCell>
 
                     <TableCell
-                      className="p-4 md:p-16"
+                      className="p-4 md:p-10"
                       component="th"
                       scope="row"
                       align="right"

@@ -15,13 +15,6 @@ const DriversTable = lazy(() => import("./DriversTable"));
 
 const rows = [
   {
-    id: "image",
-    align: "left",
-    disablePadding: true,
-    label: "",
-    sort: false,
-  },
-  {
     id: "username",
     align: "left",
     disablePadding: false,

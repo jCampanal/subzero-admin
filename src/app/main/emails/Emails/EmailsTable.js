@@ -117,7 +117,7 @@ function EmailsTable({
               .map((email, i) => {
                 return (
                   <TableRow
-                    className="h-72 cursor-pointer"
+                    className="h-56 cursor-pointer"
                     hover
                     /*  key={email.emailId} */
                     key={i}
@@ -132,7 +132,7 @@ function EmailsTable({
                     </TableCell> */}
 
                     {/* <TableCell
-                      className="p-4 md:p-16"
+                      className="p-4 md:p-10"
                       component="th"
                       scope="row"
                     >
@@ -140,7 +140,7 @@ function EmailsTable({
                     </TableCell> */}
 
                     <TableCell
-                      className="p-4 md:p-16"
+                      className="p-4 md:p-10"
                       component="th"
                       scope="row"
                     >
@@ -148,7 +148,7 @@ function EmailsTable({
                     </TableCell>
 
                     <TableCell
-                      className="p-4 md:p-16"
+                      className="p-4 md:p-10"
                       component="th"
                       scope="row"
                       align="left"
@@ -156,7 +156,7 @@ function EmailsTable({
                       {email.subtitle.slice(0, 49)}
                     </TableCell>
                     <TableCell
-                      className="p-4 md:p-16"
+                      className="p-4 md:p-10"
                       component="th"
                       scope="row"
                       align="left"
@@ -164,7 +164,7 @@ function EmailsTable({
                       {email.subject.slice(0, 49)}
                     </TableCell>
                     <TableCell
-                      className="p-4 md:p-16"
+                      className="p-4 md:p-10"
                       component="th"
                       scope="row"
                       align="left"

@@ -116,7 +116,7 @@ function DriversTable({
               const isSelected = selected.indexOf(driver.id) !== -1;
               return (
                 <TableRow
-                  className="h-72 cursor-pointer"
+                  className="h-56 cursor-pointer"
                   hover
                   role="checkbox"
                   aria-checked={isSelected}
@@ -135,25 +135,12 @@ function DriversTable({
                     />
                   </TableCell>
 
-                  <TableCell
-                    className="w-52 px-4 md:px-0"
-                    component="th"
-                    scope="row"
-                    padding="none"
-                  >
-                    <img
-                      className="w-full block rounded"
-                      src={`${process.env.PUBLIC_URL}/assets/images/avatars/profile.jpg`}
-                      alt={driver.name}
-                    />
-                  </TableCell>
-
-                  <TableCell className="p-4 md:p-16" component="th" scope="row">
+                  <TableCell className="p-4 md:p-10" component="th" scope="row">
                     {driver.userName}
                   </TableCell>
 
                   <TableCell
-                    className="p-4 md:p-16"
+                    className="p-4 md:p-10"
                     component="th"
                     scope="row"
                     align="left"
@@ -162,7 +149,7 @@ function DriversTable({
                   </TableCell>
 
                   <TableCell
-                    className="p-4 md:p-16"
+                    className="p-4 md:p-10"
                     component="th"
                     scope="row"
                     align="left"
@@ -171,7 +158,7 @@ function DriversTable({
                   </TableCell>
 
                   <TableCell
-                    className="p-4 md:p-16"
+                    className="p-4 md:p-10"
                     component="th"
                     scope="row"
                     align="right"

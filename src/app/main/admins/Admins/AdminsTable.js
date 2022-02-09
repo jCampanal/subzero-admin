@@ -122,7 +122,7 @@ function AdminsTable({
                 const isSelected = selected.indexOf(admin.id) !== -1;
                 return (
                   <TableRow
-                    className="h-72 cursor-pointer"
+                    className="h-56 cursor-pointer"
                     hover
                     role="checkbox"
                     aria-checked={isSelected}
@@ -159,14 +159,14 @@ function AdminsTable({
                     </TableCell> */}
 
                     <TableCell
-                      className="p-4 md:p-16"
+                      className="p-4 md:p-10"
                       component="th"
                       scope="row"
                     >
                       {admin.email}
                     </TableCell>
                     <TableCell
-                      className="p-4 md:p-16"
+                      className="p-4 md:p-10"
                       component="th"
                       scope="row"
                     >
@@ -174,7 +174,7 @@ function AdminsTable({
                     </TableCell>
 
                     <TableCell
-                      className="p-4 md:p-16"
+                      className="p-4 md:p-10"
                       component="th"
                       scope="row"
                       align="left"
@@ -183,7 +183,7 @@ function AdminsTable({
                     </TableCell>
 
                     <TableCell
-                      className="p-4 md:p-16"
+                      className="p-4 md:p-10"
                       component="th"
                       scope="row"
                       align="left"
@@ -192,7 +192,7 @@ function AdminsTable({
                     </TableCell>
 
                     <TableCell
-                      className="p-4 md:p-16"
+                      className="p-4 md:p-10"
                       component="th"
                       scope="row"
                       align="right"

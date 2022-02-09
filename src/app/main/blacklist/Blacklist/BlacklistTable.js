@@ -116,7 +116,7 @@ function BlacklistTable(props) {
                 const isSelected = selected.indexOf(item.id) !== -1;
                 return (
                   <TableRow
-                    className="h-72 cursor-pointer"
+                    className="h-56 cursor-pointer"
                     hover
                     role="checkbox"
                     aria-checked={isSelected}
@@ -136,7 +136,7 @@ function BlacklistTable(props) {
                     </TableCell>
 
                     <TableCell
-                      className="p-4 md:p-16"
+                      className="p-4 md:p-10"
                       component="th"
                       scope="row"
                     >
@@ -144,7 +144,7 @@ function BlacklistTable(props) {
                     </TableCell>
 
                     <TableCell
-                      className="p-4 md:p-16"
+                      className="p-4 md:p-10"
                       component="th"
                       scope="row"
                       align="left"
@@ -153,7 +153,7 @@ function BlacklistTable(props) {
                     </TableCell>
 
                     <TableCell
-                      className="p-4 md:p-16"
+                      className="p-4 md:p-10"
                       component="th"
                       scope="row"
                       align="right"

@@ -92,7 +92,7 @@ function TableHeader(props) {
         {props.rows.map((row) => {
           return (
             <TableCell
-              className="p-4 md:p-16"
+              className="p-4 md:p-10"
               key={row.id}
               align={row.align}
               padding={row.disablePadding ? "none" : "normal"}

@@ -11,14 +11,14 @@ const CustomTableRow = ({ item, handleClick, handleCancelOrder }) => {
 
   return (
     <TableRow
-      className="h-72 cursor-pointer"
+      className="h-56 cursor-pointer"
       hover
       role="checkbox"
       tabIndex={-1}
       key={item.id}
     >
       <TableCell
-        className="p-4 md:p-16"
+        className="p-4 md:p-10"
         component="th"
         scope="row"
         align="left"
@@ -26,7 +26,7 @@ const CustomTableRow = ({ item, handleClick, handleCancelOrder }) => {
         {item.no}
       </TableCell>
       <TableCell
-        className="p-4 md:p-16"
+        className="p-4 md:p-10"
         component="th"
         scope="row"
         align="left"
@@ -35,7 +35,7 @@ const CustomTableRow = ({ item, handleClick, handleCancelOrder }) => {
       </TableCell>
 
       <TableCell
-        className="p-4 md:p-16"
+        className="p-4 md:p-10"
         component="th"
         scope="row"
         align="left"
@@ -44,19 +44,19 @@ const CustomTableRow = ({ item, handleClick, handleCancelOrder }) => {
       </TableCell>
 
       <TableCell
-        className="p-4 md:p-16"
+        className="p-4 md:p-10"
         component="th"
         scope="row"
         align="left"
       >
         <span className={`text-${ShipmentStatus[item.status].tColor}`}>
-          <i className={`fa ${ShipmentStatus[item.status].icon} mr-2`} />
+          <i className={`fa ${ShipmentStatus[item.status].icon} mr-5`} />
           {t(ShipmentStatus[item.status].name)}
         </span>
       </TableCell>
 
       <TableCell
-        className="p-4 md:p-16"
+        className="p-4 md:p-10"
         component="th"
         scope="row"
         align="right"
@@ -67,16 +67,13 @@ const CustomTableRow = ({ item, handleClick, handleCancelOrder }) => {
           className="mr-8"
         >
           <Visibility className="mr-5" />
-          {t("VIEW")}
         </Button>
         <Button
           color="primary"
           onClick={() => handleCancelOrder(item)}
-          className="text-red"
           disabled={item.status === "Delivered"}
         >
           <Cancel className="mr-5" />
-          {t("CANCEL")}
         </Button>
       </TableCell>
     </TableRow>

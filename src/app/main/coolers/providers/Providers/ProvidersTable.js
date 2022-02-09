@@ -117,7 +117,7 @@ function ProvidersTable({
                 const isSelected = selected.indexOf(provider.id) !== -1;
                 return (
                   <TableRow
-                    className="h-72 cursor-pointer"
+                    className="h-56 cursor-pointer"
                     hover
                     role="checkbox"
                     aria-checked={isSelected}
@@ -138,7 +138,7 @@ function ProvidersTable({
                     </TableCell>
 
                     <TableCell
-                      className="p-4 md:p-16"
+                      className="p-4 md:p-10"
                       component="th"
                       scope="row"
                     >
@@ -146,7 +146,7 @@ function ProvidersTable({
                     </TableCell>
 
                     <TableCell
-                      className="p-4 md:p-16"
+                      className="p-4 md:p-10"
                       component="th"
                       scope="row"
                       align="left"
@@ -155,7 +155,7 @@ function ProvidersTable({
                     </TableCell>
 
                     <TableCell
-                      className="p-4 md:p-16"
+                      className="p-4 md:p-10"
                       component="th"
                       scope="row"
                       align="left"
@@ -164,7 +164,7 @@ function ProvidersTable({
                     </TableCell>
 
                     <TableCell
-                      className="p-4 md:p-16"
+                      className="p-4 md:p-10"
                       component="th"
                       scope="row"
                       align="right"

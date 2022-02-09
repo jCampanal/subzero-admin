@@ -119,7 +119,7 @@ function CoolersActivityTable({
 
                 return (
                   <TableRow
-                    className="h-72 cursor-pointer"
+                    className="h-56 cursor-pointer"
                     hover
                     role="checkbox"
                     aria-checked={isSelected}
@@ -141,7 +141,7 @@ function CoolersActivityTable({
                     </TableCell> */}
 
                     <TableCell
-                      className="p-4 md:p-16"
+                      className="p-4 md:p-10"
                       component="th"
                       scope="row"
                     >
@@ -149,7 +149,7 @@ function CoolersActivityTable({
                     </TableCell>
 
                     <TableCell
-                      className="p-4 md:p-16"
+                      className="p-4 md:p-10"
                       component="th"
                       scope="row"
                       align="left"
@@ -158,7 +158,7 @@ function CoolersActivityTable({
                     </TableCell>
 
                     <TableCell
-                      className="p-4 md:p-16"
+                      className="p-4 md:p-10"
                       component="th"
                       scope="row"
                       align="left"
@@ -167,7 +167,7 @@ function CoolersActivityTable({
                     </TableCell>
 
                     <TableCell
-                      className="p-4 md:p-16"
+                      className="p-4 md:p-10"
                       component="th"
                       scope="row"
                       align="left"
@@ -176,7 +176,7 @@ function CoolersActivityTable({
                     </TableCell>
 
                     <TableCell
-                      className="p-4 md:p-16"
+                      className="p-4 md:p-10"
                       component="th"
                       scope="row"
                       align="left"
@@ -184,7 +184,7 @@ function CoolersActivityTable({
                       {date}
                     </TableCell>
                     <TableCell
-                      className="p-4 md:p-16"
+                      className="p-4 md:p-10"
                       component="th"
                       scope="row"
                       align="right"
