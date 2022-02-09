@@ -136,7 +136,7 @@ function OrdersTable({ wharehose, rows, data }) {
             itemId={order.id}
             proceedCallback={() => acceptCancelOrder(order.id)}
             dlgTitle={t("DELETE_WARNING_TITLE")}
-            dlgText={t("DELETE_WARNING_TEXT")}
+            dlgText={`You are going to cancel the order ${order.no}. Proceed with the request?`}
           />
         ),
       })

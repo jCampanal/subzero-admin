@@ -21,6 +21,7 @@ const locale = {
   DELIVERED: "Entregado",
   CANCELED: "Cancelado",
   CLEAR_SEARCH: "limpiar búsqueda",
+  DELETE_WARNING_TITLE: "¿Estas seguro ?",
 };
 
 export default locale;

@@ -57,12 +57,16 @@ const ordersAdminSlice = createSlice({
         const orderIndex = state.adminOrders.findIndex(
           (o) => o.wharehouse.id === newOrder.wharehouse.id
         );
+
         if (orderIndex >= 0) {
           state.adminOrders[orderIndex] = newOrder;
         } else {
           state.adminOrders = state.adminOrders.concat(newOrder);
           state.total = state.total + action.payload.data.data.length;
         }
+        state.adminOrders = state.adminOrders.sort(
+          (a, b) => b.data.data.length - a.data.data.length
+        );
         // state.adminOrders = [];
       })
       .addCase(fetchOrders.rejected, (state, action) => {
