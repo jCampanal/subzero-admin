@@ -159,7 +159,7 @@ function OrdersTable({ wharehose, rows, data }) {
 
   return (
     <div className="w-full flex flex-col">
-      <FuseScrollbars className="flex-grow overflow-x-auto">
+      <FuseScrollbars className="flex-grow overflow-x-auto ">
         <Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
           <TableHeader
             namespace="orders-admin"
