@@ -116,27 +116,23 @@ const ProductForm = () => {
 
   const handleSubmitForm = (data) => {
     const oldProducts = getBigFormValues().products;
-    if (oldProducts.findIndex((p) => p.id === data.product.id) < 0) {
-      const newProduct = {
-        id: data.product.id,
-        saleUnitName: data.saleUnit.saleUnitName,
-        productName: data.product.name,
-        productToSend: {
-          description: data.description,
-          quanty: data.quantity,
-          productSaleUnitId: data.saleUnit.productSaleUnitId,
-        },
-      };
 
-      setBigFormValues("products", [...oldProducts, newProduct]);
-      setChanger(!changer);
-    } else {
-      alert("You can not add the same product twice");
-    }
+    const newProduct = {
+      saleUnitName: data.saleUnit.saleUnitName,
+      productName: data.product.name,
+      productToSend: {
+        description: data.description,
+        quanty: data.quantity,
+        productSaleUnitId: data.saleUnit.productSaleUnitId,
+      },
+    };
+
+    setBigFormValues("products", [...oldProducts, newProduct]);
+    setChanger(!changer);
   };
-  const handleRemoveProduct = (product) => {
+  const handleRemoveProduct = (i) => {
     const oldProducts = getBigFormValues().products;
-    const newProducts = oldProducts.filter((p) => p.id !== product.id);
+    const newProducts = oldProducts.filter((p, pIndex) => pIndex !== i);
 
     setBigFormValues("products", newProducts);
     setChanger(!changer);
@@ -378,13 +374,13 @@ const ProductForm = () => {
             <OrderCountS>{getBigFormValues().products.length}</OrderCountS>
           </OrderTitleS>
 
-          {getBigFormValues().products.map((product) => (
-            <OrderS key={product.id}>
+          {getBigFormValues().products.map((product, i) => (
+            <OrderS key={i}>
               <OrderCotentS>
                 <OrderNameS>{product.productName}</OrderNameS>
                 <OrderDetailsS>
                   <span>{product.saleUnitName}</span>
-                  <IconS onClick={() => handleRemoveProduct(product)}>
+                  <IconS onClick={() => handleRemoveProduct(i)}>
                     <Delete />
                   </IconS>
                 </OrderDetailsS>
