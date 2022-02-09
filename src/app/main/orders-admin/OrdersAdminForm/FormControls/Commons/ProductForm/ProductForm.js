@@ -94,6 +94,7 @@ const ProductForm = () => {
   const {
     handleSubmit,
     control,
+    reset,
     formState: { dirtyFields, isValid, errors },
   } = useForm({
     defaultValues: {
@@ -111,6 +112,13 @@ const ProductForm = () => {
     setSelectedProduct(product);
   };
   const handleChangeCategory = (category) => {
+    reset({
+      product: "",
+      category: category,
+      saleUnit: "",
+      description: "",
+      quantity: "",
+    });
     setSelectedCategory(category);
   };
 
