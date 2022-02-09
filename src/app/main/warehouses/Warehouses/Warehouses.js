@@ -1,7 +1,7 @@
 import React, { lazy, memo, useEffect, useState } from "react";
 import FusePageCarded from "@fuse/core/FusePageCarded/FusePageCarded";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import FuseLoading from "@fuse/core/FuseLoading";
 import rows from "./rows";
@@ -17,7 +17,6 @@ const Header = lazy(() =>
 const Table = lazy(() => import("./WarehousesTable").then((table) => table));
 
 function Warehouses() {
-
   const dispatch = useDispatch();
   const history = useHistory();
   const { t } = useTranslation("warehouses");
@@ -58,7 +57,6 @@ function Warehouses() {
       })
     );
 
-  
   useEffect(() => {
     document.title = "Warehouses - Subzero Ice Services";
   }, []);
@@ -71,7 +69,7 @@ function Warehouses() {
       classes={{
         content: "flex",
         contentCard: "overflow-hidden",
-        header: "min-h-72 h-72 sm:h-136 sm:min-h-136",
+        header: "",
       }}
       header={
         <Header
@@ -101,4 +99,4 @@ function Warehouses() {
   );
 }
 
-export default memo(withProtectedRoute( Warehouses));
+export default memo(withProtectedRoute(Warehouses));

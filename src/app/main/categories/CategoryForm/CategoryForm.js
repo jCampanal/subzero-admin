@@ -154,7 +154,7 @@ const CategoryForm = () => {
         classes={{
           content: "flex mx-14 justify-center",
           toolbar: "p-0",
-          header: "min-h-72 h-72 sm:h-136 sm:min-h-136",
+          header: "",
         }}
         header={
           <FormHeader saveCallback={saveData} deleteCallback={removeCategory} />
