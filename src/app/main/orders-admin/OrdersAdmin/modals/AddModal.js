@@ -1,4 +1,4 @@
-import { Dialog } from "@material-ui/core";
+import { Dialog, IconButton } from "@material-ui/core";
 
 import React from "react";
 import PropType from "prop-types";
@@ -6,7 +6,8 @@ import styled from "styled-components";
 import OrdersAddForm from "../../OrdersAdminForm/OrdersAddForm";
 
 import FuseTheme from "@fuse/core/FuseTheme";
-
+import FuseScrollbars from "@fuse/core/FuseScrollbars";
+import CloseIcon from "@material-ui/icons/Close";
 const AddModal = ({ isModal, setIsModal }) => {
   return (
     <FuseTheme>
@@ -18,7 +19,14 @@ const AddModal = ({ isModal, setIsModal }) => {
           maxWidth="md"
           className="dialog"
         >
-          <OrdersAddForm />
+          <FuseScrollbars className="flex-grow overflow-x-auto">
+            <div className="flex justify-end pr-10">
+              <IconButton onClick={() => setIsModal(false)}>
+                <CloseIcon />
+              </IconButton>
+            </div>
+            <OrdersAddForm />
+          </FuseScrollbars>
         </Dialog>
       </ModalS>
     </FuseTheme>

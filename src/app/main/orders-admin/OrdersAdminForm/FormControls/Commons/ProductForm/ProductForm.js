@@ -78,7 +78,8 @@ const ProductForm = () => {
         saleUnitValue: yup.string(),
         decimals: yup.boolean(),
       })
-      .typeError("Select a valid sale unit"),
+      .typeError("Select a valid sale unit")
+      .required("Select a valid sale unit"),
     category: yup
       .object()
       .shape({
@@ -333,6 +334,11 @@ const ProductForm = () => {
                 labelText="Quantity"
                 isRequired
                 control={control}
+                error={!!errors.quantity}
+                helperText={errors?.quantity?.message}
+                style={{
+                  direction: "rtl",
+                }}
               />
               <Field
                 type="select"
@@ -341,6 +347,8 @@ const ProductForm = () => {
                 labelText="Unit"
                 isRequired
                 control={control}
+                error={!!errors.saleUnit}
+                helperText={errors?.saleUnit?.message}
                 options={salesUnits.map((unit) => {
                   return (
                     <MenuItem key={unit.saleUnitId} value={unit}>

@@ -33,7 +33,7 @@ function PageCardedHeader({ totalOrders }) {
     dateFrom: "",
     dateTo: "",
   });
-  const [isAddModal, setIsAddModal] = useState(false);
+  const [isAddModal, setIsAddModal] = useState(true);
   const [noOrden, setNoOrden] = useState("");
   const [companySearch, setCompanySearch] = useState("");
 
