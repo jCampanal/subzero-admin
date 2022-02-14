@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const ListShipmetsWrapperS = styled.div`
   width: 100%;
   padding: 20px 15px;
+  min-height: 90vh;
   background-color: white;
 `;
 export const ListShipmetsS = styled.div``;
