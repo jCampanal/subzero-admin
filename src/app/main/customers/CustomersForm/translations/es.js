@@ -38,6 +38,7 @@ const locale = {
   NOT_SPECIAL_CHARATER: "Must contain at least one special character",
   VERIFY: "Lo sentimos no pudimos verificarlo",
   WARE: "Almacén",
+  TAX_EXEPTION: "Execpto de pagar taxes",
 };
 
 export default locale;

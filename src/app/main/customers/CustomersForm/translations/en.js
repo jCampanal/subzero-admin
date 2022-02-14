@@ -37,6 +37,7 @@ const locale = {
   NOT_SPECIAL_CHARATER: "Must contain at least one special character",
   VERIFY: "Sorry, we could not verify it",
   WARE: "Warehose",
+  TAX_EXEPTION: "Tax exemption",
 };
 
 export default locale;
