@@ -21,6 +21,7 @@ function OrdersAdmin() {
   const totalOrders = useSelector(selectTotal);
 
   const dispatch = useDispatch();
+
   useEffect(() => {
     setLoading(true);
     getAllWarehouses()
@@ -38,7 +39,7 @@ function OrdersAdmin() {
         );
         setLoading(false);
       });
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     if (warehoseTab.length > 0) {
@@ -49,7 +50,7 @@ function OrdersAdmin() {
         dispatch(fetchOrders({ wharehose: wareHouse }));
       }
     }
-  }, [warehoseTab, dispatch]);
+  }, [warehoseTab]);
   return (
     <FusePageCarded
       classes={{

@@ -122,6 +122,7 @@ const ProductForm = () => {
       description: "",
       quantity: "",
     });
+    setSelectedCategory(category);
     setValue("category", category);
   };
 
