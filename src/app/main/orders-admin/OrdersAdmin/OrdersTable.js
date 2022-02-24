@@ -186,6 +186,9 @@ function OrdersTable({ wharehose, rows, data }) {
                     case "status": {
                       return o.status;
                     }
+                    case "#": {
+                      return o.no;
+                    }
                     default: {
                       return o[order.id];
                     }

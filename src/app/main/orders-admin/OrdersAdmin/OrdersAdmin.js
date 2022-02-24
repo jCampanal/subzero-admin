@@ -72,7 +72,6 @@ function OrdersAdmin() {
           )}
         </>
       }
-      innerScroll
     />
   );
 }

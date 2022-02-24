@@ -226,7 +226,7 @@ function PageCardedHeader({ totalOrders }) {
           searchByDate={searchByDate}
           toggleDateRangeDlgIsOpen={toggleDateRangeDlgIsOpen}
           notValidate
-          defaultNull
+          defaultNullFrom
         />
       </div>
       <div className="flex text-right">

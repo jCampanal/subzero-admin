@@ -79,7 +79,7 @@ export default function OrdersTab(props) {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="default">
+      <AppBar position="sticky" color="default">
         {/* <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="tabs">
             {(props) => (

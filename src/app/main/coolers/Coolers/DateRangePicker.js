@@ -30,11 +30,17 @@ function DateRangePicker({
   searchByDate,
   notValidate,
   defaultNull,
+  defaultNullFrom,
+  defaultNullTo,
 }) {
   const { t } = useTranslation(namespace);
 
-  const [dateFrom, setDateFrom] = useState(defaultNull ? null : new Date());
-  const [dateTo, setDateTo] = useState(defaultNull ? null : new Date());
+  const [dateFrom, setDateFrom] = useState(
+    defaultNull ? null : defaultNullFrom ? null : new Date()
+  );
+  const [dateTo, setDateTo] = useState(
+    defaultNull ? null : defaultNullTo ? null : new Date()
+  );
   const dispatch = useDispatch();
 
   const toggleDialog = () => {

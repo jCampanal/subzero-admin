@@ -392,13 +392,16 @@ const ProductForm = () => {
             <h2>THE ORDER</h2>
             <OrderCountS>{getBigFormValues().products.length}</OrderCountS>
           </OrderTitleS>
-
           {getBigFormValues().products.map((product, i) => (
             <OrderS key={i}>
               <OrderCotentS>
                 <OrderNameS>{product.productName}</OrderNameS>
                 <OrderDetailsS>
-                  <span>{product.saleUnitName}</span>
+                  <span>
+                    {product.productToSend.quanty +
+                      " x " +
+                      product.saleUnitName}
+                  </span>
                   <IconS onClick={() => handleRemoveProduct(i)}>
                     <Delete />
                   </IconS>
