@@ -30,13 +30,14 @@ import { postOrder } from "app/api-conn/shipments_order";
 import { formatDate, getBinaryDays } from "app/lib/formatDate";
 import { cancelAddOrderAdmin } from "app/store/oredersAdmin/ordersAdminSlice";
 
-const ProductForm = () => {
+const ProductForm = (props) => {
   const [changer, setChanger] = useState(true);
   const [listCategories, setListCategories] = useState([]);
   const [listProducts, setListProducts] = useState([]);
   const [salesUnits, setSalesUnits] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState();
   const [selectedCategory, setSelectedCategory] = useState();
+
 
   const { t } = useTranslation("orders-admin");
   const history = useHistory();
@@ -127,6 +128,10 @@ const ProductForm = () => {
   };
 
   const handleSubmitForm = (data) => {
+    console.log('entro')
+    //if(dirtyFields === {} || !isValid){
+    //  console.log('no entro')
+   // }else{
     const oldProducts = getBigFormValues().products;
 
     const newProduct = {
@@ -142,6 +147,7 @@ const ProductForm = () => {
 
     setBigFormValues("products", [...oldProducts,newProduct]);
     setChanger(!changer);
+    //}
   };
   const handleRemoveProduct = (i) => {
     const oldProducts = getBigFormValues().products;
@@ -151,11 +157,10 @@ const ProductForm = () => {
     setChanger(!changer);
   };
   const saveData = () => {
-    console.log("getValues", getBigFormValues());
 
     let postURL = "/admin/Order";
     const formData = {
-      deliveryTime: formatDate(getBigFormValues().deliveryTime),
+     deliveryTime: formatDate(new Date(getBigFormValues().deliveryTime)),
 
       pickUp: getBigFormValues().pickUp,
       products: getBigFormValues().products.map((product) => {
@@ -212,6 +217,8 @@ const ProductForm = () => {
             },
           })
         );
+        console.log('llego aqui 10')
+        props.ClickClose()
         history.push("/orders_admin");
         return null;
       })
@@ -234,6 +241,7 @@ const ProductForm = () => {
     setSelectedProduct("");
     resetBigFormValues();
     dispatch(cancelAddOrderAdmin(true));
+
   };
 
   useEffect(() => {
@@ -309,7 +317,7 @@ const ProductForm = () => {
               id="category"
               isRequired
               control={control}
-              error={!!errors.category}
+              error={errors.category}
               helperText={errors?.category?.message}
               onChange={(cate) => {
                 handleChangeCategory(cate);
@@ -329,7 +337,7 @@ const ProductForm = () => {
               labelText="Product"
               isRequired
               control={control}
-              error={!!errors.product}
+              error={errors.product}
               helperText={errors?.product?.message}
               onChange={(product) => {
                 handleChangeProduct(product);
@@ -350,7 +358,7 @@ const ProductForm = () => {
                 labelText="Quantity"
                 isRequired
                 control={control}
-                error={!!errors.quantity}
+                error={errors.quantity}
                 helperText={errors?.quantity?.message}
                 style={{
                   direction: "rtl",
@@ -382,7 +390,7 @@ const ProductForm = () => {
               control={control}
             />
             <ButtonWrapperS>
-              <ButtonS type="submit" disabled={dirtyFields === {} || !isValid}>
+              <ButtonS type="submit" >
                 Add product
               </ButtonS>
             </ButtonWrapperS>

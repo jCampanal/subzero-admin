@@ -48,6 +48,7 @@ const CustomerForm = ({ customers }) => {
   const isWarehose = getBigFormValues().pickUp;
 
   const handleChangeCustomer = (customerID) => {
+    reset();
     const slectedCustomer = customers.find((c) => c.id === customerID);
     setSelectedCustomer(slectedCustomer);
     setBigFormValues("customerId", customerID);
