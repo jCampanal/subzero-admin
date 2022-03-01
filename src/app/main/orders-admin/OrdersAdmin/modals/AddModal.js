@@ -25,7 +25,7 @@ const AddModal = ({ isModal, setIsModal }) => {
                 <CloseIcon />
               </IconButton>
             </div>
-            <OrdersAddForm />
+            <OrdersAddForm ClickClose={() => {setIsModal(false)}}/>
           </FuseScrollbars>
         </Dialog>
       </ModalS>

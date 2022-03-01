@@ -45,7 +45,7 @@ const FormControls = lazy(() => import("./FormControls/FormControls"));
 //   },
 // ];
 
-const OrderAddForm = () => {
+const OrderAddForm = (props) => {
   const [customerAll, setCustomerAll] = useState([]);
   const [warehoseAll, setWarehoseAll] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -93,6 +93,8 @@ const OrderAddForm = () => {
       getAllCustomers()
         .then((res) => {
           setCustomerAll(res.data);
+          console.log('res.data')
+          console.log(res.data)
           setLoading(false);
           return null;
         })
@@ -141,7 +143,7 @@ const OrderAddForm = () => {
       {loading ? (
         <FuseLoading />
       ) : (
-        <FormControls customers={customerAll} warehouses={warehoseAll} />
+        <FormControls ClickClose={props.ClickClose} customers={customerAll} warehouses={warehoseAll} />
       )}
     </FormProvider>
   );

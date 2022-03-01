@@ -9,7 +9,7 @@ import FormDate from "./Commons/FormDate/FormDate";
 import ProductForm from "./Commons/ProductForm/ProductForm";
 import InvitedForm from "./Commons/InvitedForm/InvitedForm";
 
-const FormControls = ({ customers, warehouses }) => {
+const FormControls = (props ) => {
   const [tabSelected, setTabSelected] = useState("customer");
   return (
     <FormControlsS>
@@ -18,14 +18,14 @@ const FormControls = ({ customers, warehouses }) => {
 
       <UserSectionS>
         {tabSelected === "customer" ? (
-          <CustomerForm customers={customers} />
+          <CustomerForm customers={props.customers} />
         ) : (
-          <InvitedForm warehouses={warehouses} />
+          <InvitedForm warehouses={props.warehouses} />
         )}
       </UserSectionS>
       <TimeSection />
       <FormDate />
-      <ProductForm />
+      <ProductForm ClickClose={props.ClickClose}/>
     </FormControlsS>
   );
 };
