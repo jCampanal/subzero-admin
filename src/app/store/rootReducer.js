@@ -4,6 +4,7 @@ import i18n from "./i18nSlice";
 import authorization from "./auth";
 import user from "./user";
 import ordersAdmin from "./oredersAdmin";
+import driverMonitor from "./driverMonitor"
 
 const createReducer = (asyncReducers) => (state, action) => {
   const combinedReducer = combineReducers({
@@ -12,6 +13,7 @@ const createReducer = (asyncReducers) => (state, action) => {
     authorization,
     user,
     ordersAdmin,
+    driverMonitor,
     ...asyncReducers,
   });
 
