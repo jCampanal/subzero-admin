@@ -11,21 +11,25 @@ import InvitedForm from "./Commons/InvitedForm/InvitedForm";
 
 const FormControls = (props ) => {
   const [tabSelected, setTabSelected] = useState("customer");
+  const [tryCreateOrder,setTryCreateOrder]=useState(false)
+
+  const handlerTryCreateOrder=()=>{
+    setTryCreateOrder(true)
+  }
   return (
     <FormControlsS>
       <Header tabSelected={tabSelected} setTabSelected={setTabSelected} />
       <Divider />
-
       <UserSectionS>
         {tabSelected === "customer" ? (
-          <CustomerForm customers={props.customers} />
+          <CustomerForm customers={props.customers} TryCreateOrder={tryCreateOrder}/>
         ) : (
           <InvitedForm warehouses={props.warehouses} />
         )}
       </UserSectionS>
       <TimeSection />
       <FormDate />
-      <ProductForm ClickClose={props.ClickClose}/>
+      <ProductForm ClickClose={props.ClickClose} TryCreate={()=>handlerTryCreateOrder()}/>
     </FormControlsS>
   );
 };

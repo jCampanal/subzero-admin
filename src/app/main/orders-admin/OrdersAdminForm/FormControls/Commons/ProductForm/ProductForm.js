@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useForm, useFormContext } from "react-hook-form";
+import { useForm, useFormContext,useFormState } from "react-hook-form";
 import Field from "../Field/Field";
 import {
   ProductFormS,
@@ -37,7 +37,7 @@ const ProductForm = (props) => {
   const [salesUnits, setSalesUnits] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState();
   const [selectedCategory, setSelectedCategory] = useState();
-
+  const [submit,setSubmit]=useState(false)
 
   const { t } = useTranslation("orders-admin");
   const history = useHistory();
@@ -99,7 +99,7 @@ const ProductForm = (props) => {
     control,
     reset,
     setValue,
-    formState: { dirtyFields, isValid, errors },
+    formState: {  isValid, errors },
   } = useForm({
     defaultValues: {
       product: "",
@@ -110,6 +110,9 @@ const ProductForm = (props) => {
     },
     mode: "all",
     resolver: yupResolver(validationRules),
+  });
+  const { dirtyFields } = useFormState({
+    control
   });
 
   const handleChangeProduct = (product) => {
@@ -128,10 +131,7 @@ const ProductForm = (props) => {
   };
 
   const handleSubmitForm = (data) => {
-    console.log('entro')
-    //if(dirtyFields === {} || !isValid){
-    //  console.log('no entro')
-   // }else{
+   
     const oldProducts = getBigFormValues().products;
 
     const newProduct = {
@@ -154,7 +154,7 @@ const ProductForm = (props) => {
       description: "",
       quantity: "",
     });
-    //}
+    setSubmit(false)
   };
   const handleRemoveProduct = (i) => {
     const oldProducts = getBigFormValues().products;
@@ -164,7 +164,7 @@ const ProductForm = (props) => {
     setChanger(!changer);
   };
   const saveData = () => {
-
+    props.TryCreate()
     let postURL = "/admin/Order";
     const formData = {
      deliveryTime: formatDate(new Date(getBigFormValues().deliveryTime)),
@@ -223,8 +223,7 @@ const ProductForm = (props) => {
               horizontal: "right",
             },
           })
-        );
-        console.log('llego aqui 10')
+        );        
         props.ClickClose()
         history.push("/orders_admin");
         return null;
@@ -242,13 +241,20 @@ const ProductForm = (props) => {
         )
       );
   };
+  const handleSubmitE=()=>{
+    if(!isValid){
+      setSubmit(true)
+    }
+    
+  }
+
   const handleCancel = () => {
     reset();
     setSelectedCategory("");
     setSelectedProduct("");
     resetBigFormValues();
     dispatch(cancelAddOrderAdmin(true));
-
+    setSubmit(false)
   };
 
   useEffect(() => {
@@ -311,12 +317,13 @@ const ProductForm = (props) => {
       loadProducts();
     }
   }, [selectedCategory, dispatch]);
-
+  console.log(dirtyFields)
   return (
     <ProductFormS>
       <div className="grid gap-x-48 grid-cols-1 sm:grid-cols-2">
         <div>
           <form onSubmit={handleSubmit((data) => handleSubmitForm(data))}>
+            {console.log(!dirtyFields.category&&submit)}
             <Field
               type="select"
               name="category"
@@ -324,8 +331,8 @@ const ProductForm = (props) => {
               id="category"
               isRequired
               control={control}
-              error={errors.category}
-              helperText={errors?.category?.message}
+              error={errors.category||(!dirtyFields.category&&submit)}
+              helperText={errors.category?errors.category.message:(!dirtyFields.category&&submit)?"required field":""}
               onChange={(cate) => {
                 handleChangeCategory(cate);
               }}
@@ -344,8 +351,8 @@ const ProductForm = (props) => {
               labelText="Product"
               isRequired
               control={control}
-              error={errors.product}
-              helperText={errors?.product?.message}
+              error={errors.product||(!dirtyFields.product&&submit)}
+              helperText={errors.product?errors.product.message:!dirtyFields.product&&submit?"required field":''}
               onChange={(product) => {
                 handleChangeProduct(product);
               }}
@@ -365,8 +372,8 @@ const ProductForm = (props) => {
                 labelText="Quantity"
                 isRequired
                 control={control}
-                error={errors.quantity}
-                helperText={errors?.quantity?.message}
+                error={errors.quantity||(!dirtyFields.quantity&&submit)}
+                helperText={errors.quantity?errors.quantity.message:!dirtyFields.quantity&&submit?"required field":''}
                 style={{
                   direction: "rtl",
                 }}
@@ -378,8 +385,8 @@ const ProductForm = (props) => {
                 labelText="Unit"
                 isRequired
                 control={control}
-                error={!!errors.saleUnit}
-                helperText={errors?.saleUnit?.message}
+                error={errors.saleUnit||(!dirtyFields.saleUnit&&submit)}
+                helperText={errors.saleUnit?errors.saleUnit.message:!dirtyFields.saleUnit&&submit?"required field":''}
                 options={salesUnits.map((unit) => {
                   return (
                     <MenuItem key={unit.saleUnitId} value={unit}>
@@ -397,7 +404,7 @@ const ProductForm = (props) => {
               control={control}
             />
             <ButtonWrapperS>
-              <ButtonS type="submit" >
+              <ButtonS type="submit" onClick={handleSubmitE}>
                 Add product
               </ButtonS>
             </ButtonWrapperS>

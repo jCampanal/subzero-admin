@@ -1,6 +1,6 @@
 import { MenuItem } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import { useForm, useFormContext } from "react-hook-form";
+import { useForm, useFormContext,useFormState } from "react-hook-form";
 import Field from "../Field/Field";
 import { CustomerFormS } from "./CustomerForm.style";
 import PropTypes from "prop-types";
@@ -16,7 +16,7 @@ const defaulFormValues = {
   wrehouseId: "",
 };
 
-const CustomerForm = ({ customers }) => {
+const CustomerForm = (props) => {
   const methods = useFormContext();
   const setBigFormValues = methods.setValue;
   const getBigFormValues = methods.getValues;
@@ -34,7 +34,7 @@ const CustomerForm = ({ customers }) => {
 
   const {
     control,
-    formState: { errors },
+    formState: { dirtyFields,errors },
     setValue,
     reset,
   } = useForm({
@@ -43,13 +43,19 @@ const CustomerForm = ({ customers }) => {
     resolver: yupResolver(validationRules),
   });
 
+
+
   const [selectedCustomer, setSelectedCustomer] = useState();
 
   const isWarehose = getBigFormValues().pickUp;
-
+  
   const handleChangeCustomer = (customerID) => {
-    reset();
-    const slectedCustomer = customers.find((c) => c.id === customerID);
+    reset(
+      {  
+         addressId: "",
+         wrehouseId: "",}
+    );
+    const slectedCustomer = props.customers.find((c) => c.id === customerID);
     setSelectedCustomer(slectedCustomer);
     setBigFormValues("customerId", customerID);
     setBigFormValues("wrehouseId", slectedCustomer.warehouse?.id);
@@ -85,9 +91,9 @@ const CustomerForm = ({ customers }) => {
           onChange={handleChangeCustomer}
           control={control}
           noValue="Nothing selected"
-          error={!!errors.customerId}
-          helperText={errors?.customerId?.message}
-          options={customers.map((customer) => {
+          error={errors.customerId||((getBigFormValues().customerId==""||getBigFormValues().customerId=="Nothing selected")&&props.TryCreateOrder)}
+          helperText={errors.customerId?errors.customerId.message:(getBigFormValues().customerId==""||getBigFormValues().customerId=="Nothing selected")&&props.TryCreateOrder?"required field":""}
+          options={props.customers.map((customer) => {
             return (
               <MenuItem key={customer.id} value={customer.id}>
                 {customer.company.name}
@@ -105,8 +111,8 @@ const CustomerForm = ({ customers }) => {
           name="wrehouseId"
           control={control}
           onChange={handleChangeWharehose}
-          error={!!errors.wrehouseId}
-          helperText={errors?.wrehouseId?.message}
+          error={errors.wrehouseId||(!dirtyFields.wrehouseId&&props.TryCreateOrder)}
+          helperText={errors.wrehouseId?errors.wrehouseId.message:!dirtyFields.wrehouseId&&props.TryCreateOrder?"required field":""}
           noValue=""
           options={
             selectedCustomer && selectedCustomer.warehouse
@@ -131,8 +137,8 @@ const CustomerForm = ({ customers }) => {
           name="addressId"
           control={control}
           onChange={handleChangeAddress}
-          error={!!errors.addressId}
-          helperText={errors?.addressId?.message}
+          error={errors.addressId||(!dirtyFields.addressId&&props.TryCreateOrder)}
+          helperText={errors.addressId?errors.addressId.message:!dirtyFields.addressId&&props.TryCreateOrder?"required field":""}
           noValue=""
           options={
             selectedCustomer
