@@ -24,7 +24,7 @@ const FormControls = (props ) => {
         {tabSelected === "customer" ? (
           <CustomerForm customers={props.customers} TryCreateOrder={tryCreateOrder}/>
         ) : (
-          <InvitedForm warehouses={props.warehouses} />
+          <InvitedForm warehouses={props.warehouses} TryCreateOrder={tryCreateOrder}/>
         )}
       </UserSectionS>
       <TimeSection />

@@ -22,6 +22,7 @@ const locale = {
   CANCELED: "Canceled",
   CLEAR_SEARCH: "Clear search",
   DELETE_WARNING_TITLE: "Are you sure ?",
+  REQUIRED:"required"
 };
 
 export default locale;

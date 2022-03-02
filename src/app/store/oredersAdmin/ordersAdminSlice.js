@@ -63,8 +63,14 @@ const ordersAdminSlice = createSlice({
           state.adminOrders[orderIndex] = newOrder;
         } else {
           state.adminOrders = state.adminOrders.concat(newOrder);
-          state.total = state.total + action.payload.data.data.length;
+          
+         // state.total = state.total + action.payload.data.data.length;
         }
+        state.total = 0
+        state.adminOrders.map(wherahouse=>{
+          state.total+=wherahouse.data.data.length
+        })
+
         state.adminOrders = state.adminOrders.sort(
           (a, b) => b.data.data.length - a.data.data.length
         );

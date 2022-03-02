@@ -21,7 +21,7 @@ const defaulFormValues = {
   email: "",
 };
 
-const InvitedForm = ({ warehouses }) => {
+const InvitedForm = ({ warehouses, TryCreateOrder}) => {
   const methods = useFormContext();
   const setBigFormValues = methods.setValue;
   const { t } = useTranslation("orders-admin");
@@ -40,11 +40,11 @@ const InvitedForm = ({ warehouses }) => {
     companyName: yup.string().required(),
     email: yup.string().email().required(),
   });
-
+  
   const {
     control,
     reset,
-    formState: { errors },
+    formState: {dirtyFields, errors },
   } = useForm({
     defaultValues: defaulFormValues,
     mode: "all",
@@ -64,8 +64,8 @@ const InvitedForm = ({ warehouses }) => {
     <InvitedFormS>
       <Field
         control={control}
-        error={!!errors.companyName}
-        helperText={errors?.companyName?.message}
+        error={errors.companyName||(!dirtyFields.companyName&&TryCreateOrder)}
+        helperText={errors.companyName?errors.companyName.message:!dirtyFields.wrehouseId&&TryCreateOrder?"required field":""}
         labelText="Company"
         name="companyName"
         id="companyName"
@@ -74,8 +74,8 @@ const InvitedForm = ({ warehouses }) => {
       />
       <Field
         control={control}
-        error={!!errors.email}
-        helperText={errors?.email?.message}
+        error={errors.email||(!dirtyFields.email&&TryCreateOrder)}
+        helperText={errors.email?errors.email.message:!dirtyFields.companyName&&TryCreateOrder?"required field":""}
         labelText="Email"
         name="email"
         id="email"
@@ -86,7 +86,7 @@ const InvitedForm = ({ warehouses }) => {
         <Field
           control={control}
           onChange={(value) => handleChange("street", value)}
-          error={!!errors.street}
+          error={errors.street}
           helperText={errors?.street?.message}
           labelText="Street"
           name="street"
@@ -96,7 +96,7 @@ const InvitedForm = ({ warehouses }) => {
         <Field
           control={control}
           onChange={(value) => handleChange("state", value)}
-          error={!!errors.state}
+          error={errors.state}
           helperText={errors?.state?.message}
           labelText="State"
           name="state"
@@ -108,7 +108,7 @@ const InvitedForm = ({ warehouses }) => {
         <Field
           control={control}
           onChange={(value) => handleChange("city", value)}
-          error={!!errors.city}
+          error={errors.city}
           helperText={errors?.city?.message}
           labelText="City"
           name="city"
@@ -118,7 +118,7 @@ const InvitedForm = ({ warehouses }) => {
         <Field
           control={control}
           onChange={(value) => handleChange("zipCode", value)}
-          error={!!errors.zipCode}
+          error={errors.zipCode}
           helperText={errors?.zipCode?.message}
           labelText="Zip Code"
           name="zipCode"
@@ -129,8 +129,8 @@ const InvitedForm = ({ warehouses }) => {
       <Field
         control={control}
         onChange={(value) => handleChange("wrehouseId", value)}
-        error={!!errors.wrehouseId}
-        helperText={errors?.wrehouseId?.message}
+        error={errors.wrehouseId||(!dirtyFields.wrehouseId&&TryCreateOrder)}
+        helperText={errors.wrehouseId?errors.wrehouseId.message:!dirtyFields.wrehouseId&&TryCreateOrder?"required field":""}
         labelText="Warehouse"
         name="wrehouseId"
         id="wrehouseId"

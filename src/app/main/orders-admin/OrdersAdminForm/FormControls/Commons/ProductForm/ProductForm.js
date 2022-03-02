@@ -37,9 +37,10 @@ const ProductForm = (props) => {
   const [salesUnits, setSalesUnits] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState();
   const [selectedCategory, setSelectedCategory] = useState();
+  const { t } = useTranslation("orders-admin");
   const [submit,setSubmit]=useState(false)
 
-  const { t } = useTranslation("orders-admin");
+  console.log("hemos construido "+t("REQUIRED"))
   const history = useHistory();
   const dispatch = useDispatch();
   const methods = useFormContext();
@@ -166,6 +167,19 @@ const ProductForm = (props) => {
   const saveData = () => {
     props.TryCreate()
     let postURL = "/admin/Order";
+    if(getBigFormValues().products.length!==0
+    &&(
+      (getBigFormValues().profile === "customer"
+        &&(getBigFormValues().addressId !== ""
+          ||(getBigFormValues().pickUp&&getBigFormValues().wrehouseId!==""))
+        &&getBigFormValues().customerId!=="Nothing selected")
+      ||
+      (getBigFormValues().profile !== "customer"
+        &&getBigFormValues().companyName!==""&&getBigFormValues().email!==""
+        &&getBigFormValues().wrehouseId!=="")))
+    {
+      console.log("Entra aqui")
+      console.log(getBigFormValues().wrehouseId)
     const formData = {
      deliveryTime: formatDate(new Date(getBigFormValues().deliveryTime)),
 
@@ -240,6 +254,7 @@ const ProductForm = (props) => {
           })
         )
       );
+     }
   };
   const handleSubmitE=()=>{
     if(!isValid){
