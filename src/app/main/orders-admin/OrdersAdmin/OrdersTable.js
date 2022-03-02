@@ -18,12 +18,13 @@ import RemoveDlg from "app/common/removeDlg";
 import { openDialog } from "app/store/fuse/dialogSlice";
 import { fetchOrders } from "app/store/oredersAdmin/ordersAdminSlice";
 import _ from "lodash";
+import { formatDate } from "app/lib/formatDate";
 
 function OrdersTable({ wharehose, rows, data }) {
   const { t } = useTranslation("orders-admin");
   const dispatch = useDispatch();
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(1000);
   const location = useLocation();
 
   const [isViewModal, setIsViewModal] = useState(false);
@@ -74,12 +75,17 @@ function OrdersTable({ wharehose, rows, data }) {
     if (_noOrder === "" || !_noOrder) {
       _noOrder = undefined;
     }
-    if (date1 === "" || !date1) {
-      date1 = undefined;
+    if (date1 === "" || !date1) {    
+      //date1=undefined
+      date1 = formatDate(new Date(new Date().setHours(-5,0,0,0)));
+      console.log("date 1"+ date1)
     }
     if (date2 === "" || !date2) {
-      date2 = undefined;
+      date2 = formatDate(new Date());
+      console.log("date 2"+ date2)
+    
     }
+    
     dispatch(
       fetchOrders({
         wharehose: wharehose,
@@ -212,22 +218,7 @@ function OrdersTable({ wharehose, rows, data }) {
         </Table>
       </FuseScrollbars>
 
-      <TablePagination
-        className="flex-shrink-0 border-t-1"
-        component="div"
-        count={data.totalItems}
-        labelRowsPerPage={t("ROWS_PER_PAGE")}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        backIconButtonProps={{
-          "aria-label": "Previous Page",
-        }}
-        nextIconButtonProps={{
-          "aria-label": "Next Page",
-        }}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+
 
       {viewOrder && (
         <ViewModal

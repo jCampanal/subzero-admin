@@ -147,6 +147,13 @@ const ProductForm = (props) => {
 
     setBigFormValues("products", [...oldProducts,newProduct]);
     setChanger(!changer);
+    reset({
+      product: "",
+      category: "",
+      saleUnit: "",
+      description: "",
+      quantity: "",
+    });
     //}
   };
   const handleRemoveProduct = (i) => {

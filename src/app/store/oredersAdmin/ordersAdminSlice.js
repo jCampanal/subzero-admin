@@ -53,6 +53,7 @@ const ordersAdminSlice = createSlice({
           wharehouse: action.payload.wharehouse,
           data: action.payload.data,
         };
+        console.log(action.payload.data.totalItems)
 
         const orderIndex = state.adminOrders.findIndex(
           (o) => o.wharehouse.id === newOrder.wharehouse.id
