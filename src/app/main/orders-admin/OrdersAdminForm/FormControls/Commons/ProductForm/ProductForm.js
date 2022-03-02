@@ -144,9 +144,8 @@ const ProductForm = (props) => {
         productSaleUnitId: data.saleUnit.productSaleUnitId,
       },
     };
-   
 
-    setBigFormValues("products", [...oldProducts,newProduct]);
+    setBigFormValues("products", [...oldProducts, newProduct]);
     setChanger(!changer);
     reset({
       product: "",
@@ -435,7 +434,11 @@ const ProductForm = (props) => {
               <OrderCotentS>
                 <OrderNameS>{product.productName}</OrderNameS>
                 <OrderDetailsS>
-                  <span>{product.productToSend.quanty+' x '+product.saleUnitName}</span>
+                  <span>
+                    {product.productToSend.quanty +
+                      " x " +
+                      product.saleUnitName}
+                  </span>
                   <IconS onClick={() => handleRemoveProduct(i)}>
                     <Delete />
                   </IconS>

@@ -1,33 +1,33 @@
-import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
-import MobileDetect from 'mobile-detect';
-import PerfectScrollbar from 'perfect-scrollbar';
-import 'perfect-scrollbar/css/perfect-scrollbar.css';
-import PropTypes from 'prop-types';
-import { createRef, useCallback, useEffect, useRef, forwardRef } from 'react';
-import { connect } from 'react-redux';
-import withRouterAndRef from '../withRouterAndRef/withRouterAndRef';
+import { makeStyles } from "@material-ui/core/styles";
+import clsx from "clsx";
+import MobileDetect from "mobile-detect";
+import PerfectScrollbar from "perfect-scrollbar";
+import "perfect-scrollbar/css/perfect-scrollbar.css";
+import PropTypes from "prop-types";
+import { createRef, useCallback, useEffect, useRef, forwardRef } from "react";
+import { connect } from "react-redux";
+import withRouterAndRef from "../withRouterAndRef/withRouterAndRef";
 
 const md = new MobileDetect(window.navigator.userAgent);
 const isMobile = md.mobile();
 
 const handlerNameByEvent = {
-  'ps-scroll-y': 'onScrollY',
-  'ps-scroll-x': 'onScrollX',
-  'ps-scroll-up': 'onScrollUp',
-  'ps-scroll-down': 'onScrollDown',
-  'ps-scroll-left': 'onScrollLeft',
-  'ps-scroll-right': 'onScrollRight',
-  'ps-y-reach-start': 'onYReachStart',
-  'ps-y-reach-end': 'onYReachEnd',
-  'ps-x-reach-start': 'onXReachStart',
-  'ps-x-reach-end': 'onXReachEnd',
+  "ps-scroll-y": "onScrollY",
+  "ps-scroll-x": "onScrollX",
+  "ps-scroll-up": "onScrollUp",
+  "ps-scroll-down": "onScrollDown",
+  "ps-scroll-left": "onScrollLeft",
+  "ps-scroll-right": "onScrollRight",
+  "ps-y-reach-start": "onYReachStart",
+  "ps-y-reach-end": "onYReachEnd",
+  "ps-x-reach-start": "onXReachStart",
+  "ps-x-reach-end": "onXReachEnd",
 };
 Object.freeze(handlerNameByEvent);
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    overscrollBehavior: 'contain',
+    overscrollBehavior: "contain",
   },
 }));
 
@@ -48,7 +48,7 @@ const FuseScrollbars = forwardRef((props, ref) => {
       }
     });
     // eslint-disable-next-line
-    }, [ref]);
+  }, [ref]);
 
   const unHookUpEvents = useCallback(() => {
     handlerByEvent.current.forEach((value, key) => {
@@ -130,17 +130,16 @@ const FuseScrollbars = forwardRef((props, ref) => {
     },
     [destroyPs]
   );
-    console.log('En el scroll '+props.enable)
   // console.info('render::ps');
   return (
     <div
       id={props.id}
       className={clsx(classes.root, props.className)}
       style={
-        props.customScrollbars && (props.enable||true ) && !isMobile
+        props.customScrollbars && (props.enable || true) && !isMobile
           ? {
-              position: 'relative',
-              overflow: 'hidden!important',
+              position: "relative",
+              overflow: "hidden!important",
             }
           : {}
       }
@@ -173,7 +172,7 @@ FuseScrollbars.propTypes = {
 };
 
 FuseScrollbars.defaultProps = {
-  className: '',
+  className: "",
   enable: true,
   scrollToTopOnChildChange: false,
   scrollToTopOnRouteChange: false,

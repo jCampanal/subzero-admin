@@ -205,7 +205,6 @@ const FusePageCarded = forwardRef((props, ref) => {
             {props.contentToolbar && (
               <div className={classes.toolbar}>{props.contentToolbar}</div>
             )}
-            {console.log('SCroll+' + props.innerScroll)}
             {props.content && (
               <FuseScrollbars
                 className={classes.content}

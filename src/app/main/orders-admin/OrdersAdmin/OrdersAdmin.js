@@ -54,7 +54,7 @@ function OrdersAdmin() {
   return (
     <FusePageCarded
       classes={{
-        content: "flex",        
+        content: "flex",
         contentCard: "overflow-hidden",
         header: "",
       }}

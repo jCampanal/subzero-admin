@@ -78,7 +78,7 @@ export default function OrdersTab(props) {
 
   return (
     <div className={classes.root}>
-      <AppBar position='sticky' color="default" >
+      <AppBar position="sticky" color="default">
         {/* <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="tabs">
             {(props) => (
@@ -140,7 +140,7 @@ export default function OrdersTab(props) {
           aria-label="full width tabs example"
         >
           {orders.map((tabItem) => (
-            <Tab 
+            <Tab
               key={tabItem.wharehouse.id}
               label={
                 <div>
@@ -155,7 +155,7 @@ export default function OrdersTab(props) {
           ))}
         </Tabs>
       </AppBar>
-      
+
       <SwipeableViews
         axis={theme.direction === "rtl" ? "x-reverse" : "x"}
         index={value}
@@ -180,8 +180,7 @@ export default function OrdersTab(props) {
           </TabPanel>
         ))}
       </SwipeableViews>
-    </div>  
-    
+    </div>
   );
 }
 
