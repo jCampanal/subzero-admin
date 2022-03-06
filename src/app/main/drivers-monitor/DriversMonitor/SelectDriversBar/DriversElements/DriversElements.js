@@ -32,6 +32,8 @@ const DriversElements=(props)=>{
                           Name={element.name}
                           Online={element.online}
                           Color={element.color}
+                          Ordenes={'2'}
+                          Stops={['Parque El Curita','Santiago de las vegas']}
                           Click={()=>handlerChangeCheckbox(element.id)}/>
         )
     })

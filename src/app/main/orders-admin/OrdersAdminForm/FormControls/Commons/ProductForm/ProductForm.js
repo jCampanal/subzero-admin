@@ -37,10 +37,12 @@ const ProductForm = (props) => {
   const [salesUnits, setSalesUnits] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState();
   const [selectedCategory, setSelectedCategory] = useState();
-  const { t } = useTranslation("orders-admin");
+  const { t } = useTranslation("orders-admin")
   const [submit,setSubmit]=useState(false)
+  const [outofProducts,setOutofProducts]=useState(false)
 
-  console.log("hemos construido "+t("REQUIRED"))
+  console.log("outofProducts")
+  console.log(outofProducts)
   const history = useHistory();
   const dispatch = useDispatch();
   const methods = useFormContext();
@@ -66,11 +68,11 @@ const ProductForm = (props) => {
         salesUnits: yup.array(),
         listID: yup.string().nullable(),
       })
-      .typeError("Select a valid product"),
+      .typeError(t("SEL_VALID_PRODUCT")),
     quantity: yup
       .number()
       .required(t("REQUIRED"))
-      .typeError("Select a valid number"),
+      .typeError(t("SEL_VALID_NUMBER")),
     description: yup.string(),
     saleUnit: yup
       .object()
@@ -82,8 +84,8 @@ const ProductForm = (props) => {
         saleUnitValue: yup.string(),
         decimals: yup.boolean(),
       })
-      .typeError("Select a valid sale unit")
-      .required("Select a valid sale unit"),
+      .typeError( t("SEL_VALID_SAL_UNIT"))
+      .required(t("REQUIRED")),
     category: yup
       .object()
       .shape({
@@ -92,7 +94,7 @@ const ProductForm = (props) => {
         link: yup.string(),
         imageURL: yup.string(),
       })
-      .typeError("Select a valid category"),
+      .typeError(t('SEL_VALID_CATEGORY')),
   });
 
   const {
@@ -146,6 +148,7 @@ const ProductForm = (props) => {
     };
 
     setBigFormValues("products", [...oldProducts, newProduct]);
+    setOutofProducts(false)
     setChanger(!changer);
     reset({
       product: "",
@@ -165,6 +168,9 @@ const ProductForm = (props) => {
   };
   const saveData = () => {
     props.TryCreate()
+    if(getBigFormValues().products.length===0){
+      setOutofProducts(true)
+    }
     let postURL = "/admin/Order";
     if(getBigFormValues().products.length!==0
     &&(
@@ -341,12 +347,12 @@ const ProductForm = (props) => {
             <Field
               type="select"
               name="category"
-              labelText="Category"
+              labelText={t("CATEGORY")}
               id="category"
               isRequired
               control={control}
-              error={errors.category||(!dirtyFields.category&&submit)}
-              helperText={errors.category?errors.category.message:(!dirtyFields.category&&submit)?"required field":""}
+              error={errors.category||(!dirtyFields.category&&(submit||outofProducts))}
+              helperText={errors.category?errors.category.message:(!dirtyFields.category&&(submit||outofProducts))?t("REQUIRED"):""}
               onChange={(cate) => {
                 handleChangeCategory(cate);
               }}
@@ -362,11 +368,11 @@ const ProductForm = (props) => {
               type="select"
               name="product"
               id="product"
-              labelText="Product"
+              labelText={t("PRODUCT")}
               isRequired
               control={control}
-              error={errors.product||(!dirtyFields.product&&submit)}
-              helperText={errors.product?errors.product.message:!dirtyFields.product&&submit?"required field":''}
+              error={errors.product||(!dirtyFields.product&&(submit||outofProducts))}
+              helperText={errors.product?errors.product.message:!dirtyFields.product&&(submit||outofProducts)?t("REQUIRED"):''}
               onChange={(product) => {
                 handleChangeProduct(product);
               }}
@@ -383,11 +389,11 @@ const ProductForm = (props) => {
                 type="text"
                 name="quantity"
                 id="quantity"
-                labelText="Quantity"
+                labelText={t("QUANTITY")}
                 isRequired
                 control={control}
-                error={errors.quantity||(!dirtyFields.quantity&&submit)}
-                helperText={errors.quantity?errors.quantity.message:!dirtyFields.quantity&&submit?"required field":''}
+                error={errors.quantity||(!dirtyFields.quantity&&(submit||outofProducts))}
+                helperText={errors.quantity?errors.quantity.message:!dirtyFields.quantity&&(submit||outofProducts)?t("REQUIRED"):''}
                 style={{
                   direction: "rtl",
                 }}
@@ -396,11 +402,11 @@ const ProductForm = (props) => {
                 type="select"
                 name="saleUnit"
                 id="saleUnit"
-                labelText="Unit"
+                labelText={t("UNIT")}
                 isRequired
                 control={control}
-                error={errors.saleUnit||(!dirtyFields.saleUnit&&submit)}
-                helperText={errors.saleUnit?errors.saleUnit.message:!dirtyFields.saleUnit&&submit?"required field":''}
+                error={errors.saleUnit||(!dirtyFields.saleUnit&&(submit||outofProducts))}
+                helperText={errors.saleUnit?errors.saleUnit.message:!dirtyFields.saleUnit&&(submit||outofProducts)?t("REQUIRED"):''}
                 options={salesUnits.map((unit) => {
                   return (
                     <MenuItem key={unit.saleUnitId} value={unit}>
@@ -414,19 +420,19 @@ const ProductForm = (props) => {
               type="text"
               name="description"
               id="description"
-              labelText="Description"
+              labelText={t("DESCRIPTION")}
               control={control}
             />
             <ButtonWrapperS>
               <ButtonS type="submit" onClick={handleSubmitE}>
-                Add product
+                {t("ADD_PRODUCT")}
               </ButtonS>
             </ButtonWrapperS>
           </form>
         </div>
         <div>
           <OrderTitleS>
-            <h2>THE ORDER</h2>
+            <h2>{t("THE_ORDER")}</h2>
             <OrderCountS>{getBigFormValues().products.length}</OrderCountS>
           </OrderTitleS>
           {getBigFormValues().products.map((product, i) => (
@@ -454,10 +460,10 @@ const ProductForm = (props) => {
             <Divider className="mb-20" />
             <div className="flex justify-between">
               <ButtonS danger onClick={handleCancel}>
-                Cancel
+                {t("CANCELAR")}
               </ButtonS>
               <ButtonS primary onClick={saveData} className="flex justify-end">
-                <Telegram className="mr-5" fontSize="large" /> Craete Order
+                <Telegram className="mr-5" fontSize="large" /> {t("CREATE_ORDER")}
               </ButtonS>
             </div>
           </OrderFooterS>
