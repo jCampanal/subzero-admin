@@ -7,7 +7,8 @@ import {
     OrderCountS,
     ButtonDatePickerS,
     H3S,
-    OnlineSignal} from './DriverElement.style'
+    OnlineSignal,
+    LabelH4S} from './DriverElement.style'
 import { DatePicker } from "@material-ui/pickers";
 import Field from 'app/main/orders-admin/OrdersAdminForm/FormControls/Commons/Field/Field';
 import {  MenuItem } from "@material-ui/core";
@@ -108,27 +109,8 @@ const DriverElement=(props)=>{
                                     }}                       
                         />
                     )}
-                    />     
-
-                    <Controller
-                            name="selected"
-                            control={control}
-                            render={({ field }) => (
-                            <FormControlLabel
-                                className="mt-8 mb-16"                                
-                                id="selected"
-                                control={
-                                <Checkbox
-                                    {...field}
-                                    checked={field.value}
-                                    onChange={(e) => {field.onChange(e.target.checked);handleSubmitForm()}}
-                                />
-                                }
-                                label={<span style={{ fontSize: "16px" }}>Pick up</span>}
-                            />
-                            )}
-                        />          
-       
+                    />          
+                    <LabelH4S>Show records for the:</LabelH4S>                
                                         <Field
                                             type="select"
                                             className="w-6/12 place-self-center md:w-5/6"
@@ -148,6 +130,25 @@ const DriverElement=(props)=>{
                                                 </MenuItem>,
                                                 ]}
                                             />
+
+                    <Controller
+                            name="selected"
+                            control={control}
+                            render={({ field }) => (
+                            <FormControlLabel
+                                className="mt-8 mb-16"                                
+                                id="selected"
+                                control={
+                                <Checkbox
+                                    {...field}
+                                    checked={field.value}
+                                    onChange={(e) => {field.onChange(e.target.checked);handleSubmitForm()}}
+                                />
+                                }
+                                label={<span style={{ fontSize: "16px" }}>Show records</span>}
+                            />
+                            )}
+                        />     
             </FormS >
                       
        </DivDriverElementS>

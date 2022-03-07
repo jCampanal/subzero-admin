@@ -10,7 +10,11 @@ border-radius:10px;
 margin: 5px 0px;
 background-color: #fafafa;
 box-shadow:1px 2px 2px grey,-1px 2px 2px grey,1px -2px 2px grey,-1px -2px 2px grey;
-transition:all 225ms;`;
+transition:all 225ms;
+@media (min-width:960px){
+  width:96%;
+  left:2%;        
+}`;
 
 export const DivDriverElementSecundaryS=styled.div`
 display:flex;
@@ -20,7 +24,7 @@ align-items: center;
 ${(props) =>
   props.padding &&
   css`
-    padding:0 20%; 
+    padding-left:15%; 
   `}`;
 
 export const FormS=styled.form`
@@ -30,13 +34,17 @@ justify-content:space-around;
 align-items: center;
 width: 100%;`;
 
+export const LabelH4S=styled.h4`
+margin-top:10px;
+`;
+
 export const OnlineSignal=styled.div`
 border:solid 2px #757575;
 border-radius:100px;
 width:18px;
 height:18px;
 background-color:${(props) => (props.Online ? props.Color : 'black')};
-margin-right:12px`;
+margin-right:8px;`;
 
 export const H3S=styled.h3`
 margin:2px; 

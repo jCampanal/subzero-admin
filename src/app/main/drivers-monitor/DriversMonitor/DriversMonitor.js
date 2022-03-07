@@ -64,10 +64,7 @@ useEffect( ()=>{
   
   return (
   <div>
-    <div className="px-12 relative shadow">
-      <h1>{t("DRIVERS_MONITOR")}</h1>
-    </div>
-      <div className="flex absolute m-0 box-border w-full h-full justify-center flex-col md:flex-row">
+    <div className="flex absolute m-0 box-border w-full h-full justify-center flex-col md:flex-row">
       <DivMap>
             < GoogleMapReact
               containerStyle={{

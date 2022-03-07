@@ -23,7 +23,7 @@ export const BarDriversPrincipalS = styled.div`
   box-sizing: border-box;
   background-color:#fafafa;
   @media (min-width:960px){
-    max-width: 35%;
+    max-width: 20%;
     height:100%;        
   }
 `;
@@ -60,4 +60,6 @@ export const LabelS=styled.div`
   padding-left:10%;
   width:100%; 
   color:black;
-`
+  @media (min-width:960px){
+    left:1%;        
+  }`;
