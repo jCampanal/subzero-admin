@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useForm, useFormContext,useFormState } from "react-hook-form";
+import { useForm, useFormContext, useFormState } from "react-hook-form";
 import Field from "../Field/Field";
 import {
   ProductFormS,
@@ -38,9 +38,11 @@ const ProductForm = (props) => {
   const [selectedProduct, setSelectedProduct] = useState();
   const [selectedCategory, setSelectedCategory] = useState();
   const { t } = useTranslation("orders-admin");
-  const [submit,setSubmit]=useState(false)
+  const [submit, setSubmit] = useState(false);
+  const [outofProducts, setOutofProducts] = useState(false);
 
-  console.log("hemos construido "+t("REQUIRED"))
+  console.log("outofProducts");
+  console.log(outofProducts);
   const history = useHistory();
   const dispatch = useDispatch();
   const methods = useFormContext();
@@ -66,11 +68,11 @@ const ProductForm = (props) => {
         salesUnits: yup.array(),
         listID: yup.string().nullable(),
       })
-      .typeError("Select a valid product"),
+      .typeError(t("SEL_VALID_PRODUCT")),
     quantity: yup
       .number()
       .required(t("REQUIRED"))
-      .typeError("Select a valid number"),
+      .typeError(t("SEL_VALID_NUMBER")),
     description: yup.string(),
     saleUnit: yup
       .object()
@@ -82,8 +84,8 @@ const ProductForm = (props) => {
         saleUnitValue: yup.string(),
         decimals: yup.boolean(),
       })
-      .typeError("Select a valid sale unit")
-      .required("Select a valid sale unit"),
+      .typeError(t("SEL_VALID_SAL_UNIT"))
+      .required(t("REQUIRED")),
     category: yup
       .object()
       .shape({
@@ -92,7 +94,7 @@ const ProductForm = (props) => {
         link: yup.string(),
         imageURL: yup.string(),
       })
-      .typeError("Select a valid category"),
+      .typeError(t("SEL_VALID_CATEGORY")),
   });
 
   const {
@@ -100,7 +102,7 @@ const ProductForm = (props) => {
     control,
     reset,
     setValue,
-    formState: {  isValid, errors },
+    formState: { isValid, errors },
   } = useForm({
     defaultValues: {
       product: "",
@@ -113,7 +115,7 @@ const ProductForm = (props) => {
     resolver: yupResolver(validationRules),
   });
   const { dirtyFields } = useFormState({
-    control
+    control,
   });
 
   const handleChangeProduct = (product) => {
@@ -132,7 +134,6 @@ const ProductForm = (props) => {
   };
 
   const handleSubmitForm = (data) => {
-   
     const oldProducts = getBigFormValues().products;
 
     const newProduct = {
@@ -146,6 +147,7 @@ const ProductForm = (props) => {
     };
 
     setBigFormValues("products", [...oldProducts, newProduct]);
+    setOutofProducts(false);
     setChanger(!changer);
     reset({
       product: "",
@@ -154,7 +156,7 @@ const ProductForm = (props) => {
       description: "",
       quantity: "",
     });
-    setSubmit(false)
+    setSubmit(false);
   };
   const handleRemoveProduct = (i) => {
     const oldProducts = getBigFormValues().products;
@@ -164,103 +166,106 @@ const ProductForm = (props) => {
     setChanger(!changer);
   };
   const saveData = () => {
-    props.TryCreate()
+    props.TryCreate();
+    if (getBigFormValues().products.length === 0) {
+      setOutofProducts(true);
+    }
     let postURL = "/admin/Order";
-    if(getBigFormValues().products.length!==0
-    &&(
-      (getBigFormValues().profile === "customer"
-        &&(getBigFormValues().addressId !== ""
-          ||(getBigFormValues().pickUp&&getBigFormValues().wrehouseId!==""))
-        &&getBigFormValues().customerId!=="Nothing selected")
-      ||
-      (getBigFormValues().profile !== "customer"
-        &&getBigFormValues().companyName!==""&&getBigFormValues().email!==""
-        &&getBigFormValues().wrehouseId!=="")))
-    {
-      console.log("Entra aqui")
-      console.log(getBigFormValues().wrehouseId)
-    const formData = {
-     deliveryTime: formatDate(new Date(getBigFormValues().deliveryTime)),
+    if (
+      getBigFormValues().products.length !== 0 &&
+      ((getBigFormValues().profile === "customer" &&
+        (getBigFormValues().addressId !== "" ||
+          (getBigFormValues().pickUp &&
+            getBigFormValues().wrehouseId !== "")) &&
+        getBigFormValues().customerId !== "Nothing selected") ||
+        (getBigFormValues().profile !== "customer" &&
+          getBigFormValues().companyName !== "" &&
+          getBigFormValues().email !== "" &&
+          getBigFormValues().wrehouseId !== ""))
+    ) {
+      console.log("Entra aqui");
+      console.log(getBigFormValues().wrehouseId);
+      const formData = {
+        deliveryTime: formatDate(new Date(getBigFormValues().deliveryTime)),
 
-      pickUp: getBigFormValues().pickUp,
-      products: getBigFormValues().products.map((product) => {
-        const formatedProduct = product.productToSend;
+        pickUp: getBigFormValues().pickUp,
+        products: getBigFormValues().products.map((product) => {
+          const formatedProduct = product.productToSend;
 
-        return formatedProduct;
-      }),
-      // termOrder: getBigFormValues().termOrder,
-      termOrder: 2,
+          return formatedProduct;
+        }),
+        // termOrder: getBigFormValues().termOrder,
+        termOrder: 2,
 
-      daysToOrder: getBinaryDays(getBigFormValues().daysToOrder),
-      scheduleStatus: getBigFormValues().daysToOrder.length > 0,
-      wrehouseId: getBigFormValues().wrehouseId,
-    };
+        daysToOrder: getBinaryDays(getBigFormValues().daysToOrder),
+        scheduleStatus: getBigFormValues().daysToOrder.length > 0,
+        wrehouseId: getBigFormValues().wrehouseId,
+      };
 
-    if (getBigFormValues().poNo !== "") {
-      const intPhoNo = getBigFormValues().poNo;
-      formData.poNo = intPhoNo;
+      if (getBigFormValues().poNo !== "") {
+        const intPhoNo = getBigFormValues().poNo;
+        formData.poNo = intPhoNo;
+      }
+
+      if (getBigFormValues().profile === "customer") {
+        postURL = "/admin/Order";
+        if (getBigFormValues().addressId !== "") {
+          formData.addressId = getBigFormValues().addressId;
+        }
+        formData.customerId = getBigFormValues().customerId;
+      } else {
+        postURL = "/admin/Order/createOrderFromInvited";
+        if (getBigFormValues().city !== "") {
+          formData.city = getBigFormValues().city;
+        }
+        if (getBigFormValues().state !== "") {
+          formData.state = getBigFormValues().state;
+        }
+        if (getBigFormValues().street !== "") {
+          formData.street = getBigFormValues().street;
+        }
+        if (getBigFormValues().zipCode !== "") {
+          formData.zipCode = parseInt(getBigFormValues().zipCode);
+        }
+
+        formData.companyName = getBigFormValues().companyName;
+        formData.email = getBigFormValues().email;
+      }
+      postOrder(formData, postURL)
+        .then(() => {
+          dispatch(
+            showMessage({
+              message: "The order was created successfully",
+              variant: "success",
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "right",
+              },
+            })
+          );
+          props.ClickClose();
+          history.push("/orders_admin");
+          return null;
+        })
+        .catch((error) =>
+          dispatch(
+            showMessage({
+              message: error.response.data.title || error.response.data.message,
+              variant: "error",
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "right",
+              },
+            })
+          )
+        );
     }
-
-    if (getBigFormValues().profile === "customer") {
-      postURL = "/admin/Order";
-      if (getBigFormValues().addressId !== "") {
-        formData.addressId = getBigFormValues().addressId;
-      }
-      formData.customerId = getBigFormValues().customerId;
-    } else {
-      postURL = "/admin/Order/createOrderFromInvited";
-      if (getBigFormValues().city !== "") {
-        formData.city = getBigFormValues().city;
-      }
-      if (getBigFormValues().state !== "") {
-        formData.state = getBigFormValues().state;
-      }
-      if (getBigFormValues().street !== "") {
-        formData.street = getBigFormValues().street;
-      }
-      if (getBigFormValues().zipCode !== "") {
-        formData.zipCode = parseInt(getBigFormValues().zipCode);
-      }
-
-      formData.companyName = getBigFormValues().companyName;
-      formData.email = getBigFormValues().email;
-    }
-    postOrder(formData, postURL)
-      .then(() => {
-        dispatch(
-          showMessage({
-            message: "The order was created successfully",
-            variant: "success",
-            anchorOrigin: {
-              vertical: "top",
-              horizontal: "right",
-            },
-          })
-        );        
-        props.ClickClose()
-        history.push("/orders_admin");
-        return null;
-      })
-      .catch((error) =>
-        dispatch(
-          showMessage({
-            message: error.response.data.title || error.response.data.message,
-            variant: "error",
-            anchorOrigin: {
-              vertical: "top",
-              horizontal: "right",
-            },
-          })
-        )
-      );
-     }
   };
-  const handleSubmitE=()=>{
-    if(!isValid){
-      setSubmit(true)
+  const handleSubmitE = () => {
+    if (!isValid) {
+      setSubmit(true);
     }
-    
-  }
+  };
 
   const handleCancel = () => {
     reset();
@@ -268,7 +273,7 @@ const ProductForm = (props) => {
     setSelectedProduct("");
     resetBigFormValues();
     dispatch(cancelAddOrderAdmin(true));
-    setSubmit(false)
+    setSubmit(false);
   };
 
   useEffect(() => {
@@ -331,22 +336,31 @@ const ProductForm = (props) => {
       loadProducts();
     }
   }, [selectedCategory, dispatch]);
-  console.log(dirtyFields)
+  console.log(dirtyFields);
   return (
     <ProductFormS>
       <div className="grid gap-x-48 grid-cols-1 sm:grid-cols-2">
         <div>
           <form onSubmit={handleSubmit((data) => handleSubmitForm(data))}>
-            {console.log(!dirtyFields.category&&submit)}
+            {console.log(!dirtyFields.category && submit)}
             <Field
               type="select"
               name="category"
-              labelText="Category"
+              labelText={t("CATEGORY")}
               id="category"
               isRequired
               control={control}
-              error={errors.category||(!dirtyFields.category&&submit)}
-              helperText={errors.category?errors.category.message:(!dirtyFields.category&&submit)?"required field":""}
+              error={
+                errors.category ||
+                (!dirtyFields.category && (submit || outofProducts))
+              }
+              helperText={
+                errors.category
+                  ? errors.category.message
+                  : !dirtyFields.category && (submit || outofProducts)
+                  ? t("REQUIRED")
+                  : ""
+              }
               onChange={(cate) => {
                 handleChangeCategory(cate);
               }}
@@ -362,11 +376,20 @@ const ProductForm = (props) => {
               type="select"
               name="product"
               id="product"
-              labelText="Product"
+              labelText={t("PRODUCT")}
               isRequired
               control={control}
-              error={errors.product||(!dirtyFields.product&&submit)}
-              helperText={errors.product?errors.product.message:!dirtyFields.product&&submit?"required field":''}
+              error={
+                errors.product ||
+                (!dirtyFields.product && (submit || outofProducts))
+              }
+              helperText={
+                errors.product
+                  ? errors.product.message
+                  : !dirtyFields.product && (submit || outofProducts)
+                  ? t("REQUIRED")
+                  : ""
+              }
               onChange={(product) => {
                 handleChangeProduct(product);
               }}
@@ -383,11 +406,20 @@ const ProductForm = (props) => {
                 type="text"
                 name="quantity"
                 id="quantity"
-                labelText="Quantity"
+                labelText={t("QUANTITY")}
                 isRequired
                 control={control}
-                error={errors.quantity||(!dirtyFields.quantity&&submit)}
-                helperText={errors.quantity?errors.quantity.message:!dirtyFields.quantity&&submit?"required field":''}
+                error={
+                  errors.quantity ||
+                  (!dirtyFields.quantity && (submit || outofProducts))
+                }
+                helperText={
+                  errors.quantity
+                    ? errors.quantity.message
+                    : !dirtyFields.quantity && (submit || outofProducts)
+                    ? t("REQUIRED")
+                    : ""
+                }
                 style={{
                   direction: "rtl",
                 }}
@@ -396,11 +428,20 @@ const ProductForm = (props) => {
                 type="select"
                 name="saleUnit"
                 id="saleUnit"
-                labelText="Unit"
+                labelText={t("UNIT")}
                 isRequired
                 control={control}
-                error={errors.saleUnit||(!dirtyFields.saleUnit&&submit)}
-                helperText={errors.saleUnit?errors.saleUnit.message:!dirtyFields.saleUnit&&submit?"required field":''}
+                error={
+                  errors.saleUnit ||
+                  (!dirtyFields.saleUnit && (submit || outofProducts))
+                }
+                helperText={
+                  errors.saleUnit
+                    ? errors.saleUnit.message
+                    : !dirtyFields.saleUnit && (submit || outofProducts)
+                    ? t("REQUIRED")
+                    : ""
+                }
                 options={salesUnits.map((unit) => {
                   return (
                     <MenuItem key={unit.saleUnitId} value={unit}>
@@ -414,19 +455,19 @@ const ProductForm = (props) => {
               type="text"
               name="description"
               id="description"
-              labelText="Description"
+              labelText={t("DESCRIPTION")}
               control={control}
             />
             <ButtonWrapperS>
               <ButtonS type="submit" onClick={handleSubmitE}>
-                Add product
+                {t("ADD_PRODUCT")}
               </ButtonS>
             </ButtonWrapperS>
           </form>
         </div>
         <div>
           <OrderTitleS>
-            <h2>THE ORDER</h2>
+            <h2>{t("THE_ORDER")}</h2>
             <OrderCountS>{getBigFormValues().products.length}</OrderCountS>
           </OrderTitleS>
           {getBigFormValues().products.map((product, i) => (
@@ -454,10 +495,11 @@ const ProductForm = (props) => {
             <Divider className="mb-20" />
             <div className="flex justify-between">
               <ButtonS danger onClick={handleCancel}>
-                Cancel
+                {t("CANCELAR")}
               </ButtonS>
               <ButtonS primary onClick={saveData} className="flex justify-end">
-                <Telegram className="mr-5" fontSize="large" /> Craete Order
+                <Telegram className="mr-5" fontSize="large" />{" "}
+                {t("CREATE_ORDER")}
               </ButtonS>
             </div>
           </OrderFooterS>

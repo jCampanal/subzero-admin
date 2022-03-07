@@ -1,64 +1,41 @@
 import styled from "styled-components";
 
-
 const devices = {
-    mobileS: `(min-width: '320px')`,
-    mobileM: `(min-width: '375px')`,
-    mobileL: `(min-width: '425px')`,
-    tablet: `(min-width: '768px')`,
-    laptop: `(min-width: '1024px')`,
-    laptopL: `(min-width:'1440px')`,
-    desktop: `(min-width:'2560px')`,
-  };
+  mobileS: "(min-width: '320px')",
+  mobileM: "(min-width: '375px')",
+  mobileL: "(min-width: '425px')",
+  tablet: "(min-width: '768px')",
+  laptop: "(min-width: '1024px')",
+  laptopL: "(min-width:'1440px')",
+  desktop: "(min-width:'2560px')",
+};
 
-
+const choferes =
+  "flex relative overflow-auto h-full grow-0 shrink-0 basis-1/4 w-full px-15 box-border max-w-[25%]";
 
 export const BarDriversPrincipalS = styled.div`
-  position:absolute;
- 
-  width: 300px ;
-  right: ${(props) =>
-    props.Selected?"0":"-300px"};
-  display:block;
-  top: 0;  
-  transition: right 400ms, display 1s;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  z-index:999;
-  font-family: Poppins,Roboto,Helvetica,Arial,sans-serif;
-  &::-webkit-scrollbar-thumb {
-    background-color: #797979;
-    border-radius: 20px;
-    border: 2px solid #f1f2f3;
-}
-  &@media(max-width: ${devices.mobileL}) {
-    right: ${(props) => 
-        props.Selected?"50%":"-50%"};
-    width: "50%" ;
-
-  }
-`;
-export const BarDriversSecndari2S = styled.div`  
-  background-color: #fafafa;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  height: 250%;
   width: 100%;
-  height:15%;
-  position:fixed;
-  z-index:1000;
-  background-color:#3f51b5;
-  display:flex;
-  align-items:center
- 
+  box-sizing: border-box;
+  background-color: #fafafa;
+  @media (min-width: 960px) {
+    max-width: 35%;
+    height: 100%;
+  }
 `;
 
 export const BarDriversSecndari1S = styled.div`
   top: 15%;
-  background-color: #fafafa;
   width: 100%;
-  min-height:85%;
-  position:relative;
+  min-height: 85%;
+  overflow-y: auto;
+  position: static;
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
 `;
 
 export const ButtonS = styled.div`
@@ -75,4 +52,11 @@ export const ButtonS = styled.div`
     background-color: ${(props) => (props.left ? "#17a2b8;" : "#6c757d")};
     color: white;
   }
+`;
+
+export const LabelS = styled.div`
+  display: inline-flex;
+  padding-left: 10%;
+  width: 100%;
+  color: black;
 `;

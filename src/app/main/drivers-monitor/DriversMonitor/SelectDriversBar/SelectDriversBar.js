@@ -1,45 +1,33 @@
-import React,{useState,Fragment, useEffect} from 'react'
-import { BarDriversPrincipalS,BarDriversSecndari2S,BarDriversSecndari1S } from "./SelectDriversBar.style";
-import DriversElements from "./DriversElements/DriversElements"
+import React, { Fragment } from "react";
+import {
+  BarDriversPrincipalS,
+  BarDriversSecndari1S,
+  LabelS,
+} from "./SelectDriversBar.style";
+import DriversElements from "./DriversElements/DriversElements";
 import FuseScrollbars from "@fuse/core/FuseScrollbars";
 import { useSelector } from "react-redux";
-import { getDriversCarded} from "app/store/driverMonitor/driverMonitor";
-import DriverBarButton from './DriverBarButton/DriverBarButton';
-const SelectDriversBar =(props)=>{
+import { getDriversCarded } from "app/store/driverMonitor/driverMonitor";
+import AirportShuttleIcon from "@material-ui/icons/AirportShuttle";
+const SelectDriversBar = (props) => {
+  const ShowCarded = useSelector(getDriversCarded);
+  console.log(ShowCarded);
 
-    const ShowCarded=useSelector(getDriversCarded)
-    console.log(ShowCarded)
-
-    
-
-    return(
-        <Fragment>
-        <DriverBarButton Style={{position:'fixed',
-                        display:'block',
-                        right:'2.6%',
-                        top:'80px',
-                        zIndex:'999',}}
-                        />
-        <BarDriversPrincipalS clasName={"Drivers"} Selected={ShowCarded}>
-        <FuseScrollbars className="block overflow-y-auto " enable={true}>
-            <BarDriversSecndari2S>
-            <DriverBarButton Style={{position:'relative',
-                        display:'flex',
-                        left:'1em',
-                       }}/>
-            </BarDriversSecndari2S>
-            
-            <BarDriversSecndari1S>
-            
-               <DriversElements Drivers={props.Drivers}/> 
-               
-            </BarDriversSecndari1S>
+  return (
+    <Fragment>
+      <BarDriversPrincipalS>
+        <LabelS>
+          <AirportShuttleIcon className="mr-5" fontSize="large" />
+          <h1>Drivers:</h1>
+        </LabelS>
+        <FuseScrollbars className="flex-grow overflow-y-auto ">
+          <BarDriversSecndari1S>
+            <DriversElements Drivers={props.Drivers} />
+          </BarDriversSecndari1S>
         </FuseScrollbars>
-        </BarDriversPrincipalS>                
-        </Fragment>
-        
-        
-    )
-}
+      </BarDriversPrincipalS>
+    </Fragment>
+  );
+};
 
-export default SelectDriversBar
+export default SelectDriversBar;
