@@ -1,22 +1,17 @@
 import React, { Fragment } from 'react'
+import { useTranslation } from "react-i18next";
 import {
-    AppBar,
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
     Table,
     TableBody,
     TableCell,
     TableHead,
     TableRow,
-    Toolbar,
-    Typography,
-    ButtonGroup 
   } from "@material-ui/core";
   import { formatDisplayDate } from "app/lib/formatDate";
+  
 
 const ViewModalDetails=({data})=>{
+    const { t } = useTranslation("schedules");
     return(
         <Fragment>
             <div className="px-16 sm:px-20 pt-10">

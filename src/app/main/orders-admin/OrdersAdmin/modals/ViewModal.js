@@ -19,8 +19,11 @@ import { useTranslation } from "react-i18next";
 import PropType from "prop-types";
 import { formatDisplayDate } from "app/lib/formatDate";
 import ViewModalDetails from "./ViewModal/WiewModalDetails";
+import ViewModalPOD from "./ViewModal/ViewModalPOD";
 
 const ViewModal = ({ data, isModal, setIsModal }) => {
+  console.log("DATA")
+  console.log(data)
   const { t } = useTranslation("schedules");
   const [selectedOption,setSelectedOption]=useState("details")
 
@@ -47,7 +50,7 @@ const ViewModal = ({ data, isModal, setIsModal }) => {
         </Toolbar>
       </AppBar>
       <DialogContent classes={{ root: "p-0" }}>
-    
+    {/*data.status==="Delivered"*/ true &&
          <OptionsMenusDivS>                   
               <ButtonS              
                 selected={selectedOption==="details"}
@@ -62,8 +65,10 @@ const ViewModal = ({ data, isModal, setIsModal }) => {
                 POD
               </ButtonS>         
          </OptionsMenusDivS>
+        }
 
         {selectedOption==="details"&&<ViewModalDetails data={data}/>}
+        {selectedOption==="POD"&&<ViewModalPOD data={data}/>}
       </DialogContent>
       <DialogActions className="px-8 py-16 justify-end">
         <div className="px-16">
