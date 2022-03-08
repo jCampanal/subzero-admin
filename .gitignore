@@ -2,7 +2,7 @@
 
 # dependencies
 /node_modules
-/GitHubDesktop-linux-2.9.3-linux3.deb
+
 /.yarn
 
 # testing
