@@ -97,7 +97,7 @@ function PageCardedHeader({ totalOrders }) {
   const handleOpenAddModal = () => {
     setIsAddModal(true);
   };
-  console.log(t("ORDERS_ADMIN"))
+  console.log(t("ORDERS_ADMIN"));
   useEffect(() => {
     if (
       filter.noOrden !== "" ||

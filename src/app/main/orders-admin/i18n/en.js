@@ -23,20 +23,19 @@ const locale = {
   CLEAR_SEARCH: "Clear search",
   DELETE_WARNING_TITLE: "Are you sure ?",
 
-
-  REQUIRED:"required field",
+  REQUIRED: "required field",
   SEL_VALID_PRODUCT: "Select a valid product",
   SEL_VALID_NUMBER: "Select a valid number",
-  SEL_VALID_SAL_UNIT:"Select a valid sale unit",
-  SEL_VALID_CATEGORY:"Select a valid category",
-  CATEGORY:"Category",
-  PRODUCT:"Product",
-  QUANTITY:"Quantity",
-  UNIT:"Unit",
-  DESCRIPTION:"Description",
-  ADD_PRODUCT:"Add product",
-  THE_ORDER:"THE ORDER",
-  CANCELAR:"Cancel"
+  SEL_VALID_SAL_UNIT: "Select a valid sale unit",
+  SEL_VALID_CATEGORY: "Select a valid category",
+  CATEGORY: "Category",
+  PRODUCT: "Product",
+  QUANTITY: "Quantity",
+  UNIT: "Unit",
+  DESCRIPTION: "Description",
+  ADD_PRODUCT: "Add product",
+  THE_ORDER: "THE ORDER",
+  CANCELAR: "Cancel",
 };
 
 export default locale;
