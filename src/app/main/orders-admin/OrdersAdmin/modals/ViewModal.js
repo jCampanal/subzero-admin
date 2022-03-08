@@ -11,15 +11,22 @@ import {
   TableRow,
   Toolbar,
   Typography,
+  ButtonGroup 
 } from "@material-ui/core";
-
-import React from "react";
+import {OptionsMenusDivS,ButtonS} from './ViewModal.style'
+import React,{useState} from "react";
 import { useTranslation } from "react-i18next";
 import PropType from "prop-types";
 import { formatDisplayDate } from "app/lib/formatDate";
+import ViewModalDetails from "./ViewModal/WiewModalDetails";
 
 const ViewModal = ({ data, isModal, setIsModal }) => {
   const { t } = useTranslation("schedules");
+  const [selectedOption,setSelectedOption]=useState("details")
+
+  const handlerOptions=(selected)=>{
+    setSelectedOption(selected)
+  }
 
   return (
     <Dialog
@@ -40,46 +47,23 @@ const ViewModal = ({ data, isModal, setIsModal }) => {
         </Toolbar>
       </AppBar>
       <DialogContent classes={{ root: "p-0" }}>
-        <div className="px-16 sm:px-20 pt-20">
-          <div className="-mx-4 my-5 pt-5">
-            <h2 className="mb-12">
-              For <b> {data.customer.company.name}</b>
-            </h2>
-            <h4 className="mb-12">
-              Customer : {data.customer.name} {data.customer.lastName}
-            </h4>
-            <h6 className="mb-12">
-              {formatDisplayDate(new Date(data.deliveryTime))}
-            </h6>
-            <h2 className="mb-12">
-              <b>to</b> {data.address.street}, {data.address.city},{" "}
-              {data.address.state} {data.address.zipCode}
-            </h2>
+    
+         <OptionsMenusDivS>                   
+              <ButtonS              
+                selected={selectedOption==="details"}
+                onClick={() => handlerOptions("details")}
+              >
+                Details
+              </ButtonS>
+              <ButtonS             
+                selected={selectedOption==="POD"}
+                onClick={() => handlerOptions("POD")}
+              >
+                POD
+              </ButtonS>         
+         </OptionsMenusDivS>
 
-            <span className="small"></span>
-          </div>
-        </div>
-        <br />
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell className="font-bold">Product</TableCell>
-              <TableCell className="font-bold">Quanty</TableCell>
-              <TableCell className="font-bold">Description</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.products.map((product) => {
-              return (
-                <TableRow key={product.id}>
-                  <TableCell>{product.name}</TableCell>
-                  <TableCell>{product.quanty}</TableCell>
-                  <TableCell>{product.description}</TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
+        {selectedOption==="details"&&<ViewModalDetails data={data}/>}
       </DialogContent>
       <DialogActions className="px-8 py-16 justify-end">
         <div className="px-16">
