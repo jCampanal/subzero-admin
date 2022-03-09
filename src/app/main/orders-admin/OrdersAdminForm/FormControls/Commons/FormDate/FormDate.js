@@ -3,11 +3,13 @@ import React, { Fragment, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import Field from "../Field/Field";
 import { ButtonS, FormDateS, ButtonGroupWrapperS } from "./FormDate.style";
+import { useTranslation } from "react-i18next";
 
 const FormDate = () => {
   const [tabSelected, setTabSelected] = useState("soonest");
   const methods = useFormContext();
   const { control, setValue } = methods;
+  const { t } = useTranslation("orders-admin");
   const handleChangeTab = (tab) => {
     if (tab === "soonest") {
       const newDate = new Date();
@@ -27,10 +29,10 @@ const FormDate = () => {
             onClick={() => handleChangeTab("soonest")}
           >
             <div className="mb-5">
-              <b>Soonest possible</b>{" "}
+              <b>{t("SOONEST_POSSIBLE")}</b>{" "}
             </div>
             <div className="text-11">
-              Approx 1 hour after your order is placed
+              {t("APPROX_1")}
             </div>
           </ButtonS>
           <ButtonS
@@ -39,9 +41,9 @@ const FormDate = () => {
             onClick={() => handleChangeTab("custom")}
           >
             <div className="mb-5">
-              <b>Custom date</b>{" "}
+              <b>{t("CUSTOM_DATE")}</b>{" "}
             </div>
-            <div className="text-11">Set a custom date for your order</div>
+            <div className="text-11">{t("SET_CUSTOM")}</div>
           </ButtonS>
         </ButtonGroup>
       </ButtonGroupWrapperS>
@@ -50,7 +52,7 @@ const FormDate = () => {
           <Fragment>
             <div className="mb-40">
               <Field
-                labelText="DateTime"
+                labelText={t("DATE_TIME")}
                 isRequired
                 name="deliveryTime"
                 id="deliveryTime"

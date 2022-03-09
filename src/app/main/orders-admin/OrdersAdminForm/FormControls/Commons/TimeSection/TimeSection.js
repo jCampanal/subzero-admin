@@ -10,6 +10,7 @@ import {
   ButtonGroupWrapperS,
 } from "./TimeSection.style";
 import { AccessTime, ThumbUp } from "@material-ui/icons";
+import { useTranslation } from "react-i18next";
 import {
   ButtonGroup,
   Checkbox,
@@ -29,6 +30,7 @@ const TimeSection = () => {
   const { errors } = formState;
   const dispatch = useDispatch();
   const cancelForm = useSelector(selectCancelStatus);
+  const { t } = useTranslation("orders-admin");
 
   const orderRepeted = days.length > 0;
   const toggleDays = () => {
@@ -63,19 +65,19 @@ const TimeSection = () => {
   return (
     <TimeSectionS>
       <LabelS>
-        To repeat this order weekly <span> (Optional)</span>
+        {t("TO_REPET")} <span> (Optional)</span>
       </LabelS>
 
       <WeeklyButtonS onClick={toggleDays} orderRepeted={orderRepeted}>
         {!orderRepeted && (
           <Fragment>
-            <AccessTime className="mr-5" /> Weekly repet
+            <AccessTime className="mr-5" />{t("WEEKLY_REPET")}
           </Fragment>
         )}
 
         {orderRepeted && (
           <Fragment>
-            Order repeated
+            {t("ORDER_REPEATED")}
             <ThumbUp className="ml-5" />
           </Fragment>
         )}
@@ -84,8 +86,7 @@ const TimeSection = () => {
       <Collapse in={showDays}>
         <DayButtonsWrapperS>
           <TextS>
-            Select days of the week to automatically repeat your order on the
-            selected days
+          {t("SELECT_DAYS")}
           </TextS>
           <DayButtonsS>
             <ButtonGroupWrapperS>
@@ -99,7 +100,7 @@ const TimeSection = () => {
                     }) >= 0
                   }
                 >
-                  Monday
+                  {t("MONDAY")}
                 </ButtonS>
                 <ButtonS
                   onClick={() => handleSelectDay(3)}
@@ -109,7 +110,7 @@ const TimeSection = () => {
                     }) >= 0
                   }
                 >
-                  Tueday
+                  {t("TUESDAY")}
                 </ButtonS>
                 <ButtonS
                   radius="right"
@@ -120,7 +121,7 @@ const TimeSection = () => {
                     }) >= 0
                   }
                 >
-                  Wednesday
+                  {t("WEDNESDAY")}
                 </ButtonS>
               </ButtonGroup>
             </ButtonGroupWrapperS>
@@ -135,7 +136,7 @@ const TimeSection = () => {
                     }) >= 0
                   }
                 >
-                  Thursday
+                  {t("THURSDAY")}
                 </ButtonS>
                 <ButtonS
                   onClick={() => handleSelectDay(6)}
@@ -145,7 +146,7 @@ const TimeSection = () => {
                     }) >= 0
                   }
                 >
-                  Friday
+                 {t ("FRIDAY")}
                 </ButtonS>
                 <ButtonS
                   radius="right"
@@ -156,7 +157,7 @@ const TimeSection = () => {
                     }) >= 0
                   }
                 >
-                  Saturday
+                  {t("SATURDAY")}
                 </ButtonS>
               </ButtonGroup>
             </ButtonGroupWrapperS>
@@ -170,7 +171,7 @@ const TimeSection = () => {
                   }) >= 0
                 }
               >
-                Sunday
+                {t("SUNDAY")}
               </ButtonS>
             </ButtonGroupWrapperS>
           </DayButtonsS>
@@ -192,7 +193,7 @@ const TimeSection = () => {
                 onChange={(e) => field.onChange(e.target.checked)}
               />
             }
-            label={<span style={{ fontSize: "16px" }}>Pick up</span>}
+            label={<span style={{ fontSize: "16px" }}>{t("PICK_UP")}</span>}
           />
         )}
       />
