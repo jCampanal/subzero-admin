@@ -37,6 +37,7 @@ const ordersAdminSlice = createSlice({
   name: "ordersAdmin",
   initialState: {
     status: "idle",
+    flat:0,
     adminOrders: [],
     total: 0,
     cancelForm: false,
@@ -44,6 +45,9 @@ const ordersAdminSlice = createSlice({
   reducers: {
     setOrdersAdmin: (state, action) => {
       state.adminOrders = action.payload;
+    },
+    setFlat: (state) => {
+      state.flat = 1;
     },
     cancelAddOrderAdmin: (state, action) => {
       state.cancelForm = action.payload;
@@ -84,6 +88,7 @@ const ordersAdminSlice = createSlice({
           (a, b) => b.data.data.length - a.data.data.length
         );
         // state.adminOrders = [];
+        console.log("Descarga de datos realizada")
       })
       .addCase(fetchOrders.rejected, (state, action) => {
         state.status = "failed";
@@ -97,10 +102,11 @@ const ordersAdminSlice = createSlice({
   },
 });
 
-export const { setOrdersAdmin, cancelAddOrderAdmin } = ordersAdminSlice.actions;
+export const { setOrdersAdmin, cancelAddOrderAdmin,setFlat } = ordersAdminSlice.actions;
 
 export const selectAllOrders = (state) => state.ordersAdmin.adminOrders;
 export const selectTotal = (state) => state.ordersAdmin.total;
 export const selectCancelStatus = (state) => state.ordersAdmin.cancelForm;
+export const selectFlag=(state)=>state.ordersAdmin.flat;
 
 export default ordersAdminSlice.reducer;

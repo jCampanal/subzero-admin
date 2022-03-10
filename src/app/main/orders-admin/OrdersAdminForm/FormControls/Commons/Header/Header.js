@@ -3,9 +3,11 @@ import React from "react";
 import { ButtonS, HeaderS } from "./Header.style";
 import PropTypes from "prop-types";
 import { useFormContext } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 const Header = ({ tabSelected, setTabSelected }) => {
   const methods = useFormContext();
+  const { t } = useTranslation("orders-admin");
   const { setValue } = methods;
   const handleChangeTab = (tab) => {
     setValue("profile", tab);
@@ -19,14 +21,14 @@ const Header = ({ tabSelected, setTabSelected }) => {
           selected={tabSelected === "customer"}
           onClick={() => handleChangeTab("customer")}
         >
-          Customer
+          {t("CUSTOMER")}
         </ButtonS>
         <ButtonS
           rigth
           selected={tabSelected === "invited"}
           onClick={() => handleChangeTab("invited")}
         >
-          Invited
+          {t("INVITED")}
         </ButtonS>
       </ButtonGroup>
     </HeaderS>

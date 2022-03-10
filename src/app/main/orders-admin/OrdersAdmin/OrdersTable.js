@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router";
 import { cancelOrder } from "app/api-conn/shipments_order";
 import { showMessage } from "app/store/fuse/messageSlice";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import CustomTableRow from "./CustomTableRow";
 import ViewModal from "./modals/ViewModal";
 import RemoveDlg from "app/common/removeDlg";
@@ -19,10 +19,12 @@ import { openDialog } from "app/store/fuse/dialogSlice";
 import { fetchOrders } from "app/store/oredersAdmin/ordersAdminSlice";
 import _ from "lodash";
 import { formatDate } from "app/lib/formatDate";
+import {setFlat,selectFlag} from "app/store/oredersAdmin/ordersAdminSlice";
 
 function OrdersTable({ wharehose, rows, data }) {
   const { t } = useTranslation("orders-admin");
   const dispatch = useDispatch();
+  const ActionFlag = useSelector(selectFlag);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(1000);
   const location = useLocation();
@@ -64,58 +66,47 @@ function OrdersTable({ wharehose, rows, data }) {
   }
 
   useEffect(() => {
-    let _compnay = new URLSearchParams(location.search).get("company");
-    let _noOrder = new URLSearchParams(location.search).get("noOrden");
-    let date1 = new URLSearchParams(location.search).get("pickedUpFrom");
-    let date2 = new URLSearchParams(location.search).get("pickedUpTo");
+    if(ActionFlag===0){
+      dispatch(setFlat())
+    }else{
+      console.log("Enro a buscar datos")
+          let _compnay = new URLSearchParams(location.search).get("company");
+          let _noOrder = new URLSearchParams(location.search).get("noOrden");
+          let date1 = new URLSearchParams(location.search).get("pickedUpFrom");
+          let date2 = new URLSearchParams(location.search).get("pickedUpTo");
 
-    if (_compnay === "" || !_compnay) {
-      _compnay = undefined;
+          if (_compnay === "" || !_compnay) {
+            _compnay = undefined;
+          }
+          if (_noOrder === "" || !_noOrder) {
+            _noOrder = undefined;
+          }
+          if (date1 === "" || !date1) {  
+          
+            date1 = formatDate(new Date(new Date().setHours(-5,0,0,0)));
+            
+          }
+          if (date2 === "" || !date2) {
+            date2 = formatDate(new Date());
+            
+          
+          }
+          
+          dispatch(
+            fetchOrders({
+              wharehose: wharehose,
+              date2,
+              _compnay,
+              date1,
+              _noOrder,
+              rowsPerPage,
+              page,
+            })
+          );
     }
-    if (_noOrder === "" || !_noOrder) {
-      _noOrder = undefined;
-    }
-    if (date1 === "" || !date1) {    
-      //date1=undefined
-      date1 = formatDate(new Date(new Date().setHours(-5,0,0,0)));
-      console.log("date 1"+ date1)
-    }
-    if (date2 === "" || !date2) {
-      date2 = formatDate(new Date());
-      console.log("date 2"+ date2)
-    
-    }
-    
-    dispatch(
-      fetchOrders({
-        wharehose: wharehose,
-        date2,
-        _compnay,
-        date1,
-        _noOrder,
-        rowsPerPage,
-        page,
-      })
-    );
-
-    // .catch(() => {
-    //   dispatch(
-    //     showMessage({
-    //       message: t("PROBLEM_FETCHING"),
-    //       anchorOrigin: {
-    //         vertical: "top",
-    //         horizontal: "right",
-    //       },
-    //       variant: "error",
-    //     })
-    //   );
-    // });
   }, [wharehose, t, dispatch, location.search, page, rowsPerPage, isLoad]);
 
-  // useEffect(() => {
-  //   handleCountOrders(data.length);
-  // }, [data]);
-
+ 
   const acceptCancelOrder = (id) => {
     cancelOrder(id)
       .then(() => {

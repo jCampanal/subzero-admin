@@ -85,7 +85,7 @@ const CustomerForm = (props) => {
         <Field
           type="select"
           id="user"
-          labelText="User"
+          labelText={t("USER")}
           name="customerId"
           isRequired
           onChange={handleChangeCustomer}
@@ -106,7 +106,7 @@ const CustomerForm = (props) => {
           hidden={!isWarehose}
           type="select"
           id="wrehouseId"
-          labelText="Wharehouse"
+          labelText={t("WHAREHOUSE")}
           isRequired
           name="wrehouseId"
           control={control}
@@ -132,7 +132,7 @@ const CustomerForm = (props) => {
           hidden={isWarehose}
           type="select"
           id="addressId"
-          labelText="Shipping address"
+          labelText={t("SHIPPING_ADDRESS")}
           isRequired
           name="addressId"
           control={control}

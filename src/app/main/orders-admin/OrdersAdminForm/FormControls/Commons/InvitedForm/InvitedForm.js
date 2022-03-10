@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useForm, useFormContext } from "react-hook-form";
-import { useTranslation } from "react-i18next";
 import Field from "../Field/Field";
 import { InvitedFormS } from "./InvitedForm.style";
 import * as yup from "yup";
@@ -10,6 +9,7 @@ import PropTypes from "prop-types";
 import { intRegex } from "app/lib/regexs";
 import { useSelector } from "react-redux";
 import { selectCancelStatus } from "app/store/oredersAdmin/ordersAdminSlice";
+import { useTranslation } from "react-i18next";
 
 const defaulFormValues = {
   city: "",
@@ -66,7 +66,7 @@ const InvitedForm = ({ warehouses, TryCreateOrder}) => {
         control={control}
         error={errors.companyName||(!dirtyFields.companyName&&TryCreateOrder)}
         helperText={errors.companyName?errors.companyName.message:!dirtyFields.wrehouseId&&TryCreateOrder?"required field":""}
-        labelText="Company"
+        labelText={t("COMPANY")}
         name="companyName"
         id="companyName"
         isRequired
@@ -88,7 +88,7 @@ const InvitedForm = ({ warehouses, TryCreateOrder}) => {
           onChange={(value) => handleChange("street", value)}
           error={errors.street}
           helperText={errors?.street?.message}
-          labelText="Street"
+          labelText={t("STREET")}
           name="street"
           id="street"
           placeholder="Street"
@@ -98,7 +98,7 @@ const InvitedForm = ({ warehouses, TryCreateOrder}) => {
           onChange={(value) => handleChange("state", value)}
           error={errors.state}
           helperText={errors?.state?.message}
-          labelText="State"
+          labelText={t("STATE")}
           name="state"
           id="state"
           placeholder="state"
@@ -110,7 +110,7 @@ const InvitedForm = ({ warehouses, TryCreateOrder}) => {
           onChange={(value) => handleChange("city", value)}
           error={errors.city}
           helperText={errors?.city?.message}
-          labelText="City"
+          labelText={t("CITY")}
           name="city"
           id="city"
           placeholder="City"
@@ -131,7 +131,7 @@ const InvitedForm = ({ warehouses, TryCreateOrder}) => {
         onChange={(value) => handleChange("wrehouseId", value)}
         error={errors.wrehouseId||(!dirtyFields.wrehouseId&&TryCreateOrder)}
         helperText={errors.wrehouseId?errors.wrehouseId.message:!dirtyFields.wrehouseId&&TryCreateOrder?"required field":""}
-        labelText="Warehouse"
+        labelText={t("WHAREHOUSE")}
         name="wrehouseId"
         id="wrehouseId"
         noValue="None"

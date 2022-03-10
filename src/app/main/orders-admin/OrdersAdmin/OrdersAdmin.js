@@ -6,6 +6,7 @@ import rows from "./rows";
 import { useDispatch, useSelector } from "react-redux";
 import { showMessage } from "app/store/fuse/messageSlice";
 import FuseLoading from "@fuse/core/FuseLoading";
+import { formatDate } from "app/lib/formatDate";
 import {
   fetchOrders,
   selectTotal,
@@ -46,8 +47,11 @@ function OrdersAdmin() {
       // dispatch(fetchOrders({ wharehoseId: warehoseTab[0].id }));
       for (let index = 0; index < warehoseTab.length; index++) {
         const wareHouse = warehoseTab[index];
-
-        dispatch(fetchOrders({ wharehose: wareHouse }));
+        const date1 = formatDate(new Date(new Date().setHours(-5,0,0,0)));
+        const date2 = formatDate(new Date());
+        dispatch(fetchOrders({ wharehose: wareHouse,
+                               date2: date2,
+                               date1: date1}));
       }
     }
   }, [warehoseTab]);
