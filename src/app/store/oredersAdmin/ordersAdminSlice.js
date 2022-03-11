@@ -36,18 +36,22 @@ export const fetchOrders = createAsyncThunk(
 const ordersAdminSlice = createSlice({
   name: "ordersAdmin",
   initialState: {
-    status: "idle",
-    flat:0,
+    status: "idle",    
     adminOrders: [],
     total: 0,
+    firstDownloadflag:0,
+    newOrdenCount:0,
     cancelForm: false,
   },
   reducers: {
     setOrdersAdmin: (state, action) => {
       state.adminOrders = action.payload;
     },
-    setFlat: (state) => {
-      state.flat = 1;
+    setFlag: (state) => {
+      state.firstDownloadflag = 1;
+    },
+    addedANewOrder: (state)=>{
+      state.newOrdenCount=state.newOrdenCount+1
     },
     cancelAddOrderAdmin: (state, action) => {
       state.cancelForm = action.payload;
@@ -102,11 +106,12 @@ const ordersAdminSlice = createSlice({
   },
 });
 
-export const { setOrdersAdmin, cancelAddOrderAdmin,setFlat } = ordersAdminSlice.actions;
+export const { setOrdersAdmin, cancelAddOrderAdmin,setFlag,addedANewOrder } = ordersAdminSlice.actions;
 
 export const selectAllOrders = (state) => state.ordersAdmin.adminOrders;
 export const selectTotal = (state) => state.ordersAdmin.total;
 export const selectCancelStatus = (state) => state.ordersAdmin.cancelForm;
-export const selectFlag=(state)=>state.ordersAdmin.flat;
+export const selectFlag=(state)=>state.ordersAdmin.firstDownloadflag;
+export const selectNewOrderCount=(state)=>state.ordersAdmin.newOrdenCount
 
 export default ordersAdminSlice.reducer;

@@ -16,8 +16,10 @@ import { Controller,useForm, useFormContext,useFormState } from "react-hook-form
 import { yupResolver } from "@hookform/resolvers/yup";
 import { CalendarToday } from "@material-ui/icons";
 import StopsElements from './StopsElements/StopsElements';
+import { useTranslation } from "react-i18next";
 
 const DriverElement=(props)=>{
+    const { t } = useTranslation("drivers-monitor");
     const [calendarDeployment,setCalendarDeployment]=useState(false)
 
     const {
@@ -25,7 +27,6 @@ const DriverElement=(props)=>{
         control,
         reset,
         setValue,
-        watch,
         getValues
       } = useForm({
         defaultValues: {
@@ -65,13 +66,13 @@ const DriverElement=(props)=>{
                         <DivDriverElementSecundaryS padding>                                
                             <FormControlLabel
                                    control={ <OnlineSignal Online= {props.Online} Color={props.Color}/>}
-                                    label={"Online"}/>
+                                    label={t("ONLINE")}/>
                             <FormControlLabel
                                     control={<Checkbox
                                                disabled={!props.Online} 
                                                defaultChecked={props.Enable&&props.Online}
                                                onChange={props.Click}  /  >}
-                                    label={"Enable"}/>
+                                    label={t("ENABLE")}/>
                         </DivDriverElementSecundaryS>
 
                                          
@@ -89,8 +90,8 @@ const DriverElement=(props)=>{
                     render={({ field }) => (
                         <DatePicker
                             className="w-6/12 md:w-5/6"
-                            label='date'
-                            labelText="date"
+                            label={t("DATE")}
+                            labelText={t("DATE")}
                             variant="dialog" 
                             id="date"
                             rightArrowIcon={<CalendarToday />}
@@ -110,7 +111,7 @@ const DriverElement=(props)=>{
                         />
                     )}
                     />          
-                    <LabelH4S>Show records for the:</LabelH4S>                
+                    <LabelH4S>{t("SHOW_RECORDS_FOR")}</LabelH4S>                
                                         <Field
                                             type="select"
                                             className="w-6/12 place-self-center md:w-5/6"
@@ -120,13 +121,13 @@ const DriverElement=(props)=>{
                                             onChange={e=>{setValue("frecuency",e);handleSubmitForm()}}                                       
                                             options={[                                            
                                                 <MenuItem key={"last 24 hours"} value={0}>
-                                                    {"last 24 hours"}
+                                                    {t("LAST_24_HOURS")}
                                                 </MenuItem>,
                                                 <MenuItem key={"last 6 hours"} value={1}>
-                                                    {"last 6 hours"}
+                                                    {t("LAST_6_HOURS")}
                                                 </MenuItem>,
                                                 <MenuItem key={"last hour"} value={2}>
-                                                    {"last hour"}
+                                                    {t("LAST_HOUR")}
                                                 </MenuItem>,
                                                 ]}
                                             />
@@ -145,7 +146,7 @@ const DriverElement=(props)=>{
                                     onChange={(e) => {field.onChange(e.target.checked);handleSubmitForm()}}
                                 />
                                 }
-                                label={<span style={{ fontSize: "16px" }}>Show records</span>}
+                                label={<span style={{ fontSize: "16px" }}>{t("SHOW_RECORDS")}</span>}
                             />
                             )}
                         />     

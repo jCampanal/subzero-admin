@@ -57,9 +57,10 @@ export const ButtonS = styled.div`
 
 export const LabelS=styled.div`
   display:inline-flex;
-  padding-left:10%;
+  padding-left:1%;
   width:100%; 
   color:black;
+  margin:9px;
   @media (min-width:960px){
     left:1%;        
   }`;

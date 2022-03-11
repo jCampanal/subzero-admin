@@ -19,12 +19,13 @@ import { openDialog } from "app/store/fuse/dialogSlice";
 import { fetchOrders } from "app/store/oredersAdmin/ordersAdminSlice";
 import _ from "lodash";
 import { formatDate } from "app/lib/formatDate";
-import {setFlat,selectFlag} from "app/store/oredersAdmin/ordersAdminSlice";
+import {setFlag,selectNewOrderCount,selectFlag} from "app/store/oredersAdmin/ordersAdminSlice";
 
 function OrdersTable({ wharehose, rows, data }) {
   const { t } = useTranslation("orders-admin");
   const dispatch = useDispatch();
   const ActionFlag = useSelector(selectFlag);
+  const ActionNewOrderCount = useSelector(selectNewOrderCount);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(1000);
   const location = useLocation();
@@ -67,7 +68,7 @@ function OrdersTable({ wharehose, rows, data }) {
 
   useEffect(() => {
     if(ActionFlag===0){
-      dispatch(setFlat())
+      dispatch(setFlag())
     }else{
       console.log("Enro a buscar datos")
           let _compnay = new URLSearchParams(location.search).get("company");
@@ -104,7 +105,7 @@ function OrdersTable({ wharehose, rows, data }) {
             })
           );
     }
-  }, [wharehose, t, dispatch, location.search, page, rowsPerPage, isLoad]);
+  }, [wharehose, t, dispatch, location.search, page, rowsPerPage, isLoad,ActionNewOrderCount]);
 
  
   const acceptCancelOrder = (id) => {

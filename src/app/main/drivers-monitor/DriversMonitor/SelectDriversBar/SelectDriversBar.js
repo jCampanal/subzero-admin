@@ -5,8 +5,9 @@ import FuseScrollbars from "@fuse/core/FuseScrollbars";
 import { useSelector } from "react-redux";
 import { getDriversCarded} from "app/store/driverMonitor/driverMonitor";
 import AirportShuttleIcon from '@material-ui/icons/AirportShuttle';
+import { useTranslation } from "react-i18next";
 const SelectDriversBar =(props)=>{
-
+    const { t } = useTranslation("drivers-monitor");
     const ShowCarded=useSelector(getDriversCarded)
     console.log(ShowCarded)
 

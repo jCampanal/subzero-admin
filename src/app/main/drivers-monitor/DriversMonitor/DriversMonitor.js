@@ -64,7 +64,7 @@ useEffect( ()=>{
   
   return (
   <div>
-    <div className="flex absolute m-0 box-border w-full h-full justify-center flex-col md:flex-row">
+    <div className="flex absolute mx-0 my-1 box-border w-full h-full justify-center flex-col md:flex-row">
       <DivMap>
             < GoogleMapReact
               containerStyle={{
