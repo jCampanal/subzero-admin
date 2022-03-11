@@ -26,6 +26,7 @@ const locale = {
   CLEAR_SEARCH: "Clear Search",
   SEARCH_RESULT: "Search results for",
   PICKUP_DATE: "Registration Date",
+
 };
 
 export default locale;

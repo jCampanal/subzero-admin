@@ -63,7 +63,9 @@ const locale = {
   FRIDAY:"Viernes",
   SATURDAY:"Sabado",
   SUNDAY:"Domingo",
-  PICK_UP:"Recojer"
+  PICK_UP:"Recojer",
+  DATE_2: "Segunda fecha",
+  DATE_1: "Primera fecha"
 
 };
 

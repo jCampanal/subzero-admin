@@ -22,6 +22,8 @@ const locale = {
   CANCELED: "Canceled",
   CLEAR_SEARCH: "Clear search",
   DELETE_WARNING_TITLE: "Are you sure ?",
+  DATE_2: "Second date",
+  DATE_1: "First date",
 
 
   REQUIRED:"required field",
