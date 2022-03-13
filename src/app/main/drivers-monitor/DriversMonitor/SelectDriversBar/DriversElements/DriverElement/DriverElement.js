@@ -5,7 +5,6 @@ import {
     DivDriverElementSecundaryS,
     FormS,
     OrderCountS,
-    ButtonDatePickerS,
     H3S,
     OnlineSignal,
     LabelH4S} from './DriverElement.style'
@@ -17,6 +16,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { CalendarToday } from "@material-ui/icons";
 import StopsElements from './StopsElements/StopsElements';
 import { useTranslation } from "react-i18next";
+import Circle from '@material-ui/icons/PlayCircleFilled';
 
 const DriverElement=(props)=>{
     const { t } = useTranslation("drivers-monitor");

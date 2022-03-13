@@ -9,7 +9,7 @@ padding:10px 0px;
 border-radius:10px;
 margin: 5px 0px;
 background-color: #fafafa;
-box-shadow:1px 2px 2px grey,-1px 2px 2px grey,1px -2px 2px grey,-1px -2px 2px grey;
+box-shadow:1px 2px 2px #007bff,-1px 2px 2px #007bff,1px -2px 2px #007bff,-1px -2px 2px #007bff;
 transition:all 225ms;
 @media (min-width:960px){
   width:96%;
@@ -25,7 +25,21 @@ ${(props) =>
   props.padding &&
   css`
     padding-left:15%; 
-  `}`;
+  `} 
+@media (max-width:960px ){
+  ${(props) =>
+    props.padding &&
+    css`
+      padding-left:5%; 
+    `} 
+@media (max-width: 530px){
+  ${(props) =>
+    props.padding &&
+    css`
+      padding-left:15%; 
+        `}       
+}
+`;
 
 export const FormS=styled.form`
 display:${(props) => (props.Show ? "flex" : "none")};
@@ -80,3 +94,9 @@ export const ButtonDatePickerS = styled.span`
   border-radius: 18px;
   text-transform: none;
 `;
+
+export const SpanL=styled.span`
+width:18px;
+height:18px;
+color:${(props) => (props.Online ? props.Color : 'black')};
+margin-right:8px;`;

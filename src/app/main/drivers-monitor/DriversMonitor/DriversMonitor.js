@@ -47,7 +47,8 @@ function DriversMonitor(props) {
 useEffect( ()=>{
   if(Drivers.length>0){
     const Marks= Drivers.map(element=>{      
-      return(<DivMarker 
+      return(<DivMarker
+                  key= {element.name+element.color}
                   color={element.color}
                   Enable={element.enable}
                   lat={ element.lat}

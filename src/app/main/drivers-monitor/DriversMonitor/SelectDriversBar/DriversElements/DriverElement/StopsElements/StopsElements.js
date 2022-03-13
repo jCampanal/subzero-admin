@@ -1,5 +1,6 @@
 import React from 'react'
-import {StopDivS,H4S} from './StopsElement.style'
+import {StopDivS,H4S} from './StopsElement.style';
+
 
 const StopsElements=(props)=>{
     return(
