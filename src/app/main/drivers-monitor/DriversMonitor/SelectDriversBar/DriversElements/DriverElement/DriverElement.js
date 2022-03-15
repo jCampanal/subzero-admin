@@ -69,8 +69,8 @@ const DriverElement=(props)=>{
                                     label={t("ONLINE")}/>
                             <FormControlLabel
                                     control={<Checkbox
-                                               disabled={!props.Online} 
-                                               defaultChecked={props.Enable&&props.Online}
+                                               disabled={!props.Online&&props.Wharehouse} 
+                                               defaultChecked={props.Enable&&props.Online&&props.Wharehouse}
                                                onChange={props.Click}  /  >}
                                     label={t("ENABLE")}/>
                         </DivDriverElementSecundaryS>
