@@ -91,8 +91,7 @@ const ordersAdminSlice = createSlice({
         state.adminOrders = state.adminOrders.sort(
           (a, b) => b.data.data.length - a.data.data.length
         );
-        // state.adminOrders = [];
-        console.log("Descarga de datos realizada")
+        
       })
       .addCase(fetchOrders.rejected, (state, action) => {
         state.status = "failed";

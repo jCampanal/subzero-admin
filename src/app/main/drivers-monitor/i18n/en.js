@@ -7,7 +7,8 @@ const locale = {
     SHOW_RECORDS: "Show records",
     SHOW_RECORDS_FOR:"Show records for the:",
     LAST_24_HOURS:"last 24 hours",
-    LAST_6_HOURS:"last 6 hours"
+    LAST_6_HOURS:"last 6 hours",
+    LAST_HOUR:"last hour"
 };
 
 export default locale;

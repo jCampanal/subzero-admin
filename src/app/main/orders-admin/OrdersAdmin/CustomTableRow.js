@@ -51,7 +51,7 @@ const CustomTableRow = ({ item, handleClick, handleCancelOrder }) => {
         align="left"
       >
         <span className={`text-${ShipmentStatus[item.status].tColor}`}>
-          <i className={`fa ${ShipmentStatus[item.status].icon} mr-5`} />
+          <i className={`fa ${ShipmentStatus[item.status].icon} mr-5`}/>
           {t(ShipmentStatus[item.status].name)}
         </span>
       </TableCell>
@@ -70,7 +70,9 @@ const CustomTableRow = ({ item, handleClick, handleCancelOrder }) => {
           onClick={() => handleCancelOrder(item)}
           disabled={item.status === "Delivered"}
         >
+          <span style={{color:item.status === "Delivered"?"#e37681":"#dc3545"}}>
           <CancelOutlined className="mr-5" /> Cancel
+          </span>
         </Button>
       </TableCell>
     </TableRow>

@@ -30,8 +30,8 @@ export const MenuProps = {
 };
 
 export const ShipmentStatus = {
-  Waiting: { name: "Waiting", icon: "fa-truck", tColor: "gray-700" },
-  Processing: { name: "PROCESSING", icon: "fa-truck", tColor: "blue-700" },
+  Waiting: { name: "Waiting", icon:"fa-clock" , tColor: "gray-600" },
+  Processing: { name: "PROCESSING", icon: "fa-suitcase", tColor: "blue-700" },
   Shipping: { name: "SHIPPING", icon: "fa-truck", tColor: "blue-700" },
   Delivered: { name: "DELIVERED", icon: "fa-handshake", tColor: "green-700" },
   Canceled: { name: "CANCELED", icon: "fa-times", tColor: "red-700" },
