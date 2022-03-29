@@ -27,6 +27,7 @@ function PageCardedHeader({ totalOrders }) {
   const history = useHistory();
   const mainTheme = useSelector(selectMainTheme);
   const [dateRangeDlgIsOpen, openDateRangeDlg] = useState(false);
+  const [resetDatePicker,setResetDatePicker]=useState(false)
   const [filter, setFilter] = useState({
     noOrden: "",
     company: "",
@@ -83,6 +84,7 @@ function PageCardedHeader({ totalOrders }) {
       });
       setNoOrden("");
       setCompanySearch("");
+      setResetDatePicker(true)
     }
     history.push("/orders_admin");
   };
@@ -227,6 +229,7 @@ function PageCardedHeader({ totalOrders }) {
           toggleDateRangeDlgIsOpen={toggleDateRangeDlgIsOpen}
           notValidate
           defaultNullFrom
+          reset={resetDatePicker}
         />
       </div>
       <div className="flex text-right">

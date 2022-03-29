@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -32,15 +32,17 @@ function DateRangePicker({
   defaultNull,
   defaultNullFrom,
   defaultNullTo,
+  reset,
 }) {
   const { t } = useTranslation(namespace);
-
+ 
+ 
   const [dateFrom, setDateFrom] = useState(
     defaultNull ? null : defaultNullFrom ? null : new Date()
   );
   const [dateTo, setDateTo] = useState(
     defaultNull ? null : defaultNullTo ? null : new Date()
-  );
+  )
   const dispatch = useDispatch();
 
   const toggleDialog = () => {
@@ -89,6 +91,18 @@ function DateRangePicker({
       }
     }
   };
+
+  useEffect(()=>{
+    if(reset){
+      setDateFrom(
+      defaultNull ? null : defaultNullFrom ? null : new Date()
+    );
+      setDateTo(
+      defaultNull ? null : defaultNullTo ? null : new Date()
+    )}
+    },[reset])
+
+
 
   return (
     <Dialog open={isOpen} onClose={toggleDialog} fullWidth maxWidth="sm">

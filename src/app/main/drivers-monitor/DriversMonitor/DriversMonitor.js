@@ -22,8 +22,7 @@ function DriversMonitor(props) {
   const { t } = useTranslation("drivers-monitor");
   const dispatch = useDispatch();
   const Drivers=useSelector(selectAllDrivers)
-  let MAPTYPEID=0 
-  console.log(Drivers)
+  
   useEffect(()=>{    
     dispatch(fetchDrivers())
     .then(() => {
@@ -74,7 +73,18 @@ useEffect( ()=>{
                 width:'100%',
                 height:'100%'
               }}
-              options={map => ({  mapTypeId: map.MapTypeId[MAPTYPEID],
+
+                
+              
+              bootstrapURLKeys={{ key: "" }}
+              google={props.google}
+              zoom={10}
+              center={{
+                lat: 26.761681,
+                lng: -81.191788,
+              }}
+
+              options={map => ({ 
                 mapTypeControl: true,
                 mapTypeControlOptions: {
                     style: map.MapTypeControlStyle.HORIZONTAL_BAR,
@@ -85,15 +95,7 @@ useEffect( ()=>{
                         map.MapTypeId.HYBRID
                     ]
                 } })}
-                
-              
-              bootstrapURLKeys={{ key: "" }}
-              google={props.google}
-              zoom={10}
-              center={{
-                lat: 26.761681,
-                lng: -81.191788,
-              }}
+
             >
             {markerDrivers} 
 

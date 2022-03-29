@@ -19,6 +19,9 @@ export const getAllUsers = () =>
 export const getLogedUser = () =>
   apiClient.get(userURL + `/getLoggedIn`).then((response) => response.data);
 
+export const getRoles = (id) =>
+  apiClient.get(userURL + `/getRoles/${id}`).then((response) => response.data);
+
 export const registerAdmin = (data) =>
   apiClient
     .post(userURL + "/register", data, {

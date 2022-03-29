@@ -15,6 +15,7 @@ import { useSelector, useDispatch } from "react-redux";
 import CustomTableRow from "./CustomTableRow";
 import ViewModal from "./modals/ViewModal";
 import RemoveDlg from "app/common/removeDlg";
+import { getLogedUser,getRoles } from "app/api-conn/User";
 import { openDialog } from "app/store/fuse/dialogSlice";
 import { fetchOrders } from "app/store/oredersAdmin/ordersAdminSlice";
 import _ from "lodash";
@@ -128,18 +129,59 @@ function OrdersTable({ wharehose, rows, data }) {
       });
   };
   const cancelOder = (order) => {
-    dispatch(
-      openDialog({
-        children: (
-          <RemoveDlg
-            itemId={order.id}
-            proceedCallback={() => acceptCancelOrder(order.id)}
-            dlgTitle={t("DELETE_WARNING_TITLE")}
-            dlgText={`You are going to cancel the order ${order.no}. Proceed with the request?`}
-          />
-        ),
+    console.log("order") 
+    console.log(order)
+    let SuperUsuario=null
+    const EEE= getLogedUser()
+      .then((response)=>{        
+          getRoles(response.data.id)
+            .then((response2)=>{
+              const Role=response2.data
+              const Roles=["Usuari0"]
+              const superAdmin=Role.find(element=>{               
+              return(element==="SuperAdmin")})
+              if(superAdmin){
+                dispatch(
+                  openDialog({
+                    children: (
+                      <RemoveDlg
+                        itemId={order.id}
+                        proceedCallback={() => acceptCancelOrder(order.id)}
+                        dlgTitle={t("DELETE_WARNING_TITLE")}
+                        dlgText={`You are going to cancel the order ${order.no}. Proceed with the request?`}
+                      />
+                    ),
+                  })
+                );
+                }else{
+                  dispatch(
+                    showMessage({
+                      message: "no tiene permiso" ?? "Usted no es un superUsuario",
+                      variant: "error",
+                      anchorOrigin: {
+                        vertical: "top",
+                        horizontal: "right",
+                      },
+                    })
+                  );
+                }
+            })
+            .catch((error)=>{
+              dispatch(
+                showMessage({
+                  message: error.response.data.title ?? error.response.data.message,
+                  variant: "error",
+                  anchorOrigin: {
+                    vertical: "top",
+                    horizontal: "right",
+                  },
+                })
+              );
+            })
       })
-    );
+      
+   
+    
   };
 
   if (data.data.length === 0) {
