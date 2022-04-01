@@ -12,7 +12,7 @@ const locale = {
     CURRENT_LANGUAGE: 'en-US',
     PICK_A_DATE: 'Pick a date',
     CUSTOMER: 'Customer',
-    SHIPMENT: 'Shipment',
+    SHIPMENT: 'Shipping',
     PRODUCT: 'Product',
     QUANTITY: 'Quantity',
     DESCRIPTION: 'Descrition',

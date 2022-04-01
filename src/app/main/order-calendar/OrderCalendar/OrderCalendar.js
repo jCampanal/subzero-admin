@@ -1,4 +1,4 @@
-import React, { lazy, memo } from "react";
+import React, { lazy, memo,Fragment } from "react";
 import { useTranslation } from "react-i18next";
 import DateRangeIcon from "@material-ui/icons/DateRange";
 import TableHead from "@material-ui/core/TableHead";
@@ -7,6 +7,10 @@ import Table from "@material-ui/core/Table";
 import TableCell from "@material-ui/core/TableCell";
 import FuseScrollbars from "@fuse/core/FuseScrollbars";
 import TableBody from "@material-ui/core/TableBody";
+import {todayTable,DummyInfoTodayTable} from "./cels"
+import { AppBar } from "@material-ui/core";
+import SimpleTable from "./Tables/Table/Table";
+import DivToTable from "./Tables/DivTotable/DivTotable";
 
 const OrdersByDateTab = lazy(() => import("./OrdersByDateTab"));
 
@@ -101,25 +105,26 @@ function OrderCalendar() {
   const { t } = useTranslation("orders-calendar");
   return (
     <div className="px-10 md:px-20">
+      {/*
       <p className="h2 sm:h1 mt-12">
         <DateRangeIcon className="text-32 mr-14" />
         {t("ORDERS_CALENDAR")}{" "}
         <span className="text-gray-50 rounded-full px-16 bg-blue-600">
           {dummyOrders.length}
         </span>
-      </p>
+      </p>*/}
       <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg my-14">
-        <FuseScrollbars className="flex-grow overflow-x-auto">
-          <Table className="min-w-xl" aria-labelledby="tableTitle">
+        
+          <Table className="" aria-labelledby="tableTitle">
             <TableHead>
-              <TableRow className="h-48 sm:h-64">
+              <TableRow className="h-20 sm:h-64">
                 <TableCell padding="none" className="w-40 md:w-64 text-center">
                   {t("PRODUCT")}
                 </TableCell>
-                {dates.slice(0, 7).map((date) => (
+                {dates.slice(0, 10).map((date) => (
                   <TableCell
                     padding="none"
-                    className="w-40 md:w-64 text-center"
+                    className="w-28 md:w-52 text-center"
                   >
                     {`${t(Days[date.getDay()])} ${date.getDate()}/${
                       date.getMonth() + 1
@@ -132,7 +137,7 @@ function OrderCalendar() {
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow className="h-56 cursor-pointer" hover tabIndex={-1}>
+              <TableRow className="h-20 cursor-pointer" hover tabIndex={-1}>
                 <TableCell
                   className="p-4 md:p-10 text-center"
                   component="th"
@@ -140,7 +145,7 @@ function OrderCalendar() {
                 >
                   {t("DRY_ICE")}
                 </TableCell>
-                {dates.slice(0, 7).map((date) => (
+                {dates.slice(0, 10).map((date) => (
                   <TableCell
                     className="p-4 md:p-10 text-center"
                     component="th"
@@ -163,7 +168,7 @@ function OrderCalendar() {
                   scope="row"
                 >
                   {dates
-                    .slice(0, 7)
+                    .slice(0, 10)
                     .map((date) =>
                       dummyOrders
                         .filter(
@@ -178,7 +183,7 @@ function OrderCalendar() {
                     .reduce((total, value) => total + value, 0)}
                 </TableCell>
               </TableRow>
-              <TableRow className="h-56 cursor-pointer" hover tabIndex={-1}>
+              <TableRow className="h-20 cursor-pointer" hover tabIndex={-1}>
                 <TableCell
                   className="p-4 md:p-10 text-center"
                   component="th"
@@ -186,7 +191,7 @@ function OrderCalendar() {
                 >
                   {t("PELLETS")}
                 </TableCell>
-                {dates.slice(0, 7).map((date) => (
+                {dates.slice(0, 10).map((date) => (
                   <TableCell
                     className="p-4 md:p-10 text-center"
                     component="th"
@@ -209,7 +214,7 @@ function OrderCalendar() {
                   scope="row"
                 >
                   {dates
-                    .slice(0, 7)
+                    .slice(0, 10)
                     .map((date) =>
                       dummyOrders
                         .filter(
@@ -224,7 +229,7 @@ function OrderCalendar() {
                     .reduce((total, value) => total + value, 0)}
                 </TableCell>
               </TableRow>
-              <TableRow className="h-56 cursor-pointer" hover tabIndex={-1}>
+              <TableRow className="h-20 cursor-pointer" hover tabIndex={-1}>
                 <TableCell
                   className="p-4 md:p-10 text-center"
                   component="th"
@@ -232,7 +237,7 @@ function OrderCalendar() {
                 >
                   {t("BLASTING")}
                 </TableCell>
-                {dates.slice(0, 7).map((date) => (
+                {dates.slice(0, 10).map((date) => (
                   <TableCell
                     className="p-4 md:p-10 text-center"
                     component="th"
@@ -255,7 +260,7 @@ function OrderCalendar() {
                   scope="row"
                 >
                   {dates
-                    .slice(0, 7)
+                    .slice(0, 10)
                     .map((date) =>
                       dummyOrders
                         .filter(
@@ -272,11 +277,39 @@ function OrderCalendar() {
               </TableRow>
             </TableBody>
           </Table>
-        </FuseScrollbars>
+        
       </div>
-      <div>
-        <OrdersByDateTab tabHeaders={dates} tabItems={dummyOrders} />
+
+
+      <div className='flex flex-col lg:flex-row justify-between'>
+          <div className='w-full lg:w-2/5 '>
+            <SimpleTable
+              Date={now}
+              HeadTable={todayTable}
+              BodyTable={DummyInfoTodayTable}/>
+          </div>
+
+
+      <div className='w-full lg:w-[55%] flex-col'>
+            <DivToTable
+                Overflow='visible'
+                Date={[dates[1],dates[2]]}
+                HeadTable={[todayTable,todayTable]}
+                BodyTable={[DummyInfoTodayTable,DummyInfoTodayTable]}/>
+
+            <DivToTable
+                Overflow='visible'
+                Date={[dates[3],dates[4]]}
+                HeadTable={[todayTable,todayTable]}
+                BodyTable={[DummyInfoTodayTable,DummyInfoTodayTable]}/>
+
       </div>
+
+      
+      </div>
+
+
+    
     </div>
   );
 }

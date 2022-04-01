@@ -9,7 +9,18 @@ i18next.addResourceBundle('es', 'drivers-monitor', es);
 const DriversMonitorPageConfig = {
     settings: {
         layout: {
-            config: {},
+            config: {
+                navbar: {
+                    display: false,
+                    folded: false,
+                    position: "left",
+                  },
+                  toolbar: {
+                    display: false,
+                    style: "fixed",
+                    position: "below",
+                  },
+            },
         },
     },
     routes: [

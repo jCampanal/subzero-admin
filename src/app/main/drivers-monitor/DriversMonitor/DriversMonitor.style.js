@@ -1,5 +1,19 @@
 import styled,{css} from "styled-components";
 
+
+export const FirstDiv=styled.div`
+display:flex;
+position:absolute;
+width:100%;
+height:100%;
+justify-content:center;
+flex-direction:column;
+@media (min-width:1460px){
+  flex-direction:row;       
+}
+`;
+
+
 export const DivMap = styled.div`  
   display:flex;
   position:relative;
@@ -8,7 +22,7 @@ export const DivMap = styled.div`
   height:250%;
   box-sizing: border-box;
   height:500%; 
-  @media screen and (min-width:960px){
+  @media screen and (min-width:1460px){
     max-width: 85%;
     height:100%;
   }

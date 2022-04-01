@@ -17,6 +17,7 @@ import { CancelRounded } from "@material-ui/icons";
 import PropTypes from "prop-types";
 import AddModal from "./modals/AddModal";
 import { Badge } from "@material-ui/core";
+import SearchDateShowed from "../../coolers/Coolers/SearchDateShowed"
 
 const DateRangePicker = lazy(() =>
   import("../../coolers/Coolers/DateRangePicker")
@@ -203,7 +204,7 @@ function PageCardedHeader({ totalOrders }) {
             {t("SEARCH_BY_DATE")}
           </Button>
         </motion.div>
-
+        
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
@@ -222,6 +223,8 @@ function PageCardedHeader({ totalOrders }) {
             {t("CLEAR_SEARCH")}
           </Button>
         </motion.div>
+        
+        
         <DateRangePicker
           isOpen={dateRangeDlgIsOpen}
           namespace="orders-admin"
@@ -231,6 +234,7 @@ function PageCardedHeader({ totalOrders }) {
           defaultNullFrom
           reset={resetDatePicker}
         />
+       
       </div>
       <div className="flex text-right">
         <motion.div
@@ -249,8 +253,11 @@ function PageCardedHeader({ totalOrders }) {
             <AddCircleIcon className="mr-5" />
             {t("NEW_ORDER")}
           </Button>
+          
         </motion.div>
+        <SearchDateShowed Click={toggleDateRangeDlgIsOpen}/>
       </div>
+      
       <AddModal setIsModal={setIsAddModal} isModal={isAddModal} />
     </div>
   );

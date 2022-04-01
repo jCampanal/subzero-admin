@@ -22,7 +22,7 @@ export const BarDriversPrincipalS = styled.div`
   width: 100%;
   box-sizing: border-box;
   background-color:#fafafa;
-  @media (min-width:960px){
+  @media (min-width:1460px){
     max-width: 15%;
     height:100%;        
   }
@@ -35,9 +35,10 @@ export const BarDriversSecndari1S = styled.div`
   min-height:85%;
   overflow-y:auto;
   position:static;
-  display: flex;
-  flex-direction:column;
+  display: block;
+  
 `;
+//flex-direction:column;
 
 export const ButtonS = styled.div`
   padding: 6px 12px;

@@ -2,30 +2,24 @@ import styled,{css} from "styled-components";
 
 export const DivDriverElementS=styled.div`
 display:inline-block;
-width:60%;
 position:relative;
-left:20%;
+width:180px;
+height:50px;
+margin:5px 5%;
 padding:10px 0px;
 border-radius:10px;
-margin: 5px 0px;
 background-color: #fafafa;
 box-shadow:1px 2px 2px grey,-1px 2px 2px grey,1px -2px 2px grey,-1px -2px 2px grey;
 transition:all 225ms;
-@media (min-width:960px){
-  width:90%;
-  left:5%;        
+@media (min-width:1460px){
+  margin:5px 1%;        
 }
-@media (min-width:1844px){
-  width:96%;
-  left:2%;        
-}`;
+`;
 
 export const DivDriverElementSecundaryS=styled.div`
 display:flex;
-flex-direction: column;
+flex-direction: row ;
 text-align:center;
-width:100%;
-justify-content:${(props) => (props.padding ? "space-evenly" : "center")};
 align-items: center;
 ${(props) =>
   props.padding &&
@@ -40,12 +34,23 @@ ${(props) =>
   flex-direction: row;       
 }`;
 
+export const DivDriverElementTheeryS=styled.div`
+justify-content: space-evenly;
+width:50%;
+margin-right: 10px;
+display:flex;
+flex-direction: row;`;
+
+
+
 export const FormS=styled.form`
 display:${(props) => (props.Show ? "flex" : "none")};
 flex-direction:column;
 justify-content:space-around;
 align-items: center;
 width: 100%;`;
+
+
 
 export const LabelH4S=styled.h4`
 margin-top:10px;
@@ -57,11 +62,11 @@ border-radius:100px;
 width:18px;
 height:18px;
 background-color:${(props) => (props.Online ? props.Color : 'black')};
-margin-left:3px;
-margin-right:9px;`;
+margin-left:5px;
+margin-right:2px;`;
 
 export const H3S=styled.h3`
-margin:2px; 
+margin-left:3px; 
 cursor:pointer;`;
 
 

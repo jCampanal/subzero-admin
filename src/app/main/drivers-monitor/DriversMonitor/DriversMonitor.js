@@ -12,6 +12,7 @@ import { showMessage } from "app/store/fuse/messageSlice";
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import {DivMap,DivMarker} from './DriversMonitor.style'
 import AirportShuttleIcon from '@material-ui/icons/AirportShuttle';
+import {FirstDiv}from './DriversMonitor.style'
 
 
 
@@ -48,7 +49,7 @@ useEffect( ()=>{
     const Marks= Drivers.map(element=>{      
       return(<DivMarker 
                   color={element.color}
-                  Enable={element.enable}
+                  Enable={element.online}
                   lat={ element.lat}
                   lng={ element.lng}>
                 <AirportShuttleIcon
@@ -63,7 +64,7 @@ useEffect( ()=>{
   
   return (
   <div>
-    <div className="flex absolute m-0 box-border w-full h-full justify-center flex-col md:flex-row">
+    <FirstDiv>    
       <DivMap>
             < GoogleMapReact
               containerStyle={{
@@ -105,8 +106,9 @@ useEffect( ()=>{
             </DivMap>
             
       <SelectDriversBar Drivers={Drivers}/> 
-        
-      </div>
+       
+      
+      </FirstDiv>    
     </div>
   );
 }

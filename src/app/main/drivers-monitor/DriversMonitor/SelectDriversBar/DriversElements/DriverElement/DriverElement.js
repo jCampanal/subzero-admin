@@ -3,7 +3,7 @@ import {Checkbox,FormControlLabel,IconButton,InputAdornment} from '@material-ui/
 import {
     DivDriverElementS,
     DivDriverElementSecundaryS,
-    FormS,
+    DivDriverElementTheeryS,
     OrderCountS,
     ButtonDatePickerS,    
     H3S,
@@ -29,24 +29,17 @@ const DriverElement=(props)=>{
         <DivDriverElementS>
 
                         <DivDriverElementSecundaryS padding> 
-                            <FormControlLabel
-                                    control={<Checkbox
-                                               disabled={!props.Online} 
-                                               defaultChecked={props.Enable&&props.Online}
-                                               onChange={props.Click}  /  >}
-                                    label={"Enable"}/>                               
-                            <FormControlLabel
-                                   control={ <OnlineSignal Online= {props.Online} Color={props.Color}/>}
-                                    label={props.Online?"Online":"Offline"}/>
-                           
-                        </DivDriverElementSecundaryS>
+                            <DivDriverElementTheeryS>                           
+                            <OnlineSignal Online= {props.Online} Color={props.Color}/>
+                            <h5>{props.Online?"Online":"Offline"}</h5>
+                        </DivDriverElementTheeryS> 
 
-                        <DivDriverElementSecundaryS>                            
-                            <H3S >{props.Name+" "+props.LastName}</H3S>
-                            <OrderCountS>{props.Ordenes}</OrderCountS>                            
-                        </DivDriverElementSecundaryS>
+                        <DivDriverElementTheeryS>        
+                            <H3S >{props.Name}</H3S>
+                            <OrderCountS>{props.Ordenes}</OrderCountS> 
+                        </DivDriverElementTheeryS>
 
-
+         </DivDriverElementSecundaryS>
 
                       
        </DivDriverElementS>

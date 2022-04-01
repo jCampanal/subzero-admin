@@ -1,5 +1,5 @@
 const locale = {
-    ORDERS_CALENDAR: 'Orders Calendar',
+    ORDERS_CALENDAR: 'Orders Monitor 2',
     PRODUCT: 'Product',
     TOTAL: 'Total',
     DRY_ICE: 'Dry Ice',

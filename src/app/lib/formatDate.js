@@ -72,3 +72,22 @@ export const getBinaryDays = (indexDays) => {
   // days = parseInt(days);
   return days;
 };
+
+const Month=[
+  "Jan",
+  "Feb",
+  "March",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+]
+
+export const CompringDate=(day,month,year)=>{
+  return(month+'/'+day+'/'+year)
+}

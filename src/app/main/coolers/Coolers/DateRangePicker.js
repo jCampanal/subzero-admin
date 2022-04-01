@@ -105,7 +105,7 @@ function DateRangePicker({
 
 
   return (
-    <Dialog open={isOpen} onClose={toggleDialog} fullWidth maxWidth="sm">
+    <Dialog open={isOpen} onClose={toggleDialog} fullWidth maxWidth="xs">
       <AppBar position="static" elevation={0}>
         <Toolbar className="flex w-full">
           <Typography variant="subtitle1" color="inherit">
@@ -115,7 +115,7 @@ function DateRangePicker({
       </AppBar>
       <DialogContent classes={{ root: "p-0" }}>
         <div className="px-16 sm:px-24">
-          <div className="flex -mx-4">
+          <div className="flex justify-center -mx-4">
             <DatePicker
               label={t("DATE_1")}
               inputVariant="outlined"
@@ -129,7 +129,7 @@ function DateRangePicker({
           </div>
         </div>
         <div className="px-16 sm:px-24">
-          <div className="flex -mx-4">
+          <div className="flex justify-center -mx-4">
             <DatePicker
               label={t("DATE_2")}
               inputVariant="outlined"
@@ -143,7 +143,7 @@ function DateRangePicker({
           </div>
         </div>
       </DialogContent>
-      <DialogActions className="px-8 py-16 justify-end gap-5">
+      <DialogActions className="px-8 py-16 justify-center gap-5">
         <div className="px-16">
           <Button
             type="submit"

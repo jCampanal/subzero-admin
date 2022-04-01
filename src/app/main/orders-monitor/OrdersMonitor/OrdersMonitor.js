@@ -130,7 +130,7 @@ function OrdersMonitor() {
     const {t} = useTranslation('orders-monitor');
     return (
         <div>
-            <div className="bg-gray-900 text-gray-50 py-12 px-24 grid grid-cols-1 md:grid-cols-5 items-center justify-between align-center md:gap-7">
+            <div className="bg-black text-gray-50 z-30 py-12 px-24 grid grid-cols-1 md:grid-cols-5 items-center justify-between align-center fixed md:gap-7">
                 <div className="text-center mb-9 md:mb-0">
                     <p className="text-lg font-bold">{t('TOTALS')}</p>
                     <div className="grid grid-cols-3 grid-rows-2 gap-1">
@@ -166,7 +166,6 @@ function OrdersMonitor() {
                         variant="inline"
                         format="MM/dd/yyyy"
                         margin="normal"
-                        label={t('PICK_A_DATE')}
                         onChange={() => null}
                         KeyboardButtonProps={{
                             'aria-label': 'change date',
@@ -174,7 +173,7 @@ function OrdersMonitor() {
                     />
                 </MuiPickersUtilsProvider>
             </div>
-            <div className="mt-14 flex flex-col px-10 md:px-14">
+            <div className="mt-96 flex flex-col px-10 md:px-14">
                 {dummyOrders.map((item) => (
                     <div key={item.id} className="mb-28 last:mb-0 p-14 shadow-lg bg-white rounded-lg border border-gray-200">
                         <div className="flex flex-row justify-between gap-16 p-5 mb-10">
@@ -182,9 +181,7 @@ function OrdersMonitor() {
                                 <Close />
                             </IconButton>
                             <span className="text-gray-800 text-lg font-semibold leading-8 flex-1 text-center">ID: {item.id}</span>
-                            <Button variant="contained" className="bg-blue-500 hover:bg-blue-700 text-white">
-                                {t('PROCESS')}
-                            </Button>
+
                         </div>
                         <div className="flex flex-col gap-10">
                             <div className="grid grid-cols-1 sm:grid-cols-12 gap-7 sm:gap-20 content-start">
@@ -251,9 +248,17 @@ function OrdersMonitor() {
                                             ))}
                                         </TableBody>
                                     </Table>
+
                                 </FuseScrollbars>
                             </div>
-                            <p className="text-base font-semibold uppercase">Ref:{item.ref}</p>
+                                <div className="flex justify-between items-center">
+                                
+                                    <p className="text-base font-semibold uppercase">Ref:{item.ref}</p>
+                                    <Button variant="contained" className="bg-blue-500 w-1/5 self-end hover:bg-blue-700 text-white">
+                                                    {t('PROCESS')}
+                                    </Button>
+                               </div>
+                                
                         </div>
                     </div>
                 ))}
