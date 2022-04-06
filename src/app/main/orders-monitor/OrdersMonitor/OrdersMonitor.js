@@ -130,7 +130,7 @@ function OrdersMonitor() {
     const {t} = useTranslation('orders-monitor');
     return (
         <div>
-            <div className="bg-black text-gray-50 z-30 py-12 px-24 grid grid-cols-1 md:grid-cols-5 items-center justify-between align-center fixed md:gap-7">
+            <div className="bg-black text-gray-50 z-30 w-full py-12 px-24 grid grid-cols-1 md:grid-cols-5 items-center justify-between align-center fixed md:gap-7">
                 <div className="text-center mb-9 md:mb-0">
                     <p className="text-lg font-bold">{t('TOTALS')}</p>
                     <div className="grid grid-cols-3 grid-rows-2 gap-1">

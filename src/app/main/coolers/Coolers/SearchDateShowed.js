@@ -17,6 +17,8 @@ const SearchDateShowed=(props)=>{
             setDateTo('')
           }
           if (dateFrom  === "" || !dateFrom ) {
+            console.log(new Date().getDate()+'+'+new Date().getMonth()+'+'+new Date().getFullYear())
+            console.log(new Date(new Date()))
             setDateFrom(CompringDate(new Date().getDate(),new Date().getMonth(),new Date().getFullYear()));
           }else{
             setDateFrom(CompringDate(new Date(dateFrom).getDate(),new Date(dateFrom).getMonth(),new Date(dateFrom).getFullYear()));   

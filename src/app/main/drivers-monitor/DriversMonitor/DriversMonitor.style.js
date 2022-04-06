@@ -8,7 +8,7 @@ width:100%;
 height:100%;
 justify-content:center;
 flex-direction:column;
-@media (min-width:1460px){
+@media (min-width:800px){
   flex-direction:row;       
 }
 `;
@@ -22,8 +22,8 @@ export const DivMap = styled.div`
   height:250%;
   box-sizing: border-box;
   height:500%; 
-  @media screen and (min-width:1460px){
-    max-width: 85%;
+  @media screen and (min-width:800px){
+    
     height:100%;
   }
 `;

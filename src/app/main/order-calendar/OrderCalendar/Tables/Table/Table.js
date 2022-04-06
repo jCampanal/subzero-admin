@@ -9,27 +9,27 @@ import Paper from "@material-ui/core/Paper"
 import { TableContainer } from '@material-ui/core';
 
 const Days = {
-    0: "SUN",
-    1: "MON",
-    2: "TUE",
-    3: "WED",
-    4: "THU",
-    5: "FRI",
-    6: "SAT",
+    0: "SUNDAY",
+    1: "MONDAY",
+    2: "TUESDAY",
+    3: "WEDNESDAY",
+    4: "THURSDAY",
+    5: "FRIDAY",
+    6: "SATURDAY",
   };
 
 
 const SimpleTable=(props)=>{
     return(
-        <Paper sx={{ overflow: props.Overflow }}>
+        <Paper className="my-12 " sx={{ overflow: props.Overflow }}>
             <TableContainer style={{height:props.H?props.H:'auto',maxHeight:props.H?props.H:'none' }} >
                 
-                    <Table stickyHeader  className="my-12" aria-labelledby="tableTitle"> 
+                    <Table stickyHeader  aria-labelledby="tableTitle"> 
                             
                                 <TableHead>
                                     <TableRow className="h-20  cursor-pointer" >
                                         <TableCell
-                                                    className="p-1 bg-blue  text-center font-bold"
+                                                    className="p-1 bg-blue text-white text-center font-bold"
                                                     colSpan={3}                             
                                                 >
                                                 {Days[props.Date.getDay()]+','+props.Date.getDate()}

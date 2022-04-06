@@ -89,5 +89,5 @@ const Month=[
 ]
 
 export const CompringDate=(day,month,year)=>{
-  return(month+'/'+day+'/'+year)
+  return(month+1+'/'+day+'/'+year)
 }

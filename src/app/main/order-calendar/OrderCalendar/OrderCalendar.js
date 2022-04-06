@@ -117,21 +117,21 @@ function OrderCalendar() {
         
           <Table className="" aria-labelledby="tableTitle">
             <TableHead>
-              <TableRow className="h-20 sm:h-64">
-                <TableCell padding="none" className="w-40 md:w-64 text-center">
+              <TableRow className="h-20 sm:h-64 ">
+                <TableCell padding="none" className="w-40 md:w-64 text-center font-bold">
                   {t("PRODUCT")}
                 </TableCell>
                 {dates.slice(0, 10).map((date) => (
                   <TableCell
                     padding="none"
-                    className="w-28 md:w-52 text-center"
+                    className="w-28 md:w-52 text-center font-bold"
                   >
                     {`${t(Days[date.getDay()])} ${date.getDate()}/${
                       date.getMonth() + 1
                     }`}
                   </TableCell>
                 ))}
-                <TableCell padding="none" className="w-40 md:w-64 text-center">
+                <TableCell padding="none" className="w-40 md:w-64 text-center font-bold">
                   {t("TOTAL")}
                 </TableCell>
               </TableRow>
