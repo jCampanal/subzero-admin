@@ -23,7 +23,6 @@ export const DivMap = styled.div`
   box-sizing: border-box;
   height:500%; 
   @media screen and (min-width:800px){
-    
     height:100%;
   }
 `;

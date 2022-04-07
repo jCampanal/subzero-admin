@@ -79,58 +79,7 @@ export default function OrdersTab(props) {
   return (
     <div className={classes.root}>
       <AppBar position="sticky" color="default">
-        {/* <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="tabs">
-            {(props) => (
-              <Tabs
-                ref={props.innerRef}
-                {...props.droppableProps}
-                value={value}
-                // onChange={handleTabChange} Not used
-                onChange={handleChange}
-                indicatorColor="primary"
-                textColor="primary"
-                variant="fullWidth"
-                aria-label="full width tabs"
-              >
-                {orders.map((tabItem, index) => (
-                  <Draggable
-                    key={tabItem.wharehouse.id}
-                    draggableId={`id-${tabItem.wharehouse.id}`} // must be a string
-                    index={index}
-                    disableInteractiveElementBlocking={true}
-                  >
-                    {(props) => (
-                      <Tab
-                        ref={props.innerRef}
-                        {...props.draggableProps}
-                        {...props.dragHandleProps}
-                        onClick={() => setValue(index)} // Set active tab like this
-                        key={tabItem.wharehouse.id}
-                        // style={{
-                        //   flexGrow: "1",
-                        //   maxWidth: "none",
-                        //   flexBasis: "0",
-                        //   flexShrink: "1",
-                        // }}
-                        label={
-                          <div>
-                            {tabItem.wharehouse.name}
-                            <span className="ml-4 rounded-full text-white bg-blue-600 py-1 px-5">
-                              {tabItem.data.data.length}
-                            </span>
-                          </div>
-                        }
-                        {...a11yProps(tabItem.id - 1)}
-                      />
-                    )}
-                  </Draggable>
-                ))}
-                {props.placeholder}
-              </Tabs>
-            )}
-          </Droppable>
-        </DragDropContext> */}
+       
         <Tabs
           value={value}
           onChange={handleChange}

@@ -5,11 +5,13 @@ import authorization from "./auth";
 import user from "./user";
 import ordersAdmin from "./oredersAdmin";
 import driverMonitor from "./driverMonitor"
+import ordersMonitor from "./OrderMonitor"
 
 const createReducer = (asyncReducers) => (state, action) => {
   const combinedReducer = combineReducers({
     fuse,
     i18n,
+    ordersMonitor,
     authorization,
     user,
     ordersAdmin,

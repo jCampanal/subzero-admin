@@ -11,8 +11,9 @@ border-radius:10px;
 background-color: #fafafa;
 box-shadow:1px 2px 2px grey,-1px 2px 2px grey,1px -2px 2px grey,-1px -2px 2px grey;
 transition:all 225ms;
-@media (min-width:1460px){
-  margin:5px 1%;        
+@media (min-width:800px){
+  margin:5px 1%;
+  width:98%;        
 }
 `;
 

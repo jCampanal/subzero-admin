@@ -24,6 +24,7 @@ export const BarDriversPrincipalS = styled.div`
   background-color:#fafafa;
   @media (min-width:800px){
     max-width: 200px;
+    min-width: 200px;
     height:100%;        
   }
 `;
