@@ -157,6 +157,10 @@ function Drivers() {
     loadDrivers(pageNumber, pageSize, _name);
   }, [location, pageSize, pageNumber]);
 
+  useEffect(() => {
+    document.title = "Drivers - Subzero Ice Services";
+  }, []);
+
   return (
     <FusePageCarded
       classes={{

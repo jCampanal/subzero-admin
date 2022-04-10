@@ -150,7 +150,7 @@ const navigationConfig = [
             },
             {
                 id: 'orders_calendar',
-                title: 'Orders Calendar',
+                title: 'Orders Monitor 2',
                 translate: 'ORDERS_CALENDAR',
                 type: 'item',
                 icon: 'date_range',

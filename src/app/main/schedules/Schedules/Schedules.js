@@ -66,7 +66,9 @@ function Schedules() {
   function handleChangePage(event, value) {
     setPageNumber(value);
   }
-
+  useEffect(() => {
+    document.title = "Shedules - Subzero Ice Services";
+  }, []);
   const onProceed = (itemIds) => {
     setLoading(true);
     deleteSchedule(JSON.stringify(itemIds))

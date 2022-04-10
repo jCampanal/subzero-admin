@@ -62,7 +62,9 @@ function Emails() {
   useEffect(() => {
     loadEmails(pageNumber, pageSize);
   }, [pageSize, pageNumber, loadEmails]);
-
+  useEffect(() => {
+    document.title = "Email- Subzero Ice Services";
+  }, []);
   return (
     <FusePageCarded
       classes={{

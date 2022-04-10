@@ -255,7 +255,9 @@ function PageCardedHeader({ totalOrders }) {
           </Button>
           
         </motion.div>
-        <SearchDateShowed Click={toggleDateRangeDlgIsOpen}/>
+        <SearchDateShowed Click={toggleDateRangeDlgIsOpen}
+                          t={t}
+                          searchByDate={searchByDate}/>
       </div>
       
       <AddModal setIsModal={setIsAddModal} isModal={isAddModal} />

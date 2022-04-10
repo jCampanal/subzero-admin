@@ -6,6 +6,7 @@ import { getAllDrivers } from "app/api-conn/drivers";
 import ListShipmets from "./NewShimpmets/ListShipmets";
 import FuseLoading from "@fuse/core/FuseLoading";
 
+
 function Shipments() {
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
@@ -35,7 +36,9 @@ function Shipments() {
   useEffect(() => {
     loadData();
   }, [loadData]);
-
+  useEffect(() => {
+    document.title = "Shipments - Subzero Ice Services";
+  }, []);
   return (
     <Fragment>
       {loading ? <FuseLoading /> : <ListShipmets drivers={data} />}

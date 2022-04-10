@@ -6,9 +6,9 @@ const DivToTable=(props)=>{
     return(
         <Fragment>
             <div className=' mb-6 flex flex-row justify-evenly '>
-                <div className=' w-2/5 '>
+                <div style={{width:'48%'}}>
                         <SimpleTable 
-                        H="350px"
+                        H="250px"
                         Overflow='visible'
                         Date={props.Date[0]}
                         HeadTable={props.HeadTable[0]}
@@ -16,9 +16,9 @@ const DivToTable=(props)=>{
                 </div>    
             
            
-                <div className='w-2/5'>
+                <div style={{width:'48%'}}>
                         <SimpleTable 
-                        H="350px"
+                        H="250px"
                         Overflow='hidden'
                         Date={props.Date[1]}
                         HeadTable={props.HeadTable[1]}

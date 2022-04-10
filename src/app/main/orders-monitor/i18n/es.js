@@ -16,6 +16,7 @@ const locale = {
     PRODUCT: 'Producto',
     QUANTITY: 'Cantidad',
     DESCRIPTION: 'Descripción',
+    ORDERS_IN_PROGRESS:'Pedidos en proceso'
 };
 
 export default locale;

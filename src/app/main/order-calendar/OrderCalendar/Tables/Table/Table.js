@@ -22,12 +22,12 @@ const Days = {
 const SimpleTable=(props)=>{
     return(
         <Paper className="my-12 " sx={{ overflow: props.Overflow }}>
-            <TableContainer style={{height:props.H?props.H:'auto',maxHeight:props.H?props.H:'none' }} >
+            <TableContainer style={{maxHeight:props.H?props.H:'none' }} >
                 
                     <Table stickyHeader  aria-labelledby="tableTitle"> 
                             
                                 <TableHead>
-                                    <TableRow className="h-20  cursor-pointer" >
+                                    <TableRow className="h-16  cursor-pointer" >
                                         <TableCell
                                                     className="p-1 bg-blue text-white text-center font-bold"
                                                     colSpan={3}                             
@@ -40,12 +40,12 @@ const SimpleTable=(props)=>{
                                 </TableHead>
                                 
                                 <TableBody>
-                                    <TableRow className="h-20  cursor-pointer" >
+                                    <TableRow className="h-6  cursor-pointer" >
                                             {props.HeadTable.map(element=>{
                                                 console.log(element.caption)
                                                 return(
                                                 <TableCell
-                                                    className="text-center font-bold"
+                                                    className="text-left py-2 font-bold"
                                                     component="th"
                                                     scope="row"
                                                     key={element.id}
@@ -56,21 +56,21 @@ const SimpleTable=(props)=>{
 
                                         {props.BodyTable.map(element=>{
                                             return(
-                                                <TableRow className="h-56 cursor-pointer" hover tabIndex={-1}>
+                                                <TableRow className="h-6 cursor-pointer" hover tabIndex={-1}>
                                                 <TableCell
-                                                    className=" text-center font-bold"
+                                                    className=" text-left h-6 py-0 font-bold"
                                                     component="th"
                                                     scope="row"
                                                     key={element.No}
                                                     >{element.No} </TableCell>
                                                     <TableCell
-                                                    className="  text-center "
+                                                    className=" h-6 py-0 text-left "
                                                     component="th"
                                                     scope="row"
                                                     key={element.No+element.Company}
                                                     >{element.Company} </TableCell>
                                                     <TableCell
-                                                    className="text-center "
+                                                    className="text-left py-0 "
                                                     component="th"
                                                     scope="row"
                                                     key={element.No+element.time}

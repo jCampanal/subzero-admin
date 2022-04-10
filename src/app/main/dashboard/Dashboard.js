@@ -55,6 +55,10 @@ const Dashboard = () => {
 
     getData();
   }, [dispatch]);
+
+  useEffect(() => {
+    document.title = "Dashboard - Subzero Ice Services";
+  }, []);
   return (
     <div className="w-full">
       <Widget1 dataArray={data.processedOrdersThisYear} />

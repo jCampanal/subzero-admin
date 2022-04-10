@@ -55,6 +55,10 @@ function OrdersAdmin() {
       }
     }
   }, [warehoseTab]);
+
+  useEffect(() => {
+    document.title = "Order Admin - Subzero Ice Services";
+  }, []);
   return (
     <FusePageCarded
       classes={{

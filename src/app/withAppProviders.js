@@ -1,3 +1,4 @@
+import {useEffect} from 'react'
 import { createGenerateClassName, jssPreset, StylesProvider } from '@material-ui/core/styles';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { create } from 'jss';
@@ -15,9 +16,17 @@ const jss = create({
   insertionPoint: document.getElementById('jss-insertion-point'),
 });
 
+
+
 const generateClassName = createGenerateClassName({ disableGlobal: true });
 
 const withAppProviders = (Component) => (props) => {
+
+ 
+    console.log('routes')
+    console.log(routes) 
+  
+  
   const WrapperComponent = () => (
     <AppContext.Provider
       value={{

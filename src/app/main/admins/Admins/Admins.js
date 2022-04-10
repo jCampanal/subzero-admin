@@ -144,6 +144,10 @@ function Admins() {
     loadAdmins(pageNumber, pageSize, _name);
   }, [location, pageSize, pageNumber]);
 
+  useEffect(() => {
+    document.title = "Admins - Subzero Ice Services";
+  }, []);
+
   return (
     <FusePageCarded
       classes={{

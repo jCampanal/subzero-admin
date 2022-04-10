@@ -13,7 +13,7 @@ import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import {DivMap,DivMarker} from './DriversMonitor.style'
 import AirportShuttleIcon from '@material-ui/icons/AirportShuttle';
 import {FirstDiv}from './DriversMonitor.style'
-
+document.title='Driver Monitor'
 
 
 
@@ -61,6 +61,9 @@ useEffect( ()=>{
     setMarkerDrivers([...Marks])
 }
 },[Drivers])
+useEffect(() => {
+  document.title = "Driver Monitor - Subzero Ice Services";
+}, []);
   
   return (
   <div>

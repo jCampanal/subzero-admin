@@ -1,4 +1,4 @@
-import React, { lazy, memo,Fragment } from "react";
+import React, { useEffect,lazy, memo,Fragment } from "react";
 import { useTranslation } from "react-i18next";
 import DateRangeIcon from "@material-ui/icons/DateRange";
 import TableHead from "@material-ui/core/TableHead";
@@ -103,6 +103,9 @@ const dummyOrders = dummyCompanies.map((company, index) => ({
 
 function OrderCalendar() {
   const { t } = useTranslation("orders-calendar");
+  useEffect(() => {
+  document.title = "Order Monitor 2 - Subzero Ice Services";
+}, []);
   return (
     <div className="px-10 md:px-20">
       {/*
@@ -113,33 +116,34 @@ function OrderCalendar() {
           {dummyOrders.length}
         </span>
       </p>*/}
-      <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg my-14">
+      <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg ">
         
           <Table className="" aria-labelledby="tableTitle">
             <TableHead>
-              <TableRow className="h-20 sm:h-64 ">
-                <TableCell padding="none" className="w-40 md:w-64 text-center font-bold">
+              <TableRow className="h-16 sm:h-16 ">
+                <TableCell padding="none"  className="w-40 py-3   md:w-64  text-center font-bold">
                   {t("PRODUCT")}
                 </TableCell>
                 {dates.slice(0, 10).map((date) => (
                   <TableCell
                     padding="none"
-                    className="w-28 md:w-52 text-center font-bold"
+                    className="w-28 py-3  md:w-52 text-center font-bold"
+                    
                   >
                     {`${t(Days[date.getDay()])} ${date.getDate()}/${
                       date.getMonth() + 1
                     }`}
                   </TableCell>
                 ))}
-                <TableCell padding="none" className="w-40 md:w-64 text-center font-bold">
+                <TableCell padding="none"  className="w-40 py-3   md:w-64  text-center font-bold">
                   {t("TOTAL")}
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow className="h-20 cursor-pointer" hover tabIndex={-1}>
+              <TableRow className=" cursor-pointer" hover tabIndex={-1}>
                 <TableCell
-                  className="p-4 md:p-10 text-center"
+                  className="p-4 h-6 md:px-10 text-center"
                   component="th"
                   scope="row"
                 >
@@ -147,7 +151,7 @@ function OrderCalendar() {
                 </TableCell>
                 {dates.slice(0, 10).map((date) => (
                   <TableCell
-                    className="p-4 md:p-10 text-center"
+                    className="p-4 h-6 md:px-10 text-center"
                     component="th"
                     scope="row"
                   >
@@ -163,7 +167,7 @@ function OrderCalendar() {
                   </TableCell>
                 ))}
                 <TableCell
-                  className="p-4 md:p-10 text-center"
+                  className="p-4 h-6 md:px-10 text-center"
                   component="th"
                   scope="row"
                 >
@@ -183,9 +187,9 @@ function OrderCalendar() {
                     .reduce((total, value) => total + value, 0)}
                 </TableCell>
               </TableRow>
-              <TableRow className="h-20 cursor-pointer" hover tabIndex={-1}>
+              <TableRow className="h-6 cursor-pointer" hover tabIndex={-1}>
                 <TableCell
-                  className="p-4 md:p-10 text-center"
+                  className="p-4 md:px-10 text-center"
                   component="th"
                   scope="row"
                 >
@@ -193,7 +197,7 @@ function OrderCalendar() {
                 </TableCell>
                 {dates.slice(0, 10).map((date) => (
                   <TableCell
-                    className="p-4 md:p-10 text-center"
+                    className="p-4 md:px-10 text-center"
                     component="th"
                     scope="row"
                   >
@@ -209,7 +213,7 @@ function OrderCalendar() {
                   </TableCell>
                 ))}
                 <TableCell
-                  className="p-4 md:p-10 text-center"
+                  className="p-4 md:px-10 text-center"
                   component="th"
                   scope="row"
                 >
@@ -229,9 +233,9 @@ function OrderCalendar() {
                     .reduce((total, value) => total + value, 0)}
                 </TableCell>
               </TableRow>
-              <TableRow className="h-20 cursor-pointer" hover tabIndex={-1}>
+              <TableRow className="h-6 cursor-pointer" hover tabIndex={-1}>
                 <TableCell
-                  className="p-4 md:p-10 text-center"
+                  className="p-4 md:px-10 text-center"
                   component="th"
                   scope="row"
                 >
@@ -239,7 +243,7 @@ function OrderCalendar() {
                 </TableCell>
                 {dates.slice(0, 10).map((date) => (
                   <TableCell
-                    className="p-4 md:p-10 text-center"
+                    className="p-4 md:px-10 text-center"
                     component="th"
                     scope="row"
                   >
@@ -255,7 +259,7 @@ function OrderCalendar() {
                   </TableCell>
                 ))}
                 <TableCell
-                  className="p-4 md:p-10 text-center"
+                  className="p-4 md:px-10 text-center"
                   component="th"
                   scope="row"
                 >
@@ -282,7 +286,7 @@ function OrderCalendar() {
 
 
       <div className='flex flex-col lg:flex-row justify-between'>
-          <div className='w-full lg:w-2/5 '>
+          <div className='w-full lg:w-5/12 '>
             <SimpleTable
               Date={now}
               HeadTable={todayTable}
@@ -290,7 +294,7 @@ function OrderCalendar() {
           </div>
 
 
-      <div className='w-full lg:w-[55%] flex-col'>
+      <div className='w-full lg:w-8/12 flex-col'>
             <DivToTable
                 Overflow='visible'
                 Date={[dates[1],dates[2]]}

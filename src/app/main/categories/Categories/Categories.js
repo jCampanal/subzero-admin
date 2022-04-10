@@ -11,6 +11,7 @@ import { openDialog } from "../../../store/fuse/dialogSlice";
 import RemoveDlg from "../../../common/removeDlg";
 import PageCardedHeader from "../../products/Products/PageCardedHeader";
 import CategoriesTable from "./CategoriesTable";
+document.title='Categories'
 
 function Categories() {
   const {
@@ -88,9 +89,7 @@ function Categories() {
   useEffect(() => {
     if (!logged) history.push("/login");
   }, [logged, history]);
-  useEffect(() => {
-    document.title = "Categories - Subzero Ice Services";
-  }, []);
+
   useEffect(loadCategories, [dispatch]);
 
   return (

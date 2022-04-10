@@ -14,8 +14,35 @@ export const formatDate = (date) => {
   //   date.getMinutes();
   return formattedDate;
 };
+
+export const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+export const days = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+
+
+
 export const formatDisplayDate = (date) => {
-  const months = [
+  /*const months = [
     "January",
     "February",
     "March",
@@ -37,7 +64,7 @@ export const formatDisplayDate = (date) => {
     "Thursday",
     "Friday",
     "Saturday",
-  ];
+  ];*/
   const monthIndex = date.getMonth(); // 11
   const monthName = months[monthIndex]; // December
   const dayIndex = date.getDay(); // 0

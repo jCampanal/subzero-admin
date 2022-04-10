@@ -6,7 +6,9 @@ import es from "./i18n/es";
 i18next.addResourceBundle("en", "orders-admin", en);
 i18next.addResourceBundle("es", "orders-admin", es);
 
-const OrdersAdminConfig = {
+document.title='Order Admin'
+
+const OrdersAdminConfig = {  
   settings: {
     layout: {
       config: {},

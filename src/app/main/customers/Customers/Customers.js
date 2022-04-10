@@ -112,7 +112,9 @@ function Customers() {
 
     loadCustomers(pageNumber, pageSize, _name);
   }, [location, pageSize, pageNumber]);
-
+  useEffect(() => {
+    document.title = "Customers - Subzero Ice Services";
+  }, []);
   return (
     <FusePageCarded
       classes={{
