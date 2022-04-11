@@ -9,14 +9,15 @@ align-items: center;
 align-self: center;`;
 
 const ButtonS=styled.button`
+display:inline-block;
 border: 1px solid;
 border-radius: 5px;
-padding: .375rem .75rem;
+padding: .4rem .75rem;
 border-color: ${(props) => (props.Estate?'#6c757d':'#28a745')};
 color: ${(props) => (props.Estate?'#6c757d':'#28a745')};
 font-weight: 400;
-font-size: 1.43rem;
-line-height: 1.5;
+font-size: 1.37rem;
+line-height: 1.7;
 transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 font-family:sans-serif;
 display: flex;
@@ -26,7 +27,7 @@ align-self: center;
 &:hover{
     background-color:${(props) => (props.Estate?'#6c757d':'#28a745')};
     color:white;
-
+    font-weight: 500;
 }
 &:focus{
     box-shadow:${(props) => (props.Estate?'2px 2px 5px #6793a6,-2px -2px 5px #6793a6,-2px 2px 5px #6793a6, 2px -2px 5px #6793a6'

@@ -11,14 +11,14 @@ align-self: center;`;
 const ButtonS=styled.button`
 border: 1px solid;
 border-radius: 5px;
-min-height:38px;
-width:83px;
+min-height:36px;
+width:78px;
 border-color: #007bff;
 color: #007bff;
-font-weight: 500;
-transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-font-family-sans-serif: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-font-family-monospace: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+font-weight: 400;
+font-size: 1.37rem;
+line-height: 1.9;
+font-family:sans-serif;
 display: flex;
 justify-content: center;
 align-items: center;
@@ -26,7 +26,7 @@ align-self: center;
 &:hover{
     background-color:#007bff;
     color:white;
-
+    font-weight: 500;
 }
 &:focus{
     

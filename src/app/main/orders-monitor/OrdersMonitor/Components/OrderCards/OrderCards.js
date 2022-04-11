@@ -54,7 +54,8 @@ const OrderCards=(props)=>{
                     </TableHead>
                     <TableBody>
                         <TableRow className={`h-16`}>
-                            <TableCell  className={`px-8 py-4  text-left bg-${props.item.state==='Completed'?'blue-500':props.item.state==='Shipping'?'yellow-500':'gray-500'} text-white border-2`} >
+                            <TableCell  className={`px-8 py-4  text-left  text-white border-2`} 
+                            style={{backgroundColor:props.item.state==='Completed'?'#17a2b8':props.item.state==='Shipping'?'#ffc107':'#6c757d'}}>
                             <SpanS Size={'2'}  Bold>{props.item.id}</SpanS>
                             </TableCell> 
                         </TableRow>
@@ -75,26 +76,26 @@ const OrderCards=(props)=>{
                     </TableHead>
                     <TableBody>
                         <TableRow hover className="h-32">
-                            <TableCell className="px-8 py-4 border-2" component="th" scope="row" padding="none">
+                            <TableCell className="px-8 py-4 border-2" component="th" scope="row" >
                                 <SpanS Size={'2'}>{props.item.customerCompany}</SpanS>
                             </TableCell>
-                            <TableCell className="px-8 py-4 border-2" component="th" scope="row" padding="none">
+                            <TableCell className="px-8 py-4 border-2" component="th" scope="row" >
                                 <SpanS Size={'2'}>{props.item.shippingAddress}</SpanS>
                             </TableCell>
                         </TableRow>
                         <TableRow hover className="h-32">
-                            <TableCell className="px-8 py-4 border-2" component="th" scope="row" padding="none">
+                            <TableCell className="px-8 py-4 border-2" component="th" scope="row" >
                                 <SpanS Size={'2'}>{props.item.customerName}</SpanS>
                             </TableCell>
-                            <TableCell className="px-8 py-4 border-2" component="th" scope="row" padding="none">
+                            <TableCell className="px-8 py-4 border-2" component="th" scope="row" >
                                 <SpanS Size={'2'}>{props.item.shippingTime.toLocaleString(t('CURRENT_LANGUAGE'))}</SpanS>
                             </TableCell>
                         </TableRow>
                         <TableRow hover className="h-32">
-                            <TableCell className="px-8 py-4 border-2" component="th" scope="row" padding="none">
+                            <TableCell className="px-8 py-4 border-2" component="th" scope="row" >
                                 <SpanS Size={'2'}>Ref:{props.item.ref}</SpanS>
                             </TableCell>
-                            <TableCell className="px-8 py-4 border-2 flex items-left" component="th" scope="row" padding="none">
+                            <TableCell className="px-8 py-4 border-2 flex items-left" component="th" scope="row" >
                             {props.item.state==='Shipping'&&
                                     
                                         <ProcessButton  Click={()=>{props.Change(props.item.id,'state','Process')}}>
@@ -148,13 +149,13 @@ const OrderCards=(props)=>{
                 <Table aria-labelledby="tableTitle " className='w-11/12 items-center'>
                     <TableHead>
                         <TableRow className="h-40">
-                            <TableCell className="px-8 py-4 font-bold" component="th" scope="row" >
+                            <TableCell className="px-8 py-4 font-bold border-t-2" component="th" scope="row" >
                                 {t('PRODUCT')}
                             </TableCell>
-                            <TableCell className="px-8 py-4 font-bold" component="th" scope="row" >
+                            <TableCell className="px-8 py-4 font-bold border-t-2" component="th" scope="row" >
                                 {t('QUANTITY')}
                             </TableCell>
-                            <TableCell className="px-8 py-4 font-bold" component="th" scope="row" >
+                            <TableCell className="px-8 py-4 font-bold border-t-2" component="th" scope="row" >
                                 {t('DESCRIPTION')}
                             </TableCell>
                         </TableRow>
@@ -162,15 +163,15 @@ const OrderCards=(props)=>{
                     <TableBody>
                         {props.item.products.map((product) => (
                             <TableRow hover className="h-32">
-                                <TableCell className="px-8 py-4 bg-yellow-200" component="th" scope="row" >
+                                <TableCell className="px-8 py-4 " component="th" scope="row" style={{backgroundColor:'#ffeeba'}}>
                                     <SpanS Size={'2'} Bold>{product.name}</SpanS>
                                     <SpanS Size={'2'} Bold>{'(5Lb)'}</SpanS>
                                 </TableCell>
-                                <TableCell className="px-8 py-4 bg-yellow-200" component="th" scope="row" >
+                                <TableCell className="px-8 py-4 " component="th" scope="row" style={{backgroundColor:'#ffeeba'}}>
                                     <SpanS Size={'2'} Bold>{product.quantity}</SpanS>
                                     <SpanS style={{color:'gray'}}>{'(16Lb)'}</SpanS>
                                 </TableCell>
-                                <TableCell className="px-8 py-4 bg-yellow-200" component="th" scope="row" >
+                                <TableCell className="px-8 py-4 " component="th" scope="row" style={{backgroundColor:'#ffeeba'}}>
                                     <SpanS Size={'2'} >{product.description}</SpanS>
                                 </TableCell>
                             </TableRow>
