@@ -117,7 +117,6 @@ function OrdersMonitor() {
         console.log('entro en la rutina')
         let Variable=false
         Orders.map((element)=>{
-            console.log(element.state+'   '+element.Shipped)
             if(element.state==='Process'&&element.Shipped===true){
                 Variable=true 
             }
@@ -166,7 +165,9 @@ function OrdersMonitor() {
             
             
             < OrdersCardsS Activate={activate}>                
-
+                        <div style={{
+                            minHeight:'40px'
+                        }}></div>
                 {Orders.filter(element=>{
                     if(filterStated){
                         return(element.state==='Completed')

@@ -11,20 +11,20 @@ align-self: center;`;
 const ButtonS=styled.button`
 border: 1px solid;
 border-radius: 5px;
-height:36px;
-width:151px;
-border-color: ${(props) => (props.Estate?'gray':'green')};
-color: ${(props) => (props.Estate?'gray':'green')};
-font-weight: 500;
+padding: .375rem .75rem;
+border-color: ${(props) => (props.Estate?'#6c757d':'#28a745')};
+color: ${(props) => (props.Estate?'#6c757d':'#28a745')};
+font-weight: 400;
+font-size: 1.43rem;
+line-height: 1.5;
 transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-font-family-sans-serif: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-font-family-monospace: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+font-family:sans-serif;
 display: flex;
 justify-content: center;
 align-items: center;
 align-self: center;
 &:hover{
-    background-color:${(props) => (props.Estate?'gray':'green')};
+    background-color:${(props) => (props.Estate?'#6c757d':'#28a745')};
     color:white;
 
 }

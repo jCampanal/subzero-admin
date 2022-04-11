@@ -123,6 +123,7 @@ function DateRangePicker({
               value={dateFrom}
               onChange={(e) => setDateFrom(new Date(e))}
               variant="dialog"
+              maxDate={new Date()}
               okLabel={<ButtonDatePickerS>{t("OK")}</ButtonDatePickerS>}
               cancelLabel={<ButtonDatePickerS>{t("CANCEL")}</ButtonDatePickerS>}
             />
@@ -137,6 +138,7 @@ function DateRangePicker({
               value={dateTo}
               onChange={(e) => setDateTo(new Date(e))}
               variant="dialog"
+              maxDate={new Date()}
               okLabel={<ButtonDatePickerS>{t("OK")}</ButtonDatePickerS>}
               cancelLabel={<ButtonDatePickerS>{t("CANCEL")}</ButtonDatePickerS>}
             />

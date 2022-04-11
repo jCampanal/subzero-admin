@@ -60,7 +60,7 @@ const SearchDateShowed=(props)=>{
             className="hidden mt-8 mb-16 mx-4 DatePicker-cls"
             value={DateTo}
             onChange={(e) => props.searchByDate(null,formatDate(new Date(e)))}
-            
+            maxDate={new Date()}
             okLabel={<ButtonDatePickerS>{props.t("OK")}</ButtonDatePickerS>}
             cancelLabel={<ButtonDatePickerS>{props.t("CANCEL")}</ButtonDatePickerS>}
           /> 

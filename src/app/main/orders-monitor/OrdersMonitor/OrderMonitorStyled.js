@@ -7,15 +7,15 @@ display:flex;
 left:0;
 flex-direction: column;
 padding: 0px 2.5rem;
-height:calc(100% - 375px);
+height:calc(100% - 359.95px);
 width:${(props) => (props.Activate ? `calc(100% - ${WidthDriverBar})`: "100%")};
 transition:all 500ms;
 overflow-y:auto;
-top:375px; 
+top:359.95px; 
 @media screen and (min-width:960px){
-    top:136px;
+    top:132.05px;
     padding: 0px 3.5rem;    
-    height:calc(100% - 136px);    
+    height:calc(100% - 132.05px);    
 }`;
 
 export const DriversCardsS=styled.div`
@@ -26,13 +26,13 @@ flex-direction: column;
 align-items:center;
 right:${(props) => (!props.Activate ? '-'+WidthDriverBar: '0px')};
 width:${WidthDriverBar};
-background-color:#22292f;
-height:calc(100% - 375px);
-top:371px;  
+background-color:#343a40;
+height:calc(100% - 359.95px);
+top:359.95px;  
 transition: all 500ms;
 @media screen and (min-width:960px){ 
-    top:136px;  
-    height:calc(100% - 136px);
+    top:132.05px;  
+    height:calc(100% - 132.05px);
     
 }
 `;
@@ -44,7 +44,7 @@ top:0;
 left:0;
 z-index:300;
 display:grid;
-background-color:#22292f;
+background-color:#343a40;
 color:#ffffff;
 width:100%;
 padding: 3rem 6rem;

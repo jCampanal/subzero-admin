@@ -3,7 +3,6 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Table from "@material-ui/core/Table";
 import TableCell from "@material-ui/core/TableCell";
-import FuseScrollbars from "@fuse/core/FuseScrollbars";
 import TableBody from "@material-ui/core/TableBody";
 import Paper from "@material-ui/core/Paper"
 import { TableContainer } from '@material-ui/core';
@@ -54,9 +53,9 @@ const SimpleTable=(props)=>{
                                                 </TableCell> ) })}
                                         </TableRow>  
 
-                                        {props.BodyTable.map(element=>{
+                                        {props.BodyTable.map((element,index)=>{
                                             return(
-                                                <TableRow className="h-6 cursor-pointer" hover tabIndex={-1}>
+                                                <TableRow className={`h-6 cursor-pointer bg-${index%2===1?'white':'gray-200'}`} hover tabIndex={-1}>
                                                 <TableCell
                                                     className=" text-left h-6 py-0 font-bold"
                                                     component="th"

@@ -43,8 +43,8 @@ const OrderCards=(props)=>{
 
         <div className="flex flex-row gap-10">
             
-                <div className='w-1/2'>
-                <Table aria-labelledby="tableTitle" className="mb-9">
+                <div className='flex  flex-col w-1/2 items-center justify-items-center justify-center'>
+                <Table aria-labelledby="tableTitle" className="mb-9 w-11/12">
                     <TableHead>
                         <TableRow className={`h-20`}>
                             <TableCell  className="px-8 py-4  text-left border-2 "   >
@@ -61,8 +61,8 @@ const OrderCards=(props)=>{
                     </TableBody>
                 </Table>
              
-            <FuseScrollbars className="flex-grow overflow-x-auto sm:col-span-4">
-                <Table aria-labelledby="tableTitle">
+            <FuseScrollbars className="flex-grow overflow-x-auto sm:col-span-4 w-11/12">
+                <Table aria-labelledby="tableTitle " className='w-full'>
                     <TableHead>
                         <TableRow className="h-40">
                             <TableCell className="px-8 font-bold py-4 border-2" >
@@ -117,7 +117,8 @@ const OrderCards=(props)=>{
                                                 />
                                                 
                                                 <Select
-                                                        className="max-h-24 h-1/2 w-1/2 border-0"
+                                                        className="max-h-36 h-4/6 min-w-max border-0"
+                                                        style={{minWidth:'120%'}}
                                                         name={'Driver'}
                                                         disabled={!props.item.Shipped}
                                                         id={'Select'+props.item.id}
@@ -142,9 +143,9 @@ const OrderCards=(props)=>{
                 </Table>
             </FuseScrollbars>
         </div>
-
+        <div className='w-1/2 items-center'>
             <FuseScrollbars className="flex-grow overflow-x-auto sm:col-span-8">
-                <Table aria-labelledby="tableTitle">
+                <Table aria-labelledby="tableTitle " className='w-11/12 items-center'>
                     <TableHead>
                         <TableRow className="h-40">
                             <TableCell className="px-8 py-4 font-bold" component="th" scope="row" >
@@ -178,6 +179,7 @@ const OrderCards=(props)=>{
                 </Table>
 
                 </FuseScrollbars>
+            </div>
             
             
             

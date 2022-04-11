@@ -23,7 +23,8 @@ const InfoSing=(props)=>{
                                 <TableBody>
                                     <TableRow className="h-6" >
                                         <TableCell
-                                                    className="text-white p-0 text-center font-bold border-r-transparent border-t-transparent border-l-transparent border-b-gray-500"
+                                                    className="text-white p-0 text-center font-bold border-r-transparent border-t-transparent border-l-transparent border-b-gray"
+                                                    style={{borderColor:'#454d55'}}
                                                     colSpan={3}                             
                                                 >
                                                 <span className=" font-bold p-0">{props.TextHeader}</span>
@@ -35,8 +36,9 @@ const InfoSing=(props)=>{
                                             {props.BodyHeader.map((element,index)=>{
                                                 return(
                                                 <TableCell
-                                                    className="text-center text-white py-2 px-px font-bold border-r-transparent border-t-transparent border-l-transparent border-b-gray-500"
+                                                    className="text-center text-white p-px font-bold border-r-transparent border-t-transparent border-l-transparent border-b-gray"
                                                     component="th"
+                                                    style={{borderColor:'#454d55'}}
                                                     scope="row"
                                                     key={'BodyHeader'+index}
                                                 >
@@ -51,7 +53,7 @@ const InfoSing=(props)=>{
                                             {props.BodyText.map((element,index)=>{
                                                 return(
                                                 <TableCell
-                                                    className="text-center py-2 px-px border-transparent font-bold"
+                                                    className="text-center p-px border-transparent font-bold"
                                                     component="th"
                                                     scope="row"
                                                     key={'BodyHeader'+index}
