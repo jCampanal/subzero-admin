@@ -95,16 +95,16 @@ const OrderCards=(props)=>{
                             <TableCell className="px-8 py-4 border-2" component="th" scope="row" >
                                 <SpanS Size={'2'}>Ref:{props.item.ref}</SpanS>
                             </TableCell>
-                            <TableCell className="px-8 py-4 border-2 flex items-left" component="th" scope="row" >
+                            <TableCell className="px-8 py-4 border-2 flex items-left " component="th" scope="row" >
                             {props.item.state==='Shipping'&&
                                     
                                         <ProcessButton  Click={()=>{props.Change(props.item.id,'state','Process')}}>
                                             
                                          </ProcessButton>
                                     }
-                            {props.item.state==='Process'&&<span className="flex items-center ">
+                            {props.item.state==='Process'&&<div className="w-full flex items-center ">
                                               <FormControlLabel
-                                                    className="px-8 py-4 border-0"
+                                                    className="mx-4  grow-0 my-4 border-0"
                                                     id="Deliver"
                                                     
                                                     control={
@@ -118,8 +118,7 @@ const OrderCards=(props)=>{
                                                 />
                                                 
                                                 <Select
-                                                        className="max-h-36 h-4/6 min-w-max border-0"
-                                                        style={{minWidth:'120%'}}
+                                                        className="h-4/6 min-w-fit w-4/6  grow-0 border-0"                                                        
                                                         name={'Driver'}
                                                         disabled={!props.item.Shipped}
                                                         id={'Select'+props.item.id}
@@ -135,7 +134,7 @@ const OrderCards=(props)=>{
                                                                 
                                             </Select>
                                             
-                                         </span>}
+                                         </div>}
                             </TableCell>
                         </TableRow>
                     </TableBody>
