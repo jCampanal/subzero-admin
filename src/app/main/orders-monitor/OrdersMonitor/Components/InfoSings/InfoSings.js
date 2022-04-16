@@ -63,7 +63,8 @@ const InfoSing=(props)=>{
                                                     scope="row"
                                                     key={'BodyHeader'+index}
                                                 >
-                                                    <StrongS className={` font-semibold text-${element[1]?element[1]:'gray'}`}>
+                                                    <StrongS className={` font-semibold `}
+                                                        style={{color:element[1]?element[1]:'gray'}}>
                                                         {element[0]}
                                                     </StrongS>
                                                 </TableCell> )

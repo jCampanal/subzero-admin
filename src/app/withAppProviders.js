@@ -22,9 +22,7 @@ const generateClassName = createGenerateClassName({ disableGlobal: true });
 
 const withAppProviders = (Component) => (props) => {
 
- 
-    console.log('routes')
-    console.log(routes) 
+
   
   
   const WrapperComponent = () => (

@@ -55,7 +55,8 @@ const SimpleTable=(props)=>{
 
                                         {props.BodyTable.map((element,index)=>{
                                             return(
-                                                <TableRow className={`h-6 cursor-pointer bg-${index%2===1?'white':'gray-200'}`} hover tabIndex={-1}>
+                                                <TableRow className={`h-6 cursor-pointer`} hover tabIndex={-1}
+                                                    style={{backgroundColor:index%2===1?'white':'#eeeeee'}}>
                                                 <TableCell
                                                     className=" text-left h-6 py-0 font-bold"
                                                     component="th"
