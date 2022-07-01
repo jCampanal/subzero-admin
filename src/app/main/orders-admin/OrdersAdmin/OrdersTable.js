@@ -83,9 +83,9 @@ function OrdersTable({ wharehose, rows, data }) {
           if (_noOrder === "" || !_noOrder) {
             _noOrder = undefined;
           }
-          if (date1 === "" || !date1) {  
+          if (date1 === "" || !date1) { 
           
-            date1 = formatDate(new Date(new Date().setHours(-5,0,0,0)));
+            date1=undefined;
             
           }
           if (date2 === "" || !date2) {

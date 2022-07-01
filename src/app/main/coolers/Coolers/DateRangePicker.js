@@ -52,14 +52,18 @@ function DateRangePicker({
     if (notValidate) {
       let formatedDateFrom = dateFrom;
       let formatedDateTo = dateTo;
-
+      
+      
       if (dateFrom) {
-        formatedDateFrom = formatDate(dateFrom);
+        formatedDateFrom = formatDate(new Date(dateFrom.setHours(0,0,0)));
       }
       if (dateTo) {
-        formatedDateTo = formatDate(dateTo);
+        formatedDateTo = formatDate(new Date (dateTo.setHours(0,0,0)));
       }
-
+      console.log('formatedDateFrom')
+      console.log(formatedDateFrom)
+      console.log('formatedDateTo')
+      console.log(formatedDateTo)
       searchByDate(formatedDateFrom, formatedDateTo);
       toggleDateRangeDlgIsOpen();
     } else {
@@ -73,10 +77,10 @@ function DateRangePicker({
         let formatedDateTo = dateTo;
 
         if (dateFrom) {
-          formatedDateFrom = formatDate(dateFrom);
+          formatedDateFrom = formatDate(dateFrom.setTime(0));
         }
         if (dateTo) {
-          formatedDateTo = formatDate(dateTo);
+          formatedDateTo = formatDate(dateTo.setTime(0,0,0));
         }
 
         searchByDate(formatedDateFrom, formatedDateTo);
@@ -118,11 +122,9 @@ function DateRangePicker({
           <div className="flex justify-center -mx-4">
             <DatePicker
               label={t("DATE_1")}
-              inputVariant="outlined"
               className="mt-8 mb-16 mx-4 DatePicker-cls"
               value={dateFrom}
-              onChange={(e) => setDateFrom(new Date(e))}
-              variant="dialog"
+              onChange={(e) => setDateFrom(new Date(e))}              
               maxDate={new Date()}
               okLabel={<ButtonDatePickerS>{t("OK")}</ButtonDatePickerS>}
               cancelLabel={<ButtonDatePickerS>{t("CANCEL")}</ButtonDatePickerS>}
@@ -133,11 +135,9 @@ function DateRangePicker({
           <div className="flex justify-center -mx-4">
             <DatePicker
               label={t("DATE_2")}
-              inputVariant="outlined"
               className="mt-8 mb-16 mx-4 DatePicker-cls"
               value={dateTo}
-              onChange={(e) => setDateTo(new Date(e))}
-              variant="dialog"
+              onChange={(e) => setDateTo(new Date(e))}              
               maxDate={new Date()}
               okLabel={<ButtonDatePickerS>{t("OK")}</ButtonDatePickerS>}
               cancelLabel={<ButtonDatePickerS>{t("CANCEL")}</ButtonDatePickerS>}

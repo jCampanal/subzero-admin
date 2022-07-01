@@ -49,7 +49,7 @@ function PageCardedHeader({ totalOrders }) {
         setFilter({ ...filter, dateFrom: dateFrom, dateTo: dateTo });
       } else {
         if (dateFrom) {
-          setFilter({ ...filter, dateFrom: "", dateTo: dateFrom });
+          setFilter({ ...filter, dateFrom: "", dateTo: dateTo });
         }
         if (dateTo) {
           setFilter({ ...filter, dateFrom: "", dateTo: dateTo });
@@ -71,6 +71,7 @@ function PageCardedHeader({ totalOrders }) {
   }, [filter, history]);
 
   const clearFilter = () => {
+
     if (
       filter.noOrden !== "" ||
       filter.company !== "" ||
@@ -102,6 +103,7 @@ function PageCardedHeader({ totalOrders }) {
   };
   console.log(t("ORDERS_ADMIN"));
   useEffect(() => {
+    console.log('Clear filtrer')
     if (
       filter.noOrden !== "" ||
       filter.company !== "" ||
